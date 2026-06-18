@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat App</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <main class="app">
+    <header class="topbar">
+      <div class="brand">
+        <strong>Чат</strong>
+        <span class="user-id" id="userIdLabel"></span>
+      </div>
+
+      <div class="controls">
+        <select id="projectSelect" aria-label="Выбор проекта">
+          <option value="project_1">project_1</option>
+          <option value="project_2">project_2</option>
+        </select>
+        <button class="new-chat" id="newChatButton" type="button">Новый чат</button>
+      </div>
+    </header>
+
+    <section class="chat" id="chatHistory" aria-live="polite">
+      <div class="empty-state" id="emptyState">Начните новый диалог</div>
+    </section>
+
+    <form class="composer-wrap" id="chatForm">
+      <div class="composer">
+        <textarea id="messageInput" rows="1" placeholder="Введите сообщение..." autocomplete="off"></textarea>
+        <button class="send-button" id="sendButton" type="submit">Отправить</button>
+      </div>
+    </form>
+  </main>
+
+  <script src="/static/app.js" defer></script>
+</body>
+</html>
