@@ -1,0 +1,46 @@
+=== DOCUMENTATION FOR TARGET: PCIEPHYWRAP ===
+
+<target_short_dscr>:
+Register for Wrapper of PCIE PHY (CMU, Lane and PCS)
+------------------------------
+<reg_short_dscr>:
+PCIE PHY Configuration
+------------------------------
+<field_public_text>:
+Software Reset for PCIE PHY PCS APB Configuration Interface.
+------------------------------
+<field_enc>:
+1: Reset active
+0: Reset incactive
+------------------------------
+<field_public_text>:
+Software Reset for PCIE PHY SD configuration interface.
+------------------------------
+<field_enc>:
+1: Reset active
+0: Reset incactive
+------------------------------
+<field_public_text>:
+Software Reset for PCIE PHY
+------------------------------
+<field_enc>:
+1: Reset active
+0: Reset inactive
+------------------------------
+<reggrp_short_dscr>:
+Configuration of PCIE PHY local parallel configuration interface (EXT_CFG)
+------------------------------
+<reg_short_dscr>:
+Configuration of PCIE PHY local parallel configuration interface (EXT_CFG)
+------------------------------
+<field_public_text>:
+EXTCFG Interface Timing configuration.
+
+Additional N wait states before read data is sampled.
+------------------------------
+<field_enc>:
+Total Wait States (i.e. pulse width) are N+2 clock cycles of EXT_CFG clock signal.
+------------------------------
+<field_public_text>:
+Reserved, must set to its default value.
+------------------------------

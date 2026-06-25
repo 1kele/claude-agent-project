@@ -1,0 +1,1214 @@
+=== DOCUMENTATION FOR TARGET: ANA_AC_POL ===
+
+<target_short_dscr>:
+Policer sub block of the Analyzer
+------------------------------
+<target_public_text>:
+Controls the various policers.
+------------------------------
+<reggrp_short_dscr>:
+Various policer controls
+------------------------------
+<reggrp_public_text>:
+Policer configuration and status registers
+------------------------------
+<reg_short_dscr>:
+Configuration of storm policer rates
+------------------------------
+<reg_public_text>:
+These registers configure the rates of the storm policers.
+------------------------------
+<field_public_text>:
+Storm policer leaky bucket rate.
+
+Regarding unit, refer to POL_UPD_INT.
+
+Related parameters:
+ANA_AC_POL:POL_ALL_CFG:POL_UPD_INT_CFG.POL_UPD_INT
+ANA_AC_POL:POL_ALL_CFG:POL_STORM_CTRL.STORM_FRAME_RATE_ENA
+------------------------------
+<field_enc>:
+When POL_STORM_CTRL.STORM_FRAME_RATE_ENA is disabled, policing is performed in bits per second (bps). 
+0: Open until burst capacity is used, then closed.
+1: Rate = 1 x <unit> bps
+n: Rate = n x <unit> bps
+
+When POL_STORM_CTRL.STORM_FRAME_RATE_ENA is enabled, policing is performed in frames per second (fps). 
+0: Open until burst capacity is used, then closed.
+1: Rate = <unit> fps
+n: Rate = n x <unit> fps
+------------------------------
+<reg_short_dscr>:
+Configuration of storm policer thresholds
+------------------------------
+<reg_public_text>:
+These registers configure the thresholds of the storm policers
+------------------------------
+<field_public_text>:
+Policer threshold size (a.ka. burst capacity). Unit is 8192 bytes.
+
+Related parameters:
+ANA_AC_POL:POL_ALL_CFG:POL_STORM_CTRL.STORM_FRAME_RATE_ENA
+------------------------------
+<field_enc>:
+When POL_STORM_CTRL.STORM_FRAME_RATE_ENA is disabled burst capacity is configured in steps of 8192 bytes.
+0: Always closed
+1: Burst capacity = 8192 bytes
+n: Burst capacity = n x 8192 bytes
+63: Burst capacity = 516096 bytes
+
+When POL_STORM_CTRL.STORM_FRAME_RATE_ENA is enabled burst capacity is configured in steps of 8192/2504 frames.
+0: Always closed
+1: Burst capacity = 1 x 8192/2504 frames
+n: Burst capacity = n x 8192/2504 frames
+63: Burst capacity = 206 frames
+------------------------------
+<reg_short_dscr>:
+Configuration of storm policer parameters
+------------------------------
+<field_public_text>:
+Enable frame rate mode for the storm policer, where policer rates are measured in frames per second instead of bits per second.
+------------------------------
+<field_enc>:
+0: Rates measured in bits per second
+1: Rates measured in frames per second
+------------------------------
+<field_public_text>:
+Controls policing of frames to the individual CPU queues for the storm policers. If a bit is set in this mask, frames to the corresponding CPU queue are allowed to be policed (frames may get discarded).
+------------------------------
+<field_enc>:
+'00..00': Disable policing of frames to all CPU queues
+'xx..x1 ': Allow policing of frames to CPU queue #0
+    ...
+'1x..xx' : Allow policing of frames to CPU queue #n
+------------------------------
+<field_public_text>:
+Enables removing the front ports from a policed frame's destination set.
+------------------------------
+<field_enc>:
+0: The policer does not remove the front ports from the destination set for a policed frame.
+0: The policer removes the front ports from the destination set for a policed frame.
+------------------------------
+<field_public_text>:
+Enables removing the CPU ports from a policed frame's destination set.
+------------------------------
+<field_enc>:
+0: The policer does not remove the CPU ports from the destination set for a policed frame.
+1: The policer removes the CPU ports from the destination set for a policed frame.
+------------------------------
+<field_public_text>:
+Configures the frame types to be policed by the policer. 
+
+Each bit in the mask enables policing of a specific frame type. 
+Multiple frame types can be enabled at the same time and a frame can belong to multiple frame types.
+
+If a frame belongs to one or more enabled frame types, then the frame is policed.
+The only exception to this is if the CPU queue bit is cleared and the frame is destined to a CPU queue in the CPU_QU_MASK. In this case the frame is NOT policed (by this policer), regardless of other settings in TRAFFIC_TYPE_MASK.
+ 
+If a frame does not match any of the enabled frame types, then the frame bypasses the policer (never discarded and the bucket is not updated with the frame).
+
+Frame bypassing one storm policer, may be subject to policing by one of the other storm policers.
+
+Related parameters:
+ANA_AC_POL:POL_ALL_CFG:POL_STORM_CTRL.STORM_CPU_QU_MASK
+------------------------------
+<field_enc>:
+'xxxxxxx1' : Known multicast frames are policed. 
+'xxxxxx1x' : Known broadcast frames are policed.
+'xxxxx1xx' : Known unicast frames are policed. 
+'xxxx1xxx' : Unknown multicast frames are policed. 
+'xxx1xxxx' : Unknown broadcast frames are policed.
+'xx1xxxxx' : Unknown unicast frames are policed. 
+'x0xxxxxx' : Frames to a CPU queue selected by CPU_QU_MASK bypass the policer, regardless of other criteria in TRAFFIC_TYPE_MASK.
+'x1xxxxxx' : Frames to a CPU queue selected by CPU_QU_MASK are policed.
+'1xxxxxxx' : Learn frames are policed.
+'00000000': Disable policer.
+------------------------------
+<reg_short_dscr>:
+Configuration of ACL policer rates
+------------------------------
+<field_public_text>:
+ACL policer leaky bucket rate.
+
+Regarding unit, refer to POL_UPD_INT.
+
+Related parameters:
+ANA_AC_POL:POL_ALL_CFG:POL_UPD_INT_CFG.POL_UPD_INT
+ANA_AC_POL:POL_ALL_CFG:POL_ACL_CTRL.FRAME_RATE_ENA
+------------------------------
+<field_enc>:
+When POL_ACL_CTRL.FRAME_RATE_ENA is disabled, policing is performed in bits per second (bps). 
+0: Open until burst capacity is used, then closed.
+1: Rate = 1 x <unit> bps
+n: Rate = n x <unit> bps
+
+When POL_ACL_CTRL.FRAME_RATE_ENA is enabled, policing is performed in frames per second (fps). 
+0: Open until burst capacity is used, then closed.
+1: Rate = <unit> fps
+n: Rate = n x <unit> fps
+------------------------------
+<reg_short_dscr>:
+Configuration of ACL policer thresholds
+------------------------------
+<field_public_text>:
+Policer threshold size (a.ka. burst capacity). Unit is 8192 bytes.
+
+Related parameters:
+ANA_AC_POL:POL_ALL_CFG:POL_ACL_CTRL.FRAME_RATE_ENA
+------------------------------
+<field_enc>:
+When POL_ACL_CTRL.FRAME_RATE_ENA is disabled burst capacity is configured in steps of 8192 bytes.
+0: Always closed
+1: Burst capacity = 8192 bytes
+n: Burst capacity = n x 8192 bytes
+63: Burst capacity = 516096 bytes
+
+When POL_ACL_CTRL.FRAME_RATE_ENA is enabled burst capacity is configured in steps of 8192/2504 frames.
+0: Always closed
+1: Burst capacity = 1 x 8192/2504 frames
+n: Burst capacity = n x 8192/2504 frames
+63: Burst capacity = 206 frames
+------------------------------
+<reg_short_dscr>:
+Configuration of ACL policer parameters
+------------------------------
+<reg_public_text>:
+Only frames with an VCAP IS2 action with POLICE_ENA=1 are subject to ACL policing. The policer index is then controlled by the VCAP IS2 action field POLICE_IDX.
+------------------------------
+<field_public_text>:
+Configuration of Drop Precedence bypass level. 
+Frames with DP below DP_BYPASS_LVL bypass the policer (frames are never policed and the bucket is not updated with the frames).
+------------------------------
+<field_enc>:
+0: No frames bypass the policer
+1: Frames with DP = 0 bypass the policer
+2: Frames with DP = 0 or 1 bypass the policer
+3: Frames with DP = 0, 1 or 2 bypass the policer
+------------------------------
+<field_public_text>:
+Value added to each frame before updating the bucket. 
+Gap value range: -64 to +63 in two's complement format.
+
+Setting GAP_VALUE to 20 corresponds to a line-rate measurement, since on the line each frame will be preceded by 12 bytes of IFG and 8 bytes of preamble.
+Setting GAP_VALUE to 0 corresponds to a data-rate measurement.
+------------------------------
+<field_enc>:
+0x40: -64
+0x41: -63
+   ...
+0x7F: -1
+0x00: 0
+0x01: 1
+   ...
+0x3F: 63
+------------------------------
+<field_public_text>:
+Configures the pipeline point per ACL policer.
+
+When injecting or looping at a pipeline point after ACL_PIPELINE_PT will not cause ACL policing.
+
+When extracting at a pipeline point before ACL_PIPELINE_PT will not cause ACL policing.
+------------------------------
+<field_enc>:
+0: NONE
+1: ANA_VRAP
+2: ANA_PORT_VOE 
+3: ANA_CL
+4: ANA_CLM
+5: ANA_IPT_PROT 
+6: ANA_OU_MIP
+7: ANA_OU_SW
+8: ANA_OU_PROT
+9: ANA_OU_VOE
+10: ANA_MID_PROT
+11: ANA_IN_VOE
+12: ANA_IN_PROT
+13: ANA_IN_SW
+14: ANA_IN_MIP
+15: ANA_VLAN
+------------------------------
+<field_public_text>:
+Configures the frame types to be policed by the policer. 
+Each bit in the mask enables a specific frame type.
+
+If a frame does not match any of the enabled frame types, then the frame bypasses the policer (never discarded and the bucket is not updated with the frame).
+------------------------------
+<field_enc>:
+'00': Police frame (if policer is not bypassed by ACL_PIPELINE_PT or DP_BYPASS_LVL)
+'01': Only frames to front ports are triggering policer and only front port destinations are policed.
+'10': Frames to CPU are triggering policer and only CPU destinations are policed.
+'11': Frames to front ports and/or CPU are triggering policer and being policed.
+------------------------------
+<field_public_text>:
+Enables frame rate mode for the ACL policer, where policer rates are measured in frames per second instead of bits per second.
+------------------------------
+<field_enc>:
+0: Rates measured in bits per second
+1: Rates measured in frames per second
+------------------------------
+<reg_short_dscr>:
+Configuration of port policer flow control
+------------------------------
+<field_public_text>:
+Current flow control state for the port policer.
+------------------------------
+<field_enc>:
+0: Flow control is inactive
+1: Flow control is active
+------------------------------
+<field_public_text>:
+Enables flow control mode for the port policer. 
+
+If set, pause frames are transmitted when the configured policer threshold is exceeded. 
+If cleared, frames exceeding the configured policer threshold are discarded.
+
+PORT_FC_ENA must also be set to enable pause frames. 
+Furthermore DSM must be configured for flow control.
+
+Related parameters:
+ANA_AC_POL:POL_ALL_CFG:POL_ALL_CFG.PORT_FC_ENA
+DSM:CFG:ETH_FC_CFG.FC_ANA_ENA
+------------------------------
+<field_enc>:
+0: Discard mode
+1: Flow control mode
+------------------------------
+<reg_short_dscr>:
+Miscellaneous policer parameters
+------------------------------
+<field_public_text>:
+Value added to each frame before updating the bucket. 
+Gap value range: -64 to +63 in two's complement format.
+
+Setting STORM_GAP_VALUE to 20 corresponds to a line-rate measurement, since on the line each frame will be preceded by 12 bytes of IFG and 8 bytes of preamble.
+Setting STORM_GAP_VALUE to 0 corresponds to a data-rate measurement.
+------------------------------
+<field_enc>:
+0x40: -64
+0x41: -63
+   ...
+0x7F: -1
+0x00: 0
+0x01: 1
+   ...
+0x3F: 63
+------------------------------
+<field_public_text>:
+When set, the frame color used in statistics is based only on the color determined by the SDLB policer.
+
+Related parameters:
+ANA_AC:STAT_CNT_CFG_ISDX
+------------------------------
+<field_enc>:
+0: DP level determines color
+1: SDLB determines color
+------------------------------
+<field_public_text>:
+Determines the mapping between internal DP value and the color used by ISDX counters.
+
+One bit for each of the four internal DP values.
+------------------------------
+<field_enc>:
+0: DP value will be counted as green.
+1: DP value will be counted as yellow.
+------------------------------
+<field_public_text>:
+Enables overall signaling of flow control from the port policers to DSM. 
+
+Flow control is enabled for each port policer in POL_PORT_FC_CFG.FC_ENA.
+
+Related parameters:
+ANA_AC_POL:POL_ALL_CFG:POL_PORT_FC_CFG.FC_ENA
+DSM:CFG:ETH_FC_CFG.FC_ANA_ENA
+------------------------------
+<field_public_text>:
+Enables operation of port policers in parallel.
+
+In serial mode, each of the active port policers for a port are checked one after another. If a frame is discarded by a policer, the frame is not passed on to subsequent policers.
+In parallel mode, each of the active port policers for a port operate on all frames (policing and bucket updates) even though one or more of the other port policers is be closed.
+------------------------------
+<field_enc>:
+0: Port policer operates in serial mode. 
+1: Port policer operates in parallel mode.
+------------------------------
+<field_public_text>:
+If set, all storm policers are initialized and buckets are open. The bit must be cleared for normal operation to resume.
+------------------------------
+<field_enc>:
+0: Normal operation
+1: Initialization
+------------------------------
+<field_public_text>:
+If set, all priority policers are initialized and buckets are open. The bit must be cleared for normal operation to resume.
+------------------------------
+<field_enc>:
+0: Normal operation
+1: Initialization
+------------------------------
+<field_public_text>:
+If set, all ACL policers are initialized and buckets are open. The bit must be cleared for normal operation to resume.
+------------------------------
+<field_enc>:
+0: Normal operation
+1: Initialization
+------------------------------
+<field_public_text>:
+If set, the port policers operate on logical port numbers instead of physical port numbers.
+------------------------------
+<field_enc>:
+0: Policing per physical port
+1: Policing per logical port
+------------------------------
+<field_public_text>:
+If set, all port policers are initialized and buckets are open. The bit must be cleared for normal operation to resume.
+------------------------------
+<field_enc>:
+0: Normal operation
+1: Initialization
+------------------------------
+<reg_short_dscr>:
+Policer update interval
+------------------------------
+<reg_public_text>:
+Configure the leaky bucket update interval for the ACL, storm- and port policers. 
+This configuration affects the policing rate unit for these 3 policers. 
+By setting this parameter to a clock frequency dependent value, the rate unit can be kept identical/similar across different system clock frequencies.
+------------------------------
+<field_public_text>:
+This configuration will affect the policing rate unit for the storm, ACL and port policers. The rate unit is calculated as follows:
+
+Rate unit = SYS_CLK / (POL_UPD_INT * 32) bps
+
+Recommended value and corresponding rate unit:
+250MHz: 312 => 25040bps
+500MHz: 624 => 25040bps
+625MHz: 780 => 25040bps
+
+Frame rate mode is also affected be this setting. The default frame rate unit is 10fps (frames per second). This is scaled according to this formula:
+Frame rate = 10fps * (Rate unit / 25040bps)
+------------------------------
+<field_enc>:
+0-31: Not allowed
+N: Update interval
+------------------------------
+<reg_short_dscr>:
+Policer diagnostic information
+------------------------------
+<field_public_text>:
+Set if a storm policer is active.
+
+Bit is cleared by writing a 1 to this position.
+------------------------------
+<field_enc>:
+0: No event has occurred
+1: Storm policer is active (frames added to leaky buckets)
+------------------------------
+<field_public_text>:
+Set if a storm policer has removed the front ports from a frame's destination set due to policing. 
+
+Bit is cleared by writing a 1 to this position.
+------------------------------
+<field_enc>:
+0: No event has occurred
+1: A storm policer has removed the front ports from a frame's destination set due to policing
+------------------------------
+<field_public_text>:
+Set if a storm policer has removed the CPU ports from a frame's destination set due to policing.
+
+Bit is cleared by writing a 1 to this position.
+------------------------------
+<field_enc>:
+0: No event has occurred
+1: A storm policer has removed the CPU ports from a frame's destination set due to policing
+------------------------------
+<field_public_text>:
+Set if a service policer has been bypassed due to a pipeline point.
+
+Bit is cleared by writing a 1 to this position.
+------------------------------
+<field_enc>:
+0: No event has occurred
+1: policer has been bypassed
+------------------------------
+<field_public_text>:
+Set if frame has been dropped by a SDLB policer.
+
+Bit is cleared by writing a 1 to this position.
+------------------------------
+<field_enc>:
+0: No event has occurred
+1: DLB policer drop event has occurred
+------------------------------
+<field_public_text>:
+Set if a priority policer has been bypassed due to a pipeline point.
+
+Bit is cleared by writing a 1 to this position.
+------------------------------
+<field_enc>:
+0: No event has occurred
+1: policer has been bypassed
+------------------------------
+<field_public_text>:
+Set if a priority policer is active.
+
+Bit is cleared by writing a 1 to this position.
+------------------------------
+<field_enc>:
+0: No event has occurred
+1: Priority policer is active (frames added to leaky buckets)
+------------------------------
+<field_public_text>:
+Set if frame has been dropped due to priority policer.
+
+Bit is cleared by writing a 1 to this position.
+------------------------------
+<field_enc>:
+0: No event has occurred
+1: PRIO policer drop event has occurred
+------------------------------
+<field_public_text>:
+Set if a priority policer has been bypassed due to a frame's DP level or traffic type mask.
+
+Bit is cleared by writing a 1 to this position.
+------------------------------
+<field_enc>:
+0: No event has occurred
+1: Priority policer has been bypassed
+------------------------------
+<field_public_text>:
+Set if an ACL policer has been bypassed due to a pipeline point.
+
+Bit is cleared by writing a 1 to this position.
+------------------------------
+<field_enc>:
+0: No event has occurred
+1: policer has been bypassed
+------------------------------
+<field_public_text>:
+Set if an ACL policer is active.
+
+Bit is cleared by writing a 1 to this position.
+------------------------------
+<field_enc>:
+0: No event has occurred
+1: ACL policer is active (frames added to leaky buckets)
+------------------------------
+<field_public_text>:
+Set if frame has been dropped due to ACL policer.
+
+Bit is cleared by writing a 1 to this position.
+------------------------------
+<field_enc>:
+0: No event has occurred
+1: ACL policer drop event has occurred
+------------------------------
+<field_public_text>:
+Set if an ACL policer has been bypassed due to a frame's DP level or traffic type mask.
+
+Bit is cleared by writing a 1 to this position.
+------------------------------
+<field_enc>:
+0: No event has occurred
+1: ACL policer has been bypassed
+------------------------------
+<field_public_text>:
+Set if an Port policer has been bypassed due to a pipeline point.
+
+Bit is cleared by writing a 1 to this position.
+------------------------------
+<field_enc>:
+0: No event has occurred
+1: policer has been bypassed
+------------------------------
+<field_public_text>:
+Set if a port policer is active.
+
+Bit is cleared by writing a 1 to this position.
+------------------------------
+<field_enc>:
+0: No event has occurred
+1: Port policer is active (frames added to leaky buckets)
+------------------------------
+<field_public_text>:
+Set if a port policer's flow control state has been cleared.
+
+Bit is cleared by writing a 1 to this position.
+------------------------------
+<field_enc>:
+0: No event has occurred
+1: Port policer flow control state has been cleared
+------------------------------
+<field_public_text>:
+Set if flow control has been active for a port policer.
+
+Bit is cleared by writing a 1 to this position.
+------------------------------
+<field_enc>:
+0: No event has occurred
+1: Port policer flow control has been activated
+------------------------------
+<field_public_text>:
+Set if a port policer has removed the front ports from a frame's destination set due to policing. 
+
+Bit is cleared by writing a 1 to this position.
+------------------------------
+<field_enc>:
+0: No event has occurred
+1: A port policer has removed the front ports from a frame's destination set due to policing
+------------------------------
+<field_public_text>:
+Set if a port policer has removed the CPU ports from a frame's destination set due to policing.
+
+Bit is cleared by writing a 1 to this position.
+------------------------------
+<field_enc>:
+0: No event has occurred
+1: A port policer has removed the CPU ports from a frame's destination set due to policing
+------------------------------
+<field_public_text>:
+Set if a port policer has been bypassed due to a frame's DP level or traffic type mask.
+
+Bit is cleared by writing a 1 to this position.
+------------------------------
+<field_enc>:
+0: No event has occurred
+1: Port policer has been bypassed
+------------------------------
+<reg_short_dscr>:
+Policer diagnostic information
+------------------------------
+<field_public_text>:
+Set if BUM policer has been active.
+One bit per BUM policer.
+
+Bit is cleared by writing a 1 to this position.
+------------------------------
+<field_enc>:
+0: No event has occurred
+1: BUM policer has been active.
+------------------------------
+<field_public_text>:
+Set if frame has been dropped by a BUM policer.
+One bit per BUM policer.
+
+Bit is cleared by writing a 1 to this position.
+------------------------------
+<field_enc>:
+0: No event has occurred
+1: BUM policer drop event has occurred
+------------------------------
+<field_public_text>:
+Set if frame has been dropped by a BDLB policer.
+
+Bit is cleared by writing a 1 to this position.
+------------------------------
+<field_enc>:
+0: No event has occurred
+1: BDLB policer drop event has occurred
+------------------------------
+<reggrp_short_dscr>:
+Rate and threshold configuration for port policers.
+------------------------------
+<reg_short_dscr>:
+Port policer upper threshold configuration
+------------------------------
+<reg_public_text>:
+The registers are index by 4 x port number + port policer index.
+------------------------------
+<field_public_text>:
+Threshold size for port policer (burst capacity).
+
+Related parameters:
+ANA_AC_POL:POL_PORT_CTRL:POL_PORT_CFG.FRAME_RATE_ENA
+------------------------------
+<field_enc>:
+When POL_PORT_CFG.FRAME_RATE_ENA is disabled burst capacity is configured in steps of 8192 bytes.
+0: Always closed
+1: Burst capacity = 8192 bytes
+n: Burst capacity = n x 8192 bytes
+63: Burst capacity = 516096 bytes
+
+When POL_PORT_CFG.FRAME_RATE_ENA is enabled burst capacity is configured in steps of 8192/2504 frames.
+0: Always closed
+1: Burst capacity = 1 x 8192/2504 frames
+n: Burst capacity = n x 8192/2504 frames
+63: Burst capacity = 206 frames
+------------------------------
+<reg_short_dscr>:
+Port policer lower threshold configuration
+------------------------------
+<reg_public_text>:
+The registers are index by 4 x port number + port policer index.
+------------------------------
+<field_public_text>:
+Hysteresis size for port policer. 
+Unit is 8192 bytes. 
+
+PORT_THRES1 is used when a port policer is in flow control mode. 
+Flow control is asserted when the bucket level exceeds PORT_THRES0. Flow control is deasserted when the bucket has leaked PORT_THRES1 bytes since the assertion. 
+PORT_THRES1 must be programmed smaller or equal to PORT_THRES0.
+
+Related parameters:
+ANA_AC_POL:POL_PORT_CFG:POL_PORT_THRES_CFG_0.PORT_THRES0
+ANA_AC_POL:POL_ALL_CFG:POL_PORT_FC_CFG.FC_ENA
+------------------------------
+<field_enc>:
+0 : No hysteresis
+1: Deassert flow control when bucket has leaked 8192 bytes
+...
+n: Deassert flow control when bucket has leaked n * 8192 bytes
+------------------------------
+<reg_short_dscr>:
+Port policer rate configuration
+------------------------------
+<reg_public_text>:
+The registers are index by 4 x port number + port policer index.
+------------------------------
+<field_public_text>:
+Port policer leaky bucket rate. 
+
+Regarding unit, refer to POL_UPD_INT.
+
+Related parameters:
+ANA_AC_POL:POL_ALL_CFG:POL_UPD_INT_CFG.POL_UPD_INT
+ANA_AC_POL:POL_PORT_CTRL:POL_PORT_CFG.FRAME_RATE_ENA
+------------------------------
+<field_enc>:
+When POL_PORT_CFG.FRAME_RATE_ENA is disabled, policing is performed in bits per second (bps). 
+0: Open until burst capacity is used, then closed.
+1: Rate = 1 x <unit> bps
+n: Rate = n x <unit> bps
+
+When POL_PORT_CFG.FRAME_RATE_ENA is enabled, policing is performed in frames per second (fps). 
+0: Open until burst capacity is used, then closed.
+1: Rate = <unit> fps
+n: Rate = n x <unit> fps
+------------------------------
+<reggrp_short_dscr>:
+Port policer configuration and status per port
+------------------------------
+<reggrp_public_text>:
+These parameters are applicable to all port policers for each port.
+------------------------------
+<reg_short_dscr>:
+Port policer gap and pipeline point configuration
+------------------------------
+<field_public_text>:
+Configures the pipeline point per port policer.
+
+When injecting or looping at a pipeline point after PORT_PIPELINE_PT will not cause port policing.
+
+When extracting at a pipeline point before PORT_PIPELINE_PT will not cause port policing.
+------------------------------
+<field_enc>:
+0: NONE
+1: ANA_VRAP
+2: ANA_PORT_VOE 
+3: ANA_CL
+4: ANA_CLM
+5: ANA_IPT_PROT 
+6: ANA_OU_MIP
+7: ANA_OU_SW
+8: ANA_OU_PROT
+9: ANA_OU_VOE
+10: ANA_MID_PROT
+11: ANA_IN_VOE
+12: ANA_IN_PROT
+13: ANA_IN_SW
+14: ANA_IN_MIP
+15: ANA_VLAN
+------------------------------
+<field_public_text>:
+Value added to each frame before updating the bucket. 
+Gap value range: -64 to +63 in two's complement format.
+
+Setting GAP_VALUE to 20 corresponds to a line-rate measurement, since on the line each frame will be preceded by 12 bytes of IFG and 8 bytes of preamble.
+Setting GAP_VALUE to 0 corresponds to a data-rate measurement.
+------------------------------
+<field_enc>:
+0x40: -64
+0x41: -63
+   ...
+0x7F: -1
+0x00: 0
+0x01: 1
+   ...
+0x3F: 63
+------------------------------
+<reg_short_dscr>:
+Port policer configuration
+------------------------------
+<field_public_text>:
+Controls policing of frames to the individual CPU queues for the port policer. 
+If a bit is set in this mask, frames to the corresponding CPU queue are allowed to be policed (frames may get discarded and the bucket is updated with the frame).
+------------------------------
+<field_enc>:
+'00..00': Disable policing of frames to all CPU queues
+'xx..x1 ': Allow policing of frames to CPU queue #0
+    ...
+'1x..xx' : Allow policing of frames to CPU queue #n
+------------------------------
+<field_public_text>:
+Configures if service frames (ISDX <> 0) bypasses the port policers.
+------------------------------
+<field_enc>:
+0: All frames are applicable for port policing
+1: Only non service frames are applicable for port policing
+------------------------------
+<field_public_text>:
+Configuration of DP bypass level. 
+Frames with DP below DP_BYPASS_LVL bypass the port policers (frames are never policed and the bucket is not updated with the frames).
+------------------------------
+<field_enc>:
+0: No frames bypass the policer
+1: Frames with DP = 0 bypass the policer
+2: Frames with DP = 0 or 1 bypass the policer
+3: Frames with DP = 0, 1 or 2 bypass the policer
+------------------------------
+<field_public_text>:
+Enables frame rate mode for the port policers, where policer rates are measured in frames per second instead of bits per second.
+------------------------------
+<field_enc>:
+0: Rates measured in bits per second
+1: Rates measured in frames per second
+------------------------------
+<field_public_text>:
+Enables removing the front ports from a policed frame's destination set.
+------------------------------
+<field_enc>:
+0: The policer does not remove the front ports from the destination set for a policed frame.
+0: The policer removes the front ports from the destination set for a policed frame.
+------------------------------
+<field_public_text>:
+Enables removing the CPU ports from a policed frame's destination set.
+------------------------------
+<field_enc>:
+0: The policer does not remove the CPU ports from the destination set for a policed frame.
+1: The policer removes the CPU ports from the destination set for a policed frame.
+------------------------------
+<field_public_text>:
+Configures the frame types to be policed by the policer. 
+
+Each bit in the mask enables policing of a specific frame type. 
+Multiple frame types can be enabled at the same time and a frame can belong to multiple frame types.
+
+If a frame belongs to one or more enabled frame types, then the frame is policed.
+The only exception to this is if the CPU queue bit is cleared and the frame is destined to a CPU queue in the CPU_QU_MASK. In this case the frame is NOT policed (by this policer), regardless of other settings in TRAFFIC_TYPE_MASK.
+ 
+If a frame does not match any of the enabled frame types, then the frame bypasses the policer (never discarded and the bucket is not updated with the frame).
+
+Frame bypassing one port policer, may be subject to policing by one of the other port policers.
+
+Related parameters:
+ANA_AC_POL:POL_PORT_CTRL[0-56]:POL_PORT_CFG.CPU_QU_MASK
+------------------------------
+<field_enc>:
+'xxxxxxx1' : Known multicast frames are policed. 
+'xxxxxx1x' : Known broadcast frames are policed.
+'xxxxx1xx' : Known unicast frames are policed. 
+'xxxx1xxx' : Unknown multicast frames are policed. 
+'xxx1xxxx' : Unknown broadcast frames are policed.
+'xx1xxxxx' : Unknown unicast frames are policed. 
+'x0xxxxxx' : Frames to a CPU queue selected by CPU_QU_MASK bypass the policer, regardless of other criteria in TRAFFIC_TYPE_MASK.
+'x1xxxxxx' : Frames to a CPU queue selected by CPU_QU_MASK are policed.
+'1xxxxxxx' : Learn frames are policed.
+'00000000': Disable policer.
+------------------------------
+<reggrp_short_dscr>:
+Pipeline configuration indexed per port.
+------------------------------
+<reggrp_public_text>:
+The parameters in this register group controls the behavior of statistic and policing per port and per action.
+
+The register group is - by default - indexed by port number.
+However VCAP IS2 action may change the index (PORT_PT_CTRL_IDX) using ACL_RT_MODE=1 and ACL_MAC action fields.
+This is useful for Up-MEP SAT flows, where a VCAP IS2 rule+action can be configured to have the SAT frames use a PORT_PT_CTRL_IDX value which selects a PORT_PT_CTRL configuration with PVOE_DIS=1 and PSTAT_DIS=1, thus reflecting a behavior where SAT frames are not processed by the port MEP nor being counted in port statistics.
+------------------------------
+<reg_short_dscr>:
+Configures stat and policer pipeline point per pipeline action
+------------------------------
+<reg_public_text>:
+Configures pipeline location for the various stat and policer entity for each pipeline action:
+repl:0 NONE, XTR_LATE_REW
+repl:1 INJ, INJ_MASQ, LBK_ASM
+repl:2 XTR
+repl:3 XTR_UPMEP
+repl:4 LBK_QS
+------------------------------
+<field_public_text>:
+Disable Port VOE LM updates.
+------------------------------
+<field_public_text>:
+Disable port statistics.
+------------------------------
+<reggrp_short_dscr>:
+Common LB configuration and status registers
+------------------------------
+<reg_short_dscr>:
+Configuration of common leaky bucket handling
+------------------------------
+<field_public_text>:
+Specifies the clock period in unit of 0.1ns.
+------------------------------
+<field_enc>:
+16: 1.6ns (625MHz)
+20: 2ns (500MHz)
+40: 4ns (250MHz)
+------------------------------
+<field_public_text>:
+TIMESCALE_VAL and BASE_TICK_CNT controls the the rate interval as well as the rate granularity available for LB rate configuration 
+
+Refer to TIMESCALE_VAL for details.
+------------------------------
+<field_public_text>:
+Enables leaking from the leaky buckets.
+------------------------------
+<field_enc>:
+0: Disable bucket leaking
+1: Enable bucket leaking
+------------------------------
+<field_public_text>:
+Enables adding of frame bytes to the leaky buckets.
+------------------------------
+<field_enc>:
+0: Disable bucket addition
+1: Enable bucket addition
+------------------------------
+<reg_short_dscr>:
+LB policer diagnostic
+------------------------------
+<field_public_text>:
+Set when a LB scan could not start because a scan is already ongoing. 
+If this occur, BASE_TICK_CNT is set too low and must be increased.
+
+Bit is cleared by writing a 1 to this position.
+------------------------------
+<field_enc>:
+0: No event has occurred
+1: Leak scan could not start at time
+------------------------------
+<field_public_text>:
+Set when the frame rate is exceeding the Peak Information Rate.
+
+Bit is cleared by writing a 1 to this position.
+------------------------------
+<field_enc>:
+0: No event has occurred
+1: PIR exceeded
+------------------------------
+<field_public_text>:
+Set when the frame rate is exceeding the Committed Information Rate.
+
+Bit is cleared by writing a 1 to this position.
+------------------------------
+<field_enc>:
+0: No event has occurred
+1: CIR exceeded
+------------------------------
+<field_public_text>:
+Set when the frame rate is below both the Committed Information Rate and the Peak Information Rate.
+
+Bit is cleared by writing a 1 to this position.
+------------------------------
+<field_enc>:
+0: No event has occurred
+1: Traffic received without triggering CIR and PIR policing
+------------------------------
+<reggrp_short_dscr>:
+Leaky bucket configuration & status
+------------------------------
+<reg_short_dscr>:
+Configuration of various LB policer handles
+------------------------------
+<field_public_text>:
+Configuration of Drop Precedence bypass level. 
+Frames with DP below DP_BYPASS_LVL bypass the policer (frames are never policed and the bucket is not updated with the frames).
+------------------------------
+<field_enc>:
+0: No frames bypass the policer
+1: Frames with DP = 0 bypass the policer
+2: Frames with DP = 0 or 1 bypass the policer
+3: Frames with DP = 0, 1 or 2 bypass the policer
+------------------------------
+<field_public_text>:
+Enables frame rate mode for the policer, where policer rates are measured in frames per second instead of bits per second.
+------------------------------
+<field_enc>:
+0: Rates measured in bits per second
+1: Rates measured in frames per second
+------------------------------
+<reg_short_dscr>:
+Configuration of DLB policer
+------------------------------
+<field_public_text>:
+Set Coupling Flag (MEF CF).
+
+Depending on the setting of COUPLING_MODE, LB_CFG[0] and LB_CFG[1] must be configured as follows:
+COUPLING_MODE=0:
+LB_CFG[0].RATE_VAL  must be configured to MEF CIR
+LB_CFG[0].THRES_VAL must be configured to MEF CBS
+LB_CFG[1].RATE_VAL  must be configured to MEF EIR
+LB_CFG[1].THRES_VAL must be configured to MEF EBS
+
+COUPLING_MODE=1:
+LB_CFG[0].RATE_VAL  must be configured to MEF CIR
+LB_CFG[0].THRES_VAL must be configured to MEF CBS
+LB_CFG[1].RATE_VAL  must be configured to MEF EIR + MEF CIR
+LB_CFG[1].THRES_VAL must be configured to MEF EBS + MEF CBS
+------------------------------
+<field_enc>:
+0: CF=0
+1: CF=1
+------------------------------
+<field_public_text>:
+Configuration of dual leaky bucket color awareness.
+
+Frames with DP below or equal to COLOR_AWARE_LVL is treated as green. 
+Frames with DP above COLOR_AWARE_LVL are treated as yellow.
+------------------------------
+<field_enc>:
+0: DLB policer is color aware. Incoming frames with DP=0 are green and frames with DP>0 are yellow. 
+1: DLB policer is color aware. Incoming frames with DP<=1 are green and frames with DP>1 are yellow. 
+2: DLB policer is color aware. Incoming frames with DP<=2 are green and frames with DP>2 are yellow. 
+3: DLB policer is color unaware. All incoming frames are green.
+------------------------------
+<field_public_text>:
+Configuration of the drop precedence change for EIR traffic. Frames accounted for in the EIR bucket are subject to incrementing the DP level with CIR_INC_DP_VAL. This is independent of settings in COLOR_AWARE_LVL.
+------------------------------
+<field_enc>:
+0: DP is not increased.
+n: DP is increased with n for EIR traffic.
+------------------------------
+<field_public_text>:
+Configures action to be applied to policed frames.
+------------------------------
+<field_enc>:
+0: No action.
+1: Remove front ports from frame's destination port set.
+2: Remove CPU ports from frame's destination port set.
+3: Remove both front ports and CPU ports from frame's destination port set.
+------------------------------
+<field_public_text>:
+Configures if stripped encapsulation data (normalized data) is policed by the policer.
+------------------------------
+<field_enc>:
+0: Encapsulation data is counted as frame data.
+1: Encapsulation data in not counted as frame data.
+------------------------------
+<field_public_text>:
+Value added to each frame before updating the bucket. 
+Gap value range: -64 to +63 in two's complement format.
+
+Setting GAP_VALUE to 20 corresponds to a line-rate measurement, since on the line each frame will be preceded by 12 bytes of IFG and 8 bytes of preamble.
+Setting GAP_VALUE to 0 corresponds to a data-rate measurement.
+------------------------------
+<field_enc>:
+0x40: -64
+0x41: -63
+   ...
+0x7F: -1
+0x00: 0
+0x01: 1
+   ...
+0x3F: 63
+------------------------------
+<field_public_text>:
+TIMESCALE_VAL and BASE_TICK_CNT controls the the rate interval as well as the rate granularity available for LB rate configuration 
+
+The rate granularity is calculated as follows:
+    8 / (BASE_TICK_CNT*1e-10 * 2^(3 * TIMESCALE_VAL)
+The rate granularity also becomes the smallest configurable rate.
+
+The largest configurable rate is 
+    granularity * (2**<width of RATE_VAL>-2)
+------------------------------
+<field_enc>:
+Assuming BASE_TICK_CNT= 9765, RATE_VAL width = 12 bits:
+0: Granularity: 8,192,524bps. Range: 8193kbps - 33.6Gbps
+1: Granularity: 1,024,066bps. Range 1024kbps - 4.19Gbps
+2: Granularity: 128,008bps. Range: 128kbps - 523Mbps
+3: Granularity: 16,001bps. Range: 16kbps - 65Mbps
+------------------------------
+<reg_short_dscr>:
+Threshold and rate configuration
+------------------------------
+<field_public_text>:
+Policer threshold size (a.ka. burst capacity). Unit is 2048 bytes
+------------------------------
+<field_enc>:
+0: Threshold = 0 bytes (no burst allowed)
+1: Threshold = 2048 bytes
+n: Threshold = n x 2048 bytes
+------------------------------
+<field_public_text>:
+Specify rate in steps of configured granularity.
+
+The rate granularity is configured in TIMESCALE_VAL.
+------------------------------
+<field_enc>:
+0: Disable leak. For THRES_VAL = 0 bucket is always closed. For THRES_VAL > 0, the configured burst size is available.
+1: 1 * granularity
+2: 2 * granularity
+...
+max_value-1: (max_value-1)*granularity
+max_value: Disable leaky bucket (always open)
+------------------------------
+<reggrp_short_dscr>:
+Common LB configuration and status registers
+------------------------------
+<reg_short_dscr>:
+Configuration of common leaky bucket handling
+------------------------------
+<field_public_text>:
+Specifies the clock period in unit of 0.1ns.
+------------------------------
+<field_enc>:
+16: 1.6ns (625MHz)
+20: 2ns (500MHz)
+40: 4ns (250MHz)
+------------------------------
+<field_public_text>:
+TIMESCALE_VAL and BASE_TICK_CNT controls the the rate interval as well as the rate granularity available for LB rate configuration 
+
+Refer to TIMESCALE_VAL for details.
+------------------------------
+<field_public_text>:
+Enables leaking from the leaky buckets.
+------------------------------
+<field_enc>:
+0: Disable bucket leaking
+1: Enable bucket leaking
+------------------------------
+<field_public_text>:
+Enables adding of frame bytes to the leaky buckets.
+------------------------------
+<field_enc>:
+0: Disable bucket addition
+1: Enable bucket addition
+------------------------------
+<reg_short_dscr>:
+Frame type selection per policer
+------------------------------
+<field_public_text>:
+Configures the frame types to be policed by the policer.
+
+Each bit in the mask enables policing of a specific frame type.
+Multiple frame types can be enabled at the same time and a frame can belong to multiple frame types.
+
+If a frame belongs to one or more enabled frame types, then the frame is policed.
+------------------------------
+<field_enc>:
+'xxxxxx1' : Unknown broadcast frames are policed.
+'xxxxx1x' : Unknown multicast frames are policed.
+'xxxx1xx' : Unknown unicast frames are policed.
+'xxx1xxx' : Known broadcast frames are policed.
+'xx1xxxx' : Known multicast frames are policed.
+'x1xxxxx' : Known unicast frames are policed.
+'1xxxxxx' : Learn frames are policed.
+------------------------------
+<reg_short_dscr>:
+SLB policer diagnostic
+------------------------------
+<field_public_text>:
+Set when a LB scan could not start because a scan is already ongoing.
+If this occur, BASE_TICK_CNT is set too low and must be increased.
+
+Bit is cleared by writing a 1 to this position.
+------------------------------
+<field_enc>:
+0: No event has occurred
+1: Leak scan could not start at time
+------------------------------
+<field_public_text>:
+Set when the frame rate is exceeding the configured rate.
+
+Bit is cleared by writing a 1 to this position.
+------------------------------
+<field_enc>:
+0: No event has occurred
+1: CIR exceeded
+------------------------------
+<reggrp_short_dscr>:
+Leaky bucket configuration & status
+------------------------------
+<reg_short_dscr>:
+Configuration of various LB policer handles
+------------------------------
+<field_public_text>:
+Enables frame rate mode for the policer, where policer rates are measured in frames per second instead of bits per second.
+------------------------------
+<field_enc>:
+0: Rates measured in bits per second
+1: Rates measured in frames per second
+------------------------------
+<reg_short_dscr>:
+Configuration of BUM SLB policer
+------------------------------
+<field_public_text>:
+Configures if stripped encapsulation data (normalized data) is policed by the policer.
+------------------------------
+<field_enc>:
+0: Encapsulation data is counted as frame data.
+1: Encapsulation data in not counted as frame data.
+------------------------------
+<field_public_text>:
+Value added to each frame before updating the bucket. 
+Gap value range: -64 to +63 in two's complement format.
+
+Setting GAP_VALUE to 20 corresponds to a line-rate measurement, since on the line each frame will be preceded by 12 bytes of IFG and 8 bytes of preamble.
+Setting GAP_VALUE to 0 corresponds to a data-rate measurement.
+------------------------------
+<field_enc>:
+0x40: -64
+0x41: -63
+   ...
+0x7F: -1
+0x00: 0
+0x01: 1
+   ...
+0x3F: 63
+------------------------------
+<field_public_text>:
+TIMESCALE_VAL and BASE_TICK_CNT controls the the rate interval as well as the rate granularity available for LB rate configuration 
+
+The rate granularity is calculated as follows:
+    8 / (BASE_TICK_CNT*1e-10 * 2^(3 * TIMESCALE_VAL)
+The rate granularity also becomes the smallest configurable rate.
+
+The largest configurable rate is 
+    granularity * (2**<width of RATE_VAL>-2)
+------------------------------
+<field_enc>:
+Assuming BASE_TICK_CNT= 9765, RATE_VAL width = 12 bits:
+0: Granularity: 8,192,524bps. Range: 8193kbps - 33.6Gbps
+1: Granularity: 1,024,066bps. Range 1024kbps - 4.19Gbps
+2: Granularity: 128,008bps. Range: 128kbps - 523Mbps
+3: Granularity: 16,001bps. Range: 16kbps - 65Mbps
+------------------------------
+<reg_short_dscr>:
+Threshold and rate configuration
+------------------------------
+<reg_public_text>:
+Configures each Single LB
+------------------------------
+<field_public_text>:
+Policer threshold size (a.ka. burst capacity). Unit is 2048 bytes
+------------------------------
+<field_enc>:
+0: Threshold = 0 bytes (no burst allowed)
+1: Threshold = 2048 bytes
+n: Threshold = n x 2048 bytes
+------------------------------
+<field_public_text>:
+Specify rate in steps of configured granularity.
+
+The rate granularity is configured in TIMESCALE_VAL.
+------------------------------
+<field_enc>:
+0: Disable leak. For THRES_VAL = 0 bucket is always closed. For THRES_VAL > 0, the configured burst size is available.
+1: 1 * granularity
+2: 2 * granularity
+...
+max_value-1: (max_value-1)*granularity
+max_value: Disable leaky bucket (always open)
+------------------------------

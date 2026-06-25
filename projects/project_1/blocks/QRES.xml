@@ -1,0 +1,93 @@
+=== DOCUMENTATION FOR TARGET: QRES ===
+
+<target_short_dscr>:
+Queue System Configuration
+------------------------------
+<reg_short_dscr>:
+Random Early Discard (WRED) configuration
+------------------------------
+<reg_public_text>:
+Configuration of Random Early Discard (RED) profile per RedGroup/QoS class/DP level. The profile index is calulated as Group*24+(DP-1)*8+QOS. There are no profiled for DP=0..
+------------------------------
+<field_public_text>:
+When enqueuing a frame, RED is active if the egress memory consumption for the applicaple profile is above WM_RED_LEVEL. The probability of random early discarding is calculated as: (Memory consumption - WM_RED_LOW)/(WM_RED_HIGH - WM_RED_LOW).
+Unit is 2944 bytes.
+------------------------------
+<field_public_text>:
+See WM_RED_LOW. Unit is 2944 bytes.
+------------------------------
+<reg_short_dscr>:
+Random Early Discard (WRED) configuration
+------------------------------
+<reg_public_text>:
+Configured the WRED group per port.
+------------------------------
+<field_public_text>:
+Frames towards a port is WRED discarded by the profiles for the group configured.
+------------------------------
+<reg_short_dscr>:
+Shared QOS resource mode
+------------------------------
+<field_public_text>:
+When a QoS class is enabled in this mask, the class will have guaranteed shared space. The watermarks found in RES_CFG are used for setting the amount of space set aside.
+------------------------------
+<reg_short_dscr>:
+DLB shaping offset
+------------------------------
+<field_public_text>:
+The watermarks for enabling DLB rate will be offset this value compared to the sensed resource. Ie. if shared priority 0 watermark is set to 40000 cells, the default value will allow higher rate shaping when 39950 cells has been used.
+------------------------------
+<reggrp_short_dscr>:
+Watermarks and status for egress queue system
+------------------------------
+<reg_short_dscr>:
+Watermark configuration
+------------------------------
+<reg_public_text>:
+The queue system tracks four resource consumptions:
+Resource 0: Memory tracked per source
+Resource 1: Frame references tracked per source
+Resource 2: Memory tracked per destination
+Resource 3: Frame references tracked per destination
+
+Before a frame is added to the queue system, some conditions must be met:
+- Reserved memory for the specific (SRC, PRIO) or for the specific SRC is available
+OR
+- Reserved memory for the specific (DST,PRIO) or for the specific DST is available
+OR
+- Shared memory is available
+
+The frame reference resources are checked for availability like the memory resources. Enqueuing of a frame is allowed if both the memory resource check and the frame reference resource check succeed.
+
+The extra resources consumed when enqueuing a frame are first taken from the reserved (SRC,PRIO), next from the reserved SRC, and last from the shared memory area. The same is done for DST. Both memory consumptions and frame reference consumptions are updated.
+
+The register is layed out the following way for source memory (resource 0):
+Index 0-  : Reserved amount for (PORT,PRIO) at index 8*PORT+PRIO
+Index 560 - : Maximum allowed use of the shared buffer for ports, starting with port 0.
+Index 630 - : Maximum allowed use of the shared buffer for priorities, starting with prio 0.
+Index 638 - : Maximum allowed use of the shared buffer for colors, starting with dp level 0.
+
+The layout is similar for resources 1, 2, and 3. Resource 1 uses indices 1024-2047, resource 2 uses indices 2048-3071, and resource 3 uses indices 3072-4095.
+
+The allocation size for memory tracking is 184 bytes. All frames are prepended with an IFH.
+------------------------------
+<field_public_text>:
+Watermark for resource.
+Note, the default value depends on the index. Refer to the congestion scheme documentation for details.
+------------------------------
+<field_enc>:
+Bit 10:   Unit; 0:1, 1:16
+Bits 9-0: Value to be multiplied with unit
+------------------------------
+<reg_short_dscr>:
+Resource status
+------------------------------
+<field_public_text>:
+Maximum consumption since last read for corresponding watermark in RES_CFG.
+------------------------------
+<reg_short_dscr>:
+Resource status
+------------------------------
+<field_public_text>:
+Current consumption for corresponding watermark in RES_CFG.
+------------------------------

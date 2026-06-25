@@ -1,0 +1,875 @@
+=== DOCUMENTATION FOR TARGET: PCS_10GBASE_R ===
+
+<string_constant> [x_CSR_INTERNAL_ADDR_WIDTH]:
+18
+------------------------------
+<string_constant> [x_SYSTEM_CLK_CYCLE]:
+5
+------------------------------
+<target_short_dscr>:
+10GBASE-R PCS based on IEEE 802.3-2005 clause 49
+------------------------------
+<target_public_text>:
+PCS configuration and status registers and counters
+------------------------------
+<reggrp_short_dscr>:
+PCS configuration
+------------------------------
+<reggrp_public_text>:
+PCS configuration registers exist in the CSR target and the paths to the PCS are assumed to be stable (multicycle path).
+------------------------------
+<reg_short_dscr>:
+PCS configuration
+------------------------------
+<reg_public_text>:
+Configuration register
+------------------------------
+<field_public_text>:
+Global PCS Enable/Disable configuration bit.
+------------------------------
+<field_enc>:
+0 = Disable PCS
+1 = Enable PCS
+------------------------------
+<field_public_text>:
+Enable PMA loopback operation. When set, Transmit PMA data is loopbacked to Receive PMA data.
+------------------------------
+<field_enc>:
+0 = Normal mode
+1 = Loopback Tx PMA to Rx PMA
+------------------------------
+<field_public_text>:
+Reserved, must set to its default value.
+------------------------------
+<field_public_text>:
+Flip the data bus bits at the WIS/PMA interface such that bit 63 is mapped to bit 0 and bit 0 to 63. i.e. the output bus (63 down to 0) is remapped to (0 to 63) and bit 63 is the first bit.
+------------------------------
+<field_enc>:
+0: No flip (LSB first)
+1: Flip bus (MSB first)
+------------------------------
+<field_public_text>:
+Enable test pattern checking mode.
+------------------------------
+<field_enc>:
+0: Normal operation
+1: Test pattern mode
+------------------------------
+<field_public_text>:
+Flip the data bus bits at the WIS/PMA interface such that bit 63 is mapped to bit 0 and bit 0 to 63. i.e. the output bus (63 down to 0) is remapped to (0 to 63) and bit 63 is the first bit.
+------------------------------
+<field_enc>:
+0 = No flip (LSB first)
+1 = Flip bus (MSB first)
+------------------------------
+<field_public_text>:
+Enable link control using backplane Ethernet ANEG (Auto-Negotiation)
+------------------------------
+<field_enc>:
+0: Disable link control
+1: Enable link control
+------------------------------
+<field_public_text>:
+Enable test pattern generation mode
+------------------------------
+<field_enc>:
+0: Normal operation
+1: Test pattern mode
+------------------------------
+<reg_short_dscr>:
+PCS SignalDetect Configuration
+------------------------------
+<reg_public_text>:
+PCS signal_detect configuration
+------------------------------
+<field_public_text>:
+Signal detect selection (select input for internal signal_detect line)
+------------------------------
+<field_enc>:
+0: Select signal_detect line from hardmacro
+1: Select external signal_detect line
+------------------------------
+<field_public_text>:
+Signal detect polarity: The signal level on signal_detect input pin must be equal to SD_POL to indicate signal detection (SD_ENA must be set)
+------------------------------
+<field_enc>:
+0: Signal Detect input pin must be '0' to indicate a signal detection
+1: Signal Detect input pin must be '1' to indicate a signal detection
+------------------------------
+<field_public_text>:
+Signal Detect Enable
+------------------------------
+<field_enc>:
+0: The Signal Detect input pin is ignored. The PCS assumes an active Signal Detect at all times
+1: The Signal Detect input pin is used to determine if a signal is detected
+------------------------------
+<reg_short_dscr>:
+Scrambler initialization
+------------------------------
+<reg_public_text>:
+Most significant bits of the scrambler
+------------------------------
+<field_public_text>:
+Most significant bits of scrambler used to initialize it during test mode
+------------------------------
+<reg_short_dscr>:
+Scrambler initialization
+------------------------------
+<reg_public_text>:
+Least significant bits of the scrambler. Used in pseudo-random and PRBS31 modes.
+------------------------------
+<field_public_text>:
+Least significant bits of scrambler used to initialize it during test mode
+------------------------------
+<reg_short_dscr>:
+Scrambler initialization
+------------------------------
+<reg_public_text>:
+Most significant bits of the scrambler
+------------------------------
+<field_public_text>:
+Most significant bits of scrambler used to initialize it during test mode
+------------------------------
+<reg_short_dscr>:
+Scrambler initialization
+------------------------------
+<reg_public_text>:
+Least significant bits of the scrambler
+------------------------------
+<field_public_text>:
+Least significant bits of scrambler used to initialize it during test mode
+------------------------------
+<reg_short_dscr>:
+PRBS31 initialization
+------------------------------
+<reg_public_text>:
+Initial value to load into the PRBS31 linear-feedback shift register
+------------------------------
+<field_public_text>:
+PRBS31 initial value.
+------------------------------
+<reg_short_dscr>:
+MSB of test pattern
+------------------------------
+<reg_public_text>:
+Most significant Tx bits of test pattern
+------------------------------
+<field_public_text>:
+Most significant 32 bits of 64-bit data pattern used in pseudo-random and user-defined test pattern mode
+------------------------------
+<reg_short_dscr>:
+LSB of test pattern
+------------------------------
+<reg_public_text>:
+Least significant Tx bits of test pattern
+------------------------------
+<field_public_text>:
+Least significant 32 bits of 64-bit data pattern used in pseudo-random and user-defined test pattern mode
+------------------------------
+<reg_short_dscr>:
+MSB of test pattern
+------------------------------
+<reg_public_text>:
+Most significant Rx bits of test pattern
+------------------------------
+<field_public_text>:
+Most significant 32 bits of 64-bit data pattern used in pseudo-random and user-defined test pattern mode
+------------------------------
+<reg_short_dscr>:
+LSB of test pattern
+------------------------------
+<reg_public_text>:
+Least significant Rx bits of test pattern
+------------------------------
+<field_public_text>:
+Least significant 32 bits of 64-bit data pattern used in pseudo-random and user-defined test pattern mode
+------------------------------
+<reg_short_dscr>:
+Test pattern mode configuration
+------------------------------
+<reg_public_text>:
+Select test patterns when test mode is enabled
+------------------------------
+<field_public_text>:
+Disables inversion of seeds and data in the pseudo-random test pattern
+------------------------------
+<field_enc>:
+0: Inversion enabled
+1: Inversion disabled
+------------------------------
+<field_public_text>:
+Select the test pattern used by the test pattern checker. This register is only used if RX_TEST_MODE is active.
+------------------------------
+<field_enc>:
+0: unused
+1: Pseudo random
+2: PRBS31
+3: User defined
+------------------------------
+<field_public_text>:
+Disables inversion of seeds and data in the pseudo-random test pattern
+------------------------------
+<field_enc>:
+0: Inversion enabled
+1: Inversion disabled
+------------------------------
+<field_public_text>:
+Period of square wave. Value in the register is (Period-4). Valid values of period are 4 to 11.
+------------------------------
+<field_enc>:
+Period = (TX_SQPW_4B+4)
+------------------------------
+<field_public_text>:
+Select the test pattern used by the test pattern generator. This register is only used if TX_TEST_MODE is active.
+------------------------------
+<field_enc>:
+0: Square wave
+1: Pseudo random
+2: PRBS31
+3: User defined
+------------------------------
+<reg_short_dscr>:
+PCS interrupt mask register
+------------------------------
+<reg_public_text>:
+Masks for PCS interrupt sources and sticky bits in PCS_INTR_STAT
+------------------------------
+<field_public_text>:
+Mask for the RX_FSET_FIFO_FULL_STICKY bit
+------------------------------
+<field_enc>:
+0: Interrupt disabled
+1: Interrupt enabled
+------------------------------
+<field_public_text>:
+Mask for the RX_FSET_STICKY bit
+------------------------------
+<field_enc>:
+0: Interrupt disabled
+1: Interrupt enabled
+------------------------------
+<field_public_text>:
+Mask for the XGMII_ERR_STICKY bit
+------------------------------
+<field_enc>:
+0: Interrupt disabled
+1: Interrupt enabled
+------------------------------
+<field_public_text>:
+Mask for RX_OSET_FIFO_FULL_STICKY
+------------------------------
+<field_enc>:
+0: Interrupt disabled
+1: Interrupt enabled
+------------------------------
+<field_public_text>:
+Mask for the RX_OSET_STICKY bit
+------------------------------
+<field_enc>:
+0: Interrupt disabled
+1: Interrupt enabled
+------------------------------
+<field_public_text>:
+Mask for the C64B66B_ERR_STICKY bit
+------------------------------
+<field_enc>:
+0: Interrupt disabled
+1: Interrupt enabled
+------------------------------
+<field_public_text>:
+Mask for the LOCK_CHANGED_STICKY bit
+------------------------------
+<field_enc>:
+0: Interrupt disabled
+1: Interrupt enabled
+------------------------------
+<field_public_text>:
+Mask for the RX_HI_BER_STICKY bit
+------------------------------
+<field_enc>:
+0: Interrupt disabled
+1: Interrupt enabled
+------------------------------
+<reg_short_dscr>:
+Counter for 125 microsecond period
+------------------------------
+<reg_public_text>:
+This register sets the number of WIS/PMA divide-by-2 clocks in one 125 microsecond interval. The counter increments and wraps. It should be set to (125 * freq_Mhz/2) where freq_Mhz is the WIS/PMA frequency in Megahertz. 0 disables the counter.
+------------------------------
+<field_public_text>:
+Sets the maximum count for the 125 microsecond counter. Counts input clocks.
+------------------------------
+<field_enc>:
+16-bit binary number
+------------------------------
+<reggrp_short_dscr>:
+PCS status
+------------------------------
+<reggrp_public_text>:
+PCS status registers reside in the target, or are read-only. The PMTICK counters are sampled at every PMTICK event and are stable for reading between ticks.
+------------------------------
+<reg_short_dscr>:
+PCS interrupt status register
+------------------------------
+<reg_public_text>:
+Contains the sticky bits representing interrupts from the PCS. Set by logic. Write 1 to clear.
+------------------------------
+<field_public_text>:
+Interrupt generated when the Rx signal ordered set FIFO is full or becomes not full
+Interrupt occurs whenever there is ANY change in the underlying status
+------------------------------
+<field_enc>:
+0: Rx ordered set FIFO full status unchanged
+1: Rx ordered set FIFO full status changed
+------------------------------
+<field_public_text>:
+Interrupt indicating that a signal ordered set was received and captured (||Fsig||)
+------------------------------
+<field_enc>:
+0: No ordered set captured
+1: Ordered set captured in FIFO
+------------------------------
+<field_public_text>:
+Interrupt if an invalid Tx XGMII character is detected
+------------------------------
+<field_enc>:
+0: No invalid character
+1: Invalid character detected
+------------------------------
+<field_public_text>:
+Interrupt generated when the Rx sequence ordered set FIFO is full or becomes not full
+Interrupt occurs whenever there is ANY change in the underlying status
+------------------------------
+<field_enc>:
+0: Rx ordered set FIFO full status unchanged
+1: Rx ordered set FIFO full status changed
+------------------------------
+<field_public_text>:
+Interrupt indicating that a sequence ordered set was received and captured (||Q||)
+------------------------------
+<field_enc>:
+0: No ordered set captured
+1: Ordered set captured in FIFO
+------------------------------
+<field_public_text>:
+Interrupt when an invalid Rx block is detected
+------------------------------
+<field_enc>:
+0: No invalid blocks
+1: Invalid block detected
+------------------------------
+<field_public_text>:
+Lock (loss of synchronization) changed interrupt
+Interrupt occurs whenever there is ANY change in the underlying status of the LOCK signal
+------------------------------
+<field_enc>:
+0: Synchronization has not changed
+1: Synchronization (lock) status changed
+------------------------------
+<field_public_text>:
+Set by the Rx BER state machine when a high bit error rate condition is detected or cleared
+Interrupt occurs whenever there is ANY change in the underlying status
+------------------------------
+<field_enc>:
+0: High BER status unchanged
+1: High BER status changed
+------------------------------
+<reg_short_dscr>:
+PCS status register
+------------------------------
+<reg_public_text>:
+Contains status information from the PCS core
+------------------------------
+<field_public_text>:
+When in test pattern check mode, this bit will read 1 if the test pattern checker detects a match. When 0, the test pattern does not match. The test pattern error counts should still be used along with this register bit to determine proper test match status. The bit will read back 1 only when the test pattern is matching. This may happen even while test pattern errors are counted on other clock cycles.
+------------------------------
+<field_enc>:
+0: Test pattern mismatch
+1: Test pattern match
+------------------------------
+<field_public_text>:
+The block_lock status from the synchronization state machine
+------------------------------
+<field_enc>:
+0: Not synchronized
+1: Synchronized, lock obtained
+------------------------------
+<field_public_text>:
+Set by the Rx BER state machine when a high bit-error-rate condition is detected
+------------------------------
+<field_enc>:
+0: Normal BER
+1: High BER
+------------------------------
+<reggrp_short_dscr>:
+PCS status registers and counters
+------------------------------
+<reggrp_public_text>:
+PCS status registers and counters reside in the PCS logic. All the registers in this block are handshake access. The clock crossing should be handled at the interface.
+------------------------------
+<reg_short_dscr>:
+Test pattern mode error counts
+------------------------------
+<reg_public_text>:
+Count of the errors detected in test pattern mode
+------------------------------
+<field_public_text>:
+Count of detected test pattern errors in Rx test pattern checker. Write 0 to clear.
+------------------------------
+<reg_short_dscr>:
+Tx errored block counter
+------------------------------
+<reg_public_text>:
+Count of the Tx errored blocks
+------------------------------
+<field_public_text>:
+Count of the errored Tx blocks
+------------------------------
+<reg_short_dscr>:
+Invalid character counter
+------------------------------
+<reg_public_text>:
+Counts the number of invalid control characters
+------------------------------
+<field_public_text>:
+Count of the number of invalid control characters
+------------------------------
+<reg_short_dscr>:
+ber_count
+------------------------------
+<reg_public_text>:
+ber_count from IEEE802.3 section 49.2.14.2.
+------------------------------
+<field_public_text>:
+ber_count from the BER state machine
+------------------------------
+<reg_short_dscr>:
+Rx errored block counter
+------------------------------
+<reg_public_text>:
+Count of the Rx errored blocks
+------------------------------
+<field_public_text>:
+Count of the errored Rx blocks
+------------------------------
+<reg_short_dscr>:
+Invalid character counter
+------------------------------
+<reg_public_text>:
+Counts the number of invalid control characters
+------------------------------
+<field_public_text>:
+Count of the number of invalid control characters
+------------------------------
+<reg_short_dscr>:
+Status of Rx sequence ordered set FIFO
+------------------------------
+<reg_public_text>:
+Contains status information for the FIFO containing captured Rx ordered sets
+------------------------------
+<field_public_text>:
+Indicates if the FIFO is full
+------------------------------
+<field_enc>:
+0: FIFO not full
+1: FIFO full
+------------------------------
+<field_public_text>:
+Number of valid ordered sets in the FIFO that can be read
+------------------------------
+<field_enc>:
+Binary number
+------------------------------
+<reg_short_dscr>:
+Rx ordered set FIFO data
+------------------------------
+<reg_public_text>:
+The register interface to the ordered set data
+------------------------------
+<field_public_text>:
+Register interface to the FIFO containing captured ordered sets. Each read of this register pops a 24-bit ordered set off the FIFO and increments the FIFO pointer.
+------------------------------
+<reg_short_dscr>:
+Status of Rx signal ordered set FIFO
+------------------------------
+<reg_public_text>:
+Contains status information for the FIFO containing captured Rx ordered sets
+------------------------------
+<field_public_text>:
+Indicates if the FIFO is full
+------------------------------
+<field_enc>:
+0: FIFO not full
+1: FIFO full
+------------------------------
+<field_public_text>:
+Number of valid ordered sets in the FIFO that can be read
+------------------------------
+<field_enc>:
+Binary number
+------------------------------
+<reg_short_dscr>:
+Rx ordered set FIFO data
+------------------------------
+<reg_public_text>:
+The register interface to the ordered set data
+------------------------------
+<field_public_text>:
+Register interface to the FIFO containing captured ordered sets. Each read of this register pops a 24-bit ordered set off the FIFO and increments the FIFO pointer.
+------------------------------
+<reggrp_short_dscr>:
+KR FEC IEEE CONTROL REGISTER
+------------------------------
+<reggrp_public_text>:
+KR FEC IEEE CONTROL REGISTER
+------------------------------
+<reg_short_dscr>:
+KR FEC configuration register
+------------------------------
+<field_public_text>:
+Enables FEC decoder to indicate errors to PCS by sync bits
+------------------------------
+<field_enc>:
+0: FEC Decoding errors have no effect on PCS sync bits
+1: Enable FEC decoder to indicate errors to PCS sync bits
+------------------------------
+<field_public_text>:
+When set FEC counters are reset.
+------------------------------
+<field_enc>:
+0: no effect
+1: reset FEC counters
+------------------------------
+<field_public_text>:
+Flip the data bus bits at PCS interface such that bit 65 is mapped to bit 0 and bit 0 to 65. i.e. the output bus (65 down to 0) is remapped to (0 to 65) and bit 65 is the first bit.
+------------------------------
+<field_enc>:
+0 = No flip (LSB first)
+1 = Flip bus (MSB first)
+------------------------------
+<field_public_text>:
+Flip the data bus bits at PCS interface such that bit 65 is mapped to bit 0 and bit 0 to 65. i.e. the output bus (65 down to 0) is remapped to (0 to 65) and bit 65 is the first bit.
+------------------------------
+<field_enc>:
+0 = No flip (LSB first)
+1 = Flip bus (MSB first)
+------------------------------
+<field_public_text>:
+Enables enabling/disabling FEC using backplane Ethernet ANEG (Auto-Negotiation)
+------------------------------
+<field_enc>:
+0: ANEG does not control Enable/Disable of FEC
+1: ANEG controls Enable/Diable of FEC
+------------------------------
+<field_public_text>:
+Global FEC Enable/Disable configuration bit.
+------------------------------
+<field_enc>:
+0 = Disable FEC
+1 = Enable FEC
+------------------------------
+<reggrp_short_dscr>:
+KR FEC counters threshold configurations
+------------------------------
+<reg_short_dscr>:
+FEC fixed error count threshold value
+------------------------------
+<field_public_text>:
+When fixed error count exceeds or equal to this value, then FEC_FIXED_ERROR_COUNT_STICKY sticky bit is set and interrupt is generated if enabled through FEC_FIXED_ERROR_COUNT_STICKY_MASK
+------------------------------
+<reg_short_dscr>:
+FEC unfixable error count threshold value
+------------------------------
+<field_public_text>:
+When fixed error count exceeds or equal to this value, then FEC_UNFIXABLE_ERROR_COUNT_STICKY sticky bit is set and interrupt is generated if enabled through FEC_UNFIXABLE_ERROR_COUNT_STICKY_MASK
+------------------------------
+<reggrp_short_dscr>:
+KR FEC IEEE status registers
+------------------------------
+<reggrp_public_text>:
+KR FEC IEEE status registers
+------------------------------
+<reg_short_dscr>:
+FEC corrected block count
+------------------------------
+<field_public_text>:
+FEC corrected block count.
+------------------------------
+<reg_short_dscr>:
+KR FEC uncorrected block count
+------------------------------
+<field_public_text>:
+FEC uncorrectable block count.
+------------------------------
+<reggrp_short_dscr>:
+KR FEC sticky bit register
+------------------------------
+<reg_short_dscr>:
+Sticky bit register
+------------------------------
+<field_public_text>:
+This sticky bit is set whenever fixed error count crosses configured FIXED_ERROR_COUNT_THRESHOLD.
+Note: write '1' to clear this bit.
+------------------------------
+<field_enc>:
+0: Error counter has not exceeded threshold since the last time this bit was cleared.
+1: Error count exceeded threshold since the last time this bit was cleared.
+------------------------------
+<field_public_text>:
+This sticky bit is set whenever fixed error count crosses configured UNFIXABLE_ERROR_COUNT_THRESHOLD.
+Note: write '1' to clear this bit.
+------------------------------
+<field_enc>:
+0: Error counter has not exceeded threshold since the last time this bit was cleared.
+1: Error count exceeded threshold since the last time this bit was cleared.
+------------------------------
+<field_public_text>:
+FEC in frame lock indication
+This is a sticky bit that latches the low state.
+------------------------------
+<field_enc>:
+0: FEC decoder has not achieved lock
+1: FEC decoder has achieved lock
+------------------------------
+<reg_short_dscr>:
+Sticky bit mask register
+------------------------------
+<field_public_text>:
+Enable interrupt generation when FEC_FIXED_ERROR_COUNT_STICKY is set
+------------------------------
+<field_enc>:
+0: Disable interrupt generation
+1: Enable interrupt generation
+------------------------------
+<field_public_text>:
+Enable interrupt generation when FEC_UNFIXABLE_ERROR_COUNT_STICKY is set
+------------------------------
+<field_enc>:
+0: Disable interrupt generation
+1: Enable interrupt generation
+------------------------------
+<field_public_text>:
+Enable interrupt generation when FEC_FRAME_LOCK_STICKY is set
+------------------------------
+<field_enc>:
+0: Disable interrupt generation
+1: Enable interrupt generation
+------------------------------
+<reg_short_dscr>:
+KR FEC status register
+------------------------------
+<field_public_text>:
+FEC RX lock position. This is the position of the barrel shifter needed to lock to a FEC frame.
+------------------------------
+<field_public_text>:
+Result of comparing KR FEC's corrected block count (1x00AC/1x00AD) to the threshold setting in 3x8E0A/3x8E0B.
+------------------------------
+<field_enc>:
+0: count did not exceed threshold setting
+1: count exceeded threshold setting
+------------------------------
+<field_public_text>:
+Result of comparing KR FEC's uncorrectable block count (1x00AE/1x00AF) to the threshold setting in 3x8E0C/3x8E0D.
+------------------------------
+<field_enc>:
+0: count did not exceed threshold setting
+1: count exceeded threshold setting
+------------------------------
+<reggrp_short_dscr>:
+KR FEC capability register group
+------------------------------
+<reg_short_dscr>:
+FEC ability register
+------------------------------
+<field_public_text>:
+This is a status bit indicating whether PHY supports FEC or not.
+------------------------------
+<field_enc>:
+0: This PHY device does not support FEC.
+1: This PHY device supports FEC.
+------------------------------
+<reggrp_short_dscr>:
+Register group for timer configurations related to EEE of 10G Base-R PCS
+------------------------------
+<reggrp_public_text>:
+These timer value are used by the 64-bit PMA clocks in 10G-Base-R PCS (IEEE 802.3, clause 49)
+
+PMA Clock frequency = ~161.13 Mhz (= ((((66/64)/64) x 10 GHz)) = ((660000/(64 x 64)) MHz))
+PMA Clock time-period = 1/PMA Clock Frequency = ~6.2 ns (= ((64x64)/660) ns)
+------------------------------
+<reg_short_dscr>:
+One micro-second timer configuration register
+------------------------------
+<reg_public_text>:
+This register value is used to elaps 1us time as specified in IEEE802.3az-2010 clause 49.
+------------------------------
+<field_public_text>:
+This holds number of 64-bit PMA clocks required to achieve 1 micro-second (1 us) time interval.
+
+As per IEEE 803.3az-2010, min and max values are as follows:
+
+MIN : 1.1 us = 178
+MAX: 1.3 us = 209
+
+Note: Default value is ~1.1 us = 178
+------------------------------
+<reg_short_dscr>:
+EEE TX Sleep timer configuration register
+------------------------------
+<reg_public_text>:
+This register value is used to elaps time in TX_SLEEP state of EEE TX-FSM as specified in IEEE802.3az-2010 clause 49.
+------------------------------
+<field_public_text>:
+This holds number of 64-bit PMA clocks required to achieve specified sleep time interval.
+
+As per IEEE 803.3az-2010, min and max values are as follows:
+
+MIN : 4.9 us = 790
+MAX: 5.1 us = 821
+
+Note: Default value is ~5 us = 806
+------------------------------
+<reg_short_dscr>:
+EEE TX Quiet timer configuration register
+------------------------------
+<reg_public_text>:
+This register value is used to elaps time in TX_QUIET state of EEE TX-FSM as specified in IEEE802.3az-2010 clause 49.
+------------------------------
+<field_public_text>:
+This holds number of 64-bit PMA clocks required to achieve specified quiet time interval.
+
+As per IEEE 803.3az-2010, min and max values are as follows:
+
+MIN : 1.7 ms = 273926
+MAX: 1.8 ms = 290039
+
+Note: Default value is ~1.7 ms = 273926
+------------------------------
+<reg_short_dscr>:
+EEE TX Wake timer configuration register
+------------------------------
+<reg_public_text>:
+This register value is used to elaps time in TX_WAKE state of EEE TX-FSM as specified in IEEE802.3az-2010 clause 49.
+------------------------------
+<field_public_text>:
+This holds number of 64-bit PMA clocks required to achieve specified wake time interval.
+
+As per IEEE 803.3az-2010, min and max values are as follows:
+
+MIN : 10.9 us = 1757
+MAX: 11.1 us = 1788
+
+Note: Default value is ~11 us = 1773
+------------------------------
+<reg_short_dscr>:
+EEE RX Quiet timer configuration register
+------------------------------
+<reg_public_text>:
+This register value is used to elaps time in RX_SLEEP and RX_QUIET states of EEE RX-FSM as specified in IEEE802.3az-2010 clause 49.
+------------------------------
+<field_public_text>:
+This holds number of 64-bit PMA clocks required to achieve specified sleep+quiet time interval.
+
+As per IEEE 803.3az-2010, min and max values are as follows:
+
+MIN : 2 ms = 322266
+MAX: 3 ms = 483398
+
+Note: Default value is ~2.5 ms = 402832
+------------------------------
+<reg_short_dscr>:
+EEE RX Wake timer configuration register
+------------------------------
+<reg_public_text>:
+This register value is used to elaps time in RX_WAKE state of EEE RX-FSM as specified in IEEE802.3az-2010 clause 49.
+------------------------------
+<field_public_text>:
+This holds number of 64-bit PMA clocks required to achieve specified wake time interval.
+
+As per IEEE 803.3az-2010, this timer values are as follows:
+
+Without scrambler bypassed (or Without FEC): 11.5 us = 1853
+With scrambler bypassed (or With FEC): 13.7 us = 2207
+
+Note: Default value is ~11.5 us = 1853
+------------------------------
+<reg_short_dscr>:
+EEE RX Sleep timer configuration register
+------------------------------
+<reg_public_text>:
+This register value is used to elaps time in RX_WTF state of EEE RX-FSM as specified in IEEE802.3az-2010 clause 49.
+------------------------------
+<field_public_text>:
+This holds number of 64-bit PMA clocks required to achieve specified wake time fault time interval.
+
+As per IEEE 803.3az-2010, this value is:
+
+MAX: 10 ms = 1611328
+------------------------------
+<reggrp_short_dscr>:
+Register group to indicate EEE FSM status
+------------------------------
+<reg_short_dscr>:
+Wake Error Counter
+------------------------------
+<field_public_text>:
+This reflects wake_error_counter specified in IEEE 802.3az-2010, 49.2.13.2.4
+
+Value of this counter indicates how many times LPI RX FSM entered RX_WTF state.
+Note:
+1. This counter is cleared when read.
+2. Upon overflow its value remains at 0xFFFF.
+------------------------------
+<reg_short_dscr>:
+EEE Status register
+------------------------------
+<field_public_text>:
+When read as a one, transmit PCS has received LPI signaling one or more times
+since the register was last read. When read as a zero, PCS has not received LPI
+signaling.
+------------------------------
+<field_enc>:
+1 = Tx PCS has received LPI
+0 = LPI not received
+------------------------------
+<field_public_text>:
+When read as a one, receive PCS has received LPI signaling one or more times
+since the register was last read. When read as a zero, PCS has not received LPI
+signaling
+------------------------------
+<field_enc>:
+1 = Rx PCS has received LPI
+0 = LPI not received
+------------------------------
+<field_enc>:
+1 = Tx PCS is currently receiving LPI
+0 = PCS is not currently receiving LPI
+------------------------------
+<field_enc>:
+1 = Rx PCS is currently receiving LPI
+0 = PCS is not currently receiving LPI
+------------------------------
+<field_enc>:
+1 = The MAC may stop the clock during LPI
+0 = Clock not stoppable
+------------------------------
+<reg_short_dscr>:
+10G Base-R PCS EEE interrupt mask register
+------------------------------
+<reg_public_text>:
+Masks for 10G Base-R PCS EEE interrupt sources and sticky bits in EEE_STATUS
+------------------------------
+<field_public_text>:
+Mask for the TX_LPI_RECEIVED bit
+------------------------------
+<field_enc>:
+0: Interrupt disabled
+1: Interrupt enabled
+------------------------------
+<field_public_text>:
+Mask for the RX_LPI_RECEIVED bit
+------------------------------
+<field_enc>:
+0: Interrupt disabled
+1: Interrupt enabled
+------------------------------

@@ -1,0 +1,278 @@
+=== DOCUMENTATION FOR TARGET: TIMERS ===
+
+<target_short_dscr>:
+DW_apb_timers memory map
+------------------------------
+<reggrp_short_dscr>:
+DW_apb_timers address block
+------------------------------
+<reg_short_dscr>:
+Value to be loaded into Timer N
+Reset value: 0x0
+------------------------------
+<field_public_text>:
+Value to be loaded into Timer N. This is the value from which counting commences. Any value written to this register is loaded into the associated timer.
+------------------------------
+<reg_short_dscr>:
+Current value of Timer N
+Reset value: (TIM_NEWMODE == 1) ?  '2 power ((TIMER_WIDTH_1)-1)' : 0
+------------------------------
+<field_public_text>:
+Current Value of Timer N. When TIM_NEWMODE=0, This register is supported only when timer_N_clk is synchronous to pclk. Reading this register when using independent clocks results in an undefined value. When TIM_NEWMODE=1, no restrictions apply.
+------------------------------
+<reg_short_dscr>:
+Control Register for Timer N. This register controls enabling, operating mode (free-running or defined-count), and interrupt mask of Timer N. You can program each Timer1ControlReg to enable or disable a specific timer and to control its mode of operation.
+Reset value: ((TIM_0N100_PWM_MODE==1) && (TIMER_HAS_TOGGLE_1==1) && (TIMER_0N100_PWM_HC_EN==1)) ? 0x10 : 0x0
+------------------------------
+<field_public_text>:
+Timer interrupt mask for Timer N.
+------------------------------
+<field_enc>:
+0x1: Timer N interrupt is   masked
+0x0: Timer N interrupt is unmasked
+------------------------------
+<field_public_text>:
+Timer mode for Timer N. 
+Note: You must set the Timer1LoadCount register to all 1s before enabling the timer in free-running mode.
+------------------------------
+<field_enc>:
+0x0: Free Running mode of operation
+0x1: User-Defined mode of operation
+------------------------------
+<field_public_text>:
+Timer enable bit for Timer N.
+------------------------------
+<field_enc>:
+0x0: Timer N is disabled
+0x1: Timer N is enabled
+------------------------------
+<reg_short_dscr>:
+Clears the interrupt from Timer N
+Reset value: 0x0
+------------------------------
+<field_public_text>:
+Reading from this register returns all zeros (0) and clears the interrupt from Timer N.
+------------------------------
+<reg_short_dscr>:
+Contains the interrupt status for Timer N
+Reset value: 0x0
+------------------------------
+<field_public_text>:
+Contains the interrupt status for Timer N.
+------------------------------
+<field_enc>:
+0x1: Timer N Interrupt is active
+0x0: Timer N Interrupt is inactive
+------------------------------
+<reg_short_dscr>:
+Name: Timer2 Load Count Register
+  Size: 8-32 bits
+  Address Offset: 20
+  Read/Write Access: Read/Write
+------------------------------
+<field_public_text>:
+Value to be loaded into Timer2. This is the value from which counting
+  commences. Any value written to this register is loaded into the associated timer.
+------------------------------
+<reg_short_dscr>:
+Name: Timer2 Current Value
+  Size: 8-32 bits
+  Address Offset: 24
+  Read/Write Access: Read
+------------------------------
+<field_public_text>:
+Current Value of Timer2. This register is supported only
+  when timer_2_clk is synchronous to pclk. Reading this
+  register when using independent clocks results in an
+  undefined value.
+------------------------------
+<reg_short_dscr>:
+Name: Timer2 Control Register
+  Size: 3 bits
+  Address Offset: 28
+  Read/Write Access: Read/Write
+  This register controls enabling, operating mode (free-running or defined-count), and interrupt mask of
+  Timer2. You can program each Timer2ControlReg to enable or disable a specific timer and to control
+  its mode of operation.
+------------------------------
+<field_public_text>:
+Timer interrupt mask for Timer2.
+  0: not masked
+  1: masked
+------------------------------
+<field_enc>:
+0x1: Timer2 interrupt is   masked
+0x0: Timer2 interrupt is unmasked
+------------------------------
+<field_public_text>:
+Timer mode for Timer2.
+  0: free-running mode
+  1: user-defined count mode
+  NOTE: You must set the Timer2LoadCount register to all 1s before
+  enabling the timer in free-running mode.
+------------------------------
+<field_enc>:
+0x0: Free Running mode of operation
+0x1: User-Defined mode of operation
+------------------------------
+<field_public_text>:
+Timer enable bit for Timer2.
+  0: disable
+  1: enable
+------------------------------
+<field_enc>:
+0x0: Timer2 is disabled
+0x1: Timer2 is enabled
+------------------------------
+<reg_short_dscr>:
+Name: Timer2 End-of-Interrupt Register
+  Size: 1 bit
+  Address Offset: 32
+  Read/Write Access: Read
+------------------------------
+<field_public_text>:
+Reading from this register
+  returns all zeros (0) and clears the interrupt from Timer2.
+------------------------------
+<reg_short_dscr>:
+Name: Timer2 Interrupt Status Register
+  Size: 1 bit
+  Address Offset: 36
+  Read/Write Access: Read
+------------------------------
+<field_public_text>:
+Contains the interrupt status for Timer2.
+------------------------------
+<field_enc>:
+0x1: Timer2 Interrupt is   active
+0x0: Timer2 Interrupt is inactive
+------------------------------
+<reg_short_dscr>:
+Name: Timer3 Load Count Register
+  Size: 8-32 bits
+  Address Offset: 40
+  Read/Write Access: Read/Write
+------------------------------
+<field_public_text>:
+Value to be loaded into Timer3. This is the value from which counting
+  commences. Any value written to this register is loaded into the associated timer.
+------------------------------
+<reg_short_dscr>:
+Name: Timer3 Current Value
+  Size: 8-32 bits
+  Address Offset: 44
+  Read/Write Access: Read
+------------------------------
+<field_public_text>:
+Current Value of Timer3. This register is supported only
+  when timer_3_clk is synchronous to pclk. Reading this
+  register when using independent clocks results in an
+  undefined value.
+------------------------------
+<reg_short_dscr>:
+Name: Timer3 Control Register
+  Size: 4 bits
+  Address Offset: 48
+  Read/Write Access: Read/Write
+  This register controls enabling, operating mode (free-running or defined-count), and interrupt mask of
+  Timer3. You can program each Timer3ControlReg to enable or disable a specific timer and to control
+  its mode of operation.
+------------------------------
+<field_public_text>:
+Timer interrupt mask for Timer3.
+  0: not masked
+  1: masked
+------------------------------
+<field_enc>:
+0x1: Timer3 interrupt is   masked
+0x0: Timer3 interrupt is unmasked
+------------------------------
+<field_public_text>:
+Timer mode for Timer3.
+  0: free-running mode
+  1: user-defined count mode
+  NOTE: You must set the Timer3LoadCount register to all 1s before
+  enabling the timer in free-running mode.
+------------------------------
+<field_enc>:
+0x0: Free Running mode of operation
+0x1: User-Defined mode of operation
+------------------------------
+<field_public_text>:
+Timer enable bit for Timer3.
+  0: disable
+  1: enable
+------------------------------
+<field_enc>:
+0x0: Timer3 is disabled
+0x1: Timer3 is enabled
+------------------------------
+<reg_short_dscr>:
+Name: Timer3 End-of-Interrupt Register
+  Size: 1 bit
+  Address Offset: 52
+  Read/Write Access: Read
+------------------------------
+<field_public_text>:
+Reading from this register
+  returns all zeros (0) and clears the interrupt from Timer3.
+------------------------------
+<reg_short_dscr>:
+Name: Timer3 Interrupt Status Register
+  Size: 1 bit
+  Address Offset: 56
+  Read/Write Access: Read
+------------------------------
+<field_public_text>:
+Contains the interrupt status for Timer3.
+------------------------------
+<field_enc>:
+0x1: Timer3 Interrupt is   active
+0x0: Timer3 Interrupt is inactive
+------------------------------
+<reg_short_dscr>:
+Contains the interrupt status of all timers in the component.
+Reset value: 0x0
+------------------------------
+<field_public_text>:
+Contains the interrupt status of all timers in the component. If a bit of
+this register is 0, then the corresponding timer interrupt is not active
+and the corresponding interrupt could be on either the timer_intr bus
+or the timer_intr_n bus, depending on the interrupt polarity you have
+chosen. Similarly, if a bit of this register is 1, then the corresponding
+interrupt bit has been set in the relevant interrupt bus. In both cases,
+the status reported is the status after the interrupt mask has been
+applied. Reading from this register does not clear any active
+interrupts.
+------------------------------
+<field_enc>:
+0x1: Timer_intr(_n) is active
+0x0: Timer_intr(_n) is inactive
+------------------------------
+<reg_short_dscr>:
+Returns all zeros (0) and clears all active interrupts.
+Reset value: 0x0
+------------------------------
+<field_public_text>:
+Reading this register returns all zeros (0) and clears all active
+interrupts.
+------------------------------
+<reg_short_dscr>:
+Contains the unmasked interrupt status of all timers in the component.
+Reset value: 0x0
+------------------------------
+<field_public_text>:
+The register contains the unmasked interrupt status of all timers in
+the component.
+------------------------------
+<field_enc>:
+0x1: Raw Timer_intr(_n) is   active
+0x0: Raw Timer_intr(_n) is inactive
+------------------------------
+<reg_short_dscr>:
+Current revision number of the DW_apb_timers component.
+Reset value: TIM_VERSION_ID
+------------------------------
+<field_public_text>:
+Current revision number of the DW_apb_timers component.For the value, see the releases table in the AMBA 2 release notes
+------------------------------

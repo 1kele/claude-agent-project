@@ -1,0 +1,159 @@
+=== DOCUMENTATION FOR TARGET: CLKGEN ===
+
+<target_short_dscr>:
+Clock Generation Configuration and Status Registers
+------------------------------
+<reggrp_short_dscr>:
+Analog Test Ouput Configuration
+------------------------------
+<reggrp_public_text>:
+Analog Test Ouput Configuration
+------------------------------
+<reg_short_dscr>:
+AOUT Configuration
+------------------------------
+<reg_public_text>:
+AOUT Configuration
+------------------------------
+<field_public_text>:
+Enable analog test output from LCPLL.
+
+The LCPLL analog multiplexer must be configured to select the desired analog output. See these registers for further information:
+LCPLL28:LCPLL_CONFIG5.AMUX_SEL
+LCPLL28:LCPLL_CONFIG5.AMUX_EN
+------------------------------
+<reggrp_short_dscr>:
+HSIO Clock Tree Configuration and Status (LCPLL1)
+------------------------------
+<reg_short_dscr>:
+HSIO_CLKTREE_CFG
+------------------------------
+<reg_public_text>:
+Configuration Register of HSIO CLKTREE block (next to LCPLL1)
+------------------------------
+<field_public_text>:
+Tuning for clocktree BIAS
+------------------------------
+<field_public_text>:
+Base tuning for clocktree BIAS
+------------------------------
+<field_public_text>:
+Enable high drive for clocktree BIAS
+------------------------------
+<field_public_text>:
+Enable BIAS for clocktree buffers
+------------------------------
+<field_public_text>:
+Tuning for bandgap voltage
+------------------------------
+<field_public_text>:
+Enable global 1.2V bandgap
+------------------------------
+<reg_short_dscr>:
+HSIO_CLKTREE_STATUS
+------------------------------
+<reg_public_text>:
+Status Register of HSIO CLKTREE block (next to LCPLL1)
+------------------------------
+<field_public_text>:
+bandgap voltage valid
+------------------------------
+<field_enc>:
+1: bandgap OK
+------------------------------
+<reggrp_short_dscr>:
+Configuration for LCPLL #1
+------------------------------
+<reggrp_public_text>:
+Configuration for LCPLL 1
+------------------------------
+<reg_short_dscr>:
+CORE Clock Configuration
+------------------------------
+<reg_public_text>:
+LCPLL1 Core Clock Configuration
+------------------------------
+<field_public_text>:
+Clock enable
+------------------------------
+<field_enc>:
+0 : disable 
+1 : enable
+------------------------------
+<field_public_text>:
+Clock Divider Configuration
+------------------------------
+<field_enc>:
+4:  625MHz
+5:  500MHz
+6:  416.667MHz
+8:  312.5MHz
+10:  250MHz
+12:  208.33MHz
+16:  156.25MHz
+16:  156.25MHz
+20:  125MHz
+Other:  Reserved
+------------------------------
+<reg_short_dscr>:
+DDR Clock Configuration
+------------------------------
+<reg_public_text>:
+LCPLL1 DDR Clock Configuration
+------------------------------
+<field_public_text>:
+Clock enable
+------------------------------
+<field_enc>:
+0 : disable 
+1 : enable
+------------------------------
+<field_public_text>:
+Clock Divider Configuration
+------------------------------
+<field_enc>:
+4:  625MHz
+5:  500MHz
+6:  416.667MHz
+8:  312.5MHz
+10:  250MHz
+12:  208.33MHz
+16:  156.25MHz
+16:  156.25MHz
+20:  125MHz
+Other:  Reserved
+------------------------------
+<reg_short_dscr>:
+CPU2 Clock Configuration
+------------------------------
+<reg_public_text>:
+LCPLL1 CPU2 Clock Configuration
+------------------------------
+<field_public_text>:
+Clock enable
+------------------------------
+<field_enc>:
+0 : disable 
+1 : enable
+------------------------------
+<field_public_text>:
+Clock Divider Configuration
+------------------------------
+<field_enc>:
+4:  625MHz
+5:  500MHz
+6:  416.667MHz
+8:  312.5MHz
+10:  250MHz
+12:  208.33MHz
+16:  156.25MHz
+20:  125MHz
+25:  100MHz
+Other:  Reserved
+------------------------------
+<reg_short_dscr>:
+PLL Recovered Clock Configuration
+------------------------------
+<field_public_text>:
+Enable auto-squelching for sync. ethernet clock output: when set the clock output will stop toggling (keep its last value constantly) when PLL is out of lock.
+------------------------------

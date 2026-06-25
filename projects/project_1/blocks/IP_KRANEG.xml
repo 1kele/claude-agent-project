@@ -1,0 +1,717 @@
+=== DOCUMENTATION FOR TARGET: IP_KRANEG ===
+
+<reg_short_dscr>:
+KR PMD control
+------------------------------
+<field_public_text>:
+Training enable
+------------------------------
+<field_enc>:
+1: Enable KR start-up protocol
+0: Disable KR start-up protocol
+------------------------------
+<field_public_text>:
+Restart training (SC)
+------------------------------
+<field_enc>:
+1: Reset KR start-up protocol
+0: Normal operation
+------------------------------
+<reg_short_dscr>:
+KR PMD status
+------------------------------
+<field_public_text>:
+Training failure
+------------------------------
+<field_enc>:
+1: Training failure has been detected
+0: Training failure has not been detected
+------------------------------
+<field_public_text>:
+Startup protocol status
+------------------------------
+<field_enc>:
+1: Start-up protocol in progress
+0: Start-up protocol complete
+------------------------------
+<field_public_text>:
+Frame lock
+------------------------------
+<field_enc>:
+1: Training frame delineation detected
+0: Training frame delineation not detected
+------------------------------
+<field_public_text>:
+Receiver status
+------------------------------
+<field_enc>:
+1: Receiver trained and ready to receive data
+0: Receiver training
+------------------------------
+<reg_short_dscr>:
+KR LP coefficient update
+------------------------------
+<field_public_text>:
+Received coefficient update field
+------------------------------
+<reg_short_dscr>:
+KR LP status report
+------------------------------
+<field_public_text>:
+Received status report field
+------------------------------
+<reg_short_dscr>:
+KR LD coefficient update
+------------------------------
+<field_public_text>:
+Transmitted coefficient update field
+------------------------------
+<reg_short_dscr>:
+KR LD status report
+------------------------------
+<field_public_text>:
+Transmitted status report field
+------------------------------
+<reg_short_dscr>:
+clock enable
+------------------------------
+<field_public_text>:
+Enable 64:66 gearbox clock
+------------------------------
+<field_public_text>:
+Enable AN state machine clock
+------------------------------
+<field_public_text>:
+Enable Tx core clock
+------------------------------
+<field_public_text>:
+Enable Rx core clock
+------------------------------
+<field_public_text>:
+Enable 8b10b sync clock
+------------------------------
+<field_public_text>:
+Enable 64b66b sync clock
+------------------------------
+<reg_short_dscr>:
+timer hold mask
+------------------------------
+<field_public_text>:
+Freeze timers. Bit set...
+------------------------------
+<field_enc>:
+0: wait
+1: max_wait
+2: rate_detect
+3: training
+4: page_detect
+5: link_pass
+6: link_fail
+7: an_wait
+8: break_link
+9: gen0
+10: gen1
+------------------------------
+<reg_short_dscr>:
+training config 0
+------------------------------
+<field_public_text>:
+Configuration for the number of Link Training frames with receiver ready bit (of control channel status report) is set to assert remote receiver ready interrupt.(IRQ_VEC.REM_RDY_1)
+------------------------------
+<field_public_text>:
+Configuration to select the condition to cause IRQ_VEC.LPSVALID Interrupt
+------------------------------
+<field_enc>:
+1 : Generate Interrupt when a change in any of the 16 bits of the received status report is observed.
+0 : Generate Interrupt when a change in any of the 6 LSB bits i.e. [5:0] of the status report is observed. Change in other bits does not cause an interrupt.
+------------------------------
+<field_public_text>:
+Training pattern polynomial selection
+------------------------------
+<field_enc>:
+0: x^11 + x^10 + x^6 + x^5 + 1 (100G - lane 0)
+1: x^11 + x^9  + x^6 + x^5 + 1 (100G - lane 1)
+2: x^11 + x^8  + x^6 + x^4 + 1 (100G - lane 2)
+3: x^11 + x^7  + x^6 + x^4 + 1 (100G - lane 3)
+4: x^11 + x^9 + 1 (10G)
+------------------------------
+<field_public_text>:
+Training pattern seed
+------------------------------
+<field_public_text>:
+Invert Rx prbs11 in training frame
+------------------------------
+<field_public_text>:
+Invert Tx prbs11 in training frame
+------------------------------
+<reg_short_dscr>:
+Frame count for BER
+------------------------------
+<field_public_text>:
+Number of training frames used for BER calc.
+------------------------------
+<reg_short_dscr>:
+training frames sent
+------------------------------
+<field_public_text>:
+Number of training frames sent during link training.
+------------------------------
+<reg_short_dscr>:
+training prbs11 error_count
+------------------------------
+<field_public_text>:
+bit error count of prbs11 checker
+------------------------------
+<reg_short_dscr>:
+AN config 0
+------------------------------
+<field_public_text>:
+AN reset   (SC)
+------------------------------
+<field_public_text>:
+Extended next page control
+------------------------------
+<field_public_text>:
+AN enable
+------------------------------
+<field_public_text>:
+AN restart (SC)
+------------------------------
+<reg_short_dscr>:
+AN status 0
+------------------------------
+<field_public_text>:
+Parallel detection fault (LH)
+------------------------------
+<field_public_text>:
+Extended next page status
+------------------------------
+<field_public_text>:
+Page received (LH)
+------------------------------
+<field_public_text>:
+AN complete
+------------------------------
+<field_public_text>:
+Remote fault (LH)
+------------------------------
+<field_public_text>:
+AN ability
+------------------------------
+<field_public_text>:
+Link status (LL)
+------------------------------
+<field_public_text>:
+LP AN ability
+------------------------------
+<reggrp_short_dscr>:
+Local Device advertised abilities
+------------------------------
+<reg_short_dscr>:
+LD advertised abilities 15-0
+------------------------------
+<field_public_text>:
+Local advertised abilities D[15:0]
+------------------------------
+<reg_short_dscr>:
+LD advertised abilities 31-16
+------------------------------
+<field_public_text>:
+Local advertised abilities D[31:16]
+------------------------------
+<reg_short_dscr>:
+LD advertised abilities 47-32
+------------------------------
+<field_public_text>:
+Local advertised abilities D[47:32]
+------------------------------
+<reg_short_dscr>:
+LP base page advertised abilities 15-0
+------------------------------
+<field_public_text>:
+LP advertised abilities D[15:0]
+------------------------------
+<reg_short_dscr>:
+LP base page advertised abilities 31-16
+------------------------------
+<field_public_text>:
+LP advertised abilities D[31:16]
+------------------------------
+<reg_short_dscr>:
+LP base page advertised abilities 47-32
+------------------------------
+<field_public_text>:
+LP advertised abilities D[47:32]
+------------------------------
+<reggrp_short_dscr>:
+Local Device Next Page
+------------------------------
+<reg_short_dscr>:
+NxtPg transmit 15-0
+------------------------------
+<field_public_text>:
+Next page to transmit D[15:0]
+------------------------------
+<reg_short_dscr>:
+NxtPg transmit 31-16
+------------------------------
+<field_public_text>:
+Next page to transmit D[31:16]
+------------------------------
+<reg_short_dscr>:
+NxtPg transmit 47-32
+------------------------------
+<field_public_text>:
+Next page to transmit D[47:32]
+------------------------------
+<reggrp_short_dscr>:
+Link Partner Next Page
+------------------------------
+<reg_short_dscr>:
+LP next page ability 15-0
+------------------------------
+<field_public_text>:
+LP next page D[15:0]
+------------------------------
+<reg_short_dscr>:
+LP next page ability 31-16
+------------------------------
+<field_public_text>:
+LP next page D[31:16]
+------------------------------
+<reg_short_dscr>:
+LP next page ability 47-32
+------------------------------
+<field_public_text>:
+LP next page D[47:32]
+------------------------------
+<reg_short_dscr>:
+Backplane ethernet BASE-R status
+------------------------------
+<field_public_text>:
+5G-KR      negotiated
+------------------------------
+<field_public_text>:
+2.5G-KX    negotiated
+------------------------------
+<field_public_text>:
+25G-KR     negotiated
+------------------------------
+<field_public_text>:
+25G-KR-S   negotiated
+------------------------------
+<field_public_text>:
+100G-CR4   negotiated
+------------------------------
+<field_public_text>:
+100G-KR4   negotiated
+------------------------------
+<field_public_text>:
+100G-KP4   negotiated
+------------------------------
+<field_public_text>:
+100G-CR10  negotiated
+------------------------------
+<field_public_text>:
+RS-FEC     negotiated
+------------------------------
+<field_public_text>:
+40G-CR4    negotiated
+------------------------------
+<field_public_text>:
+40G-KR4    negotiated
+------------------------------
+<field_public_text>:
+BASE-R FEC negotiated
+------------------------------
+<field_public_text>:
+10G-KR     negotiated
+------------------------------
+<field_public_text>:
+10G-KX4    negotiated
+------------------------------
+<field_public_text>:
+1G-KX      negotiated
+------------------------------
+<field_public_text>:
+BP AN ability
+------------------------------
+<reg_short_dscr>:
+AN config 1
+------------------------------
+<field_public_text>:
+Enable 16-bit data input for 5G mode
+------------------------------
+<field_public_text>:
+Clock divider value for timer clocks
+------------------------------
+<field_public_text>:
+Clear ABILITY_DETECT state counter
+------------------------------
+<field_public_text>:
+Clear AN state machine history
+------------------------------
+<field_public_text>:
+Bypass training if 10G negotiated
+------------------------------
+<field_public_text>:
+Select source of 10G sync signal (Used for HCD Technology PCS using 64b66b Encoding Eg. 10GBaseKR, 5GBaseKR, 25GBaseKR etc.,)
+------------------------------
+<field_enc>:
+0: KR internal
+1: External
+------------------------------
+<field_public_text>:
+Select source of 1G sync signal (Used for HCD Technology PCS using 8b10b Encoding. Eg. 1000BaseX, 10GBaseKX4, 2.5GBaseX etc.,)
+------------------------------
+<field_enc>:
+0: KR internal
+1: External
+------------------------------
+<field_public_text>:
+rate setting
+------------------------------
+<field_enc>:
+1 : 100G-CR4
+2 : 100G-KR4
+3 : 100G-KP4
+4 : 100G-CR10
+5 : 40G-CR4
+6 : 40G-KR4
+7 : 25G-KR
+8 : 25G-KR-S
+9 : 10G-KR
+10 : 10G-KX4
+11 : 5G-KR
+12 : 2.5G-KX
+13 : 1G-KX
+------------------------------
+<reg_short_dscr>:
+AN break_link timer
+------------------------------
+<field_public_text>:
+break_link_timer setting. 
+Default value corresponds to 70ms for a System clock of 1.6ns and Timer Divider of 4.
+------------------------------
+<reg_short_dscr>:
+AN aneg_wait timer
+------------------------------
+<field_public_text>:
+an_wait_timer setting.
+Default value corresponds to 38ms for system clock period of 1.6ns and timer divider of 4.
+------------------------------
+<reg_short_dscr>:
+AN link_fail_inhibit timer
+------------------------------
+<field_public_text>:
+10g link_fail_inhibit_timer setting. 
+Default value is set to 50ms for a system clock period of 1.6ns and a timer divider value of 4. 
+Long timer and short timer are set to same values as there is a training timer in TRAIN state which takes care of the training time of 500ms.
+------------------------------
+<reg_short_dscr>:
+AN link_fail_inhibit_short timer
+------------------------------
+<field_public_text>:
+1g link_fail_inhibit_timer setting
+Default value is set to 50ms for a system clock period of 1.6ns and a timer divider value of 4.
+------------------------------
+<reg_short_dscr>:
+AN link_pass_inhibit timer
+------------------------------
+<field_public_text>:
+link_pass_inhibit_timer setting
+------------------------------
+<reg_short_dscr>:
+AN training state timer
+------------------------------
+<field_public_text>:
+training_state_timer setting
+Default value corresponds to 500ms for a system clock period of 1.6ns and a timer divider value of 4.
+------------------------------
+<reg_short_dscr>:
+AN page_detect timer
+------------------------------
+<field_public_text>:
+page_detect_timer setting. Time the state machine stays in ABILITY DETECT for ability match before entering into RATE_DETECT state to perform parallel detection.
+Default value corresponds to 500ms for system clock period of 1.6ns and a timer divider value of 4.
+------------------------------
+<reg_short_dscr>:
+training wait_timer
+------------------------------
+<field_public_text>:
+wait_timer for training.
+
+The default value corresponds to a period of around 200 10GBaseKR Training frames for a system clock period of 1.6ns and a timer divider value of 4.
+
+This value needs to be reconfigured to an appropriate value by Firmware for HCD (using KR Link Training) other than 10GBaseKR
+------------------------------
+<reg_short_dscr>:
+training maxwait_timer
+------------------------------
+<field_public_text>:
+maxwait_timer for training
+
+Default value corresponds to 500ms for a system clock period of 1.6ns and a Timer Divider value of 4.
+------------------------------
+<reg_short_dscr>:
+generic_0 timer
+------------------------------
+<field_public_text>:
+generic timer
+------------------------------
+<reg_short_dscr>:
+generic_1 timer
+------------------------------
+<field_public_text>:
+generic timer
+------------------------------
+<reg_short_dscr>:
+AN arb state machine
+------------------------------
+<field_public_text>:
+ABILITY_DETECT state counter
+------------------------------
+<reg_short_dscr>:
+AN status 1
+------------------------------
+<field_public_text>:
+AN or Training frames are being exchanged
+------------------------------
+<field_enc>:
+0: External mux should switch to egress traffic
+1: External mux should switch to KR output
+------------------------------
+<field_public_text>:
+1G or 3G sync status of local detector
+------------------------------
+<field_public_text>:
+10G sync status of local detector
+------------------------------
+<field_public_text>:
+Nonce match (LH)
+------------------------------
+<field_public_text>:
+Incompatible link (LH)
+------------------------------
+<field_public_text>:
+Negotiated HCD
+------------------------------
+<field_enc>:
+1 : 100G-CR4
+2 : 100G-KR4
+3 : 100G-KP4
+4 : 100G-CR10
+5 : 40G-CR4
+6 : 40G-KR4
+7 : 25G-KR
+8 : 25G-KR-S
+9 : 10G-KR
+10 : 10G-KX4
+11 : 5G-KR
+12 : 2.5G-KX
+13 : 1G-KX
+------------------------------
+<reg_short_dscr>:
+Firmware SC messages
+------------------------------
+<field_public_text>:
+Indicates that training has completed (SC)
+------------------------------
+<field_public_text>:
+Indicates that LDCOEF is stable (SC)
+------------------------------
+<field_public_text>:
+Indicates that LDSTAT is stable (SC)
+------------------------------
+<field_public_text>:
+Indicates that next_page is loaded (SC)
+------------------------------
+<field_public_text>:
+rate setting is done (sc)
+------------------------------
+<reg_short_dscr>:
+Firmware SC request
+------------------------------
+<field_public_text>:
+Start BER checker (SC)
+------------------------------
+<field_public_text>:
+start generic timer 1 (SC)
+------------------------------
+<field_public_text>:
+start generic timer 0 (SC)
+------------------------------
+<field_public_text>:
+start wait timer (SC)
+------------------------------
+<field_public_text>:
+start maxwait timer (SC)
+------------------------------
+<reg_short_dscr>:
+interrupt vector. All sticky
+------------------------------
+<field_public_text>:
+interrupt for kr_active toggle
+------------------------------
+<field_public_text>:
+interrupt for new LP status report
+------------------------------
+<field_public_text>:
+interrupt for new LP coeff update
+------------------------------
+<field_public_text>:
+interrupt for wait timer done
+------------------------------
+<field_public_text>:
+interrupt for maxwait timer done
+------------------------------
+<field_public_text>:
+interrupt for ber_busy = 0
+------------------------------
+<field_public_text>:
+interrupt for ber_busy = 1
+------------------------------
+<field_public_text>:
+interrupt for rem_ready = 0
+------------------------------
+<field_public_text>:
+interrupt for rem_ready = 1
+------------------------------
+<field_public_text>:
+interrupt for frlock = 0
+------------------------------
+<field_public_text>:
+interrupt for frlock = 1
+------------------------------
+<field_public_text>:
+interrupt for dme_viol = 0
+------------------------------
+<field_public_text>:
+interrupt for dme_viol = 1
+------------------------------
+<field_public_text>:
+interrupt for AN_SM = XMIT_DISABLE
+------------------------------
+<field_public_text>:
+interrupt for AN_SM = TRAIN
+------------------------------
+<field_public_text>:
+interrupt for AN_SM = RATE_DET
+------------------------------
+<field_public_text>:
+interrupt for AN_SM = COMPLETE_ACK
+------------------------------
+<field_public_text>:
+interrupt for AN_SM = AN_GOOD
+------------------------------
+<field_public_text>:
+interrupt for AN link fail
+------------------------------
+<field_public_text>:
+interrupt for AN ABILITY_DETECT fail
+------------------------------
+<field_public_text>:
+interrupt for AN ACK_DETECT fail
+------------------------------
+<field_public_text>:
+interrupt for AN NEXT_PAGE fail
+------------------------------
+<field_public_text>:
+interrupt for AN LP NEXT_PAGE received
+------------------------------
+<field_public_text>:
+interrupt for AN incompatible link
+------------------------------
+<field_public_text>:
+interrupt for gen0 timer done
+------------------------------
+<field_public_text>:
+interrupt for gen1 timer done
+------------------------------
+<field_public_text>:
+interrupt for rate change request
+------------------------------
+<reg_short_dscr>:
+interrupt mask
+------------------------------
+<field_public_text>:
+interrupt mask for kr_active toggle
+------------------------------
+<field_public_text>:
+interrupt mask for new LP status report
+------------------------------
+<field_public_text>:
+interrupt mask for new LP coeff update
+------------------------------
+<field_public_text>:
+interrupt mask for wait timer done
+------------------------------
+<field_public_text>:
+interrupt mask for maxwait timer done
+------------------------------
+<field_public_text>:
+interrupt mask for ber_busy = 0
+------------------------------
+<field_public_text>:
+interrupt mask for ber_busy = 1
+------------------------------
+<field_public_text>:
+interrupt mask for rem_ready = 0
+------------------------------
+<field_public_text>:
+interrupt mask for rem_ready = 1
+------------------------------
+<field_public_text>:
+interrupt mask for frlock = 0
+------------------------------
+<field_public_text>:
+interrupt mask for frlock = 1
+------------------------------
+<field_public_text>:
+interrupt mask for dme_viol = 0
+------------------------------
+<field_public_text>:
+interrupt mask for dme_viol = 1
+------------------------------
+<field_public_text>:
+interrupt mask for AN_SM = XMIT_DISABLE
+------------------------------
+<field_public_text>:
+interrupt mask for AN_SM = TRAIN
+------------------------------
+<field_public_text>:
+interrupt mask for AN_SM = RATE_DET
+------------------------------
+<field_public_text>:
+interrupt mask for AN_SM = COMPLETE_ACK
+------------------------------
+<field_public_text>:
+interrupt mask for AN_SM = AN_GOOD
+------------------------------
+<field_public_text>:
+interrupt mask for AN link fail
+------------------------------
+<field_public_text>:
+interrupt mask for AN ABILITY_DETECT fail
+------------------------------
+<field_public_text>:
+interrupt mask for AN ACK_DETECT fail
+------------------------------
+<field_public_text>:
+interrupt mask for AN NEXT_PAGE fail
+------------------------------
+<field_public_text>:
+interrupt mask for AN LP NEXT_PAGE received
+------------------------------
+<field_public_text>:
+interrupt mask for AN incompatible link
+------------------------------
+<field_public_text>:
+interrupt mask for gen0 timer done
+------------------------------
+<field_public_text>:
+interrupt mask for gen1 timer done
+------------------------------
+<field_public_text>:
+interrupt mask rate change request
+------------------------------

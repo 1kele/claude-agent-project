@@ -1,0 +1,507 @@
+=== DOCUMENTATION FOR TARGET: TRNG ===
+
+<target_short_dscr>:
+RNG Memory Map
+------------------------------
+<reggrp_short_dscr>:
+Control/Configuration/Status registers
+------------------------------
+<reg_short_dscr>:
+This register causes the DWC_trng to execute one of a number of actions. There are 3 commands available (in addition to 0, or NOP).
+A write of 1 to the CMD field causes the DWC_trng to generate a new random number. The length of the random number depends on the build-time configuration setting for 'Maximum length of PRNG data' (see BUILD_CONFIG.MAX_PRNG_LEN for more details) and the MODE.MODE_R256 bit, if present. If BUILD_CONFIG.MAX_PRNG_LEN is 0, or BUILD_CONFIG.MAX_PRNG_LEN is 1 and MODE.MODE_R256 is 0, the random number will be 128 bits in length and will be available in registers RAND0 through RAND3. If BUILD_CONFIG.MAX_PRNG_LEN is 1 and MODE.MODE_R256 is 1, the random number will be 128 bits in length and will be available in registers RAND0 through RAND7. (The MODE register does not exist if BUILD_CONFIG.MAX_PRNG_LEN is 0.) This operation is only valid if the PRNG portion of the core has been previously seeded (see STAT.SEEDED bit description for more details).
+A write of 2 to the CMD field causes the DWC_trng to generate and load a new random seed from the ring oscillator-based seed generator.
+A write of 3 to the CMD field causes the DWC_trng to load a nonce from the SEEDx registers. This command is only valid if the DWC_trng is currently in NONCE mode (see SMODE.SMODE_NONCE_MODE bit description for more details).
+------------------------------
+<field_public_text>:
+Execute a command.
+Enumerated values not listed are 'reserved'.
+------------------------------
+<field_enc>:
+0x1: 
+0x3: 
+0x0: 
+0x2:
+------------------------------
+<reg_short_dscr>:
+The NONCE_MODE field indicates that the engine is currently waiting for the host to load a nonce through the SEEDx registers. In this mode, the host completes the nonce load operation by writing a CMD_NONCE_RESEED command (3) to the CTRL.CMD field. The CMD_NONCE_RESEED command is ignored if NONCE_MODE is not set.
+The R256 field indicates if the PRNG is configured to collect 128-bit or 256-bit values. This bit reflects the state of the MODE.MODE_R256 mode bit.
+The MISSION_MODE field indicates if the PRNG is set to mission mode or test mode. This bit reflects the state of the SMODE.SMODE_MISSION_MODE mode bit.
+The SEEDED field indicates that the PRNG portion of the DWC_trng is currently in a seeded state. The source of the seed is saved to the LAST_RESEED field. If the SMODE.SECURE_EN field is changed (that is, 1 to 0 or 0 to 1) or the I_zeroize> port is driven to 1 (if available), the internal state of the DWC_trng is erased (zeroized) and the SEEDED field is cleared. When SEEDED is 0 it indicates that the DWC_trng must be (re)seed to before it can generate random numbers.
+The LAST_RESEED field indicates what type of operation created the current seed.
+The SRVC_RQST field reflects the fact that one or more of the ISTAT fields are asserted.
+The RAND_RESEEDING and RAND_GENERATING fields indicate that the DWC_trng is currently executing one or more of these 2 tasks.
+------------------------------
+<field_public_text>:
+Current state of random seed generation operations.
+------------------------------
+<field_enc>:
+0x0: 
+0x1:
+------------------------------
+<field_public_text>:
+Current state of random number generation operations.
+------------------------------
+<field_enc>:
+0x0: 
+0x1:
+------------------------------
+<field_public_text>:
+Current state of unacknowledged request indicator.
+------------------------------
+<field_enc>:
+0x0: 
+0x1:
+------------------------------
+<field_public_text>:
+Action which loaded current seed.
+Enumerated values not listed are 'reserved'.
+------------------------------
+<field_enc>:
+0x0: 
+0x3: 
+0x4: 
+0x7:
+------------------------------
+<field_public_text>:
+Current SEEDED state.
+------------------------------
+<field_enc>:
+0x0: 
+0x1:
+------------------------------
+<field_public_text>:
+Reflects state of SMODE.SMODE_MISSION_MODE.
+------------------------------
+<field_public_text>:
+Reflects state of MODE.MODE_R256.
+------------------------------
+<field_public_text>:
+Current state of NONCE mode.
+------------------------------
+<field_enc>:
+0x0: 
+0x1:
+------------------------------
+<reg_short_dscr>:
+This register is used to set the length of the PRNG output register.
+The R256 bit allows the DWC_trng to be configured for collection of 128- or 256-bit data from the PRNG.
+When R256 is set to 1, the DWC_trng collects 256 bits of data in the RANDx registers before asserting the ISTAT.RAND_RDY bit. The collected data is available in RAND0 through RAND7.
+When R256 is set to 0, the DWC_trng collects 128 bits of data in the RANDx registers before asserting the ISTAT.RAND_RDY bit. The collected data is available in RAND0 through RAND3. Registers RAND4 through RAND7 are unused and read back as 0 in 128-bit mode.
+------------------------------
+<field_public_text>:
+Current length for PRNG RANDx registers.
+------------------------------
+<field_enc>:
+0x0: 
+0x1:
+------------------------------
+<reg_short_dscr>:
+This register is used to enable or disable certain mission-mode run-time features within the core.
+The NONCE_MODE field is used to allow the DWC_trng to run in NONCE seed mode. In this mode the host must provide a user-defined seed to the PRNG through the SEEDx registers. (This mode is generally only used for test purposes.)
+If the ELP_TRNG3_CONFIG_SECURE_MODE build-time configuration parameter is set to 0, the MISSION_MODE bit resets to 0, which is referred to as 'test-mode'. If the build-time configuration parameter ELP_TRNG3_CONFIG_SECURE_MODE parameter is set to 1, the MISSION_MODE bit resets to 1, which is referred to as 'mission-mode'. When in test-mode, the DWC_trng allows access to normally sensitive internal seed values and registers.
+When the MISSION_MODE bit is written with a 0, access to private areas within the DWC_trng are made available for testing and qualification purposes. When the MISSION_MODE bit is written with a 1, access to these private areas is disabled. The intention is that, for in situ testing and qualification, access to the secret state portions may be desirable (MISSION_MODE set to 0). However, it is highly advisable that these nodes and registers be non-accessible and secret during normal operations. Therefore, the core should only be set to test mode when specifically desired.
+The state of the SMODE.SMODE_MISSION_MODE bit is also reflected in the STAT register through the STAT.STAT_MISSION_MODE field for added convenience.
+In order to prevent certain attacks, such as backtracking and spoofing, whenever the the state of the MISSION_MODE bit is changed, the DWC_trng automatically zeroizes all internal state information. If the DWC_trng has been operating in mission-mode and is changed to test-mode, the value used for the last seed will have been wiped to prevent unauthorized accessing to it.
+Similarly, when changing from test-mode to mission-mode, the internal state is cleared as well. This prevents an unauthorized host process from loading a state, switching back to mission-mode and attempting to spoof consumers of the random data from believing the core is operating from a random seed.
+A consequence of the zeroization is that the DWC_trng must be (re)seeded to begin providing random data again. Thus, any toggling of the MISSION_MODE bit requires the host to execute one of the reseeding operations.
+The MAX_REJECTS field dictates the maximum number of consecutive bit rejections that have to occur within a single bit generator before the ring feedback control system dynamically adjusted the frequency of the affected bit generator. There is usually no need to adjust this register. It is primarily for test purposes.
+NOTE: It is not possible to both toggle the MISSION_MODE bit and set NONCE_MODE mode in a single write operation because the toggling of MISSION_MODE returns NONCE_MODE to its reset state of 0 within a few cycles after the write completes. Changes to these fields must be done in separate writes; toggle the MISSION_MODE bit first, then set NONCE_MODE mode in a subsequent write operation.
+NOTE: Initiation of a random reseed operation (a write of 2 to the CTRL.CMD register) has the side effect of automatically clearing the NONCE_MODE mode bit.
+------------------------------
+<field_public_text>:
+Maximum number of consecutive bit rejections before issuing ring tweak.
+------------------------------
+<field_public_text>:
+Sets the operating mode to TEST or MISSION.
+NOTE: Any change to the state of this field (1 to 0 or 0 to 1) causes the DWC_trng to zeroize itself!
+------------------------------
+<field_enc>:
+0x1: 
+0x0:
+------------------------------
+<field_public_text>:
+Sets the reseed mode to nonce or random.
+------------------------------
+<field_enc>:
+0x0: 
+0x1:
+------------------------------
+<reg_short_dscr>:
+This register is used to enable or disable interrupts within the DWC_trng. When both one of the individual enable bits and GLBL_EN bit are set to 1, an occurrence of that event drives the O_irq port to 1.
+The RAND_RDY_EN bit enables the contribution from the random number ready logic (ISTAT.RAND_RDY).
+The SEED_DONE_EN bit enables the contribution from the seed completion logic (ISTAT.SEED_DONE).
+The RQST_ALARM_EN bit enables RQST reminder alarm (ISTAT.RQST_ALARM).
+The AGE_ALARM_EN bit enables AGE_ALARM_ENAGE reminder alarm (ISTAT.AGE_ALARM).
+The LFSR_LOCKUP_EN bit enables the contribution from the LFSR lockup logic (ISTAT.LFSR_LOCKUP).
+The GLBL_EN bit is the global interrupt enable signal for the DWC_trng. Setting this bit to 0 disables all interrupts. Setting this bit to 1 allows any of the individually enabled interrupt sources to generate an interrupt through the O_irq port.
+NOTE: These bits are not cleared to their reset state in a zeroize event. They retain their state.
+------------------------------
+<field_public_text>:
+Global interrupt enable.
+------------------------------
+<field_enc>:
+0x0: 
+0x1:
+------------------------------
+<field_public_text>:
+Include or exclude LFSR_LOCKUP interrupt contribution.
+------------------------------
+<field_enc>:
+0x0: 
+0x1:
+------------------------------
+<field_public_text>:
+Include or exclude RQST_ALARM interrupt contribution.
+------------------------------
+<field_enc>:
+0x0: 
+0x1:
+------------------------------
+<field_public_text>:
+Include or exclude AGE_ALARM interrupt contribution.
+------------------------------
+<field_enc>:
+0x0: 
+0x1:
+------------------------------
+<field_public_text>:
+Include or exclude SEED_DONE interrupt contribution.
+------------------------------
+<field_enc>:
+0x0: 
+0x1:
+------------------------------
+<field_public_text>:
+Include or exclude RAND_RDY interrupt contribution.
+------------------------------
+<field_enc>:
+0x0: 
+0x1:
+------------------------------
+<reg_short_dscr>:
+This register allows the user to monitor the interrupt and/or status contributions of the DWC_trng.
+Note that these status signals are used for both polling mode and interrupt modes. Whether they assert the O_irq output depends on whether the IE.GLBL_EN and one or more of the other individual IE bits are set to 1.
+The RAND_RDY bit indicate the completion of the collection of the 128- or 256-bit random number.
+The SEED_DONE bit indicates completion of a random reseed operation. Because the core automatically initiates a 'generate random number' operation (equivalent to writing CMD_GEN_RAND to the CTRL.CMD register) immediately after a nonce has been loaded, there is no NONCE reseed interrupt mechanism. Therefore, the automatically generated random number interrupt (RNAD_RDY) may be used if a 'nonce reseed complete' interrupt, if desired, when in nonce mode.
+The RQST_ALARM and AGE_ALARM bits indicate that the respective reseed alarms have expired and that the host should consider issuing a reseed command -- unless the core was set for AUTO_RESEED mode during the build-time configuration. (The inclusion of the build-time configuration AUTO_RESEED mode may be determined from the BUILD_CONFIG.AUTO_RESEED_LOOPBACK field). If this mode was enabled at build-time, there is no need to react to this alarm because the DWC_trng automatically regenerates and installs a seed autonomously.)
+Both of the RQST_ALARM and AGE_ALARM alarms are built using auto-reloading counters. Thus, they automatically re-initialize themselves as soon as they expire. The reload values for these counters are stored in the AUTO_RQST and AUTO_AGE registers, respectively. Additionally, these counters are reloaded any time a new seed regeneration operation is preformed.
+The LFSR_LOCKUP bit indicates something has disrupted the internal PRNG. The most likely cause for this alarm is silicon failure or a radiation related single event upset (SEU). If the LFSR_LOCKUP alarm fires, the core zorizes its internal state and ceases producing random data. The alarm must be acknowledged and cleared by the host and the core must be reseeded before it will resume generating random numbers. If the core was set for AUTO_RESEED mode during the build-time configuration, the reseed operation happens automatically. If the AUTO_RESEED mode was not selected at build-time, the DWC_trng must be reseeded through any of the available reseed mechanisms. (The inclusion of the build-time configuration AUTO_RESEED mode may be determined from the BUILD_CONFIG.AUTO_RESEED_LOOPBACK field).
+NOTE: If the LFSR_LOCKUP alarm fires, the DWC_trng exits the seeded mode. Unless the DWC_trng is configured with ESM nonce I/O, it will deassert the O_seeded port and assert the O_reminder port. If the DWC_trng is zeriozed through any of the zeroization methods, the LFSR_LOCKUP bit is cleared, the same as if the alarm had been acknowledged.
+------------------------------
+<field_public_text>:
+Status and acknowledgment (clearing) of LFSR_LOCKUP indicator.
+------------------------------
+<field_enc>:
+0x0: 
+0x1: 
+0x0: 
+0x1:
+------------------------------
+<field_public_text>:
+Status and acknowledgment (clearing) of RQST_ALARM indicator.
+------------------------------
+<field_enc>:
+0x0: 
+0x1: 
+0x0: 
+0x1:
+------------------------------
+<field_public_text>:
+Status and acknowledgment (clearing) of AGE_ALARM indicator.
+------------------------------
+<field_enc>:
+0x0: 
+0x1: 
+0x0: 
+0x1:
+------------------------------
+<field_public_text>:
+Status and acknowledgment (clearing) of SEED_DONE indicator.
+------------------------------
+<field_enc>:
+0x0: 
+0x1: 
+0x0: 
+0x1:
+------------------------------
+<field_public_text>:
+Status and acknowledgment (clearing) of RAND_RDY indicator.
+------------------------------
+<field_enc>:
+0x0: 
+0x1: 
+0x0: 
+0x1:
+------------------------------
+<reg_short_dscr>:
+Contains the coreKit release information.
+------------------------------
+<field_public_text>:
+Indicates the coreKit release extension type.For example, release '2.35e-lca04' is encoded as 0x1.
+------------------------------
+<field_enc>:
+0x2: 
+0x0: 
+0x1: 
+0x3: 
+0x4: 
+0x5:
+------------------------------
+<field_public_text>:
+Indicates the coreKit release extension version number.
+For example, release '2.35e-lp04' is encoded as 0x4.
+GA releases will have a value of 0.
+------------------------------
+<field_public_text>:
+Indicates the coreKit release version in pseudo-BCD.
+For example, release '2.35e-lca04' is encoded as 0x235e.
+------------------------------
+<reg_short_dscr>:
+Contains the build-time parameter enumerations.
+NOTE: Obsolete - for backward compatibility only. Use BUILD_CONFIG register instead.
+------------------------------
+<field_public_text>:
+Level of diagnostic support provided.
+This configuration parameter is not customer-modifiable.
+------------------------------
+<field_public_text>:
+Indicates state of SMODE.SMODE_MISSION_MODE reset state.
+------------------------------
+<field_enc>:
+0x1: 
+0x0:
+------------------------------
+<field_public_text>:
+Indicates the ring-oscillator sub-section is present.
+This build-time configuration parameter is not customer-modifiable.
+------------------------------
+<field_enc>:
+0x0: 
+0x1:
+------------------------------
+<field_public_text>:
+Maximum length of the PRNG RANDx register set.
+------------------------------
+<field_enc>:
+0x0: 
+0x1:
+------------------------------
+<reg_short_dscr>:
+The RAND0 register is part of the RANDx register set which are used by the host to read the newly generated random number.
+There is no endian-ness to the data in the RANDx registers because they are random. Therefore, it does not matter if software uses RAND0 as the least significant or most significant word for the collected random number. Nor does it matter if bit 0 or bit 31 of each individual register is used at the least or most significant bit.
+------------------------------
+<field_public_text>:
+Random data word 0.
+------------------------------
+<reg_short_dscr>:
+The RAND1 register is part of the RANDx register set which are used by the host to read the newly generated random number.
+There is no endian-ness to the data in the RANDx registers because they are random. Therefore, it does not matter if software uses RAND0 as the least significant or most significant word for the collected random number. Nor does it matter if bit 0 or bit 31 of each individual register is used at the least or most significant bit.
+------------------------------
+<field_public_text>:
+Random data word 1.
+------------------------------
+<reg_short_dscr>:
+The RAND2 register is part of the RANDx register set which are used by the host to read the newly generated random number.
+There is no endian-ness to the data in the RANDx registers because they are random. Therefore, it does not matter if software uses RAND0 as the least significant or most significant word for the collected random number. Nor does it matter if bit 0 or bit 31 of each individual register is used at the least or most significant bit.
+------------------------------
+<field_public_text>:
+Random data word 2.
+------------------------------
+<reg_short_dscr>:
+The RAND3 register is part of the RANDx register set which are used by the host to read the newly generated random number.
+There is no endian-ness to the data in the RANDx registers because they are random. Therefore, it does not matter if software uses RAND0 as the least significant or most significant word for the collected random number. Nor does it matter if bit 0 or bit 31 of each individual register is used at the least or most significant bit.
+------------------------------
+<field_public_text>:
+Random data word 3.
+------------------------------
+<reg_short_dscr>:
+The RAND4 register is part of the RANDx register set which are used by the host to read the newly generated random number.
+There is no endian-ness to the data in the RANDx registers because they are random. Therefore, it does not matter if software uses RAND0 as the least significant or most significant word for the collected random number. Nor does it matter if bit 0 or bit 31 of each individual register is used at the least or most significant bit.
+If build-time configured for a 128-bit output register, the upper 128 bits (RAND4 .. RAND7) always return 0 when read.
+If build-time configured for a 256-bit output register and MODE.MODE_R256 is 0, the upper 128 bits (RAND4 .. RAND7) read back as 0.
+------------------------------
+<field_public_text>:
+Random data word 4.
+------------------------------
+<reg_short_dscr>:
+The RAND5 register is part of the RANDx register set which are used by the host to read the newly generated random number.
+There is no endian-ness to the data in the RANDx registers because they are random. Therefore, it does not matter if software uses RAND0 as the least significant or most significant word for the collected random number. Nor does it matter if bit 0 or bit 31 of each individual register is used at the least or most significant bit.
+If build-time configured for a 128-bit output register, the upper 128 bits (RAND4 .. RAND7) always return 0 when read.
+If build-time configured for a 256-bit output register and MODE.MODE_R256 is 0, the upper 128 bits (RAND4 .. RAND7) read back as 0.
+------------------------------
+<field_public_text>:
+Random data word 5.
+------------------------------
+<reg_short_dscr>:
+The RAND6 register is part of the RANDx register set which are used by the host to read the newly generated random number.
+There is no endian-ness to the data in the RANDx registers because they are random. Therefore, it does not matter if software uses RAND0 as the least significant or most significant word for the collected random number. Nor does it matter if bit 0 or bit 31 of each individual register is used at the least or most significant bit.
+If build-time configured for a 128-bit output register, the upper 128 bits (RAND4 .. RAND7) always return 0 when read.
+If build-time configured for a 256-bit output register and MODE.MODE_R256 is 0, the upper 128 bits (RAND4 .. RAND7) read back as 0.
+------------------------------
+<field_public_text>:
+Random data word 6.
+------------------------------
+<reg_short_dscr>:
+The RAND7 register is part of the RANDx register set which are used by the host to read the newly generated random number.
+There is no endian-ness to the data in the RANDx registers because they are random. Therefore, it does not matter if software uses RAND0 as the least significant or most significant word for the collected random number. Nor does it matter if bit 0 or bit 31 of each individual register is used at the least or most significant bit.
+If build-time configured for a 128-bit output register, the upper 128 bits (RAND4 .. RAND7) always return 0 when read.
+If build-time configured for a 256-bit output register and MODE.MODE_R256 is 0, the upper 128 bits (RAND4 .. RAND7) read back as 0.
+------------------------------
+<field_public_text>:
+Random data word 7.
+------------------------------
+<reg_short_dscr>:
+The SEED0 register is part of the SEEDx register set which are used to load a host generated nonce seed into the DWC_trng. These registers are also used in several test modes to access internal data.
+The specific operation of these registers depends on several mode bits and build-time parameter settings.
+- When in MISSION_MODE mode and not in NONCE mode, writes to these registers result have no effect and reads return 0.
+- When in MISSION_MODE mode and NONCE mode, the writes the user-defined seed to these registers. The seed is loaded into the DWC_trng when a CMD_NONCE_RESEED command (3) is next written toCTRL.CMD register field. Reading these registers returns the currently loaded seed.
+- When in TEST_MODE mode, these register can be both written and read regardless of the state of the SMODE.SMODE_NONCE_MODE register. A read after a random reseed operation returns the seed which was generated by the random seed generator.
+NOTE: The following applies to all the SEEDx registers.
+When in MISSION_MODE mode and SMODE.SMODE_NONCE_MODE is 0, the SEEDx registers return 0 when read, and writes have no effect.
+When in MISSION_MODE mode and SMODE.SMODE_NONCE_MODE is 1, the SEEDx registers are used to inject a 255-bit seed into the DWC_trng. The actual seeding event is only executed when in NONCE mode and a 2 is written to the CTRL.CMD register.
+NOTE: The change into NONCE mode is detected by internal circuitry and used to scrub the previous contents of the seed register. Thus, the previous random seed is not leaked when switching to NONCE mode while in MISSION_MODE.
+------------------------------
+<field_public_text>:
+Seed data word 0.
+------------------------------
+<reg_short_dscr>:
+The SEED1 register is part of the SEEDx register set which are used to load a host generated nonce seed into the DWC_trng. These registers are also used in several test modes to access internal data.
+The specific operation of these registers depends on several mode bits and build-time parameter settings.
+- When in MISSION_MODE mode and not in NONCE mode, writes to these registers result have no effect and reads return 0.
+- When in MISSION_MODE mode and NONCE mode, the writes the user-defined seed to these registers. The seed is loaded into the DWC_trng when a CMD_NONCE_RESEED command (3) is next written toCTRL.CMD register field. Reading these registers returns the currently loaded seed.
+- When in TEST_MODE mode, these register can be both written and read regardless of the state of the SMODE.SMODE_NONCE_MODE register. A read after a random reseed operation returns the seed which was generated by the random seed generator.
+------------------------------
+<field_public_text>:
+Seed data word 1.
+------------------------------
+<reg_short_dscr>:
+The SEED2 register is part of the SEEDx register set which are used to load a host generated nonce seed into the DWC_trng. These registers are also used in several test modes to access internal data.
+The specific operation of these registers depends on several mode bits and build-time parameter settings.
+- When in MISSION_MODE mode and not in NONCE mode, writes to these registers result have no effect and reads return 0.
+- When in MISSION_MODE mode and NONCE mode, the writes the user-defined seed to these registers. The seed is loaded into the DWC_trng when a CMD_NONCE_RESEED command (3) is next written toCTRL.CMD register field. Reading these registers returns the currently loaded seed.
+- When in TEST_MODE mode, these register can be both written and read regardless of the state of the SMODE.SMODE_NONCE_MODE register. A read after a random reseed operation returns the seed which was generated by the random seed generator.
+------------------------------
+<field_public_text>:
+Seed data word 2.
+------------------------------
+<reg_short_dscr>:
+The SEED3 register is part of the SEEDx register set which are used to load a host generated nonce seed into the DWC_trng. These registers are also used in several test modes to access internal data.
+The specific operation of these registers depends on several mode bits and build-time parameter settings.
+- When in MISSION_MODE mode and not in NONCE mode, writes to these registers result have no effect and reads return 0.
+- When in MISSION_MODE mode and NONCE mode, the writes the user-defined seed to these registers. The seed is loaded into the DWC_trng when a CMD_NONCE_RESEED command (3) is next written toCTRL.CMD register field. Reading these registers returns the currently loaded seed.
+- When in TEST_MODE mode, these register can be both written and read regardless of the state of the SMODE.SMODE_NONCE_MODE register. A read after a random reseed operation returns the seed which was generated by the random seed generator.
+------------------------------
+<field_public_text>:
+Seed data word 3.
+------------------------------
+<reg_short_dscr>:
+The SEED4 register is part of the SEEDx register set which are used to load a host generated nonce seed into the DWC_trng. These registers are also used in several test modes to access internal data.
+The specific operation of these registers depends on several mode bits and build-time parameter settings.
+- When in MISSION_MODE mode and not in NONCE mode, writes to these registers result have no effect and reads return 0.
+- When in MISSION_MODE mode and NONCE mode, the writes the user-defined seed to these registers. The seed is loaded into the DWC_trng when a CMD_NONCE_RESEED command (3) is next written toCTRL.CMD register field. Reading these registers returns the currently loaded seed.
+- When in TEST_MODE mode, these register can be both written and read regardless of the state of the SMODE.SMODE_NONCE_MODE register. A read after a random reseed operation returns the seed which was generated by the random seed generator.
+------------------------------
+<field_public_text>:
+Seed data word 4.
+------------------------------
+<reg_short_dscr>:
+The SEED5 register is part of the SEEDx register set which are used to load a host generated nonce seed into the DWC_trng. These registers are also used in several test modes to access internal data.
+The specific operation of these registers depends on several mode bits and build-time parameter settings.
+- When in MISSION_MODE mode and not in NONCE mode, writes to these registers result have no effect and reads return 0.
+- When in MISSION_MODE mode and NONCE mode, the writes the user-defined seed to these registers. The seed is loaded into the DWC_trng when a CMD_NONCE_RESEED command (3) is next written toCTRL.CMD register field. Reading these registers returns the currently loaded seed.
+- When in TEST_MODE mode, these register can be both written and read regardless of the state of the SMODE.SMODE_NONCE_MODE register. A read after a random reseed operation returns the seed which was generated by the random seed generator.
+------------------------------
+<field_public_text>:
+Seed data word 5.
+------------------------------
+<reg_short_dscr>:
+The SEED6 register is part of the SEEDx register set which are used to load a host generated nonce seed into the DWC_trng. These registers are also used in several test modes to access internal data.
+The specific operation of these registers depends on several mode bits and build-time parameter settings.
+- When in MISSION_MODE mode and not in NONCE mode, writes to these registers result have no effect and reads return 0.
+- When in MISSION_MODE mode and NONCE mode, the writes the user-defined seed to these registers. The seed is loaded into the DWC_trng when a CMD_NONCE_RESEED command (3) is next written toCTRL.CMD register field. Reading these registers returns the currently loaded seed.
+- When in TEST_MODE mode, these register can be both written and read regardless of the state of the SMODE.SMODE_NONCE_MODE register. A read after a random reseed operation returns the seed which was generated by the random seed generator.
+------------------------------
+<field_public_text>:
+Seed data word 6.
+------------------------------
+<reg_short_dscr>:
+The SEED7 register is part of the SEEDx register set which are used to load a host generated nonce seed into the DWC_trng. These registers are also used in several test modes to access internal data.
+The specific operation of these registers depends on several mode bits and build-time parameter settings.
+- When in MISSION_MODE mode and not in NONCE mode, writes to these registers result have no effect and reads return 0.
+- When in MISSION_MODE mode and NONCE mode, the writes the user-defined seed to these registers. The seed is loaded into the DWC_trng when a CMD_NONCE_RESEED command (3) is next written toCTRL.CMD register field. Reading these registers returns the currently loaded seed.
+- When in TEST_MODE mode, these register can be both written and read regardless of the state of the SMODE.SMODE_NONCE_MODE register. A read after a random reseed operation returns the seed which was generated by the random seed generator.
+
+NOTE: The SEED7.SEED7_SEED field is 32 bits wide but the most significant bit of this register is not used by the DWC_trng for seed purposes. When manually seeding the core in NONCE mode, this bit is DONT_CARE when written and is considered undefined when read. However, when SMODE.SMODE_MISSION_MODE is set to 0 (TEST_MODE), the full 256-bit random seed generated by a CMD_RAND_RESEED command deposits a fully random bit in this location. This feature can be used if random seed qualification analysis is performed against the core. This bit is masked off when the random seed is injected into the PRNG portion of the core.
+------------------------------
+<field_public_text>:
+Seed data word 7.
+------------------------------
+<reg_short_dscr>:
+This register allows the DWC_trng to generate a reseed reminder alarm after a specified number of random numbers have been requested by the host. If the RQSTS field holds a value of 0, this feature is disabled and no AUTO_RQSTS alarms are generated.
+The feature operates in a watchdog-like fashion with the internal counter being reloaded from the RQSTS register field whenever the counter reaches 0. The internal counter is decremented once for every 16 host random number requests (that is, whenever CTRL.CMD is written with a 1, or CMD_GEN_RAND). When the internal counter reaches 0 and the RQSTS field is not 0, a reseed reminder alarm is triggered.
+Whenever a reseed event (of any type) is executed, the internal counter is automatically reloaded from this register.
+If 'Enable auto-reseed loopback mode' was selected at build-time (see BUILD_CONFIG.AUTO_RESEED_LOOPBACK bit for more details), this alarm autonomously executes the equivalent of a CMD_RAND_RESEED command (see CTRL register for more details) and refreshes the PRNG portion of the core with a newly generated random seed.
+------------------------------
+<field_public_text>:
+0 = disable the AUTO_RQSTS alarm feature
+other = reload value for internal AUTO_RQSTS counter
+------------------------------
+<reg_short_dscr>:
+This register allows the DWC_trng to generate a reseed reminder alarm after a specified number of random numbers have been requested by the host. If the AGE field holds a value of 0, this feature is disabled and no AUTO_AGE alarms are generated.
+The feature operates in a watchdog-like fashion with internal counter being reloaded from the AGE register field whenever the counter reaches 0. The internal counter is decremented once every 67.1 million (that is, 2**26) clock cycles. When the internal counter reaches 0 and the AGE field is not 0, a reseed reminder alarm is triggered.
+Whenever a reseed event (of any type) is executed, the internal counter is automatically reloaded from this register.
+If 'Enable auto-reseed loopback mode' was selected at build-time (see BUILD_CONFIG.AUTO_RESEED_LOOPBACK bit for more details), this alarm autonomously executes the equivalent of a CMD_RAND_RESEED command (see CTRL register for more details) and refreshes the PRNG portion of the core with a newly generated random seed.
+------------------------------
+<field_public_text>:
+0 = disable the AUTO_AGE alarm feature
+other = reload value for internal AUTO_AGE counter
+------------------------------
+<reg_short_dscr>:
+Contains the build-time parameter enumerations.
+------------------------------
+<field_public_text>:
+Indicates number of ESM arbitration ports available minus 1.
+For example, a core with 8 ESM arbitration ports is encoded as 0x7.
+Only valid if CORE_TYPE indicates 2 (CORE_TYPE_MULTI_ESM_NONCE).
+------------------------------
+<field_public_text>:
+Level of diagnostic support provided.
+This configuration parameter is not customer-modifiable.
+------------------------------
+<field_public_text>:
+Indicates auto-reseed configuration setting.
+------------------------------
+<field_enc>:
+0x1: 
+0x0:
+------------------------------
+<field_public_text>:
+Indicates state of SMODE.SMODE_MISSION_MODE reset state.
+------------------------------
+<field_enc>:
+0x1: 
+0x0:
+------------------------------
+<field_public_text>:
+State of MODE.MODE_R256 after reset.
+------------------------------
+<field_enc>:
+0x0: 
+0x1:
+------------------------------
+<field_public_text>:
+Maximum length of the PRNG RANDx register set.
+------------------------------
+<field_enc>:
+0x0: 
+0x1:
+------------------------------
+<field_public_text>:
+Configured I/O style (license controlled).
+Enumerated values not listed are 'reserved'.
+------------------------------
+<field_enc>:
+0x1: 
+0x2: 
+0x0:
+------------------------------

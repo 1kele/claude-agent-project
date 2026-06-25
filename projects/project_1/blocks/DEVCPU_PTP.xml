@@ -1,0 +1,277 @@
+=== DOCUMENTATION FOR TARGET: DEVCPU_PTP ===
+
+<target_short_dscr>:
+DEVCPU Precision Timing Protocol Originator
+------------------------------
+<reggrp_short_dscr>:
+PTP controller configuration and status
+------------------------------
+<reg_short_dscr>:
+Pending interrupt mask
+------------------------------
+<field_public_text>:
+One bit per pin set when an active edge is seen.
+------------------------------
+<reg_short_dscr>:
+Enable interrupts per pin
+------------------------------
+<field_public_text>:
+Enable interrupt per ptp pin.
+------------------------------
+<reg_short_dscr>:
+Current interrupt status
+------------------------------
+<field_public_text>:
+Bit n will be high if an interrupt is currently pending for pin <n>.
+------------------------------
+<reg_short_dscr>:
+Misc PTP configurations
+------------------------------
+<reg_public_text>:
+Fields have a bit per domain, facilitating multiple doimains to be simultaneously configured.
+------------------------------
+<field_public_text>:
+Enable master counter.
+------------------------------
+<field_enc>:
+0: Master counter disabled and reset
+1: Master counter enabled
+------------------------------
+<field_public_text>:
+Hold master counter.
+------------------------------
+<field_enc>:
+0: Master counter counts if enabled
+1: Master counter will stay at the reached value
+------------------------------
+<field_public_text>:
+The PTP_CUR timers will be frozen when this field is set for a domain, in order to return concurrent values.
+------------------------------
+<field_public_text>:
+Disable reprogramming of clock period for the domain. This field should be set, when clock cfg is changed through multiple register writes.
+------------------------------
+<field_enc>:
+0: Use CLK_PER_CFG registers
+1: Use latest programmed value
+------------------------------
+<reggrp_short_dscr>:
+Configuration and Status for PTP domains
+------------------------------
+<reg_short_dscr>:
+Time of day clock configuration
+------------------------------
+<reg_public_text>:
+Each system clock cycle, the time-of-day is increased with the value set in these registers, with fixed point 5.59 nanosecond value. Replication 1 is the MSB part.
+------------------------------
+<field_public_text>:
+Clock period configuration for the domain.
+------------------------------
+<reg_short_dscr>:
+Current time of day
+------------------------------
+<reg_public_text>:
+Current time of day, nanoseconds part.
+------------------------------
+<field_public_text>:
+Time of day nanoseconds.
+------------------------------
+<reg_short_dscr>:
+Current time of day
+------------------------------
+<reg_public_text>:
+Current time of day, fractional nanoseconds part.
+------------------------------
+<field_public_text>:
+Time of day fractional naoseconds (unit is nsec/256), latched when NSEC was read.
+------------------------------
+<reg_short_dscr>:
+Current time of day
+------------------------------
+<field_public_text>:
+Value of current tod secs, latched when NSEC was read.
+------------------------------
+<reg_short_dscr>:
+Current time of day
+------------------------------
+<field_public_text>:
+Current time of day, seconds part, latched when NSEC was read
+------------------------------
+<reg_short_dscr>:
+Current time of day
+------------------------------
+<reg_public_text>:
+Current time of day, NTP fractional seconds part.
+------------------------------
+<field_public_text>:
+Time of day fractional second, latched when NSEC was read.
+------------------------------
+<reggrp_short_dscr>:
+Timing synchronization
+------------------------------
+<reg_short_dscr>:
+Configuration of use of the register group
+------------------------------
+<reg_public_text>:
+Select action of the pins assigned to the load/store instance.
+------------------------------
+<field_public_text>:
+Defined actions are: 
+  IDLE: No operation 
+  LOAD:   Load TimeOfDay with configured values
+  STORE:  Store TimeOfDay of selected time domain
+  CLOCK:  Generate a clock output, or a 1PPS pulse
+  DELTA:  Add PTP_TOD_NSEC field as a signed integer to TimeOfDay
+  TOD:    Transmit serial version of TimeOfDay for selected domain.
+
+The LOAD/STORE/DELTA actions will automatically return to IDLE when complete. If the PTP_PIN_SYNC is set, the action will be executed when an active edge is seen on the pin; otherwise immediately.
+
+The CLOCK action generates a waveform dependent on the PTP_PIN_SYNC setting:
+0: Generates a repeated waveform with PIN_WF_HIGH_PERIOD (WFH) nanoseconds high, and PIN_WF_LOW_PERIOD (WFL) nanoseconds low.
+1: Generates a 1PPS pulse at time WFL, with a pulse width of WFH.
+The pin option bit 0 being set instead connects the nsec value from timeofday, 
+bit <(WFH mod 16)> to the output. Ex: set it to 7, to get nsec bit 7 out on the pin.
+
+
+The TOD action generates a serial stream with the seconds part of the TimeOfDay. The stream is initiated when the nanoseconds part equals WFL, and the bit period is configured in WFH. The stream consists of a 21 bit long preamble with value 1000...0, and 16 bytes of information. Each byte is transmitted as 1<lsb><bit 1>...<bit 7>0 (10 bits in total). Of the 16 bytes, the first 6 contains the seconds. These are transmitted with least significant byte first. The remaining 10 bytes are all zeros.
+The bit order can be reversed with pin option bit 0 (PTP_PIN_OPT), and the byte order with pin option bit 1.
+
+
+preamble of 1
+------------------------------
+<field_enc>:
+0: IDLE
+1: LOAD
+2: STORE
+3: CLOCK
+4: DELTA
+5: TOD
+6-7: reserved
+------------------------------
+<field_public_text>:
+For LOAD/STORE/DELTA actions, setting this option will suspend the action until an active edge is seen on the pins. Otherwise it will be done immediately.
+For the CLOCK action, the sync option makes the pin generate a single pulse, <WAFEFORM_LOW> nanoseconds after the time of day has increased the seconds. The pulse will get a width of <WAVEFORM_HIGH> nanoseconds. Setting this field to 3 make the controller repeat its action at the next active edge.
+------------------------------
+<field_public_text>:
+Polarity of the PTP pins.
+------------------------------
+<field_enc>:
+0: Active high
+1: Active low
+------------------------------
+<field_public_text>:
+Selects which ptp pin the load store controller input should connect to.
+------------------------------
+<field_public_text>:
+Selects which ptp pin to use for syncronization. If a clock is used for pin input, the load/store time is adjusted to the accurate time of the rising clock edge at which the pin was active. If a clock is used for pin output, the generated waveform is resynchronized to the selected clock.
+Clock can be embedded into the pin data by setting the PTP_PIN_EMBEDDED_CLK option. Used as an input, the load/store time is adjusted to the time at which the duty cycle became more than 10% off 50/50. Using the pin as an output will drive the selected clock on the pin, and generate a 75/25 duty cycle every time a rising edge is seen on the generated waveform.
+------------------------------
+<field_enc>:
+0-3: GPIO_PIN_<n>
+4: No resync of external pin
+5: External reference clock
+6: External reference clock div4
+7: External reference clock div8
+------------------------------
+<field_public_text>:
+Configures the time domain the pin is connected to.
+------------------------------
+<field_public_text>:
+Special options for an action. See the action descriptions.
+------------------------------
+<field_public_text>:
+If this bit is set, clock and data will be usiung the same pin. See the PTP_CLK_SELECT.
+------------------------------
+<field_public_text>:
+This field tells the distance from the the desired previous clock edge to the actual time it was generated. Ie. an output edge is asked to be created at 12.0 ns, and the internal time of day had the value of 12.45 ns. This field will then ben set to 0.45. Format is 5.8 fixedpoint.
+------------------------------
+<reg_short_dscr>:
+Time Of Day MSB
+------------------------------
+<field_public_text>:
+Bits 47:32 of the time-of-day seconds
+------------------------------
+<reg_short_dscr>:
+Time Of Day LSB
+------------------------------
+<field_public_text>:
+Bits 31:0 of the time-of-day seconds
+------------------------------
+<reg_short_dscr>:
+Time Of Day nanosecs part
+------------------------------
+<field_public_text>:
+Time Of Day nanoseconds loaded or stored into TimeOfDay. A synced store operation may return a value between -2 and 999.999.999 in this field. To normalize the complete TOD, in case field is read 0x3ffffffe/f, software must subtract one from the SEC part, and add 1.000.000.000 to the NSEC part.
+------------------------------
+<reg_short_dscr>:
+Time Of Day nanosecs fractional part
+------------------------------
+<field_public_text>:
+Time Of Day fractional nanoseconds loaded or stored into TimeOfDay.
+------------------------------
+<reg_short_dscr>:
+Current time of day, NTP sub-second
+------------------------------
+<field_public_text>:
+Value of NTP counter when load/save action was executed. This value will not be loaded into the timers upon a LOAD operation.
+------------------------------
+<reg_short_dscr>:
+Waveform programming
+------------------------------
+<field_public_text>:
+Configure waveform. Unit is nanoseconds.
+EX. 25MHz 60/40 clock:
+  PIN_ACTION=CLOCK, PIN_SYNC=0, PIN_WFH=24, PIN_WFL=16
+EX. 1 us pulse after 150 ns
+  PIN_ACTION=CLOCK, PIN_SYNC=1, PIN_WFH=1000, PIN_WFL=150
+------------------------------
+<reg_short_dscr>:
+Waveform programming
+------------------------------
+<field_public_text>:
+Configure waveform
+------------------------------
+<reg_short_dscr>:
+Privide the average skew betwen output and input pin
+------------------------------
+<field_public_text>:
+Return the skew between output and input pin values for the loadstore controller. A value of 0 indicates no skew. A vaule of N indicates a skew of (N>>17)*period of generated clock.
+------------------------------
+<field_public_text>:
+Set the time for which the skew detection should run.
+------------------------------
+<field_enc>:
+0: Sample 65K core cycles
+1: Sample 256K core cycles
+n: Sample 65K * 4^n cycles
+------------------------------
+<reggrp_short_dscr>:
+High precission event detection Configuration and Status Registers
+------------------------------
+<reggrp_public_text>:
+Access to the high precisson event detection. Replications are for ingress(0) and egress(1), or per load/store controller in the devcpu_ptp target.
+------------------------------
+<reg_short_dscr>:
+Phase detection control
+------------------------------
+<field_public_text>:
+Enable phase detector
+------------------------------
+<field_public_text>:
+Phase detector has lost lock since the clearing of the bit. Can be cleared writing one to this field.>
+          This field become unreliable for event clocks slower than 10 MHz, but phase detection can still be trusted. Slow event clocks are only seen in synchronuous PPS detection.
+------------------------------
+<field_public_text>:
+Reduce the number of slaves cycles to measure period with by 2**value.
+------------------------------
+<field_public_text>:
+Accuracy of lock logic
+------------------------------
+<reg_short_dscr>:
+Phase detection status
+------------------------------
+<reg_public_text>:
+Cycle time detected
+------------------------------
+<field_public_text>:
+Detected event clock period in 4.28 fixedpoint format.
+------------------------------

@@ -1,0 +1,657 @@
+=== DOCUMENTATION FOR TARGET: PCS25G_RSFEC ===
+
+<target_short_dscr>:
+PCS Control, Configuration and Status Registers; All registers are 16-bit wide only.
+------------------------------
+<reggrp_short_dscr>:
+All registers are 16-bit wide; Address space is given in 32-bit register steps.
+------------------------------
+<reg_short_dscr>:
+PCS Control.
+------------------------------
+<field_public_text>:
+1=PCS reset, 0=normal; Self clearing.
+------------------------------
+<field_public_text>:
+1=Enable loopback, 0=disable loopback.
+------------------------------
+<field_public_text>:
+Always 1.
+------------------------------
+<field_public_text>:
+0=normal operation (Always 0).
+------------------------------
+<field_public_text>:
+Always 1.
+------------------------------
+<field_public_text>:
+0101=25G; 0000=10G. Read value depends on currently active configuration (see PCS_MODE or pins).
+------------------------------
+<reg_short_dscr>:
+PCS Status.
+------------------------------
+<field_public_text>:
+1: transmit is or was in LPI state; 0: normal operation; Latching high.
+------------------------------
+<field_public_text>:
+1: receive is or was in LPI state; 0: normal operation; Latching high.
+------------------------------
+<field_public_text>:
+1: transmit is currently in LPI state; 0: normal operation.
+------------------------------
+<field_public_text>:
+1: receive is currently in LPI state; 0: normal operation.
+------------------------------
+<field_public_text>:
+When 1, indicates a fault condition detected; When 0, indicates that no fault condition is detected.
+------------------------------
+<field_public_text>:
+When 1, indicates PCS receive link up; When 0, indicates PCS receive link is or was down (latching low).
+------------------------------
+<field_public_text>:
+Set to 1 to indicate that the PCS implements a low power mode.
+------------------------------
+<reg_short_dscr>:
+PHY Identifier constant from package parameter PHY_IDENTIFIER bits 15:4. Bits 3:0 always 0.
+------------------------------
+<field_public_text>:
+Bits 15:0 of Device Identifier defined by parameter PHY_IDENTIFIER in PCS package file.
+------------------------------
+<reg_short_dscr>:
+PHY Identifier constant from package parameter PHY_IDENTIFIER bits 31:16.
+------------------------------
+<field_public_text>:
+Bits 31:16 of Device Identifier defined by parameter PHY_IDENTIFIER in PCS package file.
+------------------------------
+<reg_short_dscr>:
+PCS supported speeds (values as defined by standard only, no proprietary speeds).
+------------------------------
+<field_public_text>:
+When 1, this PCS is 25G capable.
+------------------------------
+<field_public_text>:
+When 1, this PCS is 100G capable.
+------------------------------
+<field_public_text>:
+When 1, this PCS is 40G capable.
+------------------------------
+<field_public_text>:
+When 1, this PCS is 10PASS-TS/2Base-TL capable.
+------------------------------
+<field_public_text>:
+When 1, this PCS is 10Geth capable.
+------------------------------
+<reg_short_dscr>:
+Constant indicating PCS presence.
+------------------------------
+<field_public_text>:
+TC present when 1.
+------------------------------
+<field_public_text>:
+DTE XS present when 1.
+------------------------------
+<field_public_text>:
+PHY XS present when 1.
+------------------------------
+<field_public_text>:
+PCS present when 1.
+------------------------------
+<field_public_text>:
+WIS present when 1.
+------------------------------
+<field_public_text>:
+PMD/PMA present when 1.
+------------------------------
+<field_public_text>:
+Clause 22 registers present when 1.
+------------------------------
+<reg_short_dscr>:
+Vendor specific presence.
+------------------------------
+<field_public_text>:
+Vendor specific device 2 present
+------------------------------
+<field_public_text>:
+Vendor specific device 1 present
+------------------------------
+<field_public_text>:
+Clause 22 extension present
+------------------------------
+<reg_short_dscr>:
+Operating speed indication/control.
+------------------------------
+<field_public_text>:
+Not writeable; Reflects PCS mode from PCS_MODE or external pin configurations if possible.
+------------------------------
+<reg_short_dscr>:
+Fault status; Device capabilities
+------------------------------
+<field_public_text>:
+Device present. When bits are 10 = device responding at this address.
+------------------------------
+<field_public_text>:
+Transmit fault. 1=Fault condition on transmit path. Latched high
+------------------------------
+<field_public_text>:
+Receive fault. 1=Fault condition on receive path. Latched high
+------------------------------
+<field_public_text>:
+When 1, this PCS is 25GBase-R capable.
+------------------------------
+<field_public_text>:
+When 1, this PCS is 100GBase-R capable.
+------------------------------
+<field_public_text>:
+When 1, this PCS is 40GBase-R capable.
+------------------------------
+<field_public_text>:
+When 1, this PCS is 10GBase-T capable.
+------------------------------
+<field_public_text>:
+When 1, this PCS is 10GBase-W capable.
+------------------------------
+<field_public_text>:
+When 1, this PCS is 10GBase-X capable.
+------------------------------
+<field_public_text>:
+When 1, this PCS is 10GBase-R capable.
+------------------------------
+<reg_short_dscr>:
+Constant from package parameter PACK_IDENTIFIER bits 15:0.
+------------------------------
+<field_public_text>:
+Constant from package parameter PACK_IDENTIFIER bits 15:0.
+------------------------------
+<reg_short_dscr>:
+Constant from package parameter PACK_IDENTIFIER bits 31:16.
+------------------------------
+<field_public_text>:
+Constant from package parameter PACK_IDENTIFIER bits 31:16.
+------------------------------
+<reg_short_dscr>:
+EEE Control and Capabilities (exists only if EEE is available).
+------------------------------
+<field_public_text>:
+When 1, EEE deep sleep is supported for 25GBASE-R.
+------------------------------
+<field_public_text>:
+When 1, EEE fast wake is supported for 25GBASE-R.
+------------------------------
+<field_public_text>:
+When 1, EEE deep sleep is supported for 40GBASE-R.
+------------------------------
+<field_public_text>:
+When 1, EEE fast wake is supported for 40GBASE-R.
+------------------------------
+<field_public_text>:
+When 1, EEE is supported for 10GBASE-KR.
+------------------------------
+<field_public_text>:
+Mode for selecting select 40G EEE mode; 1 = Fast wake mode; 0 = Deep sleep for LPI function.
+------------------------------
+<reg_short_dscr>:
+EEE Wake error counter (exists only if EEE is available); Clears on read.
+------------------------------
+<field_public_text>:
+Increments each time the LPI enters the RX_WTF state indicating a wake time fault; None roll-over.
+------------------------------
+<reg_short_dscr>:
+Link Status Information.
+------------------------------
+<field_public_text>:
+Receive link status. 1=Link up; 0=link down.
+------------------------------
+<field_public_text>:
+1=PCS reporting a high BER.
+------------------------------
+<field_public_text>:
+1=PCS locked to received blocks.
+------------------------------
+<reg_short_dscr>:
+Link Status latches and error counters.
+------------------------------
+<field_public_text>:
+Block Lock; Latched low.
+------------------------------
+<field_public_text>:
+BER flag; Latched high.
+------------------------------
+<field_public_text>:
+BER counter; None roll-over.
+------------------------------
+<field_public_text>:
+Errored blocks counter; None roll-over.
+------------------------------
+<reg_short_dscr>:
+10G Base-R Test Pattern Seed A bits 15:0.
+------------------------------
+<field_public_text>:
+10GBase-R Test Pattern Seed A: Bits 15:0.
+------------------------------
+<reg_short_dscr>:
+10G Base-R Test Pattern Seed A bits 31:16.
+------------------------------
+<field_public_text>:
+10GBase-R Test Pattern Seed A: Bits 31:16.
+------------------------------
+<reg_short_dscr>:
+10G Base-R Test Pattern Seed A bits 47:32.
+------------------------------
+<field_public_text>:
+10GBase-R Test Pattern Seed A: Bits 47:32.
+------------------------------
+<reg_short_dscr>:
+10G Base-R Test Pattern Seed A bits 57:48.
+------------------------------
+<field_public_text>:
+10GBase-R Test Pattern Seed A: Bits 57:48.
+------------------------------
+<reg_short_dscr>:
+10G Base-R Test Pattern Seed B bits 15:0.
+------------------------------
+<field_public_text>:
+10GBase-R Test Pattern Seed B: Bits 15:0.
+------------------------------
+<reg_short_dscr>:
+10G Base-R Test Pattern Seed B bits 31:16.
+------------------------------
+<field_public_text>:
+10GBase-R Test Pattern Seed B: Bits 31:16.
+------------------------------
+<reg_short_dscr>:
+10G Base-R Test Pattern Seed B bits 47:32.
+------------------------------
+<field_public_text>:
+10GBase-R Test Pattern Seed B: Bits 47:32.
+------------------------------
+<reg_short_dscr>:
+10G Base-R Test Pattern Seed B bits 57:48.
+------------------------------
+<field_public_text>:
+10GBase-R Test Pattern Seed B: Bits 57:48.
+------------------------------
+<reg_short_dscr>:
+Test Pattern Generator and Checker controls.
+------------------------------
+<field_public_text>:
+Select Random Idle test pattern (40G); Overrides bits 1:0 when set.
+------------------------------
+<field_public_text>:
+Transmit test-pattern enable.
+------------------------------
+<field_public_text>:
+Receive test-pattern enable.
+------------------------------
+<field_public_text>:
+Select Square Wave (1) or Pseudo Random (0) test pattern; 10G only.
+------------------------------
+<field_public_text>:
+Data Pattern Select: 1=all Zero, 0=2x Local Fault; 10G only.
+------------------------------
+<reg_short_dscr>:
+Test Pattern Error Counter; Clears on read; None roll-over.
+------------------------------
+<field_public_text>:
+Test pattern error counter; Clears on read; None roll-over.
+------------------------------
+<reg_short_dscr>:
+BER High Order Counter of BER bits 21:6; None roll-over.
+------------------------------
+<field_public_text>:
+Bits 21:6 of BER counter; None roll-over.
+------------------------------
+<reg_short_dscr>:
+Error Blocks High Order Counter bits 21:8; None roll-over.
+------------------------------
+<field_public_text>:
+High order counter present; Always 1.
+------------------------------
+<field_public_text>:
+Bits 21:8 of Error Blocks counter; None roll-over.
+------------------------------
+<reg_short_dscr>:
+Lane Alignment Status Bits and Block Lock.
+------------------------------
+<field_public_text>:
+Lane alignment status; 1=All Receive lanes locked and aligned.
+------------------------------
+<reg_short_dscr>:
+Lane Alignment Marker Lock Status bits.
+------------------------------
+<field_public_text>:
+Lane 3 alignment marker lock.
+------------------------------
+<field_public_text>:
+Lane 2 alignment marker lock.
+------------------------------
+<field_public_text>:
+Lane 1 alignment marker lock.
+------------------------------
+<field_public_text>:
+Lane 0 alignment marker lock.
+------------------------------
+<reg_short_dscr>:
+BIP Error Counter Lane 0; Clears on read; None roll-over.
+------------------------------
+<field_public_text>:
+BIP error counter lane 0; None roll-over.
+------------------------------
+<reg_short_dscr>:
+BIP Error Counter Lane 1; Clears on read; None roll-over.
+------------------------------
+<field_public_text>:
+BIP error counter lane 1; None roll-over.
+------------------------------
+<reg_short_dscr>:
+BIP Error Counter Lane 2; Clears on read; None roll-over.
+------------------------------
+<field_public_text>:
+BIP error counter lane 2; None roll-over.
+------------------------------
+<reg_short_dscr>:
+BIP Error Counter Lane 3; Clears on read; None roll-over.
+------------------------------
+<field_public_text>:
+BIP error counter lane 3; None roll-over.
+------------------------------
+<reg_short_dscr>:
+Vendor Specific Reg; Scratch Register.
+------------------------------
+<field_public_text>:
+Scratch Register; Register address to test read and write operation.
+------------------------------
+<reg_short_dscr>:
+Vendor Specific Reg; Core Revision derived from DEV_VERSION package parameter.
+------------------------------
+<field_public_text>:
+Core Design version as defined by DEV_VERSION parameter in PCS package file.
+------------------------------
+<reg_short_dscr>:
+Vendor Specific Reg; Set the amount of data between markers. (I.e. distance of markers-1).
+------------------------------
+<field_public_text>:
+A 16-bit value defining the amount of data between markers; (distance of markers-1).
+------------------------------
+<reg_short_dscr>:
+Vendor Specific Reg; Defines the transmit line decoupling FIFOs almost full threshold.
+------------------------------
+<field_public_text>:
+A 4-bit value to define the transmit line decoupling FIFOs almost full threshold; Valid values are 4..9.
+------------------------------
+<reg_short_dscr>:
+Vendor Specific Reg; Marker pattern for PCS Virtual Lane 0.
+------------------------------
+<field_public_text>:
+Lane 0 Marker pattern for m1.
+------------------------------
+<field_public_text>:
+Lane 0 Marker pattern for m0.
+------------------------------
+<reg_short_dscr>:
+Vendor Specific Reg; Last byte of PCS Virtual Lane 0 marker pattern.
+------------------------------
+<field_public_text>:
+Lane 0 Marker pattern for m2.
+------------------------------
+<reg_short_dscr>:
+Vendor Specific Reg; Marker pattern for PCS Virtual Lane 1.
+------------------------------
+<field_public_text>:
+Lane 1 Marker pattern for m1.
+------------------------------
+<field_public_text>:
+Lane 1 Marker pattern for m0.
+------------------------------
+<reg_short_dscr>:
+Vendor Specific Reg; Last byte of PCS Virtual Lane 1 marker pattern.
+------------------------------
+<field_public_text>:
+Lane 1 last btye of Marker pattern for m2.
+------------------------------
+<reg_short_dscr>:
+Vendor Specific Reg; Marker pattern for PCS Virtual Lane 2.
+------------------------------
+<field_public_text>:
+Lane 2 Marker pattern for m1.
+------------------------------
+<field_public_text>:
+Lane 2 Marker pattern for m0.
+------------------------------
+<reg_short_dscr>:
+Vendor Specific Reg; Last byte of PCS Virtual Lane 2 marker pattern.
+------------------------------
+<field_public_text>:
+Lane 2 last btye of Marker pattern for m2.
+------------------------------
+<reg_short_dscr>:
+Vendor Specific Reg; Marker pattern for PCS Virtual Lane 3.
+------------------------------
+<field_public_text>:
+Lane 3 Marker pattern for m1.
+------------------------------
+<field_public_text>:
+Lane 3 Marker pattern for m0.
+------------------------------
+<reg_short_dscr>:
+Vendor Specific Reg; Last byte of PCS Virtual Lane 3 marker pattern.
+------------------------------
+<field_public_text>:
+Lane 3 last btye of Marker pattern for m2.
+------------------------------
+<reg_short_dscr>:
+Vendor Specific Reg; Configure PCS supporting Clause 49 or 82 Encoder/Decoder, MLD.
+------------------------------
+<field_public_text>:
+Current status of MLD setting.
+------------------------------
+<field_public_text>:
+Current status of Clause 49 setting.
+------------------------------
+<field_public_text>:
+When 1 PCS implements 25G Hi-Ber (2ms, 97 errors). When 0 PCS implements 10G Hi-Ber (125us, 16 errors);
+------------------------------
+<field_public_text>:
+When 0 PCS 4-lane MLD function is active; When 1 the MLD function is disabled.
+------------------------------
+<field_public_text>:
+When 0 PCS uses Clause 82 encoder/decoder functions; When 1 PCS uses Clause 49 encoder/decoder functions.
+------------------------------
+<reg_short_dscr>:
+Vendor Specific Reg; Value shifted for block lock.
+------------------------------
+<field_public_text>:
+Number of bits SERDES input is shifted for block lock.
+------------------------------
+<reg_short_dscr>:
+Vendor Specific Reg; Latency measurement.
+------------------------------
+<field_public_text>:
+PCS Rx and Tx latency w.r.t SERDES clock. TX latency is on 15:9 and RX latency is on 8:0
+------------------------------
+<reggrp_short_dscr>:
+RS_FEC Sub-module Configuration, Control and Status Registers; All registers are 16-bit wide.
+------------------------------
+<reg_short_dscr>:
+Control register for enabling FEC functions.
+------------------------------
+<field_public_text>:
+When 1, enable RSFEC datapath; When 0 normal PCS datapath;
+------------------------------
+<field_public_text>:
+When 1, configure the FEC decoder to not indicate errors to the PCS layer; When
+ 0, the FEC decoder indicates errors to the PCS layer; Bit is writeable only if capability in FEC_STATUS indicates this feature.
+------------------------------
+<field_public_text>:
+When 1, bypass the decoder's correction function for reduced latency; When 
+0, normal FEC operation; Bit is writeable only if capability in FEC_STATUS indicates this feature.
+------------------------------
+<reg_short_dscr>:
+RS FEC Status register.
+------------------------------
+<field_public_text>:
+Always 1.
+------------------------------
+<field_public_text>:
+Indicates, when 1 that the RS-FEC receiver has locked on incoming data and deskew completed.
+------------------------------
+<field_public_text>:
+RS-FEC receive lane locked and aligned; One bit per lane: Bit 8 = lane 0, Bit 9 = lane 1, Bit 10= lane 2, Bit 11 = lane 3.
+------------------------------
+<field_public_text>:
+Asserts when error indication bypass is enabled and high symbol error rate is found;
+ Clear on read.
+------------------------------
+<field_public_text>:
+Indicates the ability to disable error propagation to the PCS layer.
+------------------------------
+<field_public_text>:
+Indicates existence of the receive correction bypass option; The bypass function allows a reduced latency operation.
+------------------------------
+<reg_short_dscr>:
+Counts number of corrected FEC codewords lower 16-bits; None roll-over when upper 16-bits are 0xffff.
+------------------------------
+<field_public_text>:
+Counts number of corrected FEC codewords lower 16-bits; Must be read before upper 16-bits; None roll-over when upper 16-bits are 0xffff
+------------------------------
+<reg_short_dscr>:
+Counts number of corrected FEC codewords upper 16-bits; Clears on read; None roll-over.
+------------------------------
+<field_public_text>:
+Counts number of corrected FEC codewords upper 16-bits; None roll-over; Clears when read.
+------------------------------
+<reg_short_dscr>:
+Counts number of uncorrected FEC codewords lower 16-bits; None roll-over when upper 16-bits are 0xffff.
+------------------------------
+<field_public_text>:
+Counts number of uncorrected FEC codewords lower 16-bits; Must be read before upper 16-bits; None roll-over when upper 16-bits are 0xffff
+------------------------------
+<reg_short_dscr>:
+Counts number of uncorrected FEC codewords upper 16-bits; Clears on read; None roll-over.
+------------------------------
+<field_public_text>:
+Counts number of uncorrected FEC codewords upper 16-bits; None roll-over; Clears when read.
+------------------------------
+<reg_short_dscr>:
+FEC alignment status and lane mappings.
+------------------------------
+<field_public_text>:
+FEC lane mapped to PMA lane 3.
+------------------------------
+<field_public_text>:
+FEC lane mapped to PMA lane 2.
+------------------------------
+<field_public_text>:
+FEC lane mapped to PMA lane 1.
+------------------------------
+<field_public_text>:
+FEC lane mapped to PMA lane 0.
+------------------------------
+<reg_short_dscr>:
+Counts number of (corrected) 10-bit symbol errors found in lane 0; None roll-over when upper 16-bits are 0xffff.
+------------------------------
+<field_public_text>:
+Counts number of (corrected) 10-bit symbol errors found in lane 0 for correctable codewords only; Lower 16-bit of counter; Must be read first; None roll-over when upper word is 0xffff.
+------------------------------
+<reg_short_dscr>:
+Upper 16-bit of counter (with above register); Clears on read; None roll-over.
+------------------------------
+<field_public_text>:
+Upper 16-bits of the 32-bit Symbol error counter for lane 0; Clears on read; None roll-over.
+------------------------------
+<reg_short_dscr>:
+Counts number of (corrected) 10-bit symbol errors found in lane 1; None roll-over when upper 16-bits are 0xffff.
+------------------------------
+<field_public_text>:
+Counts number of (corrected) 10-bit symbol errors found in lane 1 for correctable codewords only; Lower 16-bit of counter; Must be read first; None roll-over when upper word is 0xffff.
+------------------------------
+<reg_short_dscr>:
+Upper 16-bit of counter (with above register); Clears on read; None roll-over.
+------------------------------
+<field_public_text>:
+Upper 16-bits of the 32-bit Symbol error counter for lane 1; Clears on read; None roll-over.
+------------------------------
+<reg_short_dscr>:
+Counts number of (corrected) 10-bit symbol errors found in lane 2; None roll-over when upper 16-bits are 0xffff.
+------------------------------
+<field_public_text>:
+Counts number of (corrected) 10-bit symbol errors found in lane 2 for correctable codewords only; Lower 16-bit of counter; Must be read first; None roll-over when upper word is 0xffff.
+------------------------------
+<reg_short_dscr>:
+Upper 16-bit of counter (with above register); Clears on read; None roll-over.
+------------------------------
+<field_public_text>:
+Upper 16-bits of the 32-bit Symbol error counter for lane 2; Clears on read; None roll-over.
+------------------------------
+<reg_short_dscr>:
+Counts number of (corrected) 10-bit symbol errors found in lane 3; None roll-over when upper 16-bits are 0xffff.
+------------------------------
+<field_public_text>:
+Counts number of (corrected) 10-bit symbol errors found in lane 3 for correctable codewords only; Lower 16-bit of counter; Must be read first; None roll-over when upper word is 0xffff.
+------------------------------
+<reg_short_dscr>:
+Upper 16 bit of counter (with above register); Clears on read; None roll-over.
+------------------------------
+<field_public_text>:
+Upper 16-bits of the 32-bit Symbol error counter for lane 3; Clears on read; None roll-over.
+------------------------------
+<reg_short_dscr>:
+Additional control to enable RS-FEC operation.
+------------------------------
+<field_public_text>:
+Indicates per channel if RSFEC is currently enabled (1) or not (0).
+------------------------------
+<field_public_text>:
+Channel 2; When 1 use RSFEC over single lane 2 (25G); When 0 use RSFEC over 2 lanes 2,3 (50G).
+------------------------------
+<field_public_text>:
+Channel 0; When 1 use RSFEC over single lane 0 (25G); When 0 use RSFEC over 2 lanes 0,1 (50G).
+------------------------------
+<field_public_text>:
+When 1, enable RSFEC datapath of Channel 0; This is a legacy bit only, ORed with Channel 0 RS_FEC_CONTROL bit 2. Should not be used any more.
+------------------------------
+<reg_short_dscr>:
+Implementation specific information that may be useful for debugging link problems; Clears on read.
+------------------------------
+<field_public_text>:
+reserved, unused.
+------------------------------
+<field_public_text>:
+FEC alignment status; Latched high; Sets on read.
+------------------------------
+<field_public_text>:
+TX datapath 4x66 input fifo overflow fatal error; Latched high; Clear on read.
+------------------------------
+<field_public_text>:
+RX datapath 4x66 pacing fifo overflow fatal error; Latched high; Clear on read.
+------------------------------
+<field_public_text>:
+TX datapath (sync) reset occured; Latched high; Clear on read.
+------------------------------
+<field_public_text>:
+RX datapath (sync) reset occured; Latched high; Clear on read.
+------------------------------
+<field_public_text>:
+The marker_check function (PCS sublayer) caused an alignment restart to the FEC; Latched high; Clear on read.
+------------------------------
+<field_public_text>:
+FEC alignment status; Latched high; Clear on read.
+------------------------------
+<field_public_text>:
+Per PMA lane FEC synchronization status; Bit 0=lane 0 up to Bit 3 = lane 3; Latched high; Clear on read.
+------------------------------
+<reg_short_dscr>:
+Implementation specific status information; Clears on read.
+------------------------------
+<field_public_text>:
+Per PMA lane RSFEC decoder internal error; Latched-high;
+------------------------------
+<field_public_text>:
+Per PMA lane FEC synchronization status; Realtime updates;
+ Bit  0 = lane 0 upto bit 3 = lane 3;
+------------------------------
+<reg_short_dscr>:
+A version information taken from package file parameter FEC91_DEV_VERSION.
+------------------------------
+<field_public_text>:
+A version information taken from package file parameter FEC91_DEV_VERSION.
+------------------------------

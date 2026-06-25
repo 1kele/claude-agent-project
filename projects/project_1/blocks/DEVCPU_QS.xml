@@ -1,0 +1,210 @@
+=== DOCUMENTATION FOR TARGET: DEVCPU_QS ===
+
+<string_constant> [x_DEVCPU_QS_NUM_XTR_GROUPS_MUL_PCI_BURST_SIZE]:
+2
+------------------------------
+<string_constant> [x_LOG2_PCI_BURST_SIZE]:
+0
+------------------------------
+<string_constant> [x_DEVCPU_QS_NUM_XTR_GROUPS]:
+2
+------------------------------
+<string_constant> [x_DEVCPU_QS_LOG2_NUM_XTR_GROUPS]:
+1
+------------------------------
+<string_constant> [x_DEVCPU_QS_NUM_INJ_GROUPS_MUL_PCI_BURST_SIZE]:
+2
+------------------------------
+<string_constant> [x_DEVCPU_QS_NUM_INJ_GROUPS]:
+2
+------------------------------
+<string_constant> [x_DEVCPU_QS_LOG2_NUM_INJ_GROUPS]:
+1
+------------------------------
+<string_constant> [x_DEVCPU_XTR_LOG2_START_GAPS_CNT]:
+6
+------------------------------
+<string_constant> [x_DEVCPU_XTR_LOG2_XTR_GRP_BUF_WORDS]:
+5
+------------------------------
+<string_constant> [x_DEVCPU_XTR_SCH_FLW_CTRL_WM]:
+4
+------------------------------
+<string_constant> [x_DEVCPU_XTR_DPRESENT_WM]:
+2
+------------------------------
+<target_short_dscr>:
+CPU Device Queue System
+------------------------------
+<reggrp_short_dscr>:
+Frame extraction
+------------------------------
+<reggrp_public_text>:
+The DEVCPU_QS::XTR_GRP_CFG, DEVCPU_QS::XTR_RD, and DEVCPU_QS::XTR_FRM_PRUNING registers are replicated once per extraction group. Replication index n corresponds to extraction group number n.
+------------------------------
+<reg_short_dscr>:
+Extraction group configuration
+------------------------------
+<field_public_text>:
+Configures mode of the extraction group. Each extraction group can be assigned to one of three owners.
+Note: The VRAP block support only one context, if more than one extraction group is assigned the lowest group-number will be used.
+------------------------------
+<field_enc>:
+0: VRAP block
+1: Manual extraction (via DEVCPU_QS registers)
+2: FDMA extraction and manual extraction via SBA registers
+------------------------------
+<field_public_text>:
+Select order of last data and status words.
+This field only applies to manual extraction mode (see DEVCPU_QS::XTR_GRP_CFG.MODE).
+------------------------------
+<field_enc>:
+0: Status just before last data
+1: Status just after last data
+------------------------------
+<field_public_text>:
+This field allows swapping the endianness of DEVCPU_QS::XTR_RD. Most software will want to read extraction data in network order (big-endian mode), i.e. the first byte of the destiantion MAC address to be placed on byte-address 0 of DEVCPU_QS::XTR_RD. In order to do this a little endian CPU must set this field, a big endian CPU must clear this field.
+This field only applies to manual extraction mode (see DEVCPU_QS::XTR_GRP_CFG.MODE).
+------------------------------
+<field_enc>:
+0: Same endianness
+1: Swap endianness
+------------------------------
+<reg_short_dscr>:
+Manual extraction data
+------------------------------
+<field_public_text>:
+Frame Data. Read from this register to obtain the next 32 bits of the frame data currently stored in the CPU queue system. Each read must check for the special values "0x8000000n", 0<=n<=7, as described by the encoding.
+Note: The encoding is presented in little endian format, if swapping is used (see DEVCPU_QS::XTR_GRP_CFG.BYTE_SWAP), then the special values are swapped as well. I.e. a little endian CPU using BYTE_SWAP=1 has to look for "0x0n000080" instead of "0x8000000n".
+The position of the unused/valid bytes follows the endianness encoding and swapping.
+------------------------------
+<field_enc>:
+n=0-3: EOF. Unused bytes in end-of-frame word is 'n'
+n=4   : EOF, but truncated
+n=5   : EOF Aborted. Frame invalid
+n=6   : Escape. Next read is packet data
+n=7   : Data not ready for reading out
+------------------------------
+<reg_short_dscr>:
+Extraction frame pruning
+------------------------------
+<field_public_text>:
+Extracted frames for the corresponding queue are pruned to (PRUNE_SIZE+1) 32-bit words.
+Note :  PRUNE_SIZE includes the IFH when this present in the frame.
+------------------------------
+<field_enc>:
+0 : No pruning
+1:  Frames extracted are pruned to 8 bytes
+2:  Frames extracted are pruned to 12 bytes
+...
+255:  Frames extracted are pruned to 1024 bytes
+------------------------------
+<reg_short_dscr>:
+Extraction group flush
+------------------------------
+<field_public_text>:
+Enable software flushing of a CPU queue.
+Note the queue will continue to be flushed until this field is cleared by SW. The flushing will automatically stop on frame boundary so OQS is allowed to transmit to the CPU queue during flushing.
+------------------------------
+<field_enc>:
+0: No action
+1: Do CPU queue flushing
+------------------------------
+<reg_short_dscr>:
+Extraction status
+------------------------------
+<field_public_text>:
+Shows if data is available for a specific group. It remains set until all frame data have been extracted. This field is only set if the mode of the group is set to manual extraction via DEVCPU_QS registers.
+------------------------------
+<field_enc>:
+0: No frames available for this CPU queue group
+1: At least one frame is available for this CPU queue group
+------------------------------
+<reggrp_short_dscr>:
+Frame injection
+------------------------------
+<reggrp_public_text>:
+The DEVCPU_QS::INJ_GRP_CFG, DEVCPU_QS::INJ_WR, DEVCPU_QS::INJ_CTRL, and DEVCPU_QS::INJ_ERR registers are replicated once per injection group. Replication index n corresponds to injection group number n.
+------------------------------
+<reg_short_dscr>:
+Injection group configuration
+------------------------------
+<field_public_text>:
+Configures mode of the injection group. Each injection group can be assigned to one of three owners.
+Note: The VRAP block support only one context, if more than one injection group is assigned the lowest group-number will be used.
+------------------------------
+<field_enc>:
+0: VRAP block
+1: Manual injection (via DEVCPU_QS registers)
+2: FDMA injection and manual injection via SBA registers
+------------------------------
+<field_public_text>:
+This field allows swapping the endianness of the DEVCPU_QS::INJ_WR register. Most software will want to write injection data in network order (big-endian mode), i.e. the first byte of the destiantion MAC address to be placed on byte-address 0 of DEVCPU_QS::INJ_WR. In order to do this a little endian CPU must set this field, a big endian CPU must clear this field.
+This field only applies to manual extraction mode (see DEVCPU_QS::INJ_GRP_CFG.MODE).
+------------------------------
+<field_enc>:
+0: Same endianness as CPU
+1: Swap endianness
+------------------------------
+<reg_short_dscr>:
+Manual injection data
+------------------------------
+<field_public_text>:
+Frame Write. Write to this register inject  the next 32 bits of the frame data currently injected into the chip.
+Reading from this register returns 0.
+------------------------------
+<reg_short_dscr>:
+Injection control
+------------------------------
+<field_public_text>:
+Controls the min-spacing from EOF to SOF on injected frames, the default value emulates the delay of standard preamble/IFG setting on a front-port. Set this field to zero when injecting with IFH.
+------------------------------
+<field_public_text>:
+Set to abort the current frame.
+------------------------------
+<field_public_text>:
+Set to indicate that the next data written to DEVCPU_Qs::INJ_WR is end-of-frame. At the same time as setting this field, also set DEVCPU_QS::INJ_CTRL.VLD_BYTES to indicate the number of valid data bytes in the end-of-frame word.
+------------------------------
+<field_public_text>:
+Set to indicate that the next data written to DEVCPU_QS::INJ_WR is start-of-frame.
+------------------------------
+<field_public_text>:
+Set to indicate how many bytes of the next data written to DEVCPU_QS::INJ_WR which are valid. This field is only used during end-of-frame words (see DEVCPU_QS::INJ_CTRL.EOF for more information). The position of the valid bytes follows the endianness encoding and swapping.
+------------------------------
+<field_enc>:
+0: All bytes are valid
+n: 'n' byte are valid
+------------------------------
+<reg_short_dscr>:
+Injection status
+------------------------------
+<field_public_text>:
+Before the CPU injects a frame, software may check if the input queue has reached high watermark. If wathermark in the IQS has been reached this bit will be set.
+------------------------------
+<field_enc>:
+0: Input queue has not reached high watermark
+1: Input queue has reached high watermark, and frames injected may be dropped due to buffer overflow
+------------------------------
+<field_public_text>:
+When '1' the injector group's FIFO is ready for additional data written through the DEVCPU_QS::INJ_WR register.
+------------------------------
+<field_enc>:
+0: The injector group cannot accept additional data
+1: The injector group is able to accept additional data
+------------------------------
+<field_public_text>:
+When '1' the injector group is in the process of receiving a frame, and at least one write to INJ_WR remains before the frame is forwarded to the front ports. When '0' the injector group is waiting for an initiation of a frame injection.
+------------------------------
+<field_enc>:
+0: A frame injection is not in progress
+1: A frame injection is in progress
+------------------------------
+<reg_short_dscr>:
+Injection errors
+------------------------------
+<field_public_text>:
+Set if a frame has been aborted because of double-SOF injection (missing EOF).
+------------------------------
+<field_public_text>:
+Set in case of overflow as a result of not obeying FIFO-ready
+------------------------------

@@ -1,0 +1,427 @@
+=== DOCUMENTATION FOR TARGET: DSM ===
+
+<target_short_dscr>:
+Disassembler
+------------------------------
+<reggrp_short_dscr>:
+Access core memory
+------------------------------
+<reg_short_dscr>:
+Core reset control
+------------------------------
+<reg_public_text>:
+Controls reset and initialization of the switching core. Proper startup sequence is:
+- Enable memories
+- Initialize memories
+- Enable core
+------------------------------
+<field_public_text>:
+Initialize core memories. Field is automatically cleared when operation is complete (approx. 40 us).
+------------------------------
+<reggrp_short_dscr>:
+Configuration registers
+------------------------------
+<reggrp_public_text>:
+Configuration registers
+------------------------------
+<reg_short_dscr>:
+Configuration per device buffer.
+------------------------------
+<reg_public_text>:
+Miscellaneous configurations per device buffer.
+------------------------------
+<field_public_text>:
+Disables updates of the DSM related counter for the common statistics counter system that is used for DEV1G/DEV2G5 devices (ASM:DEV_STATISTICS:TX_PAUSE_CNT).
+Set this when the port utilizes a DEV10G device as it handles the statistics locally in the device (Statistics counters in DEV10G:DEV_STATISTICS_*:*).
+------------------------------
+<field_public_text>:
+Enable aging of frames stuck in the DSM buffer system for long periods.
+Aging is done by comparing the age era stamped into the frame with the current age era. This check is only performed at SOF. If the current age era is more than one higher than the era stamped into the frame, then the frame is discarded.
+
+Frame aging related parameters:
+QSYS:SYSTEM:FRM_AGING.MAX_AGE
+HSCH:SYSTEM:PORT_MODE.AGE_DIS
+DSM:CFG:BUF_CFG.AGING_ENA
+------------------------------
+<field_enc>:
+'0': Aging disabled.
+'1': Aging enabled.
+------------------------------
+<field_public_text>:
+Disable dropping of frame when underflow occurs.
+------------------------------
+<field_public_text>:
+Number of taxi cycles that the cell buffer is allowed to be empty before aborting frame due to underflow.
+------------------------------
+<reg_short_dscr>:
+txAdditionalFrameOverhead configuration
+------------------------------
+<reg_public_text>:
+Configuration of the txAdditionalFrameOverhead in RateLimit
+------------------------------
+<field_public_text>:
+If Rate Limit mode Frame Rate Overhead is enabled this bitgroup is used for configuration of txAdditionalFrameOverhead.
+------------------------------
+<reg_short_dscr>:
+Configuration register for IPG shrink mode
+------------------------------
+<reg_public_text>:
+Configuration register for IPG shrink mode
+------------------------------
+<field_public_text>:
+Enable for preamble shrink in IPG shrink mode of DEV10G, DEV24G.
+Preamble shrink is only allowed when IPG shrink mode is enabled.
+------------------------------
+<field_public_text>:
+Enable for IPG shrink mode of DEV10G, DEV24G.
+In shrink mode frame gap compensation is depending on frame size.
+------------------------------
+<reg_short_dscr>:
+Clear a single buffer in the DSM.
+------------------------------
+<reg_public_text>:
+This register controls clearing of buffers in the DSM.
+------------------------------
+<field_public_text>:
+A write to this register clears the indicated buffer. No other buffers will be influenced by clearing this buffer.
+Encoding:
+1: Clears buffer for port 0
+2: Clears buffer for port 1
+2^N: Clears buffer for port N
+
+If N > 31 Use respective next register.
+------------------------------
+<field_enc>:
+'0': No action
+'1': Buffer is cleared (Bit is automatically cleared)
+------------------------------
+<reg_short_dscr>:
+Token count tx stop watermark
+------------------------------
+<reg_public_text>:
+Token count tx stop watermark
+------------------------------
+<field_public_text>:
+Reserved, must set to its default value.
+------------------------------
+<field_public_text>:
+Set this to '1' when a 10G capable port runs at speeds below 10G.
+------------------------------
+<field_public_text>:
+When the token counter value for the device exceeds this value the DSM will stop transmission to the device. When set to 0 a hardware calculated default value is used.
+When a port is configured for HDX this WM must be set to 1.
+------------------------------
+<field_public_text>:
+Clears token counter.
+------------------------------
+<reg_short_dscr>:
+Pause frame handling in RX direction
+------------------------------
+<reg_public_text>:
+Pause frame handling in RX direction
+------------------------------
+<field_public_text>:
+Rx Pause Enable: Enables Flow Control in Rx direction:
+------------------------------
+<field_enc>:
+'0': Flow Control Disabled
+'1': Flow Control Enabled.
+------------------------------
+<reg_short_dscr>:
+FC configuration for Ethernet ports.
+------------------------------
+<reg_public_text>:
+FC configuration for Ethernet ports.
+------------------------------
+<field_public_text>:
+Obey FC status received from ANA
+------------------------------
+<field_public_text>:
+Obey FC status received from QSYS
+------------------------------
+<reg_short_dscr>:
+PFC configuration for Ethernet ports.
+------------------------------
+<reg_public_text>:
+PFC configuration for Ethernet ports.
+------------------------------
+<field_public_text>:
+Minimum time between two PFC PDUs when PFC state changes after transmission of PFC PDU.
+------------------------------
+<field_public_text>:
+Upon sending  PFC PDU with flow control deasserted for all priorities, enforce a PFC_MIN_UPDATE_TIME delay before allowing transmission of next PFC PDU.
+------------------------------
+<field_public_text>:
+Enable PFC operation for the port.
+------------------------------
+<reg_short_dscr>:
+MAC Configuration Register.
+------------------------------
+<reg_public_text>:
+Contains configuration for flow control and operation in FDX or HDX for Ethernet ports connected to the DSM.
+------------------------------
+<field_public_text>:
+Tx Pause Value: The pause value inserted in each Pause Control Frame in the Tx direction. It is also used to schedule the transmission of Pause Control Frames when Flow Control is enabled and active. If flow control is enabled, the pause value must be set to a value different from 0, based on the link characteristics.
+------------------------------
+<field_enc>:
+0x0000: 0 quanta (512-bit times) 
+0x0001: 1 quanta
+...
+0xFFFF: 64K-1 quanta.
+------------------------------
+<field_public_text>:
+Enables HDX backpressure instead of FDX FC when FC is generated.
+Note: 10G and 24G ports can not run HDX, so for those ports this field must always be set to '0'.
+------------------------------
+<field_enc>:
+'0': FDX FC is used.
+'1': HDX backpreassure is used.
+------------------------------
+<field_public_text>:
+TX pause zero on deassert. Determines whether or not a pause control frame with pause value zero is transmitted when flow control is deasserted.
+------------------------------
+<field_enc>:
+'0': No pause frame with value zero is transmitted.
+'1': Pause frame with value zero is transmitted when flow control becomes inactive.
+------------------------------
+<reg_short_dscr>:
+MAC Address Base Configuration Register - bits 47-24.
+------------------------------
+<reg_public_text>:
+MAC base address.
+Used when generating Pause Control Frames with the specified MAC address.
+------------------------------
+<field_public_text>:
+Bits 47-24 of MAC base address.
+Used when generating Pause Control Frames with the specified MAC address.
+------------------------------
+<reg_short_dscr>:
+MAC Address Base Configuration Register - bits 23-0.
+------------------------------
+<reg_public_text>:
+MAC base address.
+Used when generating Pause Control Frames with the specified MAC address.
+------------------------------
+<field_public_text>:
+Bits 23-0 of MAC base address.
+Used when generating Pause Control Frames with the specified MAC address.
+------------------------------
+<reg_short_dscr>:
+Configuration register for the taxi calendar
+------------------------------
+<field_public_text>:
+Calendar index.
+------------------------------
+<field_public_text>:
+Index of last entry in calendar sequence, that is, calendar length - 1.
+------------------------------
+<field_public_text>:
+Value of calendar slot at index CAL_IDX.
+------------------------------
+<field_public_text>:
+Value to write into calendar at index CAL_IDX.
+------------------------------
+<field_public_text>:
+Enable update of calendar. When the calendar is updated CAL_CUR_LEN is automatically updated to the value of CAL_IDX.
+------------------------------
+<reg_short_dscr>:
+Preemption configuration
+------------------------------
+<field_public_text>:
+This field indicates the minimum size of non-final fragments of a P-Frame.
+------------------------------
+<field_enc>:
+0: 64 bytes
+1: 128 bytes
+2: 192 bytes
+------------------------------
+<reggrp_short_dscr>:
+Status registers
+------------------------------
+<reggrp_public_text>:
+Status registers
+------------------------------
+<reg_short_dscr>:
+Counts number of aged frames.
+------------------------------
+<reg_public_text>:
+This counter holds the number of aged frames from this port.
+------------------------------
+<field_public_text>:
+Count number of aged frames for each port.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Buffer Overflow
+------------------------------
+<reg_public_text>:
+Buffer Overflow
+------------------------------
+<field_public_text>:
+Sticky bits for detecting buffer overflow in any of the cell buffers in the DSM.
+------------------------------
+<field_enc>:
+'0': No buffer overflow detected.
+'1': Buffer overflow detected.
+Bit is cleared by writing a '1' to this position.
+------------------------------
+<reg_short_dscr>:
+Buffer Underrun
+------------------------------
+<reg_public_text>:
+Buffer Underrun
+------------------------------
+<field_public_text>:
+Sticky bits for detecting buffer underflow in any of the cell buffers in the DSM.
+------------------------------
+<field_enc>:
+'0': No buffer underflow detected.
+'1': Buffer underflow detected.
+Bit is cleared by writing a '1' to this position.
+------------------------------
+<reggrp_short_dscr>:
+Configuration registers for rate limit modes
+------------------------------
+<reggrp_public_text>:
+Configuration registers for rate limit modes
+------------------------------
+<reg_short_dscr>:
+Configuration register for rate limit modes
+------------------------------
+<reg_public_text>:
+Configuration register for rate limit modes
+------------------------------
+<field_public_text>:
+Scale the IPG calculated by txRateLimitFrameOverhead and/or txRateLimitPayloadRate by a power of 2 to enable shaping down to lower BW.
+
+Note: For txRateLimitPayloadRate only the additional overhead excluding the standard 12 byte IPG is scaled whereas for txRateLimitFrameOverhead the complete value is scaled.
+------------------------------
+<field_enc>:
+0: Don't scale
+1: Multiply by 2
+2: Multiply by 4
+(...)
+10: Multiply by 1024
+11-15: Reserved
+------------------------------
+<field_public_text>:
+Defines if what is configured as header size in TX_RATE_LIMIT_HDR_CFG.TX_RATE_LIMIT_HDR_SIZE is subtracted form the payload in txRateLimitPayloadRate and txRateLimitFrameRate mode.
+------------------------------
+<field_enc>:
+0: Nothing is subtracted from payload
+1: TX_RATE_LIMIT_HDR_CFG.TX_RATE_LIMIT_HDR_SIZE is subtracted from payload
+------------------------------
+<field_public_text>:
+This bitgroup defines whether the preamble is counted as payload in txRateLimitPayloadRate and txRateLimitFrameRate mode.
+------------------------------
+<field_enc>:
+'0': Preamble is not counted as payload
+'1': Preamble is counted as payload
+------------------------------
+<field_public_text>:
+Enable for accumulated rate limit mode.
+Instead of taking the maximum  IPG of txRateLimitFrameOverhead, txRateLimitPayloadRate and txRateLimitFrameRate. The resulting IPG is the sum of txRateLimitFrameOverhead and txRateLimitPayloadRate. txRateLimitFrameRate must be disabled.
+------------------------------
+<field_enc>:
+'0': Accumulated rate limit mode is disabled
+'1': Accumulated rate limit mode is enabled
+------------------------------
+<field_public_text>:
+Enable txRateLimitFrameRate mode.
+IPG is extended so that frame_size + IPG result in the value configured in TX_FRAME_RATE_START_CFG.TX_FRAME_RATE_START
+------------------------------
+<field_enc>:
+'0': txRateLimitFrameRate disabled
+'1': txRateLimitFrameRate enabled
+------------------------------
+<field_public_text>:
+Enable txRateLimitPayloadRate mode.
+IPG is increased relative to payload size.
+------------------------------
+<field_enc>:
+'0': txRateLimitPayloadRate disabled
+'1': txRateLimitPayloadRate enable
+------------------------------
+<field_public_text>:
+Enable txRateLimitFrameOverhead mode.
+IPG is increased by a fixed value specified in 
+RATE_CTRL.FRM_GAP_COMP
+------------------------------
+<field_enc>:
+'0': txRateLimitFrameOverhead disabled
+'1': txRateLimitFrameOverhead enabled
+------------------------------
+<reg_short_dscr>:
+Configuration register for txFineIpgStretchRatio
+------------------------------
+<reg_public_text>:
+Configuration register for txFineIpgStretchRatio
+------------------------------
+<field_public_text>:
+Determines the extent of the interPacketGap extension, when txRateLimitPayloadRate mode is enabled. It may be considered as the number of bits in a packet that would require 32 octets of interPacketGap extension. Note that each interPacketGap is increased by an integer number of octets, the average increase is (frame length in bits) * 32) / txFineIpgStretchRatio.
+
+Note: fractions left at frame border will be carried on to the next frame.
+
+Example:
+Packet length = 64 bytes + 8 bytes preamble 
+value = 2048
+IPG increase = 9 bytes
+
+Maximum IPG increase is 255 bytes.
+------------------------------
+<field_enc>:
+IPG increase = frame length in bits * 32 / value.
+
+values below 2048 and above 518143 are reserved for arithmetic processing  reasons.
+------------------------------
+<reg_short_dscr>:
+Configuration register for txFrameRateStart
+------------------------------
+<reg_public_text>:
+Configuration register for txFrameRateStart
+------------------------------
+<field_public_text>:
+Value loaded into the txFrameRateTimer at the start of each packet, when TX_RATE_LIMIT_FRAME_RATE mode is enabled.
+Timer is decremented with each byte transmitted.
+IPG is set to timer value at EOF.
+Note: If resulting IPG is smaller than the minimum IPG of 12 bytes, it will be set to 12 bytes.
+------------------------------
+<field_enc>:
+Timer start value in bytes.
+To take effect, value must be above 84. (64byte min frame size, 8 byte preamble, 12 byte minimum IFG).
+------------------------------
+<reg_short_dscr>:
+Header size configuration register for txRateLimitPayloadRate mode
+------------------------------
+<reg_public_text>:
+Header size configuration register for txRateLimitPayloadRate mode
+------------------------------
+<field_public_text>:
+Defines how much of the frame is seen as header and not counted as payload in txRateLimitPayloadRate and txRateLimitFrameRate mode when TX_RATE_LIMIT_MODE.PAYLOAD_CFG is set to 1.
+------------------------------
+<field_enc>:
+0: 32 bytes are counted as header
+1-31: 1-31 bytes are counted as header
+------------------------------
+<reggrp_short_dscr>:
+Status registers for rate limit modes
+------------------------------
+<reggrp_public_text>:
+Status registers for rate limit modes
+------------------------------
+<reg_short_dscr>:
+Sticky bit register for rate limit modes
+------------------------------
+<reg_public_text>:
+Sticky bit register for rate limit modes
+------------------------------
+<field_public_text>:
+Sticky bit set when one of the three tx rate limitation modes has increased the IPG. I.e. when a tx rate limit mode was enabled an DSM has requested the device to use a IPG different from 12 byte.
+------------------------------
+<field_enc>:
+'0': Tx Rate Limitation has not occurred.
+'1': Tx Rate Limitation has occurred.
+Bit is cleared by writing a '1' to this position.
+------------------------------

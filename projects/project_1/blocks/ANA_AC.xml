@@ -1,0 +1,2256 @@
+=== DOCUMENTATION FOR TARGET: ANA_AC ===
+
+<string_constant> [x_ANA_LOG2_NUM_CPU_QUEUES]:
+3
+------------------------------
+<string_constant> [x_ANA_NUM_CPU_QUEUES]:
+8
+------------------------------
+<string_constant> [x_ANA_NUM_INB_PORTS]:
+70
+------------------------------
+<string_constant> [x_ANA_LOG2_NUM_ETH_PORTS]:
+7
+------------------------------
+<string_constant> [x_ANA_NUM_ETH_PORTS]:
+65
+------------------------------
+<string_constant> [x_ANA_NUM_PRIOS]:
+8
+------------------------------
+<string_constant> [x_ANA_NUM_GLAG]:
+32
+------------------------------
+<string_constant> [x_ANA_NUM_PGID_TBL_ENTRIES]:
+3290
+------------------------------
+<string_constant> [x_ANA_NUM_PGID_MIN]:
+1024
+------------------------------
+<string_constant> [x_ANA_NUM_PGID]:
+2048
+------------------------------
+<string_constant> [x_ANA_NUM_AGGR]:
+16
+------------------------------
+<string_constant> [x_ANA_NUM_FV_LAG]:
+32
+------------------------------
+<string_constant> [x_ANA_NUM_SRC_ENTRIES]:
+102
+------------------------------
+<string_constant> [x_ANA_AC_NUM_PROBE]:
+3
+------------------------------
+<string_constant> [x_ANA_NUM_CONCURRENT_CNT]:
+4
+------------------------------
+<string_constant> [x_ANA_TSTAMP_HI_BITS]:
+8
+------------------------------
+<string_constant> [x_TSN_STREAM_GATE_ID_CNT_PLUS_1]:
+1024
+------------------------------
+<target_short_dscr>:
+Access Control sub block of the Analyzer
+------------------------------
+<target_public_text>:
+Controls mask handling etc.
+------------------------------
+<reggrp_short_dscr>:
+Access core memory
+------------------------------
+<reg_short_dscr>:
+Core reset control
+------------------------------
+<reg_public_text>:
+Controls reset and initialization of the switching core. Proper startup sequence is:
+- Enable memories
+- Initialize memories
+- Enable core
+------------------------------
+<field_public_text>:
+Initialize core memories. Field is automatically cleared when operation is complete (approx. 40 us).
+------------------------------
+<reggrp_short_dscr>:
+Common configurations for all ports
+------------------------------
+<reggrp_public_text>:
+Access Control block (ANA_AC) configuration and status registers
+------------------------------
+<reg_short_dscr>:
+Miscellaneous control parameters
+------------------------------
+<field_public_text>:
+Enable use of VID instead of ISDX_BASE_ADDR as index to statistics in ANA_AC:STAT_CNT_CFG_ISDX.
+
+Related parameters:
+ANA_L2::ISDX_BASE_CFG.ISDX_BASE_ADDR
+REW:COMMON:CNT_CTRL.STAT_MODE.
+------------------------------
+<field_public_text>:
+Avoid CPU sending back to CPU.
+------------------------------
+<reg_short_dscr>:
+Various, common configuration parameters
+------------------------------
+<field_public_text>:
+Enable lookup of SRC port table using logical source port.
+------------------------------
+<field_public_text>:
+Needed in 802.1BR mode
+------------------------------
+<field_public_text>:
+Enable lookup of port mask for conversation-sensitive LAG distribution. 
+If disabled, the CSD mask does not affect the egress port mask.
+------------------------------
+<field_enc>:
+0: Lookup is disabled
+1: Use outer VID
+2: Use classified VID (vstax.tag.vid)
+3: Use GVID (encap.gvid)
+------------------------------
+<field_public_text>:
+Enable sFlow sampling.
+------------------------------
+<field_public_text>:
+Enable lookup of logical source port. 
+If disabled, the source mask does not affect the egress port mask.
+------------------------------
+<reg_short_dscr>:
+sFlow configuration
+------------------------------
+<reg_public_text>:
+This register configures the sFlow sampler.
+------------------------------
+<field_public_text>:
+CPU queue for frames copied to the CPU by an sFlow Sampler.
+
+Note that sFlow sampling will not cause any bits in IFH.MISC.CPU_MASK to get set. 
+Instead IFH.DST.SFLOW_MARKING is set (in all CPU copies of the frame).
+------------------------------
+<reg_short_dscr>:
+sFlow counter reset
+------------------------------
+<reg_public_text>:
+This register configures the sFlow Sampler reset.
+------------------------------
+<field_public_text>:
+When set to 1, the following counters are reset for all sFlow Samplers:
+ANA_AC:SFLOW:SFLOW_CNT.SFLOW_SAMPLE_CNT
+ANA_AC:SFLOW:SFLOW_CNT.SFLOW_FRAME_FWD_CNT
+
+Upon resetting the counters, the device will set the parameter back to 0.
+------------------------------
+<field_enc>:
+0: No action
+1: Reset counters.
+------------------------------
+<reg_short_dscr>:
+Stack port mask configuration
+------------------------------
+<field_public_text>:
+Stack port mask.
+
+For ports used for stacking, the corresponding bit must be set in this port mask.
+------------------------------
+<field_enc>:
+'XX...XXX': Where X is '0' or '1', representing a destination port.
+------------------------------
+<reg_short_dscr>:
+Stack port mask configuration
+------------------------------
+<field_public_text>:
+Stack port mask.
+
+For ports used for stacking, the corresponding bit must be set in this port mask.
+------------------------------
+<field_enc>:
+'XX...XXX': Where X is '0' or '1', representing a destination port.
+------------------------------
+<reg_short_dscr>:
+Stack port mask configuration
+------------------------------
+<field_public_text>:
+Stack port mask.
+
+For ports used for stacking, the corresponding bit must be set in this port mask.
+------------------------------
+<field_enc>:
+'XX...XXX': Where X is '0' or '1', representing a destination port.
+------------------------------
+<reg_short_dscr>:
+Port mask for Stack Port A
+------------------------------
+<field_public_text>:
+Port mask with ports of stack port A.
+
+This mask is only used when forwarding to UPSIDs with STACK_LINK_EQUAL_COST_CFG.STACK_LINK_EQUAL_ENA=1.
+
+If STACK_LINK_EQUAL_ENA is set, then the stack forwarding mask is calculated as one of the following two, depending on AC:
+  Even AC:
+    UPSID.UPSID_PORT_VEC* & STACK_A_CFG.STACK_A_VEC*
+  Odd AC:
+    UPSID.UPSID_PORT_VEC* & ~STACK_A_CFG.STACK_A_VEC*
+------------------------------
+<field_enc>:
+'XX...XXX': Where X is '0' or '1', representing a stacking link A destination port.
+------------------------------
+<reg_short_dscr>:
+Port mask for Stack Port A
+------------------------------
+<field_public_text>:
+Port mask with ports of stack port A.
+
+This mask is only used when forwarding to UPSIDs with STACK_LINK_EQUAL_COST_CFG.STACK_LINK_EQUAL_ENA=1.
+
+If STACK_LINK_EQUAL_ENA is set, then the stack forwarding mask is calculated as one of the following two, depending on AC:
+  Even AC:
+    UPSID.UPSID_PORT_VEC* & STACK_A_CFG.STACK_A_VEC*
+  Odd AC:
+    UPSID.UPSID_PORT_VEC* & ~STACK_A_CFG.STACK_A_VEC*
+------------------------------
+<field_enc>:
+'XX...XXX': Where X is '0' or '1', representing a stacking link A destination port.
+------------------------------
+<reg_short_dscr>:
+Port mask for Stack Port A
+------------------------------
+<field_public_text>:
+Port mask with ports of stack port A.
+
+This mask is only used when forwarding to UPSIDs with STACK_LINK_EQUAL_COST_CFG.STACK_LINK_EQUAL_ENA=1.
+
+If STACK_LINK_EQUAL_ENA is set, then the stack forwarding mask is calculated as one of the following two, depending on AC:
+  Even AC:
+    UPSID.UPSID_PORT_VEC* & STACK_A_CFG.STACK_A_VEC*
+  Odd AC:
+    UPSID.UPSID_PORT_VEC* & ~STACK_A_CFG.STACK_A_VEC*
+------------------------------
+<field_enc>:
+'XX...XXX': Where X is '0' or '1', representing a stacking link A destination port.
+------------------------------
+<reg_short_dscr>:
+UPSID(s) for local ports
+------------------------------
+<reg_public_text>:
+First replication covers port number 0-31
+Second replication covers port numbers 32-63 (if applicable)
+etc.
+
+If not all OWN_UPSID replications are required in a given port configuration, then any unused replications must be set to the value of one of the replications in use.
+------------------------------
+<field_public_text>:
+Configures own UPSID to be used for stacking.
+
+This must be configured consistently across the following registers:
+ANA_CL:COMMON:OWN_UPSID
+ANA_ACL:COMMON:OWN_UPSID
+ANA_L2:COMMON:OWN_UPSID
+ANA_AC:PS_COMMON:OWN_UPSID
+REW:COMMON:OWN_UPSID
+------------------------------
+<reg_short_dscr>:
+Common stacking parameters
+------------------------------
+<field_public_text>:
+Disable counting of bytes and frames in ANA_AC:STAT_CNT_CFG_ISDX
+for frames received on a stack port.
+
+Related parameters:
+REW:COMMON:CNT_CTRL.VSTAX_STAT_ESDX_DIS
+------------------------------
+<field_public_text>:
+Allow FWD_LOGICAL entries in MAC table to control internal port number in VStaX header.
+
+If MAC table entry for DMAC specifies vstax.general.fwd_mode=FWD_LOGICAL and a destination port number of type port_type_intpn, then this bit controls the outgoing destination port number in the VStaX header.
+
+If this bit is clear, then the destination port number in VStaX header is set to intpn=15, regardless of the port number specified in the MAC table entry.
+
+If this bit is set, then the destination port number in VStaX header is set to the value of the port number specified in the MAC table entry.
+------------------------------
+<field_enc>:
+0: Disable (set destination port to intpn=15)
+1: Enable (set destination port to value in MAC table)
+------------------------------
+<field_public_text>:
+Configures value used for vstax.lrn_mode when forwarding routed IP multicast frames on stack port(s).
+------------------------------
+<field_enc>:
+0: lrn_mode=lrn_normal
+1: lrn_mode=lrn_skip
+------------------------------
+<field_public_text>:
+Configures value used for vstax.lrn_mode when forwarding routed IP unicast frames on stack port(s).
+------------------------------
+<field_enc>:
+0: lrn_mode=lrn_normal
+1: lrn_mode=lrn_skip
+------------------------------
+<field_public_text>:
+Configures handling of IP multicast routing on stack link.
+
+If IP multicast routing is performed in egress unit, then routed copies shall not be forwarded on the stack ports and this parameter must thus be set to 0.
+
+If IP multicast routing is performed in ingress unit (or centralized), then routed copies shall be forwarded on the stack ports and this parameter must thus be set to 3.
+------------------------------
+<field_enc>:
+0: Disable multicast on both links
+1: Enable multicast routing on stack link A
+2: Enable multicast routing on stack link B
+3: Enable multicast routing on both links
+------------------------------
+<field_public_text>:
+Forward unicast frames from front ports as fwd_mode==fwd_llookup (instead of fwd_logical)
+------------------------------
+<field_enc>:
+0: Disable
+1: Enable
+------------------------------
+<field_public_text>:
+This can be used to enable GLAG in a stack
+If enabled the upper GLAG*8 number of PGID multicast entries will be used for GLAG
+------------------------------
+<field_enc>:
+0: Disable
+1: Enable
+------------------------------
+<field_public_text>:
+This feature is to be used in 48 port switches consisting of two units (i.e. chips) and where the CPU is disabled 
+one of the units. Only the unit with the disabled CPU shall have vstax2_ttl_keep==1
+------------------------------
+<field_enc>:
+0: Disable
+1: Enable
+------------------------------
+<field_public_text>:
+Forward unicast frames from front ports taking congestion management into account
+------------------------------
+<field_enc>:
+0: Disable
+1: Enable
+------------------------------
+<field_public_text>:
+Forward multicast frames as fwd_mode==fwd_llookup (instead of fwd_mc).
+
+Note that PTP frames will always be forwarded using fwd_llookup, regardless of the value of VSTAX2_MC_LLOOKUP_ENA.
+------------------------------
+<field_enc>:
+0: Disable
+1: Enable
+------------------------------
+<field_public_text>:
+Forward non flooded multicast frames w. fwd_mode==fwd_llookup (instead of fwd_mc)
+------------------------------
+<field_enc>:
+0: Disable
+1: Enable
+------------------------------
+<field_public_text>:
+CPU queue for VStaX frames forwarding error.
+------------------------------
+<field_enc>:
+0: CPU queue 0
+1: CPU queue 1
+...
+n: CPU queue n.
+------------------------------
+<field_public_text>:
+Enable putting ISDX into VStaX header.
+
+Related parameters:
+ANA_CL:PORT:STACKING_CTRL.VSTAX_ISDX_ENA
+------------------------------
+<field_enc>:
+0: Disable (VSTAX MISC contains Aggregation code)
+1: Enable (VSTAX MISC contains ISDX)
+------------------------------
+<reg_short_dscr>:
+Common stacking parameters
+------------------------------
+<field_public_text>:
+TTL value used for equal cost path.
+
+Only applicable for ring topology stacks with an even number of units.
+Must be set to number of units in the stack divided by two.
+
+Use of equal cost paths is enabled by ANA_AC:UPSID:STACK_LINK_EQUAL_COST_CFG.STACK_LINK_EQUAL_ENA
+------------------------------
+<reg_short_dscr>:
+Per port stack configuration
+------------------------------
+<field_public_text>:
+Specify learn and forwarding operation for the port
+------------------------------
+<field_enc>:
+0: VStaX2/BF mode (Basic Forwarding mode)
+1: VStaX2/AF mode (Advanced Forwarding mode)
+------------------------------
+<reg_short_dscr>:
+VStaX Gmirror destination configuration
+------------------------------
+<field_public_text>:
+The set of port(s) to which frames received on a stack port and with fwd_mode=fwd_gmirror traffic are forwarded.
+
+This is only used in VStaX context.
+------------------------------
+<reg_short_dscr>:
+VStaX Gmirror destination configuration
+------------------------------
+<field_public_text>:
+The set of port(s) to which frames received on a stack port and with fwd_mode=fwd_gmirror traffic are forwarded.
+
+This is only used in VStaX context.
+------------------------------
+<reg_short_dscr>:
+VStaX Gmirror destination configuration
+------------------------------
+<field_public_text>:
+The set of port(s) to which frames received on a stack port and with fwd_mode=fwd_gmirror traffic are forwarded.
+
+This is only used in VStaX context.
+------------------------------
+<reg_short_dscr>:
+CPU related parameters
+------------------------------
+<field_public_text>:
+Specifies a group of CPU queues which will only receive one frame copy in total.
+
+Note that CPU copies due sFlow sampling will always be generated regardless of the value of ONE_CPU_COPY_ONLY_MASK.
+------------------------------
+<field_enc>:
+'00000000' : A frame copy will be generated for all CPU queues applicable for reception
+...
+'xxxxxx11' : Only one CPU copy will be generated for CPU queue 1 and 0
+...
+'11111111' : At most one frame copy will be generated for all CPU queues applicable for reception
+------------------------------
+<reggrp_short_dscr>:
+Mirror probe configuration
+------------------------------
+<reggrp_public_text>:
+Mirror probe configuration registers per probe index.
+
+In addition to the mirror probe configuration parameters provided in this register group, it is also possible to trigger frame mirroring using 
+VCAP_S2 -> MIRROR_PROBE action
+ANA_L3:VLAN:VLAN_CFG.VLAN_MIRROR_ENA
+
+The mirror port, to which mirrored frames are copied, is configured using these parameters:
+QFWD:SYSTEM:FRAME_COPY_CFG
+ANA_AC:PS_COMMON:VSTAX_GMIRROR_CFG (when using VStaX)
+
+Encapsulation mirrored frames can be configured using these parameters:
+REW:COMMON:MIRROR_PROBE_CFG
+REW:COMMON:MIRROR_TAG_A_CFG
+REW:COMMON:MIRROR_TAG_B_CFG
+------------------------------
+<reg_short_dscr>:
+Mirror probe configuration
+------------------------------
+<field_public_text>:
+Mirror traffic received from CPU by this mirror probe.
+
+PROBE_RX_CPU_AND_VD works as an extension of the PROBE_PORT_MASK to cover CPU ports and VD0/VD1.
+------------------------------
+<field_enc>:
+"00000": No RX mirror
+"xxxx1": Rx from CPU port 53 is mirrored
+"xxx1x": Rx from CPU port 54 is mirrored
+"xx1xx": Rx from VD0 is mirrored
+"x1xxx": Rx from VD1 is mirrored
+"1xxxx": Rx from VD2 is mirrored
+Only works with RX mirror enabled. See ANA_AC:MIRROR_PROBE:PROBE_CFG.PROBE_DIRECTION.
+------------------------------
+<field_public_text>:
+The set of CPU extraction ports from where traffic is Tx mirrored by this mirror probe.
+
+Only works when Tx mirroring is  enabled. 
+
+Related parameters:
+ANA_AC:MIRROR_PROBE:PROBE_CFG.PROBE_DIRECTION
+------------------------------
+<field_enc>:
+0: CPU extraction port is not Tx mirrored
+1: CPU extraction port is Tx mirrored
+------------------------------
+<field_public_text>:
+The mirror probe's VLAN ID when PROBE_VLAN_MODE is 10 or 11.
+
+Probing per VLAN can also be enabled in ANA_L3:VLAN, but such configuration will affect all mirror probes.
+
+Related parameters:
+ANA_AC:MIRROR_PROBE:PROBE_CFG.PROBE_VLAN_MODE
+ANA_L3:VLAN:VLAN_CFG.VLAN_MIRROR_ENA
+------------------------------
+<field_public_text>:
+Mirror probe's VLAN filtering mode.
+
+Related parameters:
+ANA_L3:VLAN:VLAN_CFG.VLAN_MIRROR_ENA
+------------------------------
+<field_enc>:
+00 : No VLAN filtering
+01 : Mirror only traffic in VLANs with ANA_L3:VLAN:VLAN_CFG.VLAN_MIRROR_ENA set
+10 : Mirror only traffic with CL-IVID = PROBE_VID.
+11 : Reserved.
+------------------------------
+<field_public_text>:
+Mirror probe's MAC address filtering mode, based on the mirror bit in the MAC table.
+------------------------------
+<field_enc>:
+"00" : No MAC filtering
+"01" : Mirror only traffic with mirror bit set for known DMAC
+"10" : Mirror only traffic with mirror bit set for known SMAC
+"11" : Mirror only traffic with mirror bit set for known DMAC and/or known SMAC
+------------------------------
+<field_public_text>:
+Direction of traffic that is mirrored.
+------------------------------
+<field_enc>:
+"00" : Mirroring is disabled.
+"01" : TX - Only traffic to destination ports in the probe port set
+"10" : RX - Only traffic from source ports in the probe port set
+"11" : RX+TX - Traffic to and from ports in the probe port set (always mirrored as RX)
+------------------------------
+<reg_short_dscr>:
+Mirror probe configuration
+------------------------------
+<field_public_text>:
+Controls whether physical or masqueraded port number will be used for lookup in PROBE_PORT_MASK.
+
+CPU injected frames with masqueraded port number are identfied by having IFH.MIWC.PIPELINE_ACT == INJ_MASQ.
+
+Frames, which have been looped back from Up-MEP can only be mirrored if masqueraded port number is used for lookup in PROBE_PORT_MASK.
+
+Related parameters:
+ANA_AC:MIRROR_PROBE:PROBE_PORT_CFG.PROBE_PORT_MASK.
+------------------------------
+<field_enc>:
+0: If frame is masqueraded, then use masqueraded port number for lookup in PROBE_PORT_MASK. Otherwise use physical port number for lookup in PROBE_PORT_MASK.
+1: Use physical port.number for lookup in PROBE_PORT_MASK.
+------------------------------
+<field_public_text>:
+Mirror traffic from CPU,  which is set to bypass the analyzer.
+
+Traffic, which is set to bypass the analyzer, is identified by the following criteria:
+IFH.FWD.DST_MODE == INJECT || IFH.MISC.PIPELINE_PT >= ANA_DONE
+------------------------------
+<reg_short_dscr>:
+Mirror probe port mask configuration
+------------------------------
+<field_public_text>:
+Specifies the set of ingress port(s) subject to Rx mirroring and the set of egress port(s) subject to Tx mirroring.
+
+PROBE_PHYS_RX_PORT controls whether physical or masqueraded port number is used for lookup in PROBE_PORT_MASK.
+PROBE_RX_CPU_AND_VD works as an extension of the PROBE_PORT_MASK to cover CPU ports and VD0/VD1.
+
+Ports enabled in PROBE_PORT_MASK are either RX mirrored (ingress mirrored) and/or TX mirrored (egress mirrored) as determined by PROBE_DIRECTION.
+
+Mirror destination port(s) are determined by 
+QFWD:SYSTEM:FRAME_COPY_CFG
+
+For exact TX mirror, the configuration of this register must be consistent with the configuration of REW:COMMON:MIRROR_PROBE_CFG.MIRROR_TX_PORT.
+
+See also description for register group ANA_AC:MIRROR_PROBE.
+
+Related parameters:
+ANA_AC:MIRROR_PROBE:PROBE_CFG2.PROBE_PHYS_RX_PORT
+ANA_AC:MIRROR_PROBE:PROBE_CFG.PROBE_RX_CPU_AND_VD
+ANA_AC:MIRROR_PROBE:PROBE_CFG.PROBE_DIRECTION
+REW:COMMON:MIRROR_PROBE_CFG.MIRROR_TX_PORT
+QFWD:SYSTEM:FRAME_COPY_CFG
+------------------------------
+<field_enc>:
+0: Port is not mirrored
+1: Port is mirrored
+------------------------------
+<reg_short_dscr>:
+Mirror probe port mask configuration
+------------------------------
+<field_public_text>:
+Specifies the set of ingress port(s) subject to Rx mirroring and the set of egress port(s) subject to Tx mirroring.
+
+PROBE_PHYS_RX_PORT controls whether physical or masqueraded port number is used for lookup in PROBE_PORT_MASK.
+PROBE_RX_CPU_AND_VD works as an extension of the PROBE_PORT_MASK to cover CPU ports and VD0/VD1.
+
+Ports enabled in PROBE_PORT_MASK are either RX mirrored (ingress mirrored) and/or TX mirrored (egress mirrored) as determined by PROBE_DIRECTION.
+
+Mirror destination port(s) are determined by 
+QFWD:SYSTEM:FRAME_COPY_CFG
+
+For exact TX mirror, the configuration of this register must be consistent with the configuration of REW:COMMON:MIRROR_PROBE_CFG.MIRROR_TX_PORT.
+
+See also description for register group ANA_AC:MIRROR_PROBE.
+
+Related parameters:
+ANA_AC:MIRROR_PROBE:PROBE_CFG2.PROBE_PHYS_RX_PORT
+ANA_AC:MIRROR_PROBE:PROBE_CFG.PROBE_RX_CPU_AND_VD
+ANA_AC:MIRROR_PROBE:PROBE_CFG.PROBE_DIRECTION
+REW:COMMON:MIRROR_PROBE_CFG.MIRROR_TX_PORT
+QFWD:SYSTEM:FRAME_COPY_CFG
+------------------------------
+<field_enc>:
+0: Port is not mirrored
+1: Port is mirrored
+------------------------------
+<reg_short_dscr>:
+Mirror probe port mask configuration
+------------------------------
+<field_public_text>:
+Specifies the set of ingress port(s) subject to Rx mirroring and the set of egress port(s) subject to Tx mirroring.
+
+PROBE_PHYS_RX_PORT controls whether physical or masqueraded port number is used for lookup in PROBE_PORT_MASK.
+PROBE_RX_CPU_AND_VD works as an extension of the PROBE_PORT_MASK to cover CPU ports and VD0/VD1.
+
+Ports enabled in PROBE_PORT_MASK are either RX mirrored (ingress mirrored) and/or TX mirrored (egress mirrored) as determined by PROBE_DIRECTION.
+
+Mirror destination port(s) are determined by 
+QFWD:SYSTEM:FRAME_COPY_CFG
+
+For exact TX mirror, the configuration of this register must be consistent with the configuration of REW:COMMON:MIRROR_PROBE_CFG.MIRROR_TX_PORT.
+
+See also description for register group ANA_AC:MIRROR_PROBE.
+
+Related parameters:
+ANA_AC:MIRROR_PROBE:PROBE_CFG2.PROBE_PHYS_RX_PORT
+ANA_AC:MIRROR_PROBE:PROBE_CFG.PROBE_RX_CPU_AND_VD
+ANA_AC:MIRROR_PROBE:PROBE_CFG.PROBE_DIRECTION
+REW:COMMON:MIRROR_PROBE_CFG.MIRROR_TX_PORT
+QFWD:SYSTEM:FRAME_COPY_CFG
+------------------------------
+<field_enc>:
+0: Port is not mirrored
+1: Port is mirrored
+------------------------------
+<reggrp_short_dscr>:
+Aggregation port masks
+------------------------------
+<reggrp_public_text>:
+The aggregation port masks are applied to the destination port mask to ensure that frames only get forwarded to _one_ port within the LLAG (Local Link Aggregation Group). 
+I.e. these masks must have only 1 bit set for each logical port.
+
+The frame's AC is used to select which aggregation port mask to apply.
+
+In stacking configurations, the bits for the stack links must always be set. 
+The only exception to this is when a LLAG stack link is used for interconnecting stack units. In this case each mask must only have one of the physical stack ports enabled.
+------------------------------
+<reg_short_dscr>:
+Aggregation port mask
+------------------------------
+<reg_public_text>:
+See ANA_AC:AGGR.
+------------------------------
+<field_public_text>:
+Aggregation port mask.
+------------------------------
+<reg_short_dscr>:
+Aggregation port mask
+------------------------------
+<reg_public_text>:
+See ANA_AC:AGGR.
+------------------------------
+<field_public_text>:
+Aggregation port mask.
+------------------------------
+<reg_short_dscr>:
+Aggregation port mask
+------------------------------
+<reg_public_text>:
+See ANA_AC:AGGR.
+------------------------------
+<field_public_text>:
+Aggregation port mask.
+------------------------------
+<reggrp_short_dscr>:
+Source port masks
+------------------------------
+<reggrp_public_text>:
+Source port masks per inbound front port number (index 0 to 70-1) and per source GLAG (index: 70 to 102-1).
+
+Source port masks for GLAGs are offset by number of inbound ports.
+
+To avoid forwarding back to another LLAG member port, ports that are part of the same LLAG must be disabled in the port masks for all LLAG member ports. 
+
+The source port masks for front ports are initialized to "walking zero".
+The source port masks for the GLAGs are initialized to all-ones.
+------------------------------
+<reg_short_dscr>:
+Source port mask
+------------------------------
+<reg_public_text>:
+See ANA_AC:SRC.
+------------------------------
+<field_public_text>:
+Refer to description for ANA_AC:SRC.
+------------------------------
+<reg_short_dscr>:
+Source port mask
+------------------------------
+<reg_public_text>:
+See ANA_AC:SRC.
+------------------------------
+<field_public_text>:
+Refer to description for ANA_AC:SRC.
+------------------------------
+<reg_short_dscr>:
+Source port mask
+------------------------------
+<reg_public_text>:
+See ANA_AC:SRC.
+------------------------------
+<field_public_text>:
+Refer to description for ANA_AC:SRC.
+------------------------------
+<reggrp_short_dscr>:
+sFlow sampler configuration & status per port
+------------------------------
+<reg_short_dscr>:
+sFlow sampler control
+------------------------------
+<reg_public_text>:
+This register configures the sFlow sampler.
+------------------------------
+<field_public_text>:
+Reserved, must set to its default value.
+------------------------------
+<field_public_text>:
+Configures the sampler as an ingress, egress or dual direction sampler.
+------------------------------
+<field_enc>:
+"00": Disable sampler.
+"01": RX sampler (samples trafficfrom port)
+"10": TX sampler (samples traffic to port)
+"11": RX or TX sampler (samples traffic to and from port)
+------------------------------
+<field_public_text>:
+The probability with which the sampler copies frames to CPU.
+
+The probability can be calculated as:
+SFLOW_SAMPLE_RATE/32767
+------------------------------
+<field_enc>:
+'0x0': 0 probability, i.e. sFlow sampler is disabled.
+'0x1': 1/32767
+'0x7FFF': 100%, i.e. all frames are sampled by the sFlow sampler.
+------------------------------
+<reg_short_dscr>:
+sFlow status counts
+------------------------------
+<reg_public_text>:
+This register configures the sFlow sampler.
+------------------------------
+<field_public_text>:
+The number of frames sampled.
+The counter is free running (wraps around when reaching max value).
+
+The counter can be reset using 
+ANA_AC::SFLOW_RESET_CTRL.SFLOW_FRAME_RESET_SHOT.
+------------------------------
+<field_public_text>:
+The number of forwarded frames.
+The counter is free running (wraps around when reaching max value).
+
+This counter can be reset using 
+ANA_AC::SFLOW_RESET_CTRL.SFLOW_FRAME_RESET_SHOT.
+------------------------------
+<field_enc>:
+0 : no entries
+------------------------------
+<reggrp_short_dscr>:
+UPSID table (one entry per UPS)
+------------------------------
+<reggrp_public_text>:
+Controls how to reach a given UPS (Unit Port Set) in the stack.
+------------------------------
+<reg_short_dscr>:
+Equal cost UPSID destination configuration
+------------------------------
+<reg_public_text>:
+Used for configuring equal distance to UPSID
+------------------------------
+<field_public_text>:
+Enable equal cost forwarding to UPSID. I.e. both stack ports (A and B) are used for forwarding to UPSID.
+
+If STACK_LINK_EQUAL_ENA is set, then the stack forwarding mask is calculated as one of the following two, depending on AC:
+  Even AC:
+    UPSID_PORT_MASK &  STACK_A_MASK
+  Odd AC:
+    UPSID_PORT_MASK & ~STACK_A_MASK
+
+Furthermore when STACK_LINK_EQUAL_ENA is set, the TTL value is set to
+  VSTAX2_EQUAL_STACK_LINK_TTL_VAL
+(instead of REW::VSTAX_PORT_GRP_CFG.VSTAX_TTL).
+
+Related parameters:
+ANA_AC:UPSID:UPSID_CFG.UPSID_PORT_MASK
+ANA_AC:PS_COMMON:STACK_A_CFG.STACK_A_MASK
+ANA_AC:PS_COMMON:COMMON_EQUAL_STACK_LINK_TTL_CFG.VSTAX2_EQUAL_STACK_LINK_TTL_VAL
+REW:COMMON:VSTAX_PORT_GRP_CFG.VSTAX_TTL
+------------------------------
+<reg_short_dscr>:
+UPSID destination configuration
+------------------------------
+<reg_public_text>:
+Configures which physical ports to be used for reaching a given UPSID.
+------------------------------
+<field_public_text>:
+UPSID port mask.
+------------------------------
+<reg_short_dscr>:
+UPSID destination configuration
+------------------------------
+<reg_public_text>:
+Configures which physical ports to be used for reaching a given UPSID.
+------------------------------
+<field_public_text>:
+UPSID port mask.
+------------------------------
+<reg_short_dscr>:
+UPSID destination configuration
+------------------------------
+<reg_public_text>:
+Configures which physical ports to be used for reaching a given UPSID.
+------------------------------
+<field_public_text>:
+UPSID port mask.
+------------------------------
+<reggrp_short_dscr>:
+Configuration for Global Link Aggregation Groups
+------------------------------
+<reg_short_dscr>:
+GLAG member count configuration
+------------------------------
+<field_public_text>:
+GLAG member count.
+
+This is used to select the GLAG port mask within the GLAG part of ANA_AC:PGID.
+
+Using GLAG_MBR_CNT a GLAG_MBR_IDX is calculated as follows:
+GLAG_MBR_IDX = frame.ac % GLAG_MBR_CNT
+
+The frame's GLAGID and GLAG_MBR_IDX are then used for lookup in ANA_AC:PGID.
+------------------------------
+<field_enc>:
+0: One member
+1: Two members
+...
+7: Eight members
+------------------------------
+<reggrp_short_dscr>:
+Port group ID table configurations
+------------------------------
+<reggrp_public_text>:
+Port Group ID table registers
+
+Unicast:
+Entry 0 contains port 0 destination mask
+Entry 1 contains port 1 destination mask
+...
+Entry 65-1 contains port 65-1 destination mask
+
+Flood and general purpose (multicast):
+Entry 65 contains UC_FLOOD_MASK
+Entry 65+1 contains L2_MC_FLOOD_MASK
+Entry 65+2 contains IP4_MC_DATA_FLOOD_MASK
+Entry 65+3 contains IP4_MC_CTRL_FLOOD_MASK
+Entry 65+4 contains IP6_MC_DATA_FLOOD_MASK
+Entry 65+5 contains IP6_MC_CTRL_FLOOD_MASK
+Entry 65+6 contains general purpose PGID mask 6
+Entry 65+7 contains general purpose PGID mask 7
+...
+Entry 65+2048-1 contains general purpose PGID mask 2048-1
+
+Forwarder virtual LAG profiles (FV_LAG):
+Note: Overloads part of the general purpose area.
+
+Each FV_LAG profile contains 65+6 entries for unicast and flood. The FV_LAG profile index comes from ANA_L3:VLAN:MISC.FV_LAG_IDX and is applied when FV_LAG_IDX > 0. 
+Given the FV_LAG_IDX, an offset into the PGID table is calculated:
+  FV_LAG_OFFSET = 65+1024+(FV_LAG_IDX-1)*(65+6).
+
+Entry FV_LAG_OFFSET contains port 0 destination mask for FV_LAG profile
+...
+Entry FV_LAG_OFFSET+65-1 contains port 65-1 destination mask for FV_LAG profile
+Entry FV_LAG_OFFSET+65 contains UC_FLOOD_MASK for FV_LAG profile
+Entry FV_LAG_OFFSET+65+1 contains L2_MC_FLOOD_MASK for FV_LAG profile
+Entry FV_LAG_OFFSET+65+2 contains IP4_MC_DATA_FLOOD_MASK for FV_LAG profile
+Entry FV_LAG_OFFSET+65+3 contains IP4_MC_CTRL_FLOOD_MASK for FV_LAG profile
+Entry FV_LAG_OFFSET+65+4 contains IP6_MC_DATA_FLOOD_MASK for FV_LAG profile
+Entry FV_LAG_OFFSET+65+5 contains IP6_MC_CTRL_FLOOD_MASK for FV_LAG profile
+
+GLAG:
+Note: Overloads part of the general purpose area.
+
+Entry 65+1024-8*32 contains GLAG 0 member 0
+Entry 65+1024-8*32+1 contains GLAG 0 member 1
+...
+Entry 65+1024-1 contains GLAG 32-1 member 7
+
+The port masks 0 to  65-1 are initialized to a walking one.
+------------------------------
+<reg_short_dscr>:
+PGID port mask / destination configuration
+------------------------------
+<reg_public_text>:
+See ANA_AC:PGID.
+------------------------------
+<field_public_text>:
+PGID port mask or stack forwarding information, depending on STACK_TYPE_ENA.
+
+Related parameters:
+ANA_AC:PGID:PGID_MISC_CFG.STACK_TYPE_ENA
+------------------------------
+<field_enc>:
+PGID_MISC_CFG.STACK_TYPE_ENA=0:
+Destination port mask.
+
+PGID_MISC_CFG.STACK_TYPE_ENA=1:
+Bit 4:0 
+VStaX destination UPSPN.
+
+Bit 5 
+VStaX destination port type. 0=Normal UPSPN, 1=Internal port (advanced use).
+
+Bit 10:6  
+VStaX destination UPSID
+ 
+Bit 13:11 
+VStaX forwarding mode.
+Only used if PGID origins from multicast index in MAC table.
+In all other cases bit 13:11 must be 0.
+Encoding:
+'001': fwd_logical. Forward to logical front port at specific UPS, using (UPSID, UPSPN).
+'010': fwd_physical. Forward to physical front port at specific UPS, using (UPSID, UPSPN).
+'101': fwd_gcpu_ups. Forward to GCPU of specific UPS (identified by UPSID).
+Other: Reserved.
+
+If bit 10:6 is a remote UPSID, then 20:16 must be set to 0.
+If bit 10:6 is the a UPSID, then 20:16 must be set to same value as bit 4:0.
+------------------------------
+<reg_short_dscr>:
+PGID port mask / destination configuration
+------------------------------
+<reg_public_text>:
+See ANA_AC:PGID.
+------------------------------
+<field_public_text>:
+PGID port mask or stack forwarding information, depending on STACK_TYPE_ENA.
+
+Related parameters:
+ANA_AC:PGID:PGID_MISC_CFG.STACK_TYPE_ENA
+------------------------------
+<field_enc>:
+PGID_MISC_CFG.STACK_TYPE_ENA=0:
+Destination port mask.
+
+PGID_MISC_CFG.STACK_TYPE_ENA=1:
+Bit 4:0 
+VStaX destination UPSPN.
+
+Bit 5 
+VStaX destination port type. 0=Normal UPSPN, 1=Internal port (advanced use).
+
+Bit 10:6  
+VStaX destination UPSID
+ 
+Bit 13:11 
+VStaX forwarding mode.
+Only used if PGID origins from multicast index in MAC table.
+In all other cases bit 13:11 must be 0.
+Encoding:
+'001': fwd_logical. Forward to logical front port at specific UPS, using (UPSID, UPSPN).
+'010': fwd_physical. Forward to physical front port at specific UPS, using (UPSID, UPSPN).
+'101': fwd_gcpu_ups. Forward to GCPU of specific UPS (identified by UPSID).
+Other: Reserved.
+
+If bit 10:6 is a remote UPSID, then 20:16 must be set to 0.
+If bit 10:6 is the a UPSID, then 20:16 must be set to same value as bit 4:0.
+------------------------------
+<reg_short_dscr>:
+PGID port mask / destination configuration
+------------------------------
+<reg_public_text>:
+See ANA_AC:PGID.
+------------------------------
+<field_public_text>:
+PGID port mask or stack forwarding information, depending on STACK_TYPE_ENA.
+
+Related parameters:
+ANA_AC:PGID:PGID_MISC_CFG.STACK_TYPE_ENA
+------------------------------
+<field_enc>:
+PGID_MISC_CFG.STACK_TYPE_ENA=0:
+Destination port mask.
+
+PGID_MISC_CFG.STACK_TYPE_ENA=1:
+Bit 4:0 
+VStaX destination UPSPN.
+
+Bit 5 
+VStaX destination port type. 0=Normal UPSPN, 1=Internal port (advanced use).
+
+Bit 10:6  
+VStaX destination UPSID
+ 
+Bit 13:11 
+VStaX forwarding mode.
+Only used if PGID origins from multicast index in MAC table.
+In all other cases bit 13:11 must be 0.
+Encoding:
+'001': fwd_logical. Forward to logical front port at specific UPS, using (UPSID, UPSPN).
+'010': fwd_physical. Forward to physical front port at specific UPS, using (UPSID, UPSPN).
+'101': fwd_gcpu_ups. Forward to GCPU of specific UPS (identified by UPSID).
+Other: Reserved.
+
+If bit 10:6 is a remote UPSID, then 20:16 must be set to 0.
+If bit 10:6 is the a UPSID, then 20:16 must be set to same value as bit 4:0.
+------------------------------
+<reg_short_dscr>:
+Miscellaneous PGID configuration
+------------------------------
+<field_public_text>:
+CPU queue for frames copied to CPU due to PGID_CPU_COPY_ENA.
+
+Related parameters:
+ANA_AC:PGID:PGID_MISC_CFG.PGID_CPU_COPY_ENA
+------------------------------
+<field_enc>:
+0: CPU queue 0
+1: CPU queue 1
+...
+n: CPU queue n.
+------------------------------
+<field_public_text>:
+Encoding of PGID_CFG.PORT_MASK.
+
+Related parameters:
+ANA_AC:PGID[0-1076]:PGID_CFG.PORT_MASK
+------------------------------
+<field_enc>:
+0: Port mask encoding
+1: Stack forwarding encoding
+------------------------------
+<field_public_text>:
+Copy frame to CPU.
+
+Related parameters:
+ANA_AC:PGID:PGID_MISC_CFG.PGID_CPU_QU
+------------------------------
+<reggrp_short_dscr>:
+Conversation-sensitive distribution table
+------------------------------
+<reggrp_public_text>:
+The CSD port masks are applied to the destination port mask as part of conversation-sensitive distribution for link aggregation. These masks should only have 1 bit set for each logical port.
+
+The frame's conversation ID is used as index into the table. The conversation ID is the VID from the resulting outer VLAN tag after applying any VLAN pop counts. If frame becomes untagged, conversation ID = 0 is used.
+------------------------------
+<reg_short_dscr>:
+CSD port mask
+------------------------------
+<reg_public_text>:
+See ANA_AC:CSD.
+------------------------------
+<field_public_text>:
+CSD port mask.
+------------------------------
+<reg_short_dscr>:
+CSD port mask
+------------------------------
+<reg_public_text>:
+See ANA_AC:CSD.
+------------------------------
+<field_public_text>:
+CSD port mask.
+------------------------------
+<reg_short_dscr>:
+CSD port mask
+------------------------------
+<reg_public_text>:
+See ANA_AC:CSD.
+------------------------------
+<field_public_text>:
+CSD port mask.
+------------------------------
+<reggrp_short_dscr>:
+LAG reset port masks
+------------------------------
+<reggrp_public_text>:
+The LAG reset port mask is OR'ed with the aggregation (ANA_AC:AGGR) and CSD masks (ANA_AC:CSD) before applying the result to the final destination port mask. The purpose of the LAG reset port mask is to allow a VLAN to remove specific LAGs from its forwarding domain. In addition to setting the LAG reset port mask, a forwarder virtual LAG must also configure unicast port masks and flood masks in the associated PGID space in ANA_AC:PGID.
+
+The LAG reset table is looked up with the forwarder virtual LAG index provided by ANA_L3:VLAN:MISC.FV_LAG_IDX.
+------------------------------
+<reg_short_dscr>:
+LAG reset port mask
+------------------------------
+<field_public_text>:
+LAG reset port mask.
+------------------------------
+<reg_short_dscr>:
+LAG reset port mask
+------------------------------
+<field_public_text>:
+LAG reset port mask.
+------------------------------
+<reg_short_dscr>:
+LAG reset port mask
+------------------------------
+<field_public_text>:
+LAG reset port mask.
+------------------------------
+<reggrp_short_dscr>:
+Diagnostic information
+------------------------------
+<reggrp_public_text>:
+Diagnostic sticky bits.
+------------------------------
+<reg_short_dscr>:
+Diagnostic information
+------------------------------
+<reg_public_text>:
+Diagnostic sticky bits.
+------------------------------
+<field_public_text>:
+Set if a forwarder virtual LAG profile from PGID table has been used.
+
+Write 1 to clear this field.
+------------------------------
+<field_public_text>:
+Set if CSD mask has been used. 
+
+Write 1 to clear this field.
+------------------------------
+<field_public_text>:
+Set if frame is redirected due to VCAP IS2. 
+
+Write 1 to clear this field.
+------------------------------
+<field_enc>:
+0: No redir event
+1: A frame was redirected.
+------------------------------
+<field_public_text>:
+Set if a mirror probe has been triggered. 
+
+Write 1 to clear this field.
+------------------------------
+<field_enc>:
+0: Mirror probe not triggered
+1: Mirror probe triggered
+------------------------------
+<field_public_text>:
+Set if the egress port mask for a frame was zero and the frame was not sent to the CPU. 
+
+Write 1 to clear this field.
+------------------------------
+<field_public_text>:
+Set if a frame has been forwarded with a non-zero destination set. 
+
+Write 1 to clear this field.
+------------------------------
+<field_enc>:
+0: No frames forwarded
+1: Frame forward event
+------------------------------
+<field_public_text>:
+Set if a frame, candidate for sFlow sampling, was found.
+
+Write 1 to clear this field.
+------------------------------
+<field_public_text>:
+Set if a sFlow destination sample event has taken place. 
+
+Write 1 to clear this field.
+------------------------------
+<field_enc>:
+0: No event
+1: A sample event has occurred
+------------------------------
+<field_public_text>:
+Set if a sFlow source sample event has taken place. 
+
+Write 1 to clear this field.
+------------------------------
+<field_enc>:
+0: No event
+1: A sample event has occurred
+------------------------------
+<field_public_text>:
+Set if the GLAG source mask has been used. 
+
+Write 1 to clear this field.
+------------------------------
+<field_public_text>:
+Set if the source mask has been used. 
+
+Write 1 to clear this field.
+------------------------------
+<field_public_text>:
+Set if a CPU copy operation from the PGID lookup has been done. 
+
+Write 1 to clear this field.
+------------------------------
+<field_public_text>:
+Set if the previous blocks in the Analyzer have signaled that a frame must not be forwarded. This may be done for CPU move or discard operations. 
+
+Write 1 to clear this field.
+------------------------------
+<field_public_text>:
+Set if ip6_mc_ctrl_flood_mask has been used.
+
+Write 1 to clear this field.
+------------------------------
+<field_public_text>:
+Set if ip6_mc_data_flood_mask has been used.
+
+Write 1 to clear this field.
+------------------------------
+<field_public_text>:
+Set if ip4_mc_ctrl_flood_mask has been used.
+
+Write 1 to clear this field.
+------------------------------
+<field_public_text>:
+Set if ip4_mc_data_flood_mask has been used.
+
+Write 1 to clear this field.
+------------------------------
+<field_public_text>:
+Set if l2_mc_flood_mask has been used.
+
+Write 1 to clear this field.
+------------------------------
+<field_public_text>:
+Set if the unicast flood mask has been used. 
+
+Write 1 to clear this field.
+------------------------------
+<reggrp_short_dscr>:
+Counter configuration for diagnostic information
+------------------------------
+<reggrp_public_text>:
+For most ANA_AC sticky bits a "STICKY_MASK" can be configured.
+The sticky mask signals events to be counted per port in ANA_AC.
+
+Related register groups:
+ANA_AC:STAT_GLOBAL_CFG_PORT
+ANA_AC:STAT_CNT_CFG_PORT
+------------------------------
+<reg_short_dscr>:
+Sticky diagnostic counter masks
+------------------------------
+<field_public_text>:
+Mask to enable counting of sticky event.
+------------------------------
+<field_public_text>:
+Mask to enable counting of sticky event.
+------------------------------
+<field_public_text>:
+Mask to enable counting of sticky event.
+------------------------------
+<field_public_text>:
+Mask to enable counting of sticky event.
+------------------------------
+<field_public_text>:
+Mask to enable counting of sticky event.
+------------------------------
+<field_public_text>:
+Mask to enable counting of sticky event.
+------------------------------
+<field_public_text>:
+Mask to enable counting of sticky event.
+------------------------------
+<field_public_text>:
+Mask to enable counting of sticky event.
+------------------------------
+<field_public_text>:
+Mask to enable counting of sticky event.
+------------------------------
+<field_public_text>:
+Mask to enable counting of sticky event.
+------------------------------
+<field_public_text>:
+Mask to enable counting of sticky event.
+------------------------------
+<field_public_text>:
+Mask to enable counting of sticky event.
+------------------------------
+<field_public_text>:
+Mask to enable counting of sticky event.
+------------------------------
+<field_public_text>:
+Mask to enable counting of sticky event.
+------------------------------
+<field_public_text>:
+Mask to enable counting of sticky event.
+------------------------------
+<field_public_text>:
+Mask to enable counting of sticky event.
+------------------------------
+<field_public_text>:
+Mask to enable counting of sticky event.
+------------------------------
+<field_enc>:
+Mask to enable counting of sticky event.
+------------------------------
+<field_public_text>:
+Mask to enable counting of sticky event.
+------------------------------
+<field_public_text>:
+Mask to enable counting of sticky event.
+------------------------------
+<reggrp_short_dscr>:
+FRER configuration for generation.
+------------------------------
+<reggrp_public_text>:
+FRER configuration registers for generation. There is one configuration entry per SDX.
+------------------------------
+<reg_short_dscr>:
+Generation stream configuration.
+------------------------------
+<field_public_text>:
+Reset the function.
+------------------------------
+<field_public_text>:
+Instantiate a sequence generation function for this stream.
+------------------------------
+<reg_short_dscr>:
+Configuration and status related to all stream filters.
+------------------------------
+<field_public_text>:
+TSN_STREAM_BLOCK_OVERSIZE_STATE has been set to 1 for one or more streams.
+To determine which streams have triggered this sticky bit, TSN_STREAM_BLOCK_OVERSIZE_STATE in ANA_AC:TSN_SF_CFG must be checked.
+Write 1 to clear this field.
+Related parameters:
+ANA_AC:TSN_SF_CFG:TSN_SF_CFG.TSN_STREAM_BLOCK_OVERSIZE_STATE
+------------------------------
+<reg_short_dscr>:
+Configuration and status related to one stream filter.
+------------------------------
+<reg_public_text>:
+There is one configuration entry per stream filter identifier.
+------------------------------
+<field_public_text>:
+Stream Gate ID.
+          If set to 0, no Stream Gate is applied.
+          Related parameters:
+          ANA_AC:SG_ACCESS:SG_ACCESS_CTRL.SGID
+------------------------------
+<field_public_text>:
+Maximum frame size. Frames exceeding this size are dropped.
+          Ref. Maximum SDU size, IEEE 802.1Qci-2017.
+          Related parameters:
+          ANA_AC:TSN_SF_CFG:TSN_SF_CFG.TSN_STREAM_BLOCK_OVERSIZE_ENA
+------------------------------
+<field_public_text>:
+If set, and one frame exceeding TSN_MAX_SDU is received, then all subsequent frames in this stream will be dropped.
+          Related parameters:
+          ANA_AC:TSN_SF_CFG:TSN_SF_CFG.TSN_MAX_SDU
+          ANA_AC:TSN_SF_CFG:TSN_SF_CFG.TSN_STREAM_BLOCK_OVERSIZE_STATE
+          ANA_AC::TSN_SF.TSN_STREAM_BLOCK_OVERSIZE_STICKY
+------------------------------
+<field_public_text>:
+If set, frames are currently dropped due to reception of frame exceeding TSN_MAX_SDU.
+          May be cleared by SW to reenable frame forwarding.
+          When this bit is being set, it triggers TSN_STREAM_BLOCK_OVERSIZE_STICKY=1.
+          Related parameters:
+          ANA_AC:TSN_SF_CFG:TSN_SF_CFG.TSN_STREAM_BLOCK_OVERSIZE_ENA
+          ANA_AC:TSN_SF_CFG:TSN_SF_CFG.TSN_MAX_SDU
+          ANA_AC::TSN_SF.TSN_STREAM_BLOCK_OVERSIZE_STICKY
+------------------------------
+<reggrp_short_dscr>:
+Stream Gates configuration access registers and common configuration.
+------------------------------
+<reg_short_dscr>:
+Stream gate access controller register.
+------------------------------
+<field_public_text>:
+Indicates that 'Admin' parameter values for the stream (specified in 'SGID' field) are ready to be copied into their corresponding 'Oper' parameters. This will also trigger "List Config state machine" as specified in Figure 8-16 of IEEE 802.1Qbv/D3.1
+------------------------------
+<field_enc>:
+Software sets this bit, Hardware clears the bit once the action is performed.
+------------------------------
+<field_public_text>:
+Specifies the Stream gate identifier (SGID) to which the SG_CONFIG/SG_STATUS register group(s) are applicable.
+
+Note: This value needs to be set first before accessing any of SG_CONFIG/SG_STATUS register groups.
+------------------------------
+<reg_short_dscr>:
+PTP Domain select for Stream Gates
+------------------------------
+<reg_public_text>:
+The Stream Gates uses PTP timing as the reference time for all Gate Open / Close operations. For this to work, Stream Gates must be configured for which PTP time domain to use. There are 4 time domains in chip and the register must be configured in range  0-3 to be associated to one of the PTP time domain.
+------------------------------
+<field_public_text>:
+PTP_DOMAIN for Stream Gates.
+------------------------------
+<reg_short_dscr>:
+Configures how often Stream Gates Cycle Timer update must be done
+------------------------------
+<reg_public_text>:
+The SetCycleStartTime() must be run periodically for all active Stream Gates, so that the Cycle Start Time must remain within 1 CycleTime of current time. The recommended value is 10us converted in System clocks. This implies that minimum value of CycleTime for any active stream gate supported by chip is 10us. Lower values of CycleTime can also be supported by reducing the time between period update.
+------------------------------
+<field_public_text>:
+Enable periodic update of SetCycleStartTime(). Enable this if atleast one stream gate is active in SG_TABLE.
+------------------------------
+<field_enc>:
+0 : Enabled.
+1 : Disabled.
+------------------------------
+<field_public_text>:
+See register description. Configure number of system clocks between period updates of SetCycleStartTime().
+------------------------------
+<reggrp_short_dscr>:
+Stream Gate Admin parameter(s) configuration registers.
+------------------------------
+<reg_short_dscr>:
+SG Admin parameter configuration Register - 1
+------------------------------
+<field_public_text>:
+32-bit Nano seconds part of 'PSFPAdminBaseTime' (IEEE 802.1Qci). This is nothing but least significant 32 bits of 'PSFPAdminBaseTime'.
+------------------------------
+<field_enc>:
+PSFPAdminBaseTime[31:0]
+------------------------------
+<reg_short_dscr>:
+SG Admin parameter configuration Register - 2
+------------------------------
+<field_public_text>:
+Least significant 32 bits of upper 48 bits or seconds part of 'PSFPAdminBaseTime' (IEEE 802.1Qci).
+------------------------------
+<field_enc>:
+PSFPAdminBaseTime[63:32]
+------------------------------
+<reg_short_dscr>:
+SG Admin parameter configuration Register - 3
+------------------------------
+<field_public_text>:
+PSFPGateClosedDueToOctetsExceeded parameter. If this is set, and PSFPGateClosedDueToOctetsExceeded function is enabled, all frames are dropped. (i.e., the gate behaves as if the operational stream gate state is Closed). This is set when OCTETS_EXCEEDED_ENA is true and if any frame is discarded because there are insufficient IntervalOctetsLeft.
+------------------------------
+<field_enc>:
+0: No frames are discarded.
+1: All frames are discarded if PSFPGateClosedDueToOctetsExceeded function is enabled.
+------------------------------
+<field_public_text>:
+PSFPGateClosedDueToOctetsExceededEnable parameter. Indicates whether the PSFPGateClosedDueToOctetsExceeded function is enabled (TRUE) or disabled (FALSE).
+------------------------------
+<field_enc>:
+0: PSFPGateClosedDueToOctetsExceeded function is disabled.
+1: PSFPGateClosedDueToOctetsExceeded function is enabled.
+------------------------------
+<field_public_text>:
+PSFPGateClosedDueToInvalidRx parameter. If this is set, and PSFPGateClosedDueToInvalidRx function is enabled, all frames are dropped. (i.e., the gate behaves as if the operational stream gate state is Closed). This is set when INVALID_RX_ENA is true and if any frame is discarded because the gate is in the Closed state.
+------------------------------
+<field_enc>:
+0: No frames are discarded.
+1: All frames are discarded if PSFPGateClosedDueToInvalidRx function is enabled.
+------------------------------
+<field_public_text>:
+PSFPGateClosedDueToInvalidRxEnable parameter. Indicates whether the PSFPGateClosedDueToInvalidRx function is enabled (TRUE) or disabled (FALSE).
+------------------------------
+<field_enc>:
+0: PSFPGateClosedDueToInvalidRx function is disabled.
+1: PSFPGateClosedDueToInvalidRx function is enabled
+------------------------------
+<field_public_text>:
+'PSFPAdminGateStates' value (IEEE 802.1Qci).
+
+This determines initial state of stream gate.
+------------------------------
+<field_enc>:
+0: Stream gate is in 'Close' state.
+1: Stream gate is in 'Open' state.
+------------------------------
+<field_public_text>:
+'PSFPAdminIPS' value (IEEE 802.1Qci).
+
+This determines initial OperIPS value.
+------------------------------
+<field_enc>:
+Bit 3 encoding:
+0: IPV specified in bits [0:2] is not used or invalid.
+1: IPV specified in bits [0:2] is used as egress priority for egress queues.
+------------------------------
+<field_public_text>:
+Enables Stream gate FSMs for the stream. This is 'PSFPGateEnabled' mentioned in IEEE 802.1Qci.
+------------------------------
+<field_enc>:
+0: Stream Gate is not enabled for the stream.
+1: Stream Gate is enabled for the stream.
+------------------------------
+<field_public_text>:
+'PSFPAdminControlListLength' value (IEEE 802.1Qci). Specifies length of the control list.
+------------------------------
+<field_enc>:
+0: zero valid entries in 'PSFPAdminControlList'.
+n: N valid entries in 'PSFPAdminControlList'.
+------------------------------
+<field_public_text>:
+Most significant 16 bits of seconds part of 'PSFPAdminBaseTime' (IEEE 802.1Qci).
+------------------------------
+<field_enc>:
+PSFPAdminBaseTime[79:64]
+------------------------------
+<reg_short_dscr>:
+SG Admin parameter configuration Register - 4
+------------------------------
+<field_public_text>:
+A 32 bit nano seconds value derived from 'PSFPAdminCycleTime' (IEEE 802.1Qci).
+
+Note: Actual value of 'PSFPAdminCycleTime' is in seconds (a rational number, expressed as numerator and denominator) and its maximum value is assumed to be 1 second. So a 32 bit vector is sufficient to express it in nano seconds.
+------------------------------
+<reg_short_dscr>:
+SG Admin parameter configuration Register - 5
+------------------------------
+<field_public_text>:
+'PSFPAdminCycleTimeExtension' value (IEEE 802.1Qci).
+
+Note: This vlaue is assumed to be at most one second. Hence a 32 bit register is sufficient.
+------------------------------
+<reg_short_dscr>:
+SG - Admin Gate Control List (GCL) gate state configuration
+------------------------------
+<field_public_text>:
+Gates state of the stream for time interval specified through "TIME_INTERVAL". This is 'StreamGateState' value (IEEE 802.1Qci).
+------------------------------
+<field_public_text>:
+Internal Priority Specification (IPS) as specified in IEEE 802.1Qci.
+
+Encoding of this 4 bit vector is as follows:
+Bits [0:2] specifies Internal Priority Value (IPV)
+Bit 3 specifies whether IPV is valid or not.
+------------------------------
+<field_enc>:
+Bit 3 encoding:
+0: IPV specified in bits [0:2] is not used or invalid.
+1: IPV specified in bits [0:2] is used as egress priority for egress queues.
+------------------------------
+<reg_short_dscr>:
+SG - Admin Gate Control List (GCL) time interval configuration
+------------------------------
+<field_public_text>:
+Time interval expressed as nanoseconds used for execution of corresponding gate state. This is 'TimeInterval' value as specified in IEEE 802.1Qci for Stream gate control list.
+
+Note: This value is assumed to be lessthan a second.
+------------------------------
+<reg_short_dscr>:
+SG - Admin Gate Control List (GCL) Interval Octet Max configuration
+------------------------------
+<field_public_text>:
+IntervalOctetMax parameter specifies the maximum number of MSDU octets that are permitted to pass the gate during the specified TimeInterval. As per Qci STD, this is an optional parameter. A value of 0, implies that the parameter is omitted and there is no limit on the number of octets that can pass the Gate.
+------------------------------
+<field_enc>:
+0 : IntervalOctetMax parameter is not used and here is no limit on the number of octets that can pass the Gate.
+non-zero : IntervalOctetMax parameter is enabled.
+------------------------------
+<reggrp_short_dscr>:
+Stream Gate Oper status registers.
+------------------------------
+<reg_short_dscr>:
+SG Oper status Register - 1
+------------------------------
+<field_public_text>:
+32-bit Nano seconds part of 'PSFPConfigChangeTime' (IEEE 802.1Qci). This is nothing but least significant 32 bits of 'PSFPConfigChangeTime'.
+------------------------------
+<field_enc>:
+PSFPConfigChangeTime[31:0]
+------------------------------
+<reg_short_dscr>:
+SG Oper status Register - 2
+------------------------------
+<field_public_text>:
+Least significant 32 bits of upper 48 bits or seconds part of 'PSFPConfigChangeTime' (IEEE 802.1Qci).
+------------------------------
+<field_enc>:
+PSFPConfigChangeTime[63:32]
+------------------------------
+<reg_short_dscr>:
+SG Oper status Register - 3
+------------------------------
+<field_public_text>:
+'PSFPConfigPending' value (IEEE 802.1Qci). Indicates current PSFPConfigPending status.
+------------------------------
+<field_public_text>:
+Internal Priority Specification (IPS) as specified in IEEE 802.1Qci.
+
+Encoding of this 4 bit vector is as follows:
+Bits [0:2] specifies Internal Priority Value (IPV)
+Bit 3 specifies whether IPV is valid or not.
+------------------------------
+<field_enc>:
+Bit 3 encoding:
+0: IPV specified in bits [0:2] is invalid.
+1: IPV specified in bits [0:2] is valid.
+------------------------------
+<field_public_text>:
+'PSFPOperGateStates' value (IEEE 802.1Qci). Specifies current gate state of the stream.
+------------------------------
+<field_public_text>:
+Most significant 16 bits of seconds part of 'PSFPConfigChangeTime' (IEEE 802.1Qci).
+------------------------------
+<field_enc>:
+PSFPConfigChangeTime[79:64]
+------------------------------
+<reggrp_short_dscr>:
+Stream Gates Status sticky.
+------------------------------
+<reg_short_dscr>:
+Stream Gates Status sticky.
+------------------------------
+<field_public_text>:
+For a Stream Gate if OCTETS_EXCEEDED_ENA is set, this sticky bit is set when OCTETS_EXCEEDED transitions from 0 to 1, i.e first frame which violates Octets eceeded check. Write '1' to clear this field.
+------------------------------
+<field_enc>:
+0 : OCTETS_EXCEEDED_STICKY event did not occur.
+1 : OCTETS_EXCEEDED_STICKY event occurred atleast once.
+Write '1' to clear this field.
+------------------------------
+<field_public_text>:
+For a Stream Gate if INVALID_RX_ENA is set, this sticky bit is set when INVALID_RX transitions from 0 to 1, i.e first frame which violates Gating interval. Write '1' to clear this field.
+------------------------------
+<field_enc>:
+0 : INVALID_RX_STICKY event did not occur.
+1 : INVALID_RX_STICKY event occurred atleast once.
+Write '1' to clear this field.
+------------------------------
+<reggrp_short_dscr>:
+Common counter configuration.
+------------------------------
+<reggrp_public_text>:
+This register group defines configuration parameters common to all counters in the corresponding counter register group.
+------------------------------
+<reg_short_dscr>:
+Event mask for counters.
+------------------------------
+<field_public_text>:
+This value stores the event mask which indicates the counter of all flows to count certain events.
+ If set to '1' the respective event is not filtered and can trigger the counter.
+ If set to '0' the respective event is filtered and the counter will treat the frame as if no event has occurred.
+ 
+ Which type of frame is counted is defined in: STAT_CFG, CFG_CNT_FRM_TYPE.
+
+ The following events apply to port stat:
+ bit 0: Count events allowed by *_sticky_mask:0
+ bit 1: Count events allowed by *_sticky_mask:1
+ ...
+ bit 3: Count events allowed by *_sticky_mask:n 
+ where n is number of counter event masks
+
+ bit 4: Count port policer:0 drop events
+ bit 4+1: Count port policer:1 drop events
+ ...
+ bit 4+m: Count port policer:0 pass/active events
+ bit 4+m+1: Count port policer:1 pass/active events
+ ...
+ where m is number of per port policers
+ bit 4+2*m: Count storm policer drop events
+ bit 4+2*m+1: Count policer drop events
+ bit 4+2*m+3: Count lbk frame.
+------------------------------
+<field_enc>:
+0: This event will not trigger counting.
+1: Enable counting for frames with this event.
+------------------------------
+<reg_short_dscr>:
+Reset all counters.
+------------------------------
+<field_public_text>:
+Write '1' to this field to reset all counters and configuration for this stat group.
+
+The device will set the bit back to '0' when reset has completed.
+------------------------------
+<reggrp_short_dscr>:
+Individual configuration.
+------------------------------
+<reggrp_public_text>:
+This register group defines individual configurations for registers in a STAT.
+------------------------------
+<reg_short_dscr>:
+Sticky bits for events.
+------------------------------
+<reg_public_text>:
+It is the sticky bits of events. If one event is triggered, the corresponding bit is set to '1' before it is cleared. To write '1' into this bit will clear the sticky bit.
+------------------------------
+<field_public_text>:
+These are the sticky bits of events. There is a sticky bit for an event for each flow.
+------------------------------
+<field_enc>:
+'1': The corresponding event is triggered since it is cleared last time.
+'0': No such event is triggered since it is cleared last time.
+------------------------------
+<reg_short_dscr>:
+Event handling configuration.
+------------------------------
+<reg_public_text>:
+This register group defines how to handle the incoming events.
+------------------------------
+<field_public_text>:
+This field is to configure the counters of a flow to count frames with certain priorities.
+The field contains one bit per priority.
+
+Note that with the default value of this field, counting is disabled for all priorities.
+------------------------------
+<field_enc>:
+0: Do not count frames with this priority.
+1: Count frames with this priority.
+------------------------------
+<field_public_text>:
+Selects which frames to count.
+------------------------------
+<field_enc>:
+"000": The frames without any event signal or frame error signal asserted are counted.
+"001": The frames with unmasked (enabled) events asserted but with no error indications are counted.
+"010": The frames with both event signal and the error signal asserted are counted.
+"011": The frames with event signal asserted are counted in spite of the error indications.
+"100": The frames with the error signal asserted, but with no event signal are counted.
+"101": The frames with error signal asserted are counted in spite of the accompanied event indications.
+
+     | Error | Event
+-----+-------+------
+ 000 |   N   |   N  
+-----+-------+------
+ 001 |   N   |   Y  
+-----+-------+------
+ 010 |   Y   |   Y  
+-----+-------+------
+ 011 |   -   |   Y  
+-----+-------+------
+ 100 |   Y   |   N  
+-----+-------+------
+ 101 |   Y   |   -  
+-----+-------+------
+------------------------------
+<field_public_text>:
+Configure whether to count frames or bytes.
+------------------------------
+<field_enc>:
+'0': Count frames.
+'1': Count bytes.
+------------------------------
+<reg_short_dscr>:
+The counter's least significant 32 bits.
+------------------------------
+<field_public_text>:
+This register contains the least significant 32 bits of a counter.
+------------------------------
+<reg_short_dscr>:
+The counter's most significant 8 bits.
+------------------------------
+<field_public_text>:
+The counter's most significant 8 bits.
+
+The field stores the value in the counters of a flow from bit 32 to the most significant bit. 
+
+Reading:
+The MSB part of the counter is latched to a shadow register, when the LSB part is read. 
+As a result, the LSB part must always be read first, and the MSB part must be read immediately after the LSB part is read. 
+
+Writing:
+The procedure for writing differs depending on counter group:
+ANA_AC:STAT_CNT_CFG_PORT: LSB part must be written first, followed by MSB part.
+All other counter groups: MSB part must be written first, followed by LSB part.
+------------------------------
+<reggrp_short_dscr>:
+Common counter configuration.
+------------------------------
+<reggrp_public_text>:
+This register group defines configuration parameters common to all counters in the corresponding counter register group.
+------------------------------
+<reg_short_dscr>:
+Global configuration register
+------------------------------
+<reg_public_text>:
+Global configuration register
+------------------------------
+<field_public_text>:
+This field is to configure the counters of all flows to count the byte number or the frame number.
+------------------------------
+<field_enc>:
+'0': Count frames.
+'1': Count bytes.
+------------------------------
+<reg_short_dscr>:
+Event mask for counters.
+------------------------------
+<field_public_text>:
+This value stores the event mask which indicates the counter of all flows to count certain events.
+ If set to '1' the respective event is not filtered and can trigger the counter.
+ If set to '0' the respective event is filtered and the counter will treat the frame as if no event has occurred.
+
+ The following events apply to ACL stat: 
+ Bit 0: Count CPU traffic applicable for CPU ACL policer but not discarded
+ Bit 1: Count front port traffic applicable for ACL policer but not discarded
+ Bit 2: Count CPU traffic discarded by ACL policer
+ Bit 3: Count front port traffic discarded by ACL policer
+------------------------------
+<field_enc>:
+0: This event will not trigger counting.
+1: Enable counting for frames with this event.
+------------------------------
+<reggrp_short_dscr>:
+Individual configuration.
+------------------------------
+<reggrp_public_text>:
+This register group defines individual configurations for registers in a STAT.
+------------------------------
+<reg_short_dscr>:
+The counter's least significant 32 bits.
+------------------------------
+<field_public_text>:
+This register contains the least significant 32 bits of a counter.
+------------------------------
+<reg_short_dscr>:
+The counter's most significant 8 bits.
+------------------------------
+<field_public_text>:
+The counter's most significant 8 bits.
+
+The field stores the value in the counters of a flow from bit 32 to the most significant bit. 
+
+Reading:
+The MSB part of the counter is latched to a shadow register, when the LSB part is read. 
+As a result, the LSB part must always be read first, and the MSB part must be read immediately after the LSB part is read. 
+
+Writing:
+The procedure for writing differs depending on counter group:
+ANA_AC:STAT_CNT_CFG_PORT: LSB part must be written first, followed by MSB part.
+All other counter groups: MSB part must be written first, followed by LSB part.
+------------------------------
+<reggrp_short_dscr>:
+Common counter configuration.
+------------------------------
+<reggrp_public_text>:
+This register group defines configuration parameters common to all counters in the corresponding counter register group.
+------------------------------
+<reg_short_dscr>:
+Global configuration register
+------------------------------
+<reg_public_text>:
+Global configuration register
+------------------------------
+<field_public_text>:
+This field is to configure the counters of all flows to count the byte number or the frame number.
+------------------------------
+<field_enc>:
+'0': Count frames.
+'1': Count bytes.
+------------------------------
+<reg_short_dscr>:
+Event mask for counters.
+------------------------------
+<field_public_text>:
+This value stores the event mask which indicates the counter of all flows to count certain events.
+ If set to '1' the respective event is not filtered and can trigger the counter.
+ If set to '0' the respective event is filtered and the counter will treat the frame as if no event has occurred.
+
+ The following events apply to queue stat:
+ Bit 0: Count traffic applicable for queue policer but not discarded
+ Bit 1: Count traffic discarded by queue policer
+------------------------------
+<field_enc>:
+0: This event will not trigger counting.
+1: Enable counting for frames with this event.
+------------------------------
+<reggrp_short_dscr>:
+Individual configuration.
+------------------------------
+<reggrp_public_text>:
+This register group defines individual configurations for registers in a STAT.
+------------------------------
+<reg_short_dscr>:
+The counter's least significant 32 bits.
+------------------------------
+<field_public_text>:
+This register contains the least significant 32 bits of a counter.
+------------------------------
+<reg_short_dscr>:
+The counter's most significant 8 bits.
+------------------------------
+<field_public_text>:
+The counter's most significant 8 bits.
+
+The field stores the value in the counters of a flow from bit 32 to the most significant bit. 
+
+Reading:
+The MSB part of the counter is latched to a shadow register, when the LSB part is read. 
+As a result, the LSB part must always be read first, and the MSB part must be read immediately after the LSB part is read. 
+
+Writing:
+The procedure for writing differs depending on counter group:
+ANA_AC:STAT_CNT_CFG_PORT: LSB part must be written first, followed by MSB part.
+All other counter groups: MSB part must be written first, followed by LSB part.
+------------------------------
+<reggrp_short_dscr>:
+Common counter configuration.
+------------------------------
+<reggrp_public_text>:
+This register group defines configuration parameters common to all counters in the corresponding counter register group.
+------------------------------
+<reg_short_dscr>:
+Global configuration register
+------------------------------
+<reg_public_text>:
+Global configuration register
+------------------------------
+<field_public_text>:
+This field is to configure the counters of all flows to count the byte number or the frame number.
+------------------------------
+<field_enc>:
+'0': Count frames.
+'1': Count bytes.
+------------------------------
+<reg_short_dscr>:
+Event mask for counters.
+------------------------------
+<field_public_text>:
+This value stores the event mask which indicates the counter of all flows to count certain events.
+ If set to '1' the respective event is not filtered and can trigger the counter.
+ If set to '0' the respective event is filtered and the counter will treat the frame as if no event has occurred.
+ 
+ Which type of frame is counted is defined in: STAT_GLOBAL_CFG.
+ 
+ The following events apply to ISDX stat:
+ For CE:
+ Bit 0: Count GREEN traffic
+ Bit 1: Count YELLOW traffic
+ Bit 2: Count RED traffic
+ 
+ Bit 2 includes frames discarded due to DROP_ON_YELLOW_ENA=1 or MARK_ALL_FRMS_RED_ENA=1
+ 
+ For SME:
+ Bit 3: Count unicast traffic
+ Bit 4: Count multicast traffic
+ Bit 5: Count flooded traffic
+ Bit 6: Count broadcast traffic
+ 
+ TSN:
+ Bit 7:
+ Count frames classified to ISDX!=0.
+ 
+ Bit 8:
+ Count frames discarded by Stream Gate.
+ 
+ Bit 9:
+ Frames discarded by TSN_MAX_SDU filter.
+ This does not include frames dropped due to StreamBlockedDueToOversizeFrame=1
+ 
+ 
+ Related parameters:
+ ANA_AC_SDLB:LBSET_TBL:DLB_MISC.MARK_ALL_FRMS_RED_ENA
+ ANA_AC_SDLB:LBSET_TBL:DLB_CFG.DROP_ON_YELLOW_ENA
+ ANA_AC:TSN_SF_CFG:TSN_SF_CFG.TSN_MAX_SDU
+ ANA_AC:TSN_SF_CFG:TSN_SF_CFG.TSN_STREAM_BLOCK_OVERSIZE_ENA
+------------------------------
+<field_enc>:
+0: This event will not trigger counting.
+1: Enable counting for frames with this event.
+------------------------------
+<reggrp_short_dscr>:
+Individual configuration.
+------------------------------
+<reggrp_public_text>:
+This register group defines individual configurations for registers in a STAT.
+------------------------------
+<reg_short_dscr>:
+The counter's least significant 32 bits.
+------------------------------
+<field_public_text>:
+This register contains the least significant 32 bits of a counter.
+------------------------------
+<reg_short_dscr>:
+The counter's most significant 8 bits.
+------------------------------
+<field_public_text>:
+The counter's most significant 8 bits.
+
+The field stores the value in the counters of a flow from bit 32 to the most significant bit. 
+
+Reading:
+The MSB part of the counter is latched to a shadow register, when the LSB part is read. 
+As a result, the LSB part must always be read first, and the MSB part must be read immediately after the LSB part is read. 
+
+Writing:
+The procedure for writing differs depending on counter group:
+ANA_AC:STAT_CNT_CFG_PORT: LSB part must be written first, followed by MSB part.
+All other counter groups: MSB part must be written first, followed by LSB part.
+------------------------------
+<reggrp_short_dscr>:
+Common counter configuration.
+------------------------------
+<reggrp_public_text>:
+This register group defines configuration parameters common to all counters in the corresponding counter register group.
+------------------------------
+<reg_short_dscr>:
+Global configuration register
+------------------------------
+<reg_public_text>:
+Global configuration register
+------------------------------
+<field_public_text>:
+This field is to configure the counters of all flows to count the byte number or the frame number.
+------------------------------
+<field_enc>:
+'0': Count frames.
+'1': Count bytes.
+------------------------------
+<reg_short_dscr>:
+Event mask for counters.
+------------------------------
+<field_public_text>:
+This value stores the event mask which controls the counter of all bundle stats to count certain events.
+ If set to '1' the respective event is not filtered and can trigger the counter.
+ If set to '0' the respective event is filtered and the counter will treat the frame as if no event has occurred.
+ 
+ Which type of frame is counted is defined in: STAT_GLOBAL_CFG.
+ 
+ The following events apply to Bundle DLB stat:
+ Bit 0: Count GREEN traffic
+ Bit 1: Count YELLOW traffic
+ Bit 2: Count RED traffic
+------------------------------
+<field_enc>:
+0: This event will not trigger counting.
+1: Enable counting for frames with this event.
+------------------------------
+<reggrp_short_dscr>:
+Individual configuration.
+------------------------------
+<reggrp_public_text>:
+This register group defines individual configurations for registers in a STAT.
+------------------------------
+<reg_short_dscr>:
+The counter's least significant 32 bits.
+------------------------------
+<field_public_text>:
+This register contains the least significant 32 bits of a counter.
+------------------------------
+<reg_short_dscr>:
+The counter's most significant 8 bits.
+------------------------------
+<field_public_text>:
+The counter's most significant 8 bits.
+
+The field stores the value in the counters of a flow from bit 32 to the most significant bit. 
+
+Reading:
+The MSB part of the counter is latched to a shadow register, when the LSB part is read. 
+As a result, the LSB part must always be read first, and the MSB part must be read immediately after the LSB part is read. 
+
+Writing:
+The procedure for writing differs depending on counter group:
+ANA_AC:STAT_CNT_CFG_PORT: LSB part must be written first, followed by MSB part.
+All other counter groups: MSB part must be written first, followed by LSB part.
+------------------------------
+<reggrp_short_dscr>:
+Common counter configuration.
+------------------------------
+<reggrp_public_text>:
+This register group defines configuration parameters common to all counters in the corresponding counter register group.
+------------------------------
+<reg_short_dscr>:
+Global configuration register
+------------------------------
+<reg_public_text>:
+Global configuration register
+------------------------------
+<field_public_text>:
+This field is to configure the counters of all flows to count the byte number or the frame number.
+------------------------------
+<field_enc>:
+'0': Count frames.
+'1': Count bytes.
+------------------------------
+<reg_short_dscr>:
+Event mask for counters.
+------------------------------
+<field_public_text>:
+This value stores the event mask which controls the counter of all bundle stats to count certain events.
+ If set to '1' the respective event is not filtered and can trigger the counter.
+ If set to '0' the respective event is filtered and the counter will treat the frame as if no event has occurred.
+ 
+ Which type of frame is counted is defined in: STAT_GLOBAL_CFG.
+ 
+ The following events apply to Bundle DLB stat:
+ Bit 0: Count Broadcast traffic discarded by BUM policer
+ Bit 1: Count Multicast traffic discarded by BUM policer
+ Bit 2: Count Unicast traffic discarded by BUM policer
+ Bit 3: Count Broadcast traffic applicable for BUM policer but not discarded
+ Bit 4: Count Multicast traffic applicable for BUM policer but not discarded
+ Bit 5: Count Unicast traffic applicable for BUM policer but not discarded
+------------------------------
+<field_enc>:
+0: This event will not trigger counting.
+1: Enable counting for frames with this event.
+------------------------------
+<reggrp_short_dscr>:
+Individual configuration.
+------------------------------
+<reggrp_public_text>:
+This register group defines individual configurations for registers in a STAT.
+------------------------------
+<reg_short_dscr>:
+The counter's least significant 32 bits.
+------------------------------
+<field_public_text>:
+This register contains the least significant 32 bits of a counter.
+------------------------------
+<reg_short_dscr>:
+The counter's most significant 8 bits.
+------------------------------
+<field_public_text>:
+The counter's most significant 8 bits.
+
+The field stores the value in the counters of a flow from bit 32 to the most significant bit. 
+
+Reading:
+The MSB part of the counter is latched to a shadow register, when the LSB part is read. 
+As a result, the LSB part must always be read first, and the MSB part must be read immediately after the LSB part is read. 
+
+Writing:
+The procedure for writing differs depending on counter group:
+ANA_AC:STAT_CNT_CFG_PORT: LSB part must be written first, followed by MSB part.
+All other counter groups: MSB part must be written first, followed by LSB part.
+------------------------------
+<reggrp_short_dscr>:
+Common counter configuration.
+------------------------------
+<reggrp_public_text>:
+This register group defines configuration parameters common to all counters in the corresponding counter register group.
+------------------------------
+<reg_short_dscr>:
+Global configuration register
+------------------------------
+<reg_public_text>:
+Global configuration register
+------------------------------
+<field_public_text>:
+This field is to configure the counters of all flows to count the byte number or the frame number.
+------------------------------
+<field_enc>:
+'0': Count frames.
+'1': Count bytes.
+------------------------------
+<reg_short_dscr>:
+Event mask for counters.
+------------------------------
+<field_public_text>:
+This value stores the event mask which indicates the counter of all flows to count certain events.
+ If set to '1' the respective event is not filtered and can trigger the counter.
+ If set to '0' the respective event is filtered and the counter will treat the frame as if no event has occurred.
+ 
+ Which type of frame is counted is defined in: STAT_CFG, CFG_CNT_FRM_TYPE.
+
+ The following events apply to irleg stat:
+ Bit 0: Count acl_discarded traffic 
+  Bit 1: Count received IP UC traffic 
+  Bit 2: Count received IP MC traffic 
+  Bit 3: Count ip_uc_routed traffic 
+  Bit 4: Count ip_mc_routed traffic 
+  Bit 5: Count ip_mc_rpf_discarded traffic 
+ Bit 6: Count ip_ttl_discarded traffic 
+ 
+ Note that if counting of both received IP MC frames (bit 2) as well as routed IP MC frames (bit 4) is enabled 
+ for the same counter, then the frame will be counted twice. 
+ It is thus recommended to use a separate counter for counting received IP MC frames.
+------------------------------
+<field_enc>:
+0: This event will not trigger counting.
+1: Enable counting for frames with this event.
+------------------------------
+<reggrp_short_dscr>:
+Individual configuration.
+------------------------------
+<reggrp_public_text>:
+This register group defines individual configurations for registers in a STAT.
+The first half of the replications are used for IPv4 and the second half of the replications are used for IPv6
+------------------------------
+<reg_short_dscr>:
+The counter's least significant 32 bits.
+------------------------------
+<field_public_text>:
+This register contains the least significant 32 bits of a counter.
+------------------------------
+<reg_short_dscr>:
+The counter's most significant 8 bits.
+------------------------------
+<field_public_text>:
+The counter's most significant 8 bits.
+
+The field stores the value in the counters of a flow from bit 32 to the most significant bit. 
+
+Reading:
+The MSB part of the counter is latched to a shadow register, when the LSB part is read. 
+As a result, the LSB part must always be read first, and the MSB part must be read immediately after the LSB part is read. 
+
+Writing:
+The procedure for writing differs depending on counter group:
+ANA_AC:STAT_CNT_CFG_PORT: LSB part must be written first, followed by MSB part.
+All other counter groups: MSB part must be written first, followed by LSB part.
+------------------------------
+<reggrp_short_dscr>:
+Common counter configuration.
+------------------------------
+<reggrp_public_text>:
+This register group defines configuration parameters common to all counters in the corresponding counter register group.
+------------------------------
+<reg_short_dscr>:
+Global configuration register
+------------------------------
+<reg_public_text>:
+Global configuration register
+------------------------------
+<field_public_text>:
+This field is to configure the counters of all flows to count the byte number or the frame number.
+------------------------------
+<field_enc>:
+'0': Count frames.
+'1': Count bytes.
+------------------------------
+<reg_short_dscr>:
+Event mask for counters.
+------------------------------
+<field_public_text>:
+This value stores the event mask which indicates the counter of all flows to count certain events.
+ If set to '1' the respective event is not filtered and can trigger the counter.
+ If set to '0' the respective event is filtered and the counter will treat the frame as if no event has occurred.
+
+ The following events apply to erleg stat:
+ Bit 0: Count acl_discarded traffic 
+  Bit 1: Count ip_uc_routed traffic 
+  Bit 2: Count ip_mc_routed traffic 
+  Bit 3: Count ip_mc_switched traffic 
+ Bit 4: Count ip_mc_ttl_discarded traffic 
+ Bit 5: Count IP-in-IP traffic received with bad GRE checksum
+------------------------------
+<field_enc>:
+0: This event will not trigger counting.
+1: Enable counting for frames with this event.
+------------------------------
+<reggrp_short_dscr>:
+Individual configuration.
+------------------------------
+<reggrp_public_text>:
+This register group defines individual configurations for registers in a STAT.
+The first half of the replications are used for IPv4 and the second half of the replications are used for IPv6
+------------------------------
+<reg_short_dscr>:
+The counter's least significant 32 bits.
+------------------------------
+<field_public_text>:
+This register contains the least significant 32 bits of a counter.
+------------------------------
+<reg_short_dscr>:
+The counter's most significant 8 bits.
+------------------------------
+<field_public_text>:
+The counter's most significant 8 bits.
+
+The field stores the value in the counters of a flow from bit 32 to the most significant bit. 
+
+Reading:
+The MSB part of the counter is latched to a shadow register, when the LSB part is read. 
+As a result, the LSB part must always be read first, and the MSB part must be read immediately after the LSB part is read. 
+
+Writing:
+The procedure for writing differs depending on counter group:
+ANA_AC:STAT_CNT_CFG_PORT: LSB part must be written first, followed by MSB part.
+All other counter groups: MSB part must be written first, followed by LSB part.
+------------------------------

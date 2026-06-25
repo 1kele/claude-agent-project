@@ -1,0 +1,303 @@
+=== DOCUMENTATION FOR TARGET: QSYS ===
+
+<target_short_dscr>:
+Queue System Configuration
+------------------------------
+<reggrp_short_dscr>:
+Switch configuration
+------------------------------
+<reg_short_dscr>:
+Control Energy Efficient Ethernet operation per front port.
+------------------------------
+<field_public_text>:
+Queues set in this mask activate the egress port immediately when any of the queues have data available.
+------------------------------
+<reg_short_dscr>:
+Thresholds for delayed EEE queues
+------------------------------
+<field_public_text>:
+Maximum number of bytes in a queue before egress port is activated. Unit is 60 bytes.
+------------------------------
+<field_public_text>:
+Maximum number of frames in a queue before the egress port is activated. Unit is 1 frame.
+------------------------------
+<reg_short_dscr>:
+Frame aging configuration
+------------------------------
+<field_public_text>:
+Frames are aged and removed from the queue system when the frame's age timer becomes two. The frame age timer is increased for all frames whenever the configured time, MAX_AGE,  has passed. 
+
+Effectively, this means that a frame is aged when the frame has waited in the queue system between one or two times the period specified by MAX_AGE.
+
+The periodd configured by MAX_AGE is also termed an "age era".
+
+A value of zero disables frame aging. 
+
+Frame aging related parameters:
+QSYS:SYSTEM:FRM_AGING.MAX_AGE
+HSCH:SYSTEM:PORT_MODE.AGE_DIS
+DSM:CFG:BUF_CFG.AGING_ENA
+------------------------------
+<field_enc>:
+0: Disable frame aging.
+>=1: Era length in unit of 4us.
+------------------------------
+<reg_short_dscr>:
+Map DP values to color
+------------------------------
+<field_public_text>:
+Drop precedence N uses mapping table given by bit N in this field.
+------------------------------
+<field_enc>:
+xxx0: Map DP value 0 to DE value 0
+xxx1: Map DP value 0 to DE value 1
+...
+0xxx: Map DP value 3 to DE value 0
+1xxx: Map DP value 3 to DE value 1
+------------------------------
+<reg_short_dscr>:
+Statistics configuration
+------------------------------
+<field_public_text>:
+Set to disable counting buffer drops (tail) in the general rx drop counter.
+------------------------------
+<reg_short_dscr>:
+Ingress queue delay setup
+------------------------------
+<field_public_text>:
+Enable cut-through out of the ingress queue for the port, by iprio class.
+------------------------------
+<reggrp_short_dscr>:
+Watermarks for egress queue system
+------------------------------
+<reg_short_dscr>:
+Watermarks for flow control condition per switch port.
+------------------------------
+<field_public_text>:
+Start pausing ingress stream when the amount of memory consumed by the port exceeds this watermark. The TOTPAUSE condition must also be met.
+------------------------------
+<field_enc>:
+See RES_CFG
+------------------------------
+<field_public_text>:
+Stop pausing ingress stream when the amount of memory consumed by the port is below  this watermark.
+------------------------------
+<field_enc>:
+See RES_CFG.
+------------------------------
+<field_public_text>:
+Enable pause feedback to the MAC, allowing transmission of pause frames or HDX collisions to limit ingress data rate.
+------------------------------
+<field_public_text>:
+Reserved, must set to its default value.
+------------------------------
+<reg_short_dscr>:
+Configure total memory pause condition
+------------------------------
+<field_public_text>:
+Assert TOTPAUSE condition when total memory allocation is above this watermark.
+------------------------------
+<field_enc>:
+See RES_CFG
+------------------------------
+<field_public_text>:
+Deassert TOTPAUSE condition when total memory allocation is below this watermark.
+------------------------------
+<field_enc>:
+See RES_CFG
+------------------------------
+<reg_short_dscr>:
+Tail dropping level
+------------------------------
+<field_public_text>:
+When a source port consumes more than this level in the packet memory, frames are tail dropped, unconditionally of destination.
+------------------------------
+<field_enc>:
+See RES_CFG
+------------------------------
+<reg_short_dscr>:
+Forward pressure level
+------------------------------
+<field_public_text>:
+When ingress queue request count exceeds FWD_PRESSURE level, forward pressure is enabled for frames arriving on the port. Multicasts from this port are discarded towards destinations that have used all reserved references. 
+Forward pressure on any port in combination with aggressive taildropping (PAUSE_CFG.AGGRESSIVE_TAILDROP_ENA), affects discard policy on other ingress ports with the following conditions true: 
+- Mac- or priority based flow control disabled
+- Has accumulated more traffic per priority than the PAUSE_START/STOP registers are set to.
+ -Are sending traffic towards a destination port which has no port reserved references left for the frame's priority.
+Under these conditions, the destination in question is removed from the set of destinations for the frame. (The frame is discarded towards that destination)
+------------------------------
+<field_public_text>:
+Disable forward pressure per ingress port
+------------------------------
+<reg_short_dscr>:
+Total raw memory use before tail dropping is activated
+------------------------------
+<field_public_text>:
+Tail dropping is activate on a port when the port use has exceeded the ATOP watermark for the port, and the total memory use has exceeded this watermark.
+------------------------------
+<field_enc>:
+See RES_CFG
+------------------------------
+<reg_short_dscr>:
+Various switch port mode settings
+------------------------------
+<field_public_text>:
+When set the MAC sends PRIO pause control frames in the Tx direction when congested.
+------------------------------
+<field_public_text>:
+When set, a congested priority request pause of all lower priorities as well.
+------------------------------
+<reggrp_short_dscr>:
+Memory manager status
+------------------------------
+<reg_short_dscr>:
+Port to see values for
+------------------------------
+<field_public_text>:
+Select port to see consumption values for
+------------------------------
+<reg_short_dscr>:
+Total consumption per ingress port
+------------------------------
+<field_public_text>:
+Total consumption per port in the memory manager. Unit is one cell (176 bytes).
+------------------------------
+<reg_short_dscr>:
+Packet memory use count per port and priority
+------------------------------
+<field_public_text>:
+Total consumption per port and priority  in the memory manager. Unit is one cell (176 bytes).
+------------------------------
+<reg_short_dscr>:
+Ingress queue status
+------------------------------
+<field_public_text>:
+Number of frame copies pending in the ingress queue
+------------------------------
+<reg_short_dscr>:
+Tail drop count.
+------------------------------
+<field_public_text>:
+Returns the number of buffer drops due to ATOP reached, or lack of free memory. Values returned for the port mapped in MMGT_PORT_VIEW.
+
+Counter wraps when maximum is reached reached.
+------------------------------
+<reggrp_short_dscr>:
+Configuration and status for EACL data pool
+------------------------------
+<reg_short_dscr>:
+Status of  of the SOF pool
+------------------------------
+<field_public_text>:
+Amount of SOF words in shared use.
+------------------------------
+<reg_short_dscr>:
+Status of  of the SOF pool
+------------------------------
+<field_public_text>:
+Amount of SOF words in use by the by the port.
+------------------------------
+<reg_short_dscr>:
+Configures egress ACL lookups per port
+------------------------------
+<field_public_text>:
+Selects the watermark to use for this port, when evaluating whether more SOF data can be allocated to it. If a port cannot be granted more SOF data storage, the EACL module will be given void sof data, and can react on that. A port using more than the watermark value will consume from a shared pool. Size of that pool is compared with the SOFDATA_WM_VAL(4). If both watermarks are reached, no more storage for sof data from the port is granted.
+------------------------------
+<field_enc>:
+0: Use SOFDATA_WM_VAL(0)
+1: Use SOFDATA_WM_VAL(1)
+2: Use SOFDATA_WM_VAL(2)
+3: Use SOFDATA_WM_VAL(3)
+------------------------------
+<reg_short_dscr>:
+Watermarks for SOF Data
+------------------------------
+<field_public_text>:
+Watermark value to use for SOF Data allocation. Watermarks 0-3 are used by per port reservations. Watermark 4 is used for the shared pool of sof data.
+------------------------------
+<reg_short_dscr>:
+Automatic calendar setup
+------------------------------
+<reg_public_text>:
+These registers configures the automaric calendar for the next 10 ports from 'repl'*10.
+------------------------------
+<field_public_text>:
+Per port setting for internal bandwidth for 10 ports. Replication M, Bits 3N+2 down to 3N is a three bit value for port M*10+N, encoded as seen below.
+
+Related parameters:
+HSCH:SYSTEM:OUTB_SHARE_ENA.OUTB_SHARE_ENA
+HSCH:SYSTEM:OUTB_CPU_SHARE_ENA.OUTB_CPU_SHARE_ENA
+------------------------------
+<field_enc>:
+000: Port not active
+001: Port granted 1   Gbps
+010: Port granted 2.5 Gbps
+011: Port granted 5   Gbps
+100: Port granted 10  Gbps
+101: Port granted 25  Gbps
+110: Port granted 0.5 Gbps
+111: Port granted 12.5Gbps
+------------------------------
+<reg_short_dscr>:
+Manual calendar setup
+------------------------------
+<field_public_text>:
+Last entry in manual sequence.
+------------------------------
+<field_public_text>:
+Port to service in the cycle given by the CAL_SEQ_LEN value. Calendar sequence can only be read back when the calendar mode isn't CAL_MODE_SEQ.
+------------------------------
+<field_public_text>:
+The CAL_SEQ_PGM_VAL is written into the sequence entry CAL_SEQ_LEN.
+------------------------------
+<field_public_text>:
+Enable update of the CAL_SEQ.
+------------------------------
+<reg_short_dscr>:
+Manual calendar control.
+------------------------------
+<reg_public_text>:
+Control part of calendar sequence in use
+------------------------------
+<field_public_text>:
+Sequenced calendar is active from CAL_SEQ_FIRST to CAL_SEQ_LAST (including), of the 2048 long sequence memory. If the first entry index is higher than the last index, the sequence reader will automaticaly continue from index 0 after the last memory entry.
+------------------------------
+<field_public_text>:
+Last entry of active sequence.
+------------------------------
+<field_public_text>:
+The field must be set to 1 for activating a new sequence subspace. Field is automatically cleared when switch has been made - which is done when the current active calendar has read its last entry.
+------------------------------
+<reg_short_dscr>:
+Calendar configuration
+------------------------------
+<field_public_text>:
+The internal bus calendars can be set to an automatic sequence generated by the CAL_AUTO registers, or to a specific sequence programmed through the CAL_SEQ fields.
+------------------------------
+<field_enc>:
+8:  CAL_AUTO port setting 
+9:  Sequence program
+10: Halt
+others: reserved
+------------------------------
+<field_public_text>:
+Configures the time between bus grants to 10g ports, in 0.1 nanosecond unit. Other speeds will be adjusted relative to the 10g setting. Default value of 8 matches the nominal minimum packet time on a 10g port.
+------------------------------
+<field_public_text>:
+The automatic calendar failed to service all ports.
+------------------------------
+<reggrp_short_dscr>:
+Access core memory
+------------------------------
+<reg_short_dscr>:
+Core reset control
+------------------------------
+<reg_public_text>:
+Controls reset and initialization of the switching core. Proper startup sequence is:
+- Enable memories
+- Initialize memories
+- Enable core
+------------------------------
+<field_public_text>:
+Initialize core memories. Field is automatically cleared when operation is complete (approx. 40 us).
+------------------------------

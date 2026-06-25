@@ -1,0 +1,688 @@
+=== DOCUMENTATION FOR TARGET: HSCH ===
+
+<target_short_dscr>:
+Hierarchical Scheduler Configuration
+------------------------------
+<reggrp_short_dscr>:
+Hierarchy configuration
+------------------------------
+<reg_short_dscr>:
+Hierarchy configuration
+------------------------------
+<field_public_text>:
+Next layer for queue scheduled through the layer 0 element.
+------------------------------
+<field_enc>:
+0: Layer 1 is the next layer
+1: Layer 2 is the next layer
+------------------------------
+<field_public_text>:
+Index of element connected to in selected layer
+------------------------------
+<field_public_text>:
+Input of layer element connected to in selected layer
+------------------------------
+<field_public_text>:
+A 8-bit vector which specifies preemptable queues within the 8 priorities (with bit-0 for priority-0 and bit-7 for priority-7).
+A value of '1' in the bit positioned at 'p' indicates that the egress frame with priority 'p' can be preemptable.
+
+This is nothing but "frame preemption status" defined in IEEE802.1Qbu/D3.0 with an encoding of 'express=0' and 'preemptable=1'.
+
+Note: This vector should be left to default value if preemption is not supported on the port (i.e., all queues has express traffic).
+------------------------------
+<reggrp_short_dscr>:
+Hierarchy configuration
+------------------------------
+<reg_short_dscr>:
+Hierarchy configuration
+------------------------------
+<field_public_text>:
+Index of layer 2 element connected to by this layer 1 element.
+------------------------------
+<field_public_text>:
+Input of layer 2 element connected to
+------------------------------
+<reggrp_short_dscr>:
+Configuration of scheduling system and shapers
+------------------------------
+<reggrp_public_text>:
+General purpose scheduling elements are used to form a hierarchy of queue scheduling. The number of elements is dependent on which layer is accessed.
+------------------------------
+<reg_short_dscr>:
+Shaping configuration of the SE
+------------------------------
+<field_public_text>:
+Leak rate for this shaper. Unit is defined by the leak list period the shaper is attached to (see HSCH_TIMER_CFG.LEAK_TIME).
+------------------------------
+<field_public_text>:
+Burst capacity of this shaper. Unit is 4096 bytes. The shaper is disabled when CIR_BURST=0.
+------------------------------
+<reg_short_dscr>:
+Excess rate configuration
+------------------------------
+<field_public_text>:
+Leak rate for this shaper. Same unit as CIR_RATE unit.
+------------------------------
+<field_public_text>:
+Burst capacity of this shaper. Unit is 4096 bytes. The dual leaky bucket shaper operates as a single leaky bucket shaper when EIR_BURST=0.
+------------------------------
+<reg_short_dscr>:
+Configuration of shaper and scheduling algorithm
+------------------------------
+<field_public_text>:
+Number of inputs running with DWRR algorithm, otherwise strict. Strict inputs always have the highest input index.
+------------------------------
+<field_enc>:
+0: No inputs uses DWRR
+1: 2 lowest inputs used DWRR
+n: (n+1) lowest inputs uses DWRR
+------------------------------
+<field_public_text>:
+Enable AVB mode for this shaper, creating burst capacity only when data is available.
+------------------------------
+<field_public_text>:
+Accounting mode for this shaper.
+------------------------------
+<field_enc>:
+0: Line rate. Shape bytes including HSCH_MISC_PORT_CFG.FRM_ADJ.
+1: Data rate. Shape bytes excluding IPG.
+2. Frame rate. Shape frames with rate unit = 100 fps and burst unit = 32.8 frames.
+3: Frame rate. Shape framed with rate unit = 1 fps and burst unit = 0.3 frames.
+------------------------------
+<field_public_text>:
+Accounting mode for the DWRR distribution.
+------------------------------
+<field_enc>:
+0: Line rate. Cost is frame length including HSCH_MISC_PORT_CFG.FRM_ADJ.
+1: Data rate. Cost is frame length excluding IPG.
+2. Frame rate. Cost is 1.
+3: Reserved.
+------------------------------
+<field_public_text>:
+Block traffic through this element. This can be used for transfering element to other locations in the scheduling hierarchy
+------------------------------
+<field_enc>:
+0: Traffic can flow through this element
+1: This element will block its output
+------------------------------
+<reg_short_dscr>:
+Configuration of the connections between SEs
+------------------------------
+<field_public_text>:
+Forms the leak chains.
+------------------------------
+<reg_short_dscr>:
+Configuration of which fill levels in the queue system that the DLB shapers use to trigger excess information rate
+------------------------------
+<field_public_text>:
+QoS class used when SE_DLB_PRIO_ENA is set.
+------------------------------
+<field_public_text>:
+Destination port used when SE_DLB_DPORT_ENA is set.
+------------------------------
+<field_public_text>:
+Let excess rate become active when connected SE is above the QLIMIT_SE_EIR watermark.
+------------------------------
+<field_public_text>:
+Enable priority awareness by the DLB shaper. If set, the DLB shaper allows excess information rate when the egress buffer use for QoS class SE_DLB_PRIO has reached threshold BUF_PRIO_SHR_E[SE_DLB_PRIO] minus 3000 bytes.
+
+If both SE_DLB_PRIO_ENA and SE_DLB_SPORT_ENA are set, the excess information rate is alllowed when the ingress buffer use for QoS class per source port has reached threshold BUF_Q_RSRV_I[SE_DLB_PRIO, SE_DLB_SPORT] minus 3000 bytes. 
+
+If both SE_DLB_PRIO_ENA and SE_DLB_DPORT_ENA are set, the excess information rate is alllowed when the egress buffer use for QoS class per destination port has reached threshold BUF_Q_RSRV_E[SE_DLB_PRIO, SE_DLB_DPORT] minus 3000 bytes. 
+
+If multiple awareness functions (SE_DLB_PRIO_ENA, SE_DLB_SPORT_ENA, SE_DLB_DPORT_ENA) are enabled, all relevant thresholds must be exceeded before excess information rate is allowed.
+------------------------------
+<field_public_text>:
+Enable destination port awareness by the DLB shaper. If set, the DLB shaper allows excess information rate when the egress buffer use for destination port SE_DLB_SPORT has reached threshold BUF_P_RSRV_E[SE_DLB_DPORT] minus 3000 bytes.
+
+If multiple awareness functions (SE_DLB_PRIO_ENA, SE_DLB_SPORT_ENA, SE_DLB_DPORT_ENA) are enabled, all relevant thresholds must be exceeded before excess information rate is allowed.
+------------------------------
+<reggrp_short_dscr>:
+Status of scheduling system and shapers
+------------------------------
+<reggrp_public_text>:
+General purpose scheduling elements are used to form a hierarchy of queue scheduling. The number of elements is dependent on which layer is accessed.
+------------------------------
+<reg_short_dscr>:
+CIR status
+------------------------------
+<field_public_text>:
+Current fill level. Unit is 1 bit.
+------------------------------
+<reg_short_dscr>:
+EIR status
+------------------------------
+<field_public_text>:
+Current fill level. Unit is 1 bit.
+------------------------------
+<reggrp_short_dscr>:
+Configuration of queue shapers
+------------------------------
+<reggrp_public_text>:
+Configuration of queue shaper for the queue indexed. A queue shaper is only accessible if allocated in the QSHP_ALLOC_CFG registers.
+------------------------------
+<reg_short_dscr>:
+Queue Shaping configuration
+------------------------------
+<field_public_text>:
+Leak rate for this shaper. Unit is defined by the leak list period the shaper is attached to (see HSCH_TIMER_CFG.LEAK_TIME).
+------------------------------
+<field_public_text>:
+Burst capacity of this shaper. Unit is 4096 kilobytes. The shaper is disabled when CIR_BURST=0.
+------------------------------
+<reg_short_dscr>:
+Configuration of queue shaper
+------------------------------
+<field_public_text>:
+Accounting mode for this shaper.
+------------------------------
+<field_enc>:
+0: Line rate. Shape bytes including HSCH_MISC_PORT_CFG.FRM_ADJ.
+1: Data rate. Shape bytes excluding IPG.
+2. Frame rate. Shape frames with rate unit = 100 fps and burst unit = 32.8 frames.
+3: Frame rate. Shape framed with rate unit = 1 fps and burst unit = 0.3 frames.
+------------------------------
+<reggrp_short_dscr>:
+Assign queue shapers to queues
+------------------------------
+<reg_short_dscr>:
+Assign queue shapers to queues
+------------------------------
+<field_public_text>:
+First input using queue shapers.
+------------------------------
+<field_public_text>:
+Last input using queue shapers. A value lower than the SHP_MIN input disables queue shaping.
+------------------------------
+<field_public_text>:
+First input using queue shapers are using this queue shaper index.
+------------------------------
+<reg_short_dscr>:
+Configuration of the connections between queue shapers
+------------------------------
+<field_public_text>:
+Forms the leak chains.
+------------------------------
+<reggrp_short_dscr>:
+Status of queue shapers
+------------------------------
+<reggrp_public_text>:
+General purpose scheduling elements are used to form a hierarchy of queue scheduling. The number of elements is dependent on which layer is accessed.
+------------------------------
+<reg_short_dscr>:
+CIR status
+------------------------------
+<field_public_text>:
+Current fill level. Unit is 1 bit.
+------------------------------
+<reggrp_short_dscr>:
+Status of scheduling element inputs
+------------------------------
+<reg_short_dscr>:
+INPUT state
+------------------------------
+<field_public_text>:
+Returns the 32 input states for se cfg_se_idx, from offset 32*replication
+------------------------------
+<reggrp_short_dscr>:
+Configure DWRR weights
+------------------------------
+<reg_short_dscr>:
+Configuration and status of a DWRR entry
+------------------------------
+<field_public_text>:
+When a specific input to an element is used, the cost is used when updating the balance.
+------------------------------
+<field_public_text>:
+Current balance of the input
+------------------------------
+<reggrp_short_dscr>:
+Miscellaneous scheduler configuration
+------------------------------
+<reg_short_dscr>:
+Misc common config for scheduler
+------------------------------
+<field_public_text>:
+Set this to one to disabled all leaking from leaky bucket shapers
+------------------------------
+<reg_short_dscr>:
+Port specific config for scheduler
+------------------------------
+<field_public_text>:
+Values to add each frame when frame length adjustment is in use.
+------------------------------
+<reg_short_dscr>:
+Configuration selection register
+------------------------------
+<field_public_text>:
+The DWRR balances and queue shapers will be accessed for the scheduling element indexed by this field.
+------------------------------
+<field_public_text>:
+The HSCH layer set in this field will be accessed by the configuration interfaces.
+------------------------------
+<field_public_text>:
+Skip a hierarchy update every time this number of updates has been done. If zero, the feature is disabled. Setting to 4095 will disable hierachy updates.
+------------------------------
+<reg_short_dscr>:
+Per port PFC configuration
+------------------------------
+<reg_public_text>:
+These configurations exists per front port.
+------------------------------
+<field_public_text>:
+Set the layer at which PFC status should be applied for this port. Only layers 1 and 2 supports PFC blocking of the hierarchy.
+------------------------------
+<field_enc>:
+0: Do not block any branches through PFC status
+1: Use pfc status for the port on layer 1
+2: Use pfc status for the port on layer 2
+3: Reserved
+------------------------------
+<field_public_text>:
+Set to the scheduling element number which should be affected by pfc status for this port.
+------------------------------
+<reg_short_dscr>:
+Enable large scheduling elements
+------------------------------
+<field_public_text>:
+Bit n in replication k enables extended width on scheduling element (32k+n)*2. Scheduling element (32k+n)*2+1 must not be used if enabled. Fx. if scheduling element 180 should handle 16 inputs, HSCH_LARGE_ENA[2] bit 26 should be set to 1, and element 181 must not be used.
+------------------------------
+<reg_short_dscr>:
+Return information about scheduler busyness
+------------------------------
+<field_public_text>:
+Return the maximum period of constant update need. Clear by writing one to the lsb of the register.
+------------------------------
+<reg_short_dscr>:
+System clock period configuration
+------------------------------
+<field_public_text>:
+Must be set to the system clock period with unit 100 picoseconds.
+------------------------------
+<reg_short_dscr>:
+Force update of an element in the hierarchy
+------------------------------
+<field_public_text>:
+Set to layer in which an element must be updated.
+------------------------------
+<field_enc>:
+0: Update a layer 0 element
+1: Update a layer 1 element
+2: Update a layer 2 element
+3: Reserved
+------------------------------
+<field_public_text>:
+Set to index of element to force
+------------------------------
+<field_public_text>:
+Update the requested scheduling element
+------------------------------
+<reggrp_short_dscr>:
+Configuration of leak lists
+------------------------------
+<reg_short_dscr>:
+Leak configuration per leak group
+------------------------------
+<field_public_text>:
+Number of nanoseconds between each traversal of the leak list. A value of 10000 correspond to 10us. Each traversal subtracts the configured rate from the shaper buckets, counting bits. With the value of 10000, a rate of 1 corresponds to 1 bit per 10us, or 100kbps.
+A leak group can be set up for 16kbps unit by seting the leak_time to 1 bit per 62500 nanoseconds.
+------------------------------
+<field_enc>:
+0: Leaking disabled
+62500: 16kbps unit
+10000: 100kbps unit
+1000:  1Mbps unit
+(any other)
+------------------------------
+<reg_short_dscr>:
+Leak configuration per leak group
+------------------------------
+<field_public_text>:
+First shaper in the leak group
+------------------------------
+<field_public_text>:
+The leak group didnt succeed traversing all shapers. Rates will be wrong.
+------------------------------
+<reggrp_short_dscr>:
+Egress configuration
+------------------------------
+<reg_short_dscr>:
+Egress queue status
+------------------------------
+<field_public_text>:
+Number of free frame references.
+------------------------------
+<reg_short_dscr>:
+Enable flushing of selected framesy
+------------------------------
+<field_public_text>:
+Set to enable flushing of all frames matching the flush criteria in this register
+------------------------------
+<field_public_text>:
+Frame received on the configured port will be flushed if set.
+------------------------------
+<field_public_text>:
+Frame transmitted on the configured port will be flushed if set.
+------------------------------
+<field_public_text>:
+Flushing will only affect frames on this port.
+------------------------------
+<field_public_text>:
+Frames transmitted from the configured queue specified in FLUSH_HIER will be flushed.
+------------------------------
+<field_public_text>:
+Frames transmitted from the configured SE index specified in FLUSH_HIER will be flushed.
+------------------------------
+<field_public_text>:
+Flushing will only affect frames from this queue or SE.
+------------------------------
+<reg_short_dscr>:
+Per device port configuration
+------------------------------
+<reg_public_text>:
+These configurations exists per switch port.
+------------------------------
+<field_public_text>:
+Disable dequeuing from the egress queues. Frames are not discarded, but may become aged when dequeuing is re-enabled.
+------------------------------
+<field_public_text>:
+Disable aging of all frames transmitted to the port.
+
+Frame aging related parameters:
+QSYS:SYSTEM:FRM_AGING.MAX_AGE
+HSCH:SYSTEM:PORT_MODE.AGE_DIS
+DSM:CFG:BUF_CFG.AGING_ENA
+------------------------------
+<field_public_text>:
+Enable truncation of stack learnall frames.
+------------------------------
+<field_public_text>:
+Increase DP by one in case scheduled frame passed due to excess rate shaper.
+------------------------------
+<field_public_text>:
+Select the priority mode for CPU copies transmitted on the port.
+------------------------------
+<field_enc>:
+0: IFH CPU mask shows all CPU queues the frame applies to. Priority of frame set to the CPU queue the frame copy is generated for
+1: IFH CPU mask shows the CPU queue number the frame copy is generated for. Priority of frame set to the priority selected for the particular frame copy (see QFWD::FRAME_COPY_CFG)
+------------------------------
+<reg_short_dscr>:
+Cellbus configuration
+------------------------------
+<field_public_text>:
+Sets the minimum distance between grants to an internal port. Extra grants are disabled when configured value is 0, otherwise the port seeks extra bandwidth, and the minimum distance in clock cycles is given by this value. The replications are for internal CPU 0, internal CPU 1, VDs.
+
+The minimum value accepted is 12. The internal ports will need a delay of 12 at the switch to a new frame, which will reduce the total bandwidth a bit for some frame sizes.
+
+The bandwidth with a grant value of N with a core frequency of f MHz will grant 0.67f/N Gbps for smallest frames.
+Ex: A value of 12 grants:
+ 23Gbps at 416 MHz, 
+ 28Gbps at 500 MHz,
+ 35Gbps at 625 MHz.
+------------------------------
+<reg_short_dscr>:
+Cellbus configuration
+------------------------------
+<field_public_text>:
+When enabled, unused bandwidth sharing will be granted to the an internal CPUport, only when the calendar designated port is another internal CPU port. The OUTB_SHARE_ENA must be configured for the CPU ports when this is enabled
+------------------------------
+<reggrp_short_dscr>:
+Memory manager status
+------------------------------
+<reg_short_dscr>:
+Packet memory status
+------------------------------
+<field_public_text>:
+Number of 6 free memory words.
+------------------------------
+<reg_short_dscr>:
+Core reset control
+------------------------------
+<reg_public_text>:
+Controls reset and initialization of the switching core. Proper startup sequence is:
+- Initialize memories
+- Enable core
+------------------------------
+<field_public_text>:
+Switch core is enabled when this field is set.
+------------------------------
+<reg_short_dscr>:
+Packet memory status
+------------------------------
+<field_public_text>:
+Must be set before core reset is released. Unit is 1104 bytes.
+------------------------------
+<reggrp_short_dscr>:
+Time Aware Shaper configuration registers for schedule traffic.
+------------------------------
+<reg_short_dscr>:
+TAS parameters installer configuration register.
+------------------------------
+<field_public_text>:
+All lists less than this number will be traversed by the TAS state machine. Other lists will not be processed.
+If a value less than 24 is configured, internally the value 24 is used (so list 0-24 are always traversed.)
+At most one list is processed every clock cycle, so list processing can be delayed up to MAX(LIST_NUM_MAX, 24) cycles.
+------------------------------
+<field_public_text>:
+Specifies the list index which the TAS_LIST_CFG register group access.
+
+Note: This value needs to be set first before configuring any of above mentioned registers.
+------------------------------
+<field_public_text>:
+Global configuration, when set a guard band is implemented even for schedule queues to scheduled queue transition.
+------------------------------
+<field_enc>:
+0: Guard band is implemented for non-schedule queues to schedule queues transition.
+1: Guard band is implemented for any queue to schedule queue transition.
+------------------------------
+<field_public_text>:
+Specifies address of the gate control entry in the gate control list.
+
+Note: This value needs to be set first before reading the TAS_GCL_CFG register
+------------------------------
+<reg_short_dscr>:
+TAS gate state address for TAS_GATE_STATE register.
+------------------------------
+<reg_public_text>:
+Register must be set to the HSCH position to access the gates for, prior reading or writing the HSCH_TAS_GATE_STATE register
+------------------------------
+<field_public_text>:
+Set to the scheduling hierarchy location which the TAS_GATE_STATE register should access. See the GCL_CFG_REG3 register.
+------------------------------
+<reg_short_dscr>:
+Configure the state machine
+------------------------------
+<reg_public_text>:
+Use to reduce the amount of list processings without any activity
+------------------------------
+<field_public_text>:
+When a list is found to have the next gate event in X nanosecs, the list will not be revisited before X * this / 256 state machine clock cycles has elapsed.
+------------------------------
+<reggrp_short_dscr>:
+TAS Port configuration
+------------------------------
+<reg_short_dscr>:
+MAX SDU for traffic classes
+------------------------------
+<field_public_text>:
+Specifies maximum allowed SDU for the traffic class N, when transmitted in this profile P. P is the register group replication index, and N is the register index.
+Value used for guard banding. It is together with link_speed determining the time prior to a gate closing where the scheduler stops selecting the class. The unit is 64 bytes times the value of link_speed
+The time specified with qmaxsdu_val and link_speed should be smaller than the smallest value of time_interval in use for this profile. A queue will always be opened for a small amount of time, even if the specified guard-banding is larger than qmaxsdu_val.
+------------------------------
+<reg_short_dscr>:
+Time aware gate configuration register
+------------------------------
+<field_public_text>:
+Port to which to send Hold-MAC requests when a queue with scheduled traffic is open
+------------------------------
+<field_public_text>:
+Specifies the link speed for the port. This is used to evaluate the time taken by a frame on the line.
+------------------------------
+<field_enc>:
+The encoding of the bits is as follows:
+000: No guard banding
+001: 10 Mbps
+010: 100 Mbps.
+011: 1 Gbps.
+100: 2.5 Gbps.
+101: 5 Gbps
+110: 10 Gbps.
+111: 25 Gbps
+------------------------------
+<field_public_text>:
+A 8-bit vector that determines port queues which will allow scheduled traffic among the 8 queues. If a bit is set then the corresponding queue allows scheduled traffic.
+------------------------------
+<field_enc>:
+For ith bit or bit[i] (corresponds to ith queue):
+1: the queue serves schedule traffic provided TAS is enabled for the port.
+0: the queue does not serve scheduled traffic.
+------------------------------
+<reggrp_short_dscr>:
+Time Aware Shapper Oper/Admin parameter/status registers.
+------------------------------
+<reg_short_dscr>:
+Base time for select GCL
+------------------------------
+<field_public_text>:
+30 bit nanosecond part of the AdminBaseTime, as long as the list is in ADMIN state. Register will automatically be updated to ConfigChangeTime when he state is switched to ADVANCE. See the TAS_LIST_STATE register for details.
+------------------------------
+<reg_short_dscr>:
+Base time for selected GCL
+------------------------------
+<field_public_text>:
+Least significant 32 bits of seconds part of base time.
+------------------------------
+<reg_short_dscr>:
+Base time for selected GCL
+------------------------------
+<field_public_text>:
+Most significant 16 bits of seconds part of base time.
+------------------------------
+<reg_short_dscr>:
+Next Gate Operation time for select GCL
+------------------------------
+<field_public_text>:
+30 bit nanosecond part of next gate operation time.
+------------------------------
+<reg_short_dscr>:
+Next Gate Operation time for selected GCL
+------------------------------
+<field_public_text>:
+Least significant 32 bits of seconds part of next gate operation time.
+------------------------------
+<reg_short_dscr>:
+Next Gate Operation time for selected GCL
+------------------------------
+<field_public_text>:
+Most significant 16 bits of seconds part of next gate operation time.
+------------------------------
+<reg_short_dscr>:
+TAS Oper parameter/status Register - 4
+------------------------------
+<field_public_text>:
+Register specifies duration of a control cycle in nanoseconds.
+A 32 bit nano seconds value derived from 'OperCycleTime' (IEEE 802.1Qbv). The specified value must be less than 1 second.
+
+Note: Actual value of 'OperCycleTime' is in seconds (a rational number, expressed as numerator and denominator).
+------------------------------
+<reg_short_dscr>:
+TAS List Replacement configuration
+------------------------------
+<field_public_text>:
+Set to the index of another list before switching away from ADMIN state, in case this list should obsolete another one.
+Set to list index itself to skip obsoleting another other list.
+------------------------------
+<field_public_text>:
+This flag is being set, if a list to be replaced was operating, when this list commenced.
+------------------------------
+<field_public_text>:
+Register configures the time prior to starting this list, where another running list is asked to enter the TERMINATING state. If this list starts, without the termination completed, the STARTUP_ERROR indication is set.
+
+The startup time must not be 0, otherwise the list will be unable to start.
+------------------------------
+<field_enc>:
+xx: Obsoleting the other list xx*256 ns in advance
+------------------------------
+<reg_short_dscr>:
+TAS Oper parameter/status Register - 10
+------------------------------
+<field_public_text>:
+'OperControlListLength' value (IEEE 802.1Qbv). Specifies length of the control list.
+------------------------------
+<field_enc>:
+0: zero valid entries in 'OperControlList'.
+n: N valid entries in 'OperControlList'.
+------------------------------
+<field_public_text>:
+Time of day domain the list is synchronized to
+------------------------------
+<field_public_text>:
+Set the base address in the 10000 entries long control pool for the selected list.
+------------------------------
+<reg_short_dscr>:
+TAS running state
+------------------------------
+<field_public_text>:
+Next entry to process by the list execution.
+------------------------------
+<field_public_text>:
+Current state of the list.
+ADMIN: List is in administrative state, and is not traversed by the logic. All registers can be modified by software.
+
+ADVANCING: List is calculating the ConfigChangeTime for the list, and is replacing the AdminBaseTime with that. State is reached by writing ADVANCING to this field through software access, and the list will afterwards transition to the PENDING state when ConfigChangeTime calculation is complete.
+
+PENDING: List is awaiting the time to start, as found by the ADVANCING state. Some time before (see TAS_STARTUP_CFG), another list may be asked to enter the TERMINATING state. When the ConfigChangeTime is reached, the state is switched to OPERATING.
+
+OPERATING: List is being executed until state is switched to TERMINATING by another lists action from a PENDING state, or through direct change by software. A switch from software must be checked by a read of the state afterwards, and potentially rewritten.
+
+TERMINATING: List is completing current cycle and switches to ADMIN afterwards.
+
+Normally, no field under TAS_LIST_CFG should be modified by software except when a list is in the ADMIN state. As an exception, an active list can be stopped by writing TERMINATING to LIST_STATE, and waiting for the list to move to ADMIN. As the fields under TAS_LIST_CFG are regularly updated by the hardware, there is a race where the change to TERMINATING state can be overridden by an actively processing list. So after writing TERMINATING to LIST_STATE, software must read back the current value, and repeat until the read value is either TERMINATING or IDLE.
+------------------------------
+<field_enc>:
+000: ADMIN
+001: ADVANCING
+010: PENDING
+011: OPERATING
+100: TERMINATING
+------------------------------
+<reg_short_dscr>:
+TAS running state
+------------------------------
+<field_public_text>:
+Amount of time left in current cycle.
+------------------------------
+<reggrp_short_dscr>:
+Time Aware Shapper Oper parameter(s)/status registers.
+------------------------------
+<reg_short_dscr>:
+TAS - Oper Gate control list status register - 1
+------------------------------
+<field_public_text>:
+A 8 bit vector determing gates state of 8 priorities for the scheduling element. This is 'gateStatesValue' value (IEEE 802.1Qbv).
+------------------------------
+<field_public_text>:
+TAS_PROFILE index to use for this entry
+------------------------------
+<field_public_text>:
+Select where in the scheduling hierarchy the control entry should be applied.  The gates are always applied to the lower eight inputs of the selected element.
+The position is the concatenation of the the 5040, 64 and 70 elements from layers 0,1 and 2.
+Ex Position 120 refers to element 120 in layer 0, and position 5040 points to element 0 in layer 1.
+------------------------------
+<reg_short_dscr>:
+TAS - Oper Gate control list status register - 2
+------------------------------
+<field_public_text>:
+Time interval expressed as nanoseconds used for execution of corresponding gate state. This is 'timeIntervalValue' value (IEEE 802.1Qbv).
+
+Reading this register actually performs RAM read for GCL entry (GCL_ENTRY_NUM) with values {TIME_INTERVAL, GATE_STATE}.
+------------------------------
+<reggrp_short_dscr>:
+Status of scheduling element inputs by TAS
+------------------------------
+<reg_short_dscr>:
+INPUT state
+------------------------------
+<field_public_text>:
+Mapped to the state of the gates pointed to by TAS_GATE_STATE_CTRL
+------------------------------

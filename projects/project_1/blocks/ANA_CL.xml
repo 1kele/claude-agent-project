@@ -1,0 +1,2155 @@
+=== DOCUMENTATION FOR TARGET: ANA_CL ===
+
+<target_short_dscr>:
+Classifier sub block of the Analyzer
+------------------------------
+<reggrp_short_dscr>:
+Classification and filter configurations per port
+------------------------------
+<reggrp_public_text>:
+Registers for configuring port-based classifier parameters.
+------------------------------
+<reg_short_dscr>:
+Conversation-sensitive collector configuration
+------------------------------
+<field_public_text>:
+If set, LAG conversation ID is assigned based on frame's outer VLAN tag. The conversation ID is used to look up the conversation-sensitive collector table (ANA_CL:CSC) for filtering.
+------------------------------
+<field_public_text>:
+Controls which TPID values are rejected as valid VLAN tags for the LAG conversation sensitive arrival filtering. If a bit is set, the corresponding TPID is rejected.
+Frames with accepted VLAN tag types: Conversation ID = frame's outer VID. Priority-tagged and untagged frames use the port's VID. 
+Frames with rejected VLAN tag types: Conversation ID = 0.
+------------------------------
+<field_enc>:
+Bit0: First (outermost) TPID = 0x8100.
+Bit1: First TPID = 0x88A8
+Bit2: First TPID = ANA_CL::VLAN_STAG_CFG[0]
+Bit3: First TPID = ANA_CL::VLAN_STAG_CFG[1]
+Bit4: First TPID = ANA_CL::VLAN_STAG_CFG[2]
+------------------------------
+<reg_short_dscr>:
+Filter configuration
+------------------------------
+<reg_public_text>:
+Configuration of filtering of frames not matching expected ingress properties
+------------------------------
+<field_public_text>:
+Discard frames with a multicast SMAC address.
+------------------------------
+<field_enc>:
+0: Discard frames with multicast SMAC address
+1: No filter
+------------------------------
+<field_public_text>:
+Discard frames with DMAC or SMAC equal to 00-00-00-00-00-00.
+------------------------------
+<field_enc>:
+0: Discard frames with a null MAC address
+1: No filter
+------------------------------
+<reg_short_dscr>:
+VLAN acceptance filter
+------------------------------
+<reg_public_text>:
+VLAN_FILTER_CTRL[0] applies to outer VLAN tag (first tag).
+VLAN_FILTER_CTRL[1] applies to middle VLAN tag (second tag).
+VLAN_FILTER_CTRL[2] applies to inner VLAN tag (third tag).
+------------------------------
+<field_public_text>:
+Discard frame if VLAN_FILTER_CTRL[n].TAG_REQUIRED_ENA is set and the number of VLAN tags in frame is less than n+1:
+- If VLAN_FILTER_CTRL[0].TAG_REQUIRED_ENA is set: Discard frame if it is untagged.
+- If VLAN_FILTER_CTRL[1].TAG_REQUIRED_ENA is set: Discard frame if it is single tagged or untagged.
+- If VLAN_FILTER_CTRL[2].TAG_REQUIRED_ENA is set: Discard frame if it is single tagged, double tagged, or untagged.
+------------------------------
+<field_public_text>:
+Discard frame if the investigated VLAN tag is a priority C-tag (TPID=0x8100 and VID=0).
+------------------------------
+<field_public_text>:
+Discard frame if the investigated VLAN tag is a C-tag (TPID=0x8100) and VID>0.
+------------------------------
+<field_public_text>:
+Discard frame if the investigated VLAN tag is a priority S-tag (TPID=0x88A8 and VID=0).
+------------------------------
+<field_public_text>:
+Discard frame if the investigated VLAN TPID equals VLAN_STAG_CFG[0].STAG_ETYPE_VAL and VID=0.
+------------------------------
+<field_public_text>:
+Discard frame if the investigated VLAN TPID equals VLAN_STAG_CFG[1].STAG_ETYPE_VAL and VID=0.
+------------------------------
+<field_public_text>:
+Discard frame if the investigated VLAN TPID equals VLAN_STAG_CFG[2].STAG_ETYPE_VAL and VID=0.
+------------------------------
+<field_public_text>:
+Discard frame if the investigated VLAN tag is an S-tag (TPID=0x88A8) and VID>0.
+------------------------------
+<field_public_text>:
+Discard frame if the investigated VLAN TPID equals VLAN_STAG_CFG[0].STAG_ETYPE_VAL and VID>0.
+------------------------------
+<field_public_text>:
+Discard frame if the investigated VLAN TPID equals VLAN_STAG_CFG[1].STAG_ETYPE_VAL and VID>0.
+------------------------------
+<field_public_text>:
+Discard frame if the investigated VLAN TPID equals VLAN_STAG_CFG[2].STAG_ETYPE_VAL and VID>0.
+------------------------------
+<reg_short_dscr>:
+E-tag acceptance filter
+------------------------------
+<reg_public_text>:
+Filtering is only possible when E-tag awareness is enabled in ANA_CL:COMMON:ETAG_CFG.ETAG_TPID_ENA.
+------------------------------
+<field_public_text>:
+Discard frame if ETAG_FILTER_CTRL.ETAG_REQUIRED_ENA is set and the frame does not contain an E-tag.
+
+Untagged L2 control frames without E-tag are allowed to pass, even if this filter is enabled.
+------------------------------
+<field_public_text>:
+Discard frame if the frame contains an E-tag (TPID=0x893F).
+------------------------------
+<reg_short_dscr>:
+Stacking configuration
+------------------------------
+<reg_public_text>:
+Configure stacking awareness
+------------------------------
+<field_public_text>:
+Ingress port drop mode configuration. Applicable for front port only.
+------------------------------
+<field_enc>:
+0 : Disable drop mode for the priority
+1 : Enable drop mode for the priority
+------------------------------
+<field_public_text>:
+If cleared and STACKING_AWARE_ENA is set then any VStaX header in the frame is assumed to contain an AC. Otherwise the VStaX header is assumed to contain an ISDX.
+
+Related parameters:
+ANA_AC:PS_COMMON:COMMON_VSTAX_CFG.VSTAX2_MISC_ISDX_ENA
+------------------------------
+<field_enc>:
+0: Disable
+1: Enable
+------------------------------
+<field_public_text>:
+Enable usage of stacking information.
+------------------------------
+<field_public_text>:
+Enable discard of frames received without a stacking header.
+------------------------------
+<field_enc>:
+0: Disable
+1: Enable
+------------------------------
+<field_public_text>:
+Enable discard of frames received with a stacking header.
+------------------------------
+<field_enc>:
+0: Disable
+1: Enable
+------------------------------
+<reg_short_dscr>:
+TPID awareness configuration
+------------------------------
+<reg_public_text>:
+Configuration of which TPID values are accepted as valid VLAN tags.
+------------------------------
+<field_public_text>:
+Control which TPID values are accepted as valid VLAN tags for L3 routing and basic VLAN classification.
+If an incoming frame contains a TPID for which BASIC_TPID_AWARE_DIS is set, then the TPID is treated a non-TPID EtherType and no further tags are identified.
+------------------------------
+<field_enc>:
+Bit0: First (outermost) TPID = 0x8100.
+Bit1: First TPID = 0x88A8
+Bit2: First TPID = ANA_CL::VLAN_STAG_CFG[0]
+Bit3: First TPID = ANA_CL::VLAN_STAG_CFG[1]
+Bit4: First TPID = ANA_CL::VLAN_STAG_CFG[2]
+Bit5: Second TPID = 0x8100.
+Bit6: Second TPID = 0x88A8
+Bit7: Second TPID = ANA_CL::VLAN_STAG_CFG[0]
+Bit8: Second TPID = ANA_CL::VLAN_STAG_CFG[1]
+Bit9: Second TPID = ANA_CL::VLAN_STAG_CFG[2]
+Bit10: Third TPID = 0x8100.
+Bit11: Third TPID = 0x88A8
+Bit12: Third TPID = ANA_CL::VLAN_STAG_CFG[0]
+Bit13: Third TPID = ANA_CL::VLAN_STAG_CFG[1]
+Bit14: Third TPID = ANA_CL::VLAN_STAG_CFG[2]
+------------------------------
+<field_public_text>:
+Reserved, must set to its default value.
+------------------------------
+<reg_short_dscr>:
+VLAN configuration
+------------------------------
+<field_public_text>:
+If set, the PCP_DEI_TRANS_CFG table is used for PCP and DEI classification. Otherwise, the frame's values are used directly.
+------------------------------
+<field_public_text>:
+Select the VLAN tag used for basic VLAN and QoS classification. 
+For VLAN classification, valid tags are defined by ANA_CL:PORT:VLAN_TPID_CTRL.BASIC_TPID_AWARE_DIS. For QoS classification, all accepted tags (ANA_CL:PORT:VLAN_FILTER_CTRL) are valid.
+------------------------------
+<field_enc>:
+0: Use first tag (outer-most tag).
+1: Use second tag if present, otherwise use first tag.
+------------------------------
+<field_public_text>:
+Enable VLAN awareness for port. If VLAN unaware, the frame's VLAN tags are not used for VLAN classification. Valid VLAN tags are defined in ANA_CL::VLAN_STAG_CFG[0-2] and ANA_CL:PORT:VLAN_TPID_CTRL.BASIC_TPID_AWARE_DIS.
+------------------------------
+<field_enc>:
+0: Disable (VLAN unaware)
+1: Enable (VLAN aware)
+------------------------------
+<field_public_text>:
+Number of VLAN tag headers to remove from ingress frame. If the frame contains less VLAN tags than specified by register, the VLAN_POP_CNT is reduced to the number of VLAN tags in the frame.
+------------------------------
+<field_enc>:
+0: Keep all tags
+1: Pop up to one tag if available
+2: Pop up to two tags if available
+3: Pop up to three tags if available
+------------------------------
+<field_public_text>:
+Default tag type for untagged frames. Also used if port is VLAN unaware. The tag type is carried with the frame to the rewriter where the tag type can be used when VLAN tagging the frame.
+------------------------------
+<field_enc>:
+0: Tag type equals C-tag
+1: Tag type equals S-tag
+------------------------------
+<field_public_text>:
+Default PCP value for the port for untagged frames. Also used if port is VLAN unaware.
+------------------------------
+<field_public_text>:
+Default DEI bit for the port for untagged frames. Also used if port is VLAN unaware.
+------------------------------
+<field_public_text>:
+Default VID value for the port for untagged frames. Also used if port is VLAN unaware.
+------------------------------
+<reg_short_dscr>:
+VLAN configuration
+------------------------------
+<field_public_text>:
+Value of IFH.TAGGING.PUSH_CNT resulting from basic classification.
+
+Per port normalization of ingress flows to the forwarding domain is possible through VLAN_POP_CNT and VLAN_PUSH_CNT. The value of VLAN_PUSH_CNT is carried to the Rewriter in IFH.TAGGING.PUSH_CNT. VLAN_PUSH_CNT may be overridden by an advanced classification action as the result of a VCAP_CLM lookup.
+------------------------------
+<reg_short_dscr>:
+DEI and PCP translation table
+------------------------------
+<reg_public_text>:
+Translation of frame's DEI and PCP to classified DEI and PCP. Configuration per DEI and PCP.
+The use of this table is enabled in VLAN_CTRL.VLAN_PCP_DEI_TRANS_ENA.
+------------------------------
+<field_public_text>:
+Translate VLAN PCP and DEI to a classified DEI: DEI = PCP_DEI_TRANS_CFG[8*DEI + PCP].DEI_TRANS_VAL.
+------------------------------
+<field_public_text>:
+Translate VLAN PCP and DEI to a classified PCP: PCP = PCP_DEI_TRANS_CFG[8*DEI + PCP].PCP_TRANS_VAL.
+------------------------------
+<reg_short_dscr>:
+Port ID data
+------------------------------
+<reg_public_text>:
+Configuration of GLAG and logical port number.
+------------------------------
+<field_public_text>:
+If set, masqueraded injected frames in or before pipeline point ANA_CL will keep the IFH.SRC_PORT as specified in the injection IFH. If cleared, IFH.SRC_PORT is updated to physical port number.
+
+Note, UPDATE_IFH_SRC_PORT_ENA takes precedence.
+------------------------------
+<field_public_text>:
+Default PAG value used as input to S2. The PAG value can be changed by CLM actions.
+------------------------------
+<field_public_text>:
+Global Link Aggregation Group (GLAG) number to be used in relation to learning and forwarding.
+------------------------------
+<field_enc>:
+PORT_IS_GLAG_ENA=0:
+Port does not participate in a GLAG
+
+PORT_IS_GLAG_ENA=1:
+0: port is member of GLAG 0
+1: port is member of GLAG 1
+...
+N: port is member of GLAG N
+------------------------------
+<field_public_text>:
+Port is part of a Global Link Aggregation Gloup (GLAG).
+------------------------------
+<field_enc>:
+0: Port is not globally link aggregated.
+1: Port is part of a GLAG.
+------------------------------
+<field_public_text>:
+Update IFH.SRC_PORT to LPORT_NUM to ensure frames from link aggregated ports are queued in the same queue.
+------------------------------
+<field_enc>:
+0: IFH.FWD.SRC_PORT is untouched.
+1: IFH.FWD.SRC_PORT = LPORT_NUM.
+------------------------------
+<field_public_text>:
+Logical port number to be used in relation to learning, forwarding and policing.
+------------------------------
+<field_enc>:
+0: Logical port 0
+1: Logical port 1
+...
+n: Logical port n.
+------------------------------
+<reg_short_dscr>:
+DEI and PCP mapping table
+------------------------------
+<reg_public_text>:
+Mapping of frame's DEI and PCP to classified QoS class and drop precedence level. Configuration per DEI, PCP.
+------------------------------
+<field_public_text>:
+Map DEI and PCP to a DP level: DP level = PCP_DEI_MAP_CFG[8*DEI + PCP].PCP_DEI_DP_VAL.
+------------------------------
+<field_public_text>:
+Map VLAN PCP and DEI to a QoS class: QOS class = PCP_DEI_MAP_CFG[8*DEI + PCP].PCP_DEI_QOS_VAL.
+------------------------------
+<reg_short_dscr>:
+QoS configuration
+------------------------------
+<reg_public_text>:
+Configuration of basic QoS classification.
+------------------------------
+<field_public_text>:
+If set, DEFAULT_COSID_VAL is used as a default COSID value. This will change the IFH encoding of the field VSTAX.MISC to contain ISDX and COSID.
+------------------------------
+<field_public_text>:
+Default port COSID.
+------------------------------
+<field_public_text>:
+Select which DSCP values to rewrite based on DP level and QoS class. If the DSCP value is to be rewritten, then the new DSCP = ANA_CL::QOS_MAP_CFG[8*DP level + QoS class].DSCP_REWR_VAL.
+------------------------------
+<field_enc>:
+0: Rewrite none
+1: Rewrite if DSCP=0
+2: Rewrite for selected values configured in ANA_CL::DSCP_CFG[DSCP].DSCP_REWR_ENA.
+3: Rewrite all
+------------------------------
+<field_public_text>:
+Set if the DSCP value must be translated before using the DSCP value. If set, the translated DSCP value is given from ANA_CL::DSCP_CFG[DSCP].DSCP_TRANSLATE_VAL.
+------------------------------
+<field_enc>:
+0: Disable
+1: Enable
+------------------------------
+<field_public_text>:
+Setting this bit prevents the rewriter from remapping DSCP values for frames from this port.
+------------------------------
+<field_enc>:
+0: Allow rewriter to remap DSCP field
+1: Do not allow rewriter to remap of DSCP field
+------------------------------
+<field_public_text>:
+Setting this bit prevents the rewriter from making any changes to frames from this port.
+If a frame is CPU injected, this configuration bit is overruled.
+------------------------------
+<field_enc>:
+0: Allow rewriter to change the frame
+1: Do not allow rewriter to change the frame
+------------------------------
+<field_public_text>:
+Allow DP classification based on PCP and DEI for tagged frames.
+------------------------------
+<field_enc>:
+0: Disable
+1: Enable
+------------------------------
+<field_public_text>:
+Allow QoS classification based on PCP and DEI from tagged frames.
+------------------------------
+<field_enc>:
+0: Disable
+1: Enable
+------------------------------
+<field_public_text>:
+Allow DP classification based on DSCP for IP frames.
+
+Related parameters:
+ANA_CL:COMMON:DSCP_CFG.DSCP_DP_VAL
+------------------------------
+<field_enc>:
+0: Disable
+1: Enable
+------------------------------
+<field_public_text>:
+Allow QoS classification based on DSCP for IP frames.
+------------------------------
+<field_enc>:
+0: Disable
+1: Enable
+------------------------------
+<field_public_text>:
+Default port DP level.
+------------------------------
+<field_enc>:
+0: DP 0 (disable)
+1: DP 1
+...
+n: DP n (highest drop probability).
+------------------------------
+<field_public_text>:
+Default port QoS class.
+------------------------------
+<reg_short_dscr>:
+QoS mapping table lookup configuration
+------------------------------
+<reg_public_text>:
+Configuration of default lookups of QoS mapping table (ANA_CL:MAP_TBL).
+
+The default QoS mappings can be changed by VCAP_CLM actions.
+
+Replication 0 controls QoS mapping table lookup 0.
+Replication 1 controls QoS mapping table lookup 1.
+------------------------------
+<field_public_text>:
+Key type for default QoS mapping table lookup in ANA_CL:MAP_TBL.
+------------------------------
+<field_enc>:
+0: DEI0, PCP0 (outer tag)
+1: DEI1, PCP1 (middle tag)
+2: DEI2, PCP2 (inner tag)
+3: Reserved
+4: PCP0 (outer tag)
+5: Reserved
+6: DSCP if available, otherwise none (64 entries)
+7: DSCP if available, otherwise DEI0, PCP0 (outer tag) if available using MAP_IDX+8, otherwise none (80 entries)
+Other values: No default lookup.
+------------------------------
+<field_public_text>:
+Index for default QoS mapping table lookup in ANA_CL:MAP_TBL.
+------------------------------
+<reg_short_dscr>:
+CPU forward control
+------------------------------
+<reg_public_text>:
+Configuration of CPU capturing of control frames.
+------------------------------
+<field_public_text>:
+This configuration applies to the CPU forwarding function of the basic classifier. Each bit corresponds to one of the known TPIDs. If a bit is set, the basic classifier does not CPU forward a frame if the frame's outer VLAN tag contains the corresponding TPID.
+------------------------------
+<field_enc>:
+Bit0: TPID = 0x8100
+Bit1: TPID = 0x88A8
+Bit2: TPID = ANA_CL::VLAN_STAG_CFG[0]
+Bit3: TPID = ANA_CL::VLAN_STAG_CFG[1]
+Bit4: TPID = ANA_CL::VLAN_STAG_CFG[2]
+------------------------------
+<field_public_text>:
+Redirect VRAP frames to the CPU extraction queue given by CPU_PROTO_QU_CFG.CPU_VRAP_QU.
+------------------------------
+<field_enc>:
+0: Disable
+1: Enable
+------------------------------
+<field_public_text>:
+Redirect ICMPv6 frames to the CPU extraction queue given by CPU_PROTO_QU_CFG.CPU_HOP_BY_HOP_ICMP_QU.
+------------------------------
+<field_enc>:
+0: Disable
+1: Enable
+------------------------------
+<field_public_text>:
+Redirect IPv6 frames with hop by hop options to the CPU extraction queue given by CPU_PROTO_QU_CFG.CPU_HOP_BY_HOP_ICMP_QU.
+------------------------------
+<field_enc>:
+0: Disable redirection
+1: Enable redirection to the CPU queue
+------------------------------
+<field_public_text>:
+Copy IPv6 multicast control frames (DIP equals FF02::/16) to the CPU extraction queue given by CPU_PROTO_QU_CFG.CPU_IP6_MC_CTRL_QU.
+------------------------------
+<field_enc>:
+0: Disable copy
+1: Enable copy to CPU queue
+------------------------------
+<field_public_text>:
+Redirect MLD IPv6 frames to the CPU extraction queue given by CPU_PROTO_QU_CFG.CPU_MLD_QU.
+
+Frames must fulfill the following criteria to be considered MLD frames:
+- Contain a Hop-by-hop header.
+- Hop-by-hop header must contain a router alert option.
+- Router alert option must specify MLD (Value=0).
+
+Related parameters:
+ANA_CL:PORT:CAPTURE_CFG.CPU_IGMP_REDIR_ENA
+------------------------------
+<field_enc>:
+0: Disable redirection
+1: Enable redirection to CPU queue.
+------------------------------
+<field_public_text>:
+Copy IPv4 multicast control frames to the CPU extraction queue given by CPU_PROTO_QU_CFG.CPU_IP4_MC_CTRL_QU.
+------------------------------
+<field_enc>:
+0: Disable copy
+1: Enable copy to CPU queue
+------------------------------
+<field_public_text>:
+Redirect IGMP IPv4 frames to the CPU extraction queue given by CPU_PROTO_QU_CFG.CPU_IGMP_QU.
+
+Related parameters:
+ANA_CL:PORT:CAPTURE_CFG.CPU_MLD_REDIR_ENA
+------------------------------
+<field_enc>:
+0: Disable redirection
+1: Enable redirection to CPU queue
+------------------------------
+<reg_short_dscr>:
+IEEE802.1ag / ITU-T Y.1731 OAM frame filtering control
+------------------------------
+<reg_public_text>:
+Configuration of CPU capturing of IEEE802.1ag and Y.1731 control frames.
+------------------------------
+<field_public_text>:
+Control CPU redirection, copy or discard of reserved DMAC addresses in the range 01-80-C2-00-00-30 to 01-80-C2-00-00-3F. Each two bits of this fields control a DMAC address: Bits 0 and 1 control address 01-80-C2-00-00-30, bits 2 and 3 control address 01-80-C2-00-00-31, and so on. Frames are extracted to the CPU extraction queue defined in ANA_CL::CPU_8021_QU_CFG.
+------------------------------
+<field_enc>:
+0: Normal forward
+1: Enable redirection to CPU queue
+2: Enable copy to CPU queue
+3: Discard the frame
+------------------------------
+<reg_short_dscr>:
+GXRP redirection control
+------------------------------
+<reg_public_text>:
+Configuration of CPU capturing of GARP frames.
+------------------------------
+<field_public_text>:
+Control CPU redirection, copy or discard of reserved DMAC addresses in the range 01-80-C2-00-00-20 to 01-80-C2-00-00-2F. Each two bits of this fields control a DMAC address: Bits 0 and 1 control address 01-80-C2-00-00-20, bits 2 and 3 control address 01-80-C2-00-00-21, and so on. Frames are extracted to the CPU extraction queue defined in ANA_CL::CPU_8021_QU_CFG.
+------------------------------
+<field_enc>:
+0: Normal forward
+1: Enable redirection to CPU queue
+2: Enable copy to CPU queue
+3: Discard the frame
+------------------------------
+<reg_short_dscr>:
+BPDU redirection control
+------------------------------
+<reg_public_text>:
+Configuration of CPU capturing of BPDU frames.
+------------------------------
+<field_public_text>:
+Control CPU redirection, copy or discard of reserved DMAC addresses in the range 01-80-C2-00-00-00 to 01-80-C2-00-00-0F. Each two bits of this fields control a DMAC address: Bits 0 and 1 control address 01-80-C2-00-00-00, bits 2 and 3 control address 01-80-C2-00-00-01, and so on. Frames are extracted to the CPU extraction queue defined in ANA_CL::CPU_8021_QU_CFG.
+------------------------------
+<field_enc>:
+0: Normal forward
+1: Enable redirection to CPU queue
+2: Enable copy to CPU queue
+3: Discard the frame
+------------------------------
+<reg_short_dscr>:
+VCAP_CLM key configuration
+------------------------------
+<reg_public_text>:
+Replicated per lookup in VCAP_CLM.
+------------------------------
+<field_public_text>:
+If set, the VCAP_CLM lookup uses the basic classified VID, DEI and PCP instead of the values from the frame.
+------------------------------
+<field_enc>:
+1: Enable
+0: Disable
+------------------------------
+<field_public_text>:
+If set, the VCAP_CLM lookup uses the basic classified DSCP instead of the value from the frame.
+------------------------------
+<field_enc>:
+1: Enable
+0: Disable
+------------------------------
+<reg_short_dscr>:
+VCAP_CLM key configuration
+------------------------------
+<reg_public_text>:
+Replicated per lookup in VCAP_CLM.
+------------------------------
+<field_public_text>:
+VCAP_CLM key type used for IPv4 frames.
+------------------------------
+<field_enc>:
+0: Follow ETYPE_CLM_KEY_SEL selection
+1: MLL
+2: SGL_MLBS
+3: DBL_MLBS
+4: TRI_MLBS
+5: TRI_VID
+6: LL_FULL
+7: NORMAL with SRC information
+8: NORMAL with DST information
+9: NORMAL_7TUPLE
+10: NORMAL_5TUPLE_IP4
+11: PURE_5TUPLE_IP4
+15: DBL_VID_IDX
+16: ETAG
+17: No lookup
+other: Reserved
+------------------------------
+<field_public_text>:
+VCAP_CLM key type used for IPv6 frames.
+------------------------------
+<field_enc>:
+0: Follow ETYPE_CLM_KEY_SEL selection
+1: MLL
+2: SGL_MLBS
+3: DBL_MLBS
+4: TRI_MLBS
+5: TRI_VID
+6: LL_FULL
+7: NORMAL with SRC information
+8: NORMAL with DST information
+9: NORMAL_7TUPLE
+10: NORMAL_5TUPLE_IP4
+11: PURE_5TUPLE_IP4
+15: DBL_VID_IDX
+16: ETAG
+17: No lookup
+other: reserved
+------------------------------
+<field_public_text>:
+VCAP_CLM key type used for unicast MPLS frames (EtherType = 0x8847).
+------------------------------
+<field_enc>:
+0: Follow ETYPE_CLM_KEY_SEL selection
+1: MLL
+2: SGL_MLBS
+3: DBL_MLBS
+4: TRI_MLBS
+5: TRI_VID
+6: LL_FULL
+7: NORMAL with SRC information
+8: NORMAL with DST information
+9: NORMAL_7TUPLE
+10: NORMAL_5TUPLE_IP4
+11: PURE_5TUPLE_IP4
+15: DBL_VID_IDX
+16: ETAG
+17: No lookup
+other: reserved
+------------------------------
+<field_public_text>:
+VCAP_CLM key type used for multicast MPLS frames (EtherType = 0x8847).
+------------------------------
+<field_enc>:
+0: Follow ETYPE_CLM_KEY_SEL selection
+1: MLL
+2: SGL_MLBS
+3: DBL_MLBS
+4: TRI_MLBS
+5: TRI_VID
+6: LL_FULL
+7: NORMAL with SRC information
+8: NORMAL with DST information
+9: NORMAL_7TUPLE
+10: NORMAL_5TUPLE_IP4
+11: PURE_5TUPLE_IP4
+15: DBL_VID_IDX
+16: ETAG
+17: No lookup
+other: reserved
+------------------------------
+<field_public_text>:
+VCAP_CLM key type used when current protocol layer is MPLS label stack.
+------------------------------
+<field_enc>:
+0: Follow ETYPE_CLM_KEY_SEL selection
+2: SGL_MLBS
+3: DBL_MLBS
+4: TRI_MLBS
+17: No lookup
+other: reserved
+------------------------------
+<field_public_text>:
+VCAP_CLM key type used for frame types other than MPLS and IPv4/IPv6.
+------------------------------
+<field_enc>:
+0: No lookup
+1: MLL
+2: SGL_MLBS
+3: DBL_MLBS
+4: TRI_MLBS
+5: TRI_VID
+6: LL_FULL
+7: NORMAL with SRC information
+8: NORMAL with DST information
+9: NORMAL_7TUPLE
+10: NORMAL_5TUPLE_IP4
+11: PURE_5TUPLE_IP4
+15: DBL_VID_IDX
+16: ETAG
+17: No lookup
+other: reserved
+------------------------------
+<field_public_text>:
+Enable VCAP_CLM lookup.
+------------------------------
+<field_enc>:
+1: Enable
+0: Disable
+------------------------------
+<reg_short_dscr>:
+VCAP_CLM range types per range checker
+------------------------------
+<reg_public_text>:
+Define range checkers used in VCAP_CLM keys.
+------------------------------
+<field_public_text>:
+Selected frame field is matched against the range defined in ANA_CL::ADV_RNG_VALUE_CFG.
+------------------------------
+<field_enc>:
+0: Idle (no matching). Global range checker is then checked
+1: TCP/UDP destination port is matched against range
+2: TCP/UDP source port is matched against range
+3: TCP/UDP destination and source ports are matched against range. There is a match if either of them matches.
+4: Classified XVID from basic or CLM is matched against range. Requires XVID < 4K.
+5: Basic classified DSCP value is matched against range
+6: EtherType is matched against range
+7: Outer VID is matched against range
+8: Inner VID is matched against range.
+------------------------------
+<reg_short_dscr>:
+VCAP_CLM range values per range checker
+------------------------------
+<field_public_text>:
+Upper range value. Value is included in range.
+------------------------------
+<field_public_text>:
+Lower range value. Value is included in range.
+------------------------------
+<reggrp_short_dscr>:
+Common configurations for all ports
+------------------------------
+<reg_short_dscr>:
+UPSID(s) for local ports
+------------------------------
+<reg_public_text>:
+First replication covers port number 0-31
+Second replication covers port numbers 32-63 (if applicable)
+etc.
+
+If not all OWN_UPSID replications are required in a given port configuration, then any unused replications must be set to the value of one of the replications in use.
+------------------------------
+<field_public_text>:
+Configures own UPSID to be used for stacking.
+
+This must be configured consistently across the following registers:
+ANA_CL:COMMON:OWN_UPSID
+ANA_ACL:COMMON:OWN_UPSID
+ANA_L2:COMMON:OWN_UPSID
+ANA_AC:PS_COMMON:OWN_UPSID
+REW:COMMON:OWN_UPSID
+------------------------------
+<reg_short_dscr>:
+Aggregation code calculation
+------------------------------
+<reg_public_text>:
+This register determines which fields contribute to the calculation of the 4-bit aggregation code. The aggregation code is used to select the egress port if multiple ports are aggregated. Fields enabled are XOR'ed together to generate the final aggregation code.
+------------------------------
+<field_public_text>:
+Enable routed frames to update the aggregation code.
+------------------------------
+<field_enc>:
+0: Disable
+1: Enable.
+------------------------------
+<field_public_text>:
+Allow the classified ISDX value to contribute to the aggregation code calculation.
+------------------------------
+<field_enc>:
+0: Disable
+1: Enable
+------------------------------
+<field_public_text>:
+Use the AC code received in the VStaX header as aggregation code.
+------------------------------
+<field_enc>:
+0: Disable
+1: Enable.
+------------------------------
+<field_public_text>:
+Allow reversed DMAC address contribute to the aggregation code calculation.
+------------------------------
+<field_enc>:
+0: Disable
+1: Enable.
+------------------------------
+<field_public_text>:
+Enable a randomly generated aggregation code.
+------------------------------
+<field_enc>:
+0: Disable
+1: Enable.
+------------------------------
+<field_public_text>:
+Enable destination IPv6 addresses to contribute to the aggregation code calculation.
+------------------------------
+<field_enc>:
+0: Disable
+1: Enable.
+------------------------------
+<field_public_text>:
+Enable source IPv6 addresses to contribute to the aggregation code calculation.
+------------------------------
+<field_enc>:
+0: Disable
+1: Enable.
+------------------------------
+<field_public_text>:
+Allow IPv6 flow label to contribute to the aggregation code calculation.
+------------------------------
+<field_enc>:
+0: Disable
+1: Enable.
+------------------------------
+<field_public_text>:
+Allow IPv6 UDP/TCP destination and source port numbers to contribute to the aggregation code calculation.
+------------------------------
+<field_enc>:
+0: Disable
+1: Enable.
+------------------------------
+<field_public_text>:
+Allow IPv4 UDP/TCP destination and source port numbers to contribute to the aggregation code calculation.
+------------------------------
+<field_enc>:
+0: Disable
+1: Enable.
+------------------------------
+<field_public_text>:
+Allow destination IPv4 addresses to contribute to the aggregation code calculation.
+------------------------------
+<field_enc>:
+0: Disable
+1: Enable.
+------------------------------
+<field_public_text>:
+Allow source IPv4 addresses to contribute to the aggregation code calculation.
+------------------------------
+<field_enc>:
+0: Disable
+1: Enable.
+------------------------------
+<field_public_text>:
+Allow destination MAC address to contribute to the aggregation code calculation.
+------------------------------
+<field_enc>:
+0: Disable
+1: Enable.
+------------------------------
+<field_public_text>:
+Allow source MAC address to contribute to the aggregation code calculation.
+------------------------------
+<field_enc>:
+0: Disable
+1: Enable.
+------------------------------
+<reg_short_dscr>:
+Custom S-tag EtherTypes
+------------------------------
+<reg_public_text>:
+In addition to these custom TPID values, tags with TPID = 0x88A8 are always recognized as S-tags.
+------------------------------
+<field_public_text>:
+Configurable S-tag TPID EtherType. This value must be configured identically in REW::TPID_CFG.TPID_VAL.
+------------------------------
+<reg_short_dscr>:
+E-tag configuration
+------------------------------
+<field_public_text>:
+Enable E-tag awareness.
+
+If E-tag aware, the frame's E-tag is parsed and E-tag information is available for classification, including CLM keys. Any VLAN tags and PDU below the E-tag are parsed.
+
+If E-tag unaware, the frame's E-tag is not analyzed and the frame is considered a frame with ETYPE=0x893F.
+
+ANA_CL:COMMON:RTAG_CFG.RTAG_TPID_ENA shall be set to 0 when E-tag awareness is enabled.
+------------------------------
+<reg_short_dscr>:
+R-tag configuration
+------------------------------
+<field_public_text>:
+Enable R-tag awareness.
+
+If R-tag aware, the frame's R-tag is parsed and R-tag information is available for stream recovery. Any VLAN tags before or after the R-tag are parsed (maximum two VLAN tags are supported together with an R-tag). The PDU below the tags is parsed.
+
+If R-tag unaware, the frame's R-tag is not analyzed and the frame is considered a frame with ETYPE=0xF1C1. Any VLAN tags before the R-tag are still analyzed.
+
+ANA_CL:COMMON:ETAG_CFG.ETAG_TPID_ENA shall be set to 0 when R-tag awareness is enabled.
+------------------------------
+<reg_short_dscr>:
+CPU extraction queue configuration
+------------------------------
+<field_public_text>:
+CPU extraction queue used for VRAP frames.
+------------------------------
+<field_public_text>:
+CPU extraction queue used for IPv6 Hop by hop and ICMP frames.
+------------------------------
+<field_public_text>:
+CPU extraction queue used for MLD frames.
+------------------------------
+<field_public_text>:
+CPU extraction queue used for IPv6 multicast control frames.
+------------------------------
+<field_public_text>:
+CPU extraction queue used for IPv4 multicast control frames.
+------------------------------
+<field_public_text>:
+CPU extraction queue used for IGMP frames.
+------------------------------
+<reg_short_dscr>:
+CPU extraction queue per address of BPDU, GARP, and CCM frames.
+------------------------------
+<reg_public_text>:
+The register instance number corresponds to the address of the extracted frame. For instance: CPU_8021_QU_CFG[4].CPU_BPDU_QU is the CPU extraction queue used for BPDU frames with address 01-80-C2-00-00-04.
+------------------------------
+<field_public_text>:
+CPU extraction queue used for IEEE802.1ag and Y.1731 frames.
+------------------------------
+<field_public_text>:
+CPU extraction queue for GXRP frames.
+------------------------------
+<field_public_text>:
+CPU extraction queue for BPDU frames.
+------------------------------
+<reg_short_dscr>:
+QoS class per address of BPDU, GARP, and CCM frames.
+------------------------------
+<reg_public_text>:
+The register instance number corresponds to the address of the extracted frame. For instance: CPU_8021_QOS_CFG[4].BPDU_QOS is the QoS class used for BPDU frames with address 01-80-C2-00-00-04.
+------------------------------
+<field_public_text>:
+Configures QoS class for frames with DMAC in Y1731_AG protocol range that are redirected to the CPU.
+------------------------------
+<field_public_text>:
+Configures QoS class for frames with DMAC in GXRP range that are redirected to the CPU.
+------------------------------
+<field_public_text>:
+Configures QoS class for frames with DMAC in BPDU range that are redirected to the CPU.
+------------------------------
+<reg_short_dscr>:
+VRAP classifier configuration
+------------------------------
+<field_public_text>:
+If set, VRAP frames must be single VLAN tagged and the frame's VID must match ANA_CL::VRAP_CFG.VRAP_VID. If cleared, VRAP frames must be untagged.
+------------------------------
+<field_public_text>:
+VID value for VRAP frames.
+------------------------------
+<reg_short_dscr>:
+VRAP data
+------------------------------
+<field_public_text>:
+A VRAP frame's VRAP header is matched against VRAP_HDR_DATA, except for bits don't cared by VRAP_HDR_MASK. The VRAP header is four bytes located in the frame after EtherType = 0x8808 and EPID = 0x0004.
+------------------------------
+<reg_short_dscr>:
+VRAP mask
+------------------------------
+<field_public_text>:
+Bits set in VRAP_HDR_MASK don't care the equivalent bits in VRAP_HDR_DATA.
+------------------------------
+<reg_short_dscr>:
+VCAP_CLM range types per range checker
+------------------------------
+<reg_public_text>:
+Define range checkers used in VCAP_CLM keys.
+------------------------------
+<field_public_text>:
+Selected frame field is matched against the range defined in ANA_CL::ADV_RNG_VALUE_CFG.
+------------------------------
+<field_enc>:
+0: Idle (no matching)
+1: TCP/UDP destination port is matched against range
+2: TCP/UDP source port is matched against range
+3: TCP/UDP destination and source ports are matched against range. There is a match if either of them matches.
+4: Classified XVID from basic or CLM is matched against range. Requires XVID < 4K.
+5: Basic classified DSCP value is matched against range
+6: EtherType is matched against range
+7: Outer VID is matched against range
+8: Inner VID is matched against range
+------------------------------
+<reg_short_dscr>:
+VCAP_CLM range values per range checker
+------------------------------
+<field_public_text>:
+Upper range value. Value is included in range.
+------------------------------
+<field_public_text>:
+Lower range value. Value is included in range.
+------------------------------
+<reg_short_dscr>:
+Miscellaneous VCAP_CLM configuration
+------------------------------
+<field_public_text>:
+Reserved, must set to its default value.
+------------------------------
+<field_public_text>:
+Select default value of the G_IDX field in VCAP CLM.
+------------------------------
+<field_enc>:
+0: Set G_IDX to zero
+1: Set G_IDX to the frame's logical port number
+2: Set G_IDX to the frame's masqueraded port number
+3: Reserved
+------------------------------
+<field_public_text>:
+Select VCAP_CLM key when a VCAP_CLM lookup is enforced by LBK_CLM_FORCE_ENA or IGR_PORT_CLM_FORCE_ENA.
+------------------------------
+<field_enc>:
+0: Use NORMAL key with destination information
+1: Use NORMAL key with source information
+2: Use NORMAL_7TUPLE key
+3: Use NORMAL_5TUPLE_IP4 key
+------------------------------
+<field_public_text>:
+By default, looped frames are not subject to VCAP_CLM lookups. This configuration controls whether a VCAP_CLM lookup is enforced. See FORCED_KEY_SEL for key selection. When enforcing a VCAP_CLM lookup for looped frames, the classified ISDX is placed in the VCAP_CLM key field G_IDX.
+------------------------------
+<field_enc>:
+Bit 0: Force VCAP_CLM lookup #0 with key selected by FORCED_KEY_SEL
+Bit 1: Force VCAP_CLM lookup #1 with key selected by FORCED_KEY_SEL
+...
+------------------------------
+<field_public_text>:
+By default, frames discarded or redirected at a earlier pipeline point are not subject to further VCAP_CLM lookups. This configuration controls whether a VCAP_CLM lookup is enforced. See FORCED_KEY_SEL for key selection. When enforcing a VCAP_CLM lookup, the classified ISDX is placed in the VCAP_CLM key field G_IDX.
+------------------------------
+<field_enc>:
+Bit 0: Force VCAP_CLM lookup #0 with key selected by FORCED_KEY_SEL
+Bit 1: Force VCAP_CLM lookup #1 with key selected by FORCED_KEY_SEL
+...
+------------------------------
+<field_public_text>:
+Force VCAP_CLM lookup to use VCAP_CLM key field IGR_PORT_MASK_SEL=3 for looped frames instead of IGR_PORT_MASK_SEL=1.
+------------------------------
+<field_enc>:
+0: Disable
+1: Enable.
+------------------------------
+<field_public_text>:
+Enable VCAP_CLM key field IGR_PORT_MASK_SEL=2 for masqueraded frames.
+------------------------------
+<field_enc>:
+0: Disable
+1: Enable.
+------------------------------
+<field_public_text>:
+Enable VCAP_CLM key field IGR_PORT_MASK_SEL=3 for frames received with VStaX header.
+------------------------------
+<field_enc>:
+0: Disable
+1: Enable.
+------------------------------
+<field_public_text>:
+Enable VCAP_CLM key field IGR_PORT_MASK_SEL=3 for frames from VD0, VD1 or VD2.
+------------------------------
+<field_enc>:
+0: Disable
+1: Enable.
+------------------------------
+<field_public_text>:
+Enable VCAP_CLM key field IGR_PORT_MASK_SEL=3 for CPU injected frames.
+------------------------------
+<field_enc>:
+0: Disable
+1: Enable.
+------------------------------
+<reg_short_dscr>:
+L3 Fragment configuration for VCAP_CLM keys
+------------------------------
+<field_public_text>:
+Threshold used for invalidating L4 frames in CLM.
+------------------------------
+<field_public_text>:
+Threshold used for encoding of the L3_FRAGMENT_TYPE field in CLM.
+------------------------------
+<reg_short_dscr>:
+Various configuration per DSCP
+------------------------------
+<field_public_text>:
+Translated DSCP value if DSCP translation is enabled on the port (ANA_CL:PORT:QOS_CFG.DSCP_TRANSLATE_ENA).
+------------------------------
+<field_public_text>:
+QoS class for DSCP value if enabled by ANA_CL:PORT:QOS_CFG.DSCP_QOS_ENA and DSCP_TRUST_ENA.
+
+Related parameters:
+ANA_CL:PORT:QOS_CFG.DSCP_QOS_ENA
+ANA_CL:COMMON:DSCP_CFG.DSCP_TRUST_ENA
+------------------------------
+<field_public_text>:
+DP level for DSCP value if enabled by ANA_CL:PORT:QOS_CFG.DSCP_DP_ENA and DSCP_TRUST_ENA.
+
+Related parameters:
+ANA_CL:PORT:QOS_CFG.DSCP_DP_ENA
+ANA_CL:COMMON:DSCP_CFG.DSCP_TRUST_ENA
+------------------------------
+<field_public_text>:
+Set if the DSCP value is selected to be rewritten. This is controlled in ANA_CL:PORT:QOS_CFG.DSCP_REWR_MODE_SEL.
+------------------------------
+<field_public_text>:
+If set, the DSCP value is trusted and can be used for QoS and DP classification.
+
+Related parameters:
+ANA_CL:COMMON:DSCP_CFG.DSCP_QOS_VAL
+ANA_CL:COMMON:DSCP_CFG.DSCP_DP_VAL
+------------------------------
+<reg_short_dscr>:
+Configuration per QoS class and DP level
+------------------------------
+<field_public_text>:
+Table values for rewriting DSCP values using DP level and QoS class if enabled.
+Map the frame's DP level and QoS class to a DSCP value. DSCP = QOS_MAP_CFG[8*DP level + QoS class].DSCP_REWR_VAL. This is controlled in ANA_CL:PORT:QOS_CFG.DSCP_REWR_MODE_SEL and ANA_CL::DSCP_CFG.DSCP_REWR_ENA.
+------------------------------
+<reg_short_dscr>:
+Miscellaneous CLM configuration per lookup.
+------------------------------
+<reg_public_text>:
+Miscellaneous CLM configuration per lookup.
+------------------------------
+<field_public_text>:
+Select version of TRI_VID key.
+------------------------------
+<field_enc>:
+0: Use TRI_VID
+1: Use TRI_VID_IDX
+------------------------------
+<reg_short_dscr>:
+Miscellaneous common configuration
+------------------------------
+<field_public_text>:
+If set, IFH.QOS.DSCP is set to MEL for frames with PDU_TYPE = OAM_Y1731.
+------------------------------
+<field_public_text>:
+Reserved, must set to its default value.
+------------------------------
+<reggrp_short_dscr>:
+QoS mapping table
+------------------------------
+<reggrp_public_text>:
+The QoS mapping table MAP_TBL is looked up twice per frame with the keys defined by default QoS mapping (ANA_CL:PORT:MAP_CFG) or VCAP_CLM actions. 
+
+SET_CTRL defines which values are returned from the QoS mapping table. The actual values are programmed in MAP_ENTRY. 
+
+The QoS mapping table is laid out with 8 entries per row. MAP_IDX points to a row in the table. Depending on the key used to look up the table, one or more rows counting from the MAP_IDX are used by the mapping. For each row used, SET_CTRL must be configured.
+------------------------------
+<reg_short_dscr>:
+Configures which entry fields to use if row is matched
+------------------------------
+<field_public_text>:
+If set, TC_VAL replaces the classified TC bits if the entry is matched.
+------------------------------
+<field_public_text>:
+If set, DP_VAL replaces the classified DP level if the entry is matched.
+------------------------------
+<field_public_text>:
+If set, QOS_VAL replaces the classified QoS class if the entry is matched.
+------------------------------
+<field_public_text>:
+If set, DEI_VAL replaces the classified DEI value if the entry is matched.
+------------------------------
+<field_public_text>:
+If set, PCP_VAL replaces the classified PCP value if the entry is matched.
+------------------------------
+<field_public_text>:
+If set, DSCP_VAL replaces the classified DSCP value if the entry is matched.
+------------------------------
+<reg_short_dscr>:
+Entry in mapping table
+------------------------------
+<field_public_text>:
+Disable forwarding for frames hitting this entry.
+------------------------------
+<field_public_text>:
+TC bits. The classified TC bits are set to TC_VAL if SET_CTRL.TC_ENA is set.
+------------------------------
+<field_public_text>:
+Drop precedence level. The classified DP level is set to DP_VAL if SET_CTRL.DP_ENA is set.
+------------------------------
+<field_public_text>:
+QoS class. The classified QoS class is set to QOS_VAL if SET_CTRL.QOS_ENA is set.
+------------------------------
+<field_public_text>:
+DEI value. The classified DEI is set to DEI_VAL if SET_CTRL.DEI_ENA is set.
+------------------------------
+<field_public_text>:
+PCP value. The classified PCP is set to PCP_VAL if SET_CTRL.PCP_ENA is set.
+------------------------------
+<field_public_text>:
+DSCP value. The classified DSCP is set to DSCP_VAL if SET_CTRL.DSCP_ENA is set.
+------------------------------
+<reggrp_short_dscr>:
+Router Leg Table
+------------------------------
+<reggrp_public_text>:
+A router leg is identified by a 9 bit wide "VMID".
+
+The parameters in this table are used only for frames received by ANA_CL from VD2, i.e. IP-in-IP frames which have been encapsulated or decapsulated.
+Such frames have no Ethernet layer and no ingress port. Instead they are always IP frames and have an ingress VMID, which is used to lookup parameters in ANA_CL:VMID.
+The ingress VMID for frames forwarded through VD2 is configured in REW, see parameters below.
+
+For frames arriving on an Ethernet port, the ingress VMID will normally be determined by ANA_L3 and the parameters in ANA_CL:VMID will not apply.
+
+Related parameters:
+ANA_L3:VMID
+REW:ENCAP_IP4:IRLEG_CFG.IRLEG
+REW:VMID:RLEG_CTRL.DECAP_IRLEG
+------------------------------
+<reg_short_dscr>:
+LPM Affix
+------------------------------
+<field_public_text>:
+Additional bits to be added to LPM keys to support features like VRF-lite and policy based routing.
+------------------------------
+<field_enc>:
+Affix corresponding to ingress router leg
+------------------------------
+<reg_short_dscr>:
+CPU forward control
+------------------------------
+<reg_public_text>:
+Configuration of CPU capturing of control frames. Overrides configurations from ANA_CL:PORT[VD2]:CAPTURE_CFG
+------------------------------
+<field_public_text>:
+Redirect ICMPv6 frames to the CPU extraction queue given by CPU_PROTO_QU_CFG.CPU_HOP_BY_HOP_ICMP_QU.
+
+Since frames from VD2 have no Ethernet layer, the redirected frames will have a dummy Ethernet layer consisting of
+DMAC set to all-zeros
+SMAC set to all-zeros
+Ethertype will set according to IP version
+No VLAN tags
+
+Related parameters:
+ANA_CL:PORT:CAPTURE_CFG.IP6_ICMP_HOP_BY_HOP_REDIR_ENA
+------------------------------
+<field_enc>:
+0: Disable
+1: Enable
+------------------------------
+<field_public_text>:
+Redirect IPv6 frames with hop by hop options to the CPU extraction queue given by CPU_PROTO_QU_CFG.CPU_HOP_BY_HOP_ICMP_QU.
+
+Since frames from VD2 have no Ethernet layer, the redirected frames will have a dummy Ethernet layer consisting of
+DMAC set to all-zeros
+SMAC set to all-zeros
+Ethertype will set according to IP version
+No VLAN tags
+
+Related parameters:
+ANA_CL:PORT:CAPTURE_CFG.IP6_HOP_BY_HOP_REDIR_ENA
+------------------------------
+<field_enc>:
+0: Disable redirection
+1: Enable redirection to the CPU queue
+------------------------------
+<field_public_text>:
+Copy IPv6 multicast control frames (DIP equals FF02::/16) to the CPU extraction queue given by CPU_PROTO_QU_CFG.CPU_IP6_MC_CTRL_QU.
+
+Since frames from VD2 have no Ethernet layer, the copied frames will have a dummy Ethernet layer consisting of
+DMAC set to all-zeros
+SMAC set to all-zeros
+Ethertype will set according to IP version
+No VLAN tags
+
+Related parameters:
+ANA_CL:PORT:CAPTURE_CFG.CPU_IP6_MC_COPY_ENA
+------------------------------
+<field_enc>:
+0: Disable copy
+1: Enable copy to CPU queue
+------------------------------
+<field_public_text>:
+Redirect MLD IPv6 frames to the CPU extraction queue given by CPU_PROTO_QU_CFG.CPU_MLD_QU.
+
+Frames must fulfill the following criteria to be considered MLD frames:
+- Contain a Hop-by-hop header.
+- Hop-by-hop header must contain a router alert option.
+- Router alert option must specify MLD (Value=0).
+
+Since frames from VD2 have no Ethernet layer, the redirected frames will have a dummy Ethernet layer consisting of
+DMAC set to all-zeros
+SMAC set to all-zeros
+Ethertype will set according to IP version
+No VLAN tags
+
+Related parameters:
+ANA_CL:PORT:CAPTURE_CFG.CPU_MLD_REDIR_ENA
+ANA_CL:VMID:VD2_CAPTURE_CFG.CPU_IGMP_REDIR_ENA
+------------------------------
+<field_enc>:
+0: Disable redirection
+1: Enable redirection to CPU queue.
+------------------------------
+<field_public_text>:
+Copy IPv4 multicast control frames to the CPU extraction queue given by CPU_PROTO_QU_CFG.CPU_IP4_MC_CTRL_QU.
+
+Since frames from VD2 have no Ethernet layer, the copied frames will have a dummy Ethernet layer consisting of
+DMAC set to all-zeros
+SMAC set to all-zeros
+Ethertype will set according to IP version
+No VLAN tags
+
+Related parameters:
+ANA_CL:PORT:CAPTURE_CFG.CPU_IP4_MC_COPY_ENA
+------------------------------
+<field_enc>:
+0: Disable copy
+1: Enable copy to CPU queue
+------------------------------
+<field_public_text>:
+Redirect IGMP IPv4 frames to the CPU extraction queue given by CPU_PROTO_QU_CFG.CPU_IGMP_QU.
+
+Since frames from VD2 have no Ethernet layer, the redirected frames will have a dummy Ethernet layer consisting of
+DMAC set to all-zeros
+SMAC set to all-zeros
+Ethertype will set according to IP version
+No VLAN tags
+
+Related parameters:
+ANA_CL:PORT:CAPTURE_CFG.CPU_IGMP_REDIR_ENA
+ANA_CL:VMID:VD2_CAPTURE_CFG.CPU_MLD_REDIR_ENA
+------------------------------
+<field_enc>:
+0: Disable redirection
+1: Enable redirection to CPU queue
+------------------------------
+<reg_short_dscr>:
+QoS configuration
+------------------------------
+<reg_public_text>:
+Configuration of basic QoS classification. Overrides configurations from ANA_CL:PORT[VD2]:QOS_CFG
+------------------------------
+<field_public_text>:
+Set if the DSCP value must be translated before using the DSCP value. If set, the translated DSCP value is given from ANA_CL::DSCP_CFG[DSCP].DSCP_TRANSLATE_VAL.
+
+Related parameters:
+ANA_CL:PORT:QOS_CFG.DSCP_TRANSLATE_ENA
+------------------------------
+<field_enc>:
+0: Disable
+1: Enable
+------------------------------
+<field_public_text>:
+Setting this bit prevents the rewriter from remapping DSCP values for frames from this ingress router leg.
+
+Related parameters:
+ANA_CL:PORT:QOS_CFG.DSCP_KEEP_ENA
+------------------------------
+<field_enc>:
+0: Allow rewriter to remap DSCP field
+1: Do not allow rewriter to remap of DSCP field
+------------------------------
+<field_public_text>:
+Allow DP classification based on DSCP for IP frames.
+
+Related parameters:
+ANA_CL:PORT:QOS_CFG.DSCP_DP_ENA
+ANA_CL:COMMON:DSCP_CFG.DSCP_DP_VAL
+------------------------------
+<field_enc>:
+0: Disable
+1: Enable
+------------------------------
+<field_public_text>:
+Allow QoS classification based on DSCP for IP frames.
+
+Related parameters:
+ANA_CL:PORT:QOS_CFG.DSCP_QOS_ENA
+ANA_CL:COMMON:DSCP_CFG.DSCP_QOS_VAL
+------------------------------
+<field_enc>:
+0: Disable
+1: Enable
+------------------------------
+<field_public_text>:
+Default ingress router leg DP level.
+
+Related parameters:
+ANA_CL:PORT:QOS_CFG.DEFAULT_DP_VAL
+------------------------------
+<field_enc>:
+0: DP 0 (disable)
+1: DP 1
+...
+n: DP n (highest drop probability).
+------------------------------
+<field_public_text>:
+Default ingress router leg QoS class.
+
+Related parameters:
+ANA_CL:PORT:QOS_CFG.DEFAULT_QOS_VAL
+------------------------------
+<reggrp_short_dscr>:
+Conversation-Sensitive Collector Table
+------------------------------
+<reggrp_public_text>:
+Conversation-sensitive collector table for link aggregation.
+------------------------------
+<reg_short_dscr>:
+Port Mask Configuration
+------------------------------
+<reg_public_text>:
+Configuration of CSC port mask.
+------------------------------
+<field_public_text>:
+Specify mask of ports for which frames are discarded in the VLAN.
+
+Note:
+  Initialization value for all addresses is 0
+------------------------------
+<field_enc>:
+0: Frame is accepted
+1: Frame is discarded
+------------------------------
+<reg_short_dscr>:
+Port Mask Configuration
+------------------------------
+<reg_public_text>:
+Configuration of CSC port mask.
+------------------------------
+<field_public_text>:
+Refer to CSC_DISC_CFG.CSC_PORT_MASK description.
+------------------------------
+<field_enc>:
+0: Frame is accepted
+1: Frame is discarded
+------------------------------
+<reg_short_dscr>:
+Port Mask Configuration
+------------------------------
+<reg_public_text>:
+Configuration of CSC port mask.
+------------------------------
+<field_public_text>:
+Refer to CSC_DISC_CFG.CSC_PORT_MASK description.
+------------------------------
+<field_enc>:
+0: Frame is accepted
+1: Frame is discarded
+------------------------------
+<reggrp_short_dscr>:
+Sticky diagnostic status
+------------------------------
+<reg_short_dscr>:
+Sticky bits register
+------------------------------
+<field_public_text>:
+Set if a frame has been filtered due to wrong stacking information (e.g. not expected stacking tag etc.).
+------------------------------
+<field_enc>:
+0: No event
+1: Event
+Bit is cleared by writing a 1 to this position.
+------------------------------
+<field_public_text>:
+Set if a frame is dropped due to zero MAC addresses filtering or multicast source MAC address filtering.
+------------------------------
+<field_enc>:
+0: No event
+1: Event
+Bit is cleared by writing a 1 to this position.
+------------------------------
+<reg_short_dscr>:
+Sticky bits register
+------------------------------
+<reg_public_text>:
+Replicated three times, once for each tag.
+
+Replication 0 is outer-most tag, 2 is inner-most tag.
+------------------------------
+<field_public_text>:
+Set if a frame is dropped due required tag was not found.
+------------------------------
+<field_enc>:
+0: No Event
+1: Event
+Bit is cleared by writing a 1 to this position.
+------------------------------
+<field_public_text>:
+Set if a frame is dropped due to priority C-TAG filtering at the given tag position.
+------------------------------
+<field_enc>:
+0: No event
+1: Event
+Bit is cleared by writing a 1 to this position.
+------------------------------
+<field_public_text>:
+Set if a frame is dropped due to C-TAG filtering at the given tag position.
+------------------------------
+<field_enc>:
+0: No event
+1: Event
+Bit is cleared by writing a 1 to this position.
+------------------------------
+<field_public_text>:
+Set if a frame is dropped due priority S-TAG filtering at the given tag position.
+------------------------------
+<field_enc>:
+0: No event
+1: Event
+Bit is cleared by writing a 1 to this position.
+------------------------------
+<field_public_text>:
+Set if a frame is dropped due to S-TAG filtering at the given tag position.
+------------------------------
+<field_enc>:
+0: No event
+1: Event
+Bit is cleared by writing a 1 to this position.
+------------------------------
+<reg_short_dscr>:
+Sticky bits register
+------------------------------
+<field_public_text>:
+Set if a frame is dropped due to required E-tag not found. Filtering enabled by ANA_CL:PORT:ETAG_FILTER_CTRL.ETAG_REQUIRED_ENA.
+------------------------------
+<field_enc>:
+0: No Event
+1: Event
+Bit is cleared by writing a 1 to this position.
+------------------------------
+<field_public_text>:
+Set if a frame is dropped due to E-tag. Filtering enabled by ANA_CL:PORT:ETAG_FILTER_CTRL.ETAG_DIS.
+------------------------------
+<field_enc>:
+0: No Event
+1: Event
+Bit is cleared by writing a 1 to this position.
+------------------------------
+<reg_short_dscr>:
+Sticky bits register
+------------------------------
+<field_public_text>:
+Set if a frame has been filtered by conversation-sensitive collector filtering.
+------------------------------
+<field_enc>:
+0: The event has not occurred
+1: Frame has been filtered by CSC collector filtering.
+Bit is cleared by writing a 1 to this position.
+------------------------------
+<field_public_text>:
+Set if an invalid tag was used for LAG conversation ID.
+------------------------------
+<field_enc>:
+0: The event has not occurred
+1: VID value has been used for LAG conversation ID classification
+Bit is cleared by writing a 1 to this position.
+------------------------------
+<field_public_text>:
+Set if a VLAN tag was used for LAG conversation ID.
+------------------------------
+<field_enc>:
+0: The event has not occurred
+1: VID value has been used for LAG conversation ID classification
+Bit is cleared by writing a 1 to this position.
+------------------------------
+<field_public_text>:
+Set if a priority tag was used for LAG conversation ID.
+------------------------------
+<field_enc>:
+0: The event has not occurred
+1: Port default value has been used for LAG conversation ID classification
+Bit is cleared by writing a 1 to this position.
+------------------------------
+<field_public_text>:
+Set if no valid tag was found in frame (untagged or invalid tag).
+------------------------------
+<field_enc>:
+0: The event has not occurred
+1: Port default value has been used for LAG conversation ID classification
+Bit is cleared by writing a 1 to this position.
+------------------------------
+<field_public_text>:
+This sticky bit indicates that the QoS class was used as index into the DSCP_REWR_VAL table to determine the DSCP value.
+------------------------------
+<field_enc>:
+0: No event
+1: QoS class has been used to determine the DSCP
+Bit is cleared by writing a 1 to this position.
+------------------------------
+<field_public_text>:
+Set when the DSCP value is based on the DSCP_TRANSLATE_VAL.
+------------------------------
+<field_enc>:
+0: No event
+1: DSCP_TRANSLATE_VAL has been used.
+Bit is cleared by writing a 1 to this position.
+------------------------------
+<field_public_text>:
+Set when the port VLAN has been used.
+------------------------------
+<field_enc>:
+0: The event has not occurred
+1: Port default value has been used for VLAN classification
+Bit is cleared by writing a 1 to this position.
+------------------------------
+<field_public_text>:
+Set when the VID information from Stacking TAG has been used.
+------------------------------
+<field_enc>:
+0: The event has not occurred
+1: Stacking Header VID has been used for VLAN classification
+Bit is cleared by writing a 1 to this position.
+------------------------------
+<field_public_text>:
+Set when vid from the TAG has been used.
+------------------------------
+<field_enc>:
+0: The event has not occurred
+1: TCI VID value has been used for VLAN classification
+Bit is cleared by writing a 1 to this position.
+------------------------------
+<field_public_text>:
+Set when the classified PCP and DEI value is used to determine the QoS class.
+------------------------------
+<field_enc>:
+0: No event
+1: PCP value has been used for QoS classification
+Bit is cleared by writing a 1 to this position.
+------------------------------
+<field_public_text>:
+Set when the default port QoS has been used.
+------------------------------
+<field_enc>:
+0: No event
+1: Port default has been used for QoS classification
+Bit is cleared by writing a 1 to this position.
+------------------------------
+<field_public_text>:
+Set when the DSCP QoS has been used.
+------------------------------
+<field_enc>:
+0: No event
+1: DSCP QoS class has been used for QoS classification
+Bit is cleared by writing a 1 to this position.
+------------------------------
+<field_public_text>:
+Set when the stacking QoS has been used.
+------------------------------
+<field_enc>:
+0: No event
+1: Stacking header QoS class has been used for QoS classification
+Bit is cleared by writing a 1 to this position.
+------------------------------
+<reg_short_dscr>:
+Sticky bits register
+------------------------------
+<field_public_text>:
+Set if a frame has been received with a TPID disabled for CPU forwarding.
+------------------------------
+<field_enc>:
+0: No event
+1: Event
+Bit is cleared by writing a 1 to this position.
+------------------------------
+<field_public_text>:
+Indicates that a frame with a VStax2 TTL value of 0 was dropped.
+------------------------------
+<field_enc>:
+0: No event
+1: Event
+Bit is cleared by writing a 1 to this position.
+------------------------------
+<field_public_text>:
+Set if a VRAP frame has been detected.
+------------------------------
+<field_enc>:
+0: No event
+1: Event
+Bit is cleared by writing a 1 to this position.
+------------------------------
+<field_public_text>:
+Set if an IGMP frame has been detected.
+------------------------------
+<field_enc>:
+0: No event
+1: Event
+Bit is cleared by writing a 1 to this position.
+------------------------------
+<field_public_text>:
+This bit is set if a 802.1ag control frame  (DMAC in the range 01-80-C2-00-00-30 to 01-80-C2-00-00-3F) has been detected.
+------------------------------
+<field_enc>:
+0: No event
+1: Event
+Bit is cleared by writing a 1 to this position.
+------------------------------
+<field_public_text>:
+This bit is set if a BPDU control frame  (DMAC in the range 01-80-C2-00-00-00 to 01-80-C2-00-00-0F) has been detected.
+------------------------------
+<field_enc>:
+0: No event
+1: Event
+Bit is cleared by writing a 1 to this position.
+------------------------------
+<field_public_text>:
+This bit is set if a GxRP frame ( DMAC in the range 01-80-C2-00-00-20 to 01-80-C2-00-00-2F) has been detected.
+------------------------------
+<field_enc>:
+0: No event
+1: Event
+Bit is cleared by writing a 1 to this position.
+------------------------------
+<field_public_text>:
+Set if an IPv6 Multicast control frame has been detected.
+  - DMAC = 0x3333xxxxxxxx , Ethernet Type = IPv6, DIP = FF02::/16
+------------------------------
+<field_enc>:
+0: No event
+1: Event
+Bit is cleared by writing a 1 to this position.
+------------------------------
+<field_public_text>:
+Set if an IP Multicast control frame has been detected.
+  - DMAC = 0x01005Exxxxxx , Ethernet Type = IP, IP Protocol != IGMP, DIP = 224.0.0.x
+------------------------------
+<field_enc>:
+0: No event
+1: Event
+Bit is cleared by writing a 1 to this position.
+------------------------------
+<field_public_text>:
+Set if an MLD frame has been detected.
+------------------------------
+<field_enc>:
+0: No event
+1: Event
+Bit is cleared by writing a 1 to this position.
+------------------------------
+<field_public_text>:
+Indicates that a IPv6 frame with hop by hop options and ICMPv6 was seen.
+------------------------------
+<field_enc>:
+0: No event
+1: Event
+Bit is cleared by writing a 1 to this position.
+------------------------------
+<field_public_text>:
+Is set if an IPv6 frame with a hop by hop header and ICMPv6 was seen.
+------------------------------
+<field_enc>:
+0: No event
+1: Event
+Bit is cleared by writing a 1 to this position.
+------------------------------
+<reg_short_dscr>:
+Sticky bits register for events generated by advanced VCAP classification
+------------------------------
+<field_public_text>:
+This sticky bit signals that a frame ways attempted to normalized beyond what is supported.
+------------------------------
+<field_public_text>:
+This sticky bit signals VLAN_WAS_TAGGED from the VCAP was used.
+------------------------------
+<field_public_text>:
+This sticky bit signals COSID from the VCAP was used.
+------------------------------
+<field_public_text>:
+This sticky bit signals DSCP value from the VCAPs was used.
+------------------------------
+<field_public_text>:
+This sticky bit signals QoS class from the VCAP was used.
+------------------------------
+<field_public_text>:
+This sticky bit signals DP from the VCAP was used.
+------------------------------
+<field_public_text>:
+This sticky bit signals DEI from the VCAP was used.
+------------------------------
+<field_public_text>:
+This sticky bit signals PCP from the VCAP was used.
+------------------------------
+<field_public_text>:
+This sticky bit signals XVID from the VCAP was used.
+------------------------------
+<field_public_text>:
+This sticky bit signals GVID from the VCAP was used.
+------------------------------
+<field_public_text>:
+This sticky bit signals VLAN push count from the VCAP was used.
+------------------------------
+<field_public_text>:
+This sticky bit signals VLAN pop count from the VCAP was used.
+------------------------------
+<field_public_text>:
+This sticky bit signals TPID select from the VCAP was used.
+------------------------------
+<field_public_text>:
+This sticky bit signals MAP table usage from the VCAP was used.
+------------------------------
+<field_public_text>:
+This sticky bit signals MAP table usage from the VCAP was used.
+------------------------------
+<field_public_text>:
+This sticky bit signals ISDX from the VCAP was used.
+------------------------------
+<field_public_text>:
+This sticky bit signals MASQ_INJ was triggered from the VCAP was used.
+------------------------------
+<field_public_text>:
+This sticky bit signals generic index was changed from the VCAP.
+------------------------------
+<field_public_text>:
+This sticky bit signals NXT_KEY_TYPE from the VCAP was used.
+------------------------------
+<field_public_text>:
+This sticky bit signals NXT_TYPE_AFTER_OFFSET = ETH from the VCAP was used.
+------------------------------
+<field_public_text>:
+This sticky bit signals NXT_TYPE_AFTER_OFFSET = MPLS from the VCAP was used.
+------------------------------
+<field_public_text>:
+This sticky bit signals NXT_TYPE_AFTER_OFFSET = CW from the VCAP was used.
+------------------------------
+<field_public_text>:
+This sticky bit signals NXT_NORMALIZE from the VCAP was used.
+------------------------------
+<field_public_text>:
+This sticky bit signals NXT_OFFSET_FROM_TYPE > 63 from the VCAP was attempted.
+------------------------------
+<reg_short_dscr>:
+Sticky bits register
+------------------------------
+<field_public_text>:
+Set if an IP packet with options is found.
+------------------------------
+<field_enc>:
+0: No event
+1: Event
+Bit is cleared by writing a 1 to this position.
+------------------------------
+<field_public_text>:
+Set if an IP fragmented frame is found.
+------------------------------
+<field_enc>:
+0: No event
+1: Event
+Bit is cleared by writing a 1 to this position.
+------------------------------
+<field_public_text>:
+Set if IP total length is less that IP header length.
+------------------------------
+<field_enc>:
+0: No event
+1: Event
+Bit is cleared by writing a 1 to this position.
+------------------------------
+<field_public_text>:
+Set if an IP checksum error is found.
+------------------------------
+<field_enc>:
+0: No event
+1: Event
+Bit is cleared by writing a 1 to this position.
+------------------------------
+<reg_short_dscr>:
+Sticky bits register
+------------------------------
+<field_public_text>:
+Set if an GRE header vwith valid checksum is found.
+------------------------------
+<field_enc>:
+0: No event
+1: Event
+Bit is cleared by writing a 1 to this position.
+------------------------------
+<field_public_text>:
+Set if an GRE checksum error is found.
+------------------------------
+<field_enc>:
+0: No event
+1: Event
+Bit is cleared by writing a 1 to this position.
+------------------------------
+<reggrp_short_dscr>:
+Sticky diagnostic global port counter event configuration
+------------------------------
+<reg_short_dscr>:
+Sticky counter mask register
+------------------------------
+<field_public_text>:
+Mask count of sticky event.
+------------------------------
+<field_enc>:
+0: Disable event count
+1: Enable event count
+------------------------------
+<field_public_text>:
+Mask count of sticky event.
+------------------------------
+<field_enc>:
+0: Disable event count
+1: Enable event count
+------------------------------
+<reg_short_dscr>:
+Sticky counter mask register
+------------------------------
+<field_public_text>:
+Mask count of sticky event.
+------------------------------
+<field_enc>:
+0: Disable event count
+1: Enable event count
+------------------------------
+<field_public_text>:
+Mask count of sticky event.
+------------------------------
+<field_enc>:
+0: Disable event count
+1: Enable event count
+------------------------------
+<field_public_text>:
+Mask count of sticky event.
+------------------------------
+<field_enc>:
+0: Disable event count
+1: Enable event count
+------------------------------
+<field_public_text>:
+Mask count of sticky event.
+------------------------------
+<field_enc>:
+0: Disable event count
+1: Enable event count
+------------------------------
+<field_public_text>:
+Mask count of sticky event.
+------------------------------
+<field_enc>:
+0: Disable event count
+1: Enable event count
+------------------------------
+<reg_short_dscr>:
+Sticky counter mask register
+------------------------------
+<field_public_text>:
+Mask count of sticky event.
+------------------------------
+<field_enc>:
+0: Disable event count
+1: Enable event count
+------------------------------
+<field_public_text>:
+Mask count of sticky event.
+------------------------------
+<field_enc>:
+0: Disable event count
+1: Enable event count
+------------------------------
+<reg_short_dscr>:
+Sticky counter mask register
+------------------------------
+<field_public_text>:
+Mask count of sticky event.
+------------------------------
+<field_enc>:
+0: Disable event count
+1: Enable event count
+------------------------------
+<field_public_text>:
+Mask count of sticky event.
+------------------------------
+<field_enc>:
+0: Disable event count
+1: Enable event count
+------------------------------
+<field_public_text>:
+Mask count of sticky event.
+------------------------------
+<field_enc>:
+0: Disable event count
+1: Enable event count
+------------------------------
+<field_public_text>:
+Mask count of sticky event.
+------------------------------
+<field_enc>:
+0: Disable event count
+1: Enable event count
+------------------------------
+<field_public_text>:
+Mask count of sticky event.
+------------------------------
+<field_enc>:
+0: Disable event count
+1: Enable event count
+------------------------------
+<field_public_text>:
+Mask count of sticky event.
+------------------------------
+<field_enc>:
+0: Disable event count
+1: Enable event count
+------------------------------
+<field_public_text>:
+Mask count of sticky event.
+------------------------------
+<field_enc>:
+0: Disable event count
+1: Enable event count
+------------------------------
+<field_public_text>:
+Mask count of sticky event.
+------------------------------
+<field_enc>:
+0: Disable event count
+1: Enable event count
+------------------------------
+<field_public_text>:
+Mask count of sticky event.
+------------------------------
+<field_enc>:
+0: Disable event count
+1: Enable event count
+------------------------------
+<field_public_text>:
+Mask count of sticky event.
+------------------------------
+<field_enc>:
+0: Disable event count
+1: Enable event count
+------------------------------
+<field_public_text>:
+Mask count of sticky event.
+------------------------------
+<field_enc>:
+0: Disable event count
+1: Enable event count
+------------------------------
+<field_public_text>:
+Mask count of sticky event.
+------------------------------
+<field_enc>:
+0: Disable event count
+1: Enable event count
+------------------------------
+<field_public_text>:
+Mask count of sticky event.
+------------------------------
+<field_enc>:
+0: Disable event count
+1: Enable event count
+------------------------------
+<field_public_text>:
+Mask count of sticky event.
+------------------------------
+<field_enc>:
+0: Disable event count
+1: Enable event count
+------------------------------
+<reg_short_dscr>:
+Sticky counter mask register
+------------------------------
+<field_public_text>:
+Mask count of sticky event.
+------------------------------
+<field_enc>:
+0: Disable event count
+1: Enable event count
+------------------------------
+<field_public_text>:
+Mask count of sticky event.
+------------------------------
+<field_enc>:
+0: Disable event count
+1: Enable event count
+------------------------------
+<field_public_text>:
+Mask count of sticky event.
+------------------------------
+<field_enc>:
+0: Disable event count
+1: Enable event count
+------------------------------
+<field_public_text>:
+Mask count of sticky event.
+------------------------------
+<field_enc>:
+0: Disable event count
+1: Enable event count
+------------------------------
+<field_public_text>:
+Mask count of sticky event.
+------------------------------
+<field_enc>:
+0: Disable event count
+1: Enable event count
+------------------------------
+<field_public_text>:
+Mask count of sticky event.
+------------------------------
+<field_enc>:
+0: Disable event count
+1: Enable event count
+------------------------------
+<field_public_text>:
+Mask count of sticky event.
+------------------------------
+<field_enc>:
+0: Disable event count
+1: Enable event count
+------------------------------
+<field_public_text>:
+Mask count of sticky event.
+------------------------------
+<field_enc>:
+0: Disable event count
+1: Enable event count
+------------------------------
+<field_public_text>:
+Mask count of sticky event.
+------------------------------
+<field_enc>:
+0: Disable event count
+1: Enable event count
+------------------------------
+<field_public_text>:
+Mask count of sticky event.
+------------------------------
+<field_enc>:
+0: Disable event count
+1: Enable event count
+------------------------------
+<field_public_text>:
+Mask count of sticky event.
+------------------------------
+<field_enc>:
+0: Disable event count
+1: Enable event count
+------------------------------
+<field_public_text>:
+Mask count of sticky event.
+------------------------------
+<field_enc>:
+0: Disable event count
+1: Enable event count
+------------------------------
+<reg_short_dscr>:
+Sticky counter mask register
+------------------------------
+<field_public_text>:
+Mask count of sticky event.
+------------------------------
+<field_enc>:
+0: Disable event count
+1: Enable event count
+------------------------------
+<field_public_text>:
+Mask count of sticky event.
+------------------------------
+<field_enc>:
+0: Disable event count
+1: Enable event count
+------------------------------
+<field_public_text>:
+Mask count of sticky event.
+------------------------------
+<field_enc>:
+0: Disable event count
+1: Enable event count
+------------------------------
+<field_public_text>:
+Mask count of sticky event.
+------------------------------
+<field_enc>:
+0: Disable event count
+1: Enable event count
+------------------------------

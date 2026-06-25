@@ -1,0 +1,1673 @@
+=== DOCUMENTATION FOR TARGET: SSI ===
+
+<reg_short_dscr>:
+This register controls the serial data transfer. It is impossible to
+write to this register when the DW_apb_ssi is enabled. The DW_apb_ssi
+is enabled and disabled by writing to the SSIENR register.
+Reset Value: SSI_CTRLR0_RST
+------------------------------
+<field_public_text>:
+SSTE Reserved bits - Read Only
+------------------------------
+<field_public_text>:
+Slave Select Toggle Enable.
+When operating in SPI mode with clock phase (SCPH) set to 0, this register controls the behavior of the slave select line (ss_*_n) between data frames. If this register field is set to 1 the ss_*_n line will toggle between consecutive data frames, with the serial clock (sclk) being held to its default value while ss_*_n is high; if this register field is set to 0 the ss_*_n will stay low and sclk will run continuously for the duration of the transfer.
+Note: This register is only valid when SSI_SCPH0_SSTOGGLE is set to 1.
+------------------------------
+<field_public_text>:
+CTRLR0_23 Reserved bits - Read Only
+------------------------------
+<field_public_text>:
+SPI Frame Format: 
+
+Selects data frame format for Transmitting/Receiving the data 
+
+Bits only valid when SSI_SPI_MODE is either set to "Dual" or "Quad" or "Octal" mode. 
+
+When SSI_SPI_MODE is configured for "Dual Mode", 10/11 combination is reserved. 
+
+When SSI_SPI_MODE is configured for "Quad Mode", 11 combination is reserved.
+------------------------------
+<field_enc>:
+'h1: Dual SPI Frame Format
+'h3: Octal SPI Frame Format
+'h2: Quad SPI Frame Format
+'h0: Standard SPI Frame Format
+------------------------------
+<field_public_text>:
+Data Frame Size in 32-bit transfer size mode.
+Used to select the data frame size in 32-bit transfer mode. These bits are only valid when
+SSI_MAX_XFER_SIZE is configured to 32.  When the data frame size is programmed
+to be less than 32 bits, the receive data are automatically
+right-justified by the receive logic, with the upper bits of the receive
+FIFO zero-padded.  You are responsible for making sure that transmit data is right-justified
+before writing into the transmit FIFO. The transmit logic ignores the upper unused
+bits when transmitting the data.
+
+
+Note: When SSI_SPI_MODE is either set to "Dual" or "Quad" or "Octal" mode and  SPI_FRF  is not set to 2'b00.
+
+- DFS value should be multiple of 2 if SPI_FRF = 0x01,
+
+- DFS value should be multiple of 4 if SPI_FRF = 0x10,
+
+- DFS value should be multiple of 8 if SPI_FRF = 0x11.
+------------------------------
+<field_enc>:
+'h3: 4-bit serial data transfer
+'h4: 5-bit serial data transfer
+'h5: 6-bit serial data transfer
+'h6: 7-bit serial data transfer
+'h7: 8-bit serial data transfer
+'h8: 9-bit serial data transfer
+'h9: 10-bit serial data transfer
+'ha: 11-bit serial data transfer
+'hb: 12-bit serial data transfer
+'hc: 13-bit serial data transfer
+'hd: 14-bit serial data transfer
+'he: 15-bit serial data transfer
+'hf: 16-bit serial data transfer
+'h10: 17-bit serial data transfer
+'h11: 18-bit serial data transfer
+'h12: 19-bit serial data transfer
+'h13: 20-bit serial data transfer
+'h14: 21-bit serial data transfer
+'h15: 22-bit serial data transfer
+'h16: 23-bit serial data transfer
+'h17: 24-bit serial data transfer
+'h18: 25-bit serial data transfer
+'h19: 26-bit serial data transfer
+'h1a: 27-bit serial data transfer
+'h1b: 28-bit serial data transfer
+'h1c: 29-bit serial data transfer
+'h1d: 30-bit serial data transfer
+'h1e: 31-bit serial data transfer
+'h1f: 32-bit serial data transfer
+------------------------------
+<field_public_text>:
+Control Frame Size. Selects the length of the control word for the
+Microwire frame format.
+------------------------------
+<field_enc>:
+'h0: 1-bit Control Word
+'h1: 2-bit Control Word
+'h2: 3-bit Control Word
+'h3: 4-bit Control Word
+'h4: 5-bit Control Word
+'h5: 6-bit Control Word
+'h6: 7-bit Control Word
+'h7: 8-bit Control Word
+'h8: 9-bit Control Word
+'h9: 10-bit Control Word
+'ha: 11-bit Control Word
+'hb: 12-bit Control Word
+'hc: 13-bit Control Word
+'hd: 14-bit Control Word
+'he: 15-bit Control Word
+'hf: 16-bit Control Word
+------------------------------
+<field_public_text>:
+Shift Register Loop.
+Used for testing purposes only. When internally
+active, connects the transmit shift register output to the receive shift register input. 
+
+Can be used in both serial-slave and serial-master modes. 
+
+When the DW_apb_ssi is configured as a slave in loopback mode, the ss_in_n and ssi_clk signals 
+must be provided by an external source.  In this mode, the slave cannot generate these signals
+because there is nothing to which to loop back
+------------------------------
+<field_enc>:
+'h0: Normal mode operation
+'h1: Test mode: Tx & Rx shift reg connected
+------------------------------
+<field_public_text>:
+SLV_OE Reserved field - Read-only
+------------------------------
+<field_public_text>:
+Transfer Mode.
+
+Selects the mode of transfer for serial communication. This field does
+not affect the transfer duplicity. Only indicates whether the receive or
+transmit data are valid.
+ In transmit-only mode, data received from the
+external device is not valid and is not stored in the receive FIFO memory;
+it is overwritten on the next transfer.
+ In receive-only mode, transmitted
+data are not valid. After the first write to the transmit FIFO, the same
+word is retransmitted for the duration of the transfer.
+ In
+transmit-and-receive mode, both transmit and receive data are valid.
+The transfer continues until the transmit FIFO is empty. Data received
+from the external device are stored into the receive FIFO memory, where
+it can be accessed by the host processor. 
+ In eeprom-read mode, receive data
+is not valid while control data is being transmitted.  When all control data is sent
+to the EEPROM, receive data becomes valid and transmit data becomes invalid.  All 
+data in the transmit FIFO is considered control data in this mode.  This transfer
+mode is only valid when the DW_apb_ssi is configured as master device.
+
+00 - Transmit & Receive 
+
+01 - Transmit Only 
+
+10 - Receive Only 
+
+11 - EEPROM Read 
+
+When SSI_SPI_MODE is either set to "Dual" or "Quad" or "Octal" mode and  SPI_FRF  is not set to 2'b00. 
+There are only two valid combinations: 
+
+10 - Read 
+
+01 - Write
+------------------------------
+<field_enc>:
+'h3: EEPROM  Read  mode
+'h2: Receive  only mode or Read (SPI_FRF != 2'b00)
+'h0: Transmit & receive
+'h1: Transmit only mode or Write (SPI_FRF != 2'b00)
+------------------------------
+<field_public_text>:
+Serial Clock Polarity.
+
+Valid when the frame format (FRF) is set to Motorola SPI. Used to select
+the polarity of the inactive serial clock, which is held inactive when
+the DW_apb_ssi master is not actively transferring data on the serial bus.
+------------------------------
+<field_enc>:
+'h1: Inactive state of serial clock is high
+'h0: Inactive state of serial clock is low
+------------------------------
+<field_public_text>:
+Serial Clock Phase.
+
+Valid when the frame format (FRF) is set to Motorola SPI. The serial
+clock phase selects the relationship of the serial clock with the slave
+select signal. 
+When SCPH = 0, data are captured on the first edge of
+the serial clock. When SCPH = 1, the serial clock starts toggling one
+cycle after the slave select line is activated, and data are captured
+on the second edge of the serial clock.
+------------------------------
+<field_enc>:
+'h0: Serial clock toggles in middle of first data bit
+'h1: Serial clock toggles at start of first data bit
+------------------------------
+<field_public_text>:
+Frame Format.
+Selects which serial protocol transfers the data.
+------------------------------
+<field_enc>:
+'h0: Motorolla SPI Frame Format
+'h2: National Microwire Frame Format
+'h3: Reserved value
+'h1: Texas Instruments SSP Frame Format
+------------------------------
+<field_public_text>:
+Data Frame Size. 
+This register field is only valid when SSI_MAX_XFER_SIZE is
+configured to 16. If SSI_MAX_XFER_SIZE is configured to 32, then writing to this field
+will not have any effect.
+
+Selects the data frame length. When the data frame size is programmed to be less than
+16 bits, the receive data are automatically right-justified by the receive logic, with the
+upper bits of the receive FIFO zero-padded.
+
+You must right-justify transmit data before writing into the transmit FIFO. The transmit
+logic ignores the upper unused bits when transmitting the data 
+
+Note: When SSI_SPI_MODE is either set to "Dual" or "Quad" or "Octal" mode and  SPI_FRF  is not set to 2'b00.
+
+- DFS value should be multiple of 2 if SPI_FRF = 01,
+
+- DFS value should be multiple of 4 if SPI_FRF = 10,
+
+- DFS value should be multiple of 8 if SPI_FRF = 11.
+------------------------------
+<field_enc>:
+'h3: 4-bit serial data transfer
+'h4: 5-bit serial data transfer
+'h5: 6-bit serial data transfer
+'h6: 7-bit serial data transfer
+'h7: 8-bit serial data transfer
+'h8: 9-bit serial data transfer
+'h9: 10-bit serial data transfer
+'ha: 11-bit serial data transfer
+'hb: 12-bit serial data transfer
+'hc: 13-bit serial data transfer
+'hd: 14-bit serial data transfer
+'he: 15-bit serial data transfer
+'hf: 16-bit serial data transfer
+------------------------------
+<reg_short_dscr>:
+This register exists only when the DW_apb_ssi is configured as a
+master device. When the DW_apb_ssi is configured as a serial slave,
+writing to this location has no effect; reading from this location
+returns 0. Control register 1 controls the end of serial transfers
+when in receive-only mode. It is impossible to write to this
+register when the DW_apb_ssi is enabled. The DW_apb_ssi is enabled
+and disabled by writing to the SSIENR register.
+Reset Value: 0x0
+------------------------------
+<field_public_text>:
+CTRLR1 Reserved bits - Read Only
+------------------------------
+<field_public_text>:
+Number of Data Frames.
+
+When TMOD = 10 or TMOD = 11 , this register field sets the number of data frames to
+be continuously received by the DW_apb_ssi. The DW_apb_ssi continues
+to receive serial data until the number of data frames received is
+equal to this register value plus 1, which enables you to receive up
+to 64 KB of data in a continuous transfer. 
+When the DW_apb_ssi is
+configured as a serial slave, the transfer continues for as long as
+the slave is selected. Therefore, this register serves no purpose and
+is not present when the DW_apb_ssi is configured as a serial slave.
+------------------------------
+<reg_short_dscr>:
+This register enables and disables the DW_apb_ssi.
+Reset Value: 0x0
+------------------------------
+<field_public_text>:
+SSIENR Reserved bits - Read Only
+------------------------------
+<field_public_text>:
+SSI Enable.
+ Enables and disables all DW_apb_ssi operations. When
+disabled, all serial transfers are halted immediately. Transmit and
+receive FIFO buffers are cleared when the device is disabled. It is
+impossible to program some of the DW_apb_ssi control registers when
+enabled. When disabled, the ssi_sleep output is set (after delay) to
+inform the system that it is safe to remove the ssi_clk, thus saving
+power consumption in the system.
+------------------------------
+<field_enc>:
+'h0: Disables Serial Transfer
+'h1: Enables  Serial Transfer
+------------------------------
+<reg_short_dscr>:
+This register controls the direction of the data word for the half-duplex
+Microwire serial protocol. It is impossible to write to this register
+when the DW_apb_ssi is enabled. The DW_apb_ssi is enabled and disabled by
+writing to the SSIENR register.
+Reset Value: 0x0
+------------------------------
+<field_public_text>:
+MWCR Reserved bits - Read Only
+------------------------------
+<field_public_text>:
+Microwire Handshaking.
+
+Relevant only when the DW_apb_ssi is configured as a serial-master device.
+When configured as a serial slave, this bit field has no functionality.
+Used to enable and disable the busy/ready handshaking interface for the
+Microwire protocol. When enabled, the DW_apb_ssi checks for a ready status
+from the target slave, after the transfer of the last data/control bit,
+before clearing the BUSY status in the SR register.
+------------------------------
+<field_enc>:
+'h0: Handshaking interface is disabled
+'h1: Handshaking interface is enabled
+------------------------------
+<field_public_text>:
+Microwire Control.
+
+Defines the direction of the data word when the Microwire serial protocol
+is used. When this bit is set to 0, the data word is received by the
+DW_apb_ssi MacroCell from the external serial device. When this bit is
+set to 1, the data word is transmitted from the DW_apb_ssi MacroCell to
+the external serial device.
+------------------------------
+<field_enc>:
+'h0: SSI receives data
+'h1: SSI transmits data
+------------------------------
+<field_public_text>:
+Microwire Transfer Mode.
+
+Defines whether the Microwire transfer is sequential or non-sequential.
+When sequential mode is used, only one control word is needed to
+transmit or receive a block of data words. When non-sequential mode is
+used, there must be a control word for each data word that is
+transmitted or received.
+------------------------------
+<field_enc>:
+'h0: Non-Sequential Microwire Transfer
+'h1: Sequential Microwire Transfer
+------------------------------
+<reg_short_dscr>:
+This register is valid only when the DW_apb_ssi is configured as a master
+device. When the DW_apb_ssi is configured as a serial slave, writing to
+this location has no effect; reading from this location returns 0. The
+register enables the individual slave select output lines from the
+DW_apb_ssi master. Up to 16 slave-select output pins are available on the
+DW_apb_ssi master. Register bits can be set or cleared when SSI_EN=0. 
+
+If SSI_EN=1, then register bits can be set (to delay the slave select assertion while TX FIFO is getting filled) but cannot be cleared.
+Reset Value: 0x0
+------------------------------
+<field_public_text>:
+SER Reserved bits - Read Only
+------------------------------
+<field_public_text>:
+Slave Select Enable Flag.
+
+Each bit in this register corresponds to a slave select line (ss_x_n)
+from the DW_apb_ssi master. When a bit in this register is set (1), the
+corresponding slave select line from the master is activated when a
+serial transfer begins. It should be noted that setting or clearing bits
+in this register have no effect on the corresponding slave select outputs
+until a transfer is started. Before beginning a transfer, you should
+enable the bit in this register that corresponds to the slave device
+with which the master wants to communicate. When not operating in
+broadcast mode, only one bit in this field should be set.
+------------------------------
+<field_enc>:
+'h0: No slave selected
+'h1: Slave is selected
+------------------------------
+<reg_short_dscr>:
+This register is valid only when the DW_apb_ssi is configured as a master
+device. When the DW_apb_ssi is configured as a serial slave, writing to
+this location has no effect; reading from this location returns 0. The
+register derives the frequency of the serial clock that regulates the data
+transfer. The 16-bit field in this register defines the ssi_clk divider
+value. It is impossible to write to this register when the DW_apb_ssi is
+enabled. The DW_apb_ssi is enabled and disabled by writing to the SSIENR
+register.
+Reset Value: 0x0
+------------------------------
+<field_public_text>:
+BAUDR Reserved bits - Read Only
+------------------------------
+<field_public_text>:
+SSI Clock Divider.
+
+The LSB for this field is always set to 0 and is unaffected by a write
+operation, which ensures an even value is held in this register. If the
+value is 0, the serial output clock (sclk_out) is disabled. The frequency
+of the sclk_out is derived from the following equation:
+
+
+        Fsclk_out = Fssi_clk/SCKDV
+
+where SCKDV is any even value between 2 and 65534. For example: 
+
+
+for Fssi_clk = 3.6864MHz and SCKDV =2
+Fsclk_out = 3.6864/2 = 1.8432MHz
+------------------------------
+<reg_short_dscr>:
+This register controls the threshold value for the transmit FIFO memory.
+The DW_apb_ssi is enabled and disabled by writing to the SSIENR register.
+Reset Value: 0x0
+------------------------------
+<field_public_text>:
+TXFTLR Reserved bits - Read Only
+------------------------------
+<field_public_text>:
+Transmit FIFO Threshold.
+
+Controls the level of entries (or below) at which the transmit FIFO controller
+triggers an interrupt. The FIFO depth is configurable in the range 2-256;
+this register is sized to the number of address bits needed to access the
+FIFO. If you attempt to set this value greater than or equal to the depth
+of the FIFO, this field is not written and retains its current value. When
+the number of transmit FIFO entries is less than or equal to this value,
+the transmit FIFO empty interrupt is triggered. For information on the Transmit FIFO Threshold values, see the "Master SPI and SSP Serial Transfers" in the DW_apb_ssi Databook.
+
+ssi_txe_intr is asserted when TFT or less data entries are present in transmit FIFO
+------------------------------
+<reg_short_dscr>:
+This register controls the threshold value for the receive FIFO memory.
+The DW_apb_ssi is enabled and disabled by writing to the SSIENR register.
+Reset Value: 0x0
+------------------------------
+<field_public_text>:
+RXFTLR Reserved bits - Read Only
+------------------------------
+<field_public_text>:
+Receive FIFO Threshold.
+
+Controls the level of entries (or above) at which the receive FIFO controller triggers an interrupt. The FIFO depth is configurable in the range 2-256. This register is sized to the number of address
+bits needed to access the FIFO. If you attempt to set this value greater than the depth of the FIFO, this field is not written and retains its current value. When the number of receive FIFO entries is
+greater than or equal to this value + 1, the receive FIFO full interrupt is triggered. For information on the Receive FIFO Threshold values, see the "Master SPI and SSP Serial Transfers" in the
+DW_apb_ssi Databook.
+ssi_rxf_intr is asserted when RFT or more data entries are present in receive FIFO.
+------------------------------
+<reg_short_dscr>:
+This register contains the number of valid data entries in the transmit FIFO memory.
+Reset Value: 0x0
+------------------------------
+<field_public_text>:
+TXFLR Reserved bits - Read Only
+------------------------------
+<field_public_text>:
+Transmit FIFO Level.
+
+Contains the number of valid data entries in the transmit FIFO.
+------------------------------
+<reg_short_dscr>:
+This register contains the number of valid data entries in the receive FIFO memory.  This register can be ready at any time.
+Reset Value: 0x0
+------------------------------
+<field_public_text>:
+RXFLR Reserved bits - Read Only
+------------------------------
+<field_public_text>:
+Receive FIFO Level.
+
+Contains the number of valid data entries in the receive FIFO.
+------------------------------
+<reg_short_dscr>:
+This is a read-only register used to indicate the current transfer status,
+FIFO status, and any transmission/reception errors that may have occurred.
+The status register may be read at any time. None of the bits in this
+register request an interrupt.
+Reset Value: 0x6
+------------------------------
+<field_public_text>:
+SR Reserved bits - Read Only
+------------------------------
+<field_public_text>:
+Data Collision Error.
+
+Relevant only when the DW_apb_ssi is configured as a master device.
+This bit will be set if ss_in_n input is asserted by other master,
+when the DW_apb_ssi master is in the middle of the transfer. This informs the processor that the
+last data transfer was halted before completion. This bit is cleared
+when read.
+------------------------------
+<field_enc>:
+'h0: No Error
+'h1: Transmit Data Collision Error
+------------------------------
+<field_public_text>:
+TXE Reserved field - read-only
+------------------------------
+<field_public_text>:
+Receive FIFO Full.
+
+When the receive FIFO is completely full, this bit
+is set. When the receive FIFO contains one or more empty location, this
+bit is cleared.
+------------------------------
+<field_enc>:
+'h1: Receive FIFO is full
+'h0: Receive FIFO is not full
+------------------------------
+<field_public_text>:
+Receive FIFO Not Empty.
+
+Set when the receive FIFO contains one or more entries and is cleared
+when the receive FIFO is empty. This bit can be polled by software to
+completely empty the receive FIFO.
+------------------------------
+<field_enc>:
+'h0: Receive FIFO is empty
+'h1: Receive FIFO is not empty
+------------------------------
+<field_public_text>:
+Transmit FIFO Empty.
+
+When the transmit FIFO is completely empty, this bit is set. When the
+transmit FIFO contains one or more valid entries, this bit is cleared.
+This bit field does not request an interrupt.
+------------------------------
+<field_enc>:
+'h1: Transmit FIFO is empty
+'h0: Transmit FIFO is not empty
+------------------------------
+<field_public_text>:
+Transmit FIFO Not Full.
+ Set when the transmit FIFO contains one or more
+empty locations, and is cleared when the FIFO is full.
+------------------------------
+<field_enc>:
+'h0: Transmit FIFO is full
+'h1: Transmit FIFO is not Full
+------------------------------
+<field_public_text>:
+SSI Busy Flag.
+
+When set, indicates that a serial transfer is in progress; when cleared
+indicates that the DW_apb_ssi is idle or disabled.
+------------------------------
+<field_enc>:
+'h1: DW_apb_ssi is actively transferring data
+'h0: DW_apb_ssi is idle or disabled
+------------------------------
+<reg_short_dscr>:
+This read/write reigster masks or enables all interrupts generated by the DW_apb_ssi.
+When the DW_apb_ssi is configured as a slave device, the MSTIM bit field is not present. 
+This changes the reset value from 0x3F for serial-master configurations to 0x1F for serial-slave
+configurations.
+Reset Value: (SSI_IS_MASTER == 1) ? 0x3F : 0x1F
+------------------------------
+<field_public_text>:
+IMR Reserved bits - Read Only
+------------------------------
+<field_public_text>:
+Multi-Master Contention Interrupt Mask. This bit field is not present if
+the DW_apb_ssi is configured as a serial-slave device.
+------------------------------
+<field_enc>:
+'h0: ssi_mst_intr interrupt is masked
+'h1: ssi_mst_intr interrupt is not masked
+------------------------------
+<field_public_text>:
+Receive FIFO Full Interrupt Mask
+------------------------------
+<field_enc>:
+'h0: ssi_rxf_intr interrupt is masked
+'h1: ssi_rxf_intr interrupt is not masked
+------------------------------
+<field_public_text>:
+Receive FIFO Overflow Interrupt Mask
+------------------------------
+<field_enc>:
+'h0: ssi_rxo_intr interrupt is masked
+'h1: ssi_rxo_intr interrupt is not masked
+------------------------------
+<field_public_text>:
+Receive FIFO Underflow Interrupt Mask
+------------------------------
+<field_enc>:
+'h0: ssi_rxu_intr interrupt is masked
+'h1: ssi_rxu_intr interrupt is not masked
+------------------------------
+<field_public_text>:
+Transmit FIFO Overflow Interrupt Mask
+------------------------------
+<field_enc>:
+'h0: ssi_txo_intr interrupt is masked
+'h1: ssi_txo_intr interrupt is not masked
+------------------------------
+<field_public_text>:
+Transmit FIFO Empty Interrupt Mask
+------------------------------
+<field_enc>:
+'h0: ssi_txe_intr interrupt is masked
+'h1: ssi_txe_intr interrupt is not masked
+------------------------------
+<reg_short_dscr>:
+This register reports the status of the DW_apb_ssi interrupts after they have been masked.
+Reset Value: 0x0
+------------------------------
+<field_public_text>:
+ISR Reserved bits - Read Only
+------------------------------
+<field_public_text>:
+Multi-Master Contention Interrupt Status. This bit field is not present
+if the DW_apb_ssi is configured as a serial-slave device.
+------------------------------
+<field_enc>:
+'h1: ssi_mst_intr interrupt is active after masking
+'h0: ssi_mst_intr interrupt not active after masking
+------------------------------
+<field_public_text>:
+Receive FIFO Full Interrupt Status
+------------------------------
+<field_enc>:
+'h1: ssi_rxf_intr interrupt is full after masking
+'h0: ssi_rxf_intr interrupt is not active after masking
+------------------------------
+<field_public_text>:
+Receive FIFO Overflow Interrupt Status
+------------------------------
+<field_enc>:
+'h1: ssi_rxo_intr interrupt is active after masking
+'h0: ssi_rxo_intr interrupt is not active after masking
+------------------------------
+<field_public_text>:
+Receive FIFO Underflow Interrupt Status
+------------------------------
+<field_enc>:
+'h1: ssi_rxu_intr interrupt is active after masking
+'h0: ssi_rxu_intr interrupt is not active after masking
+------------------------------
+<field_public_text>:
+Transmit FIFO Overflow Interrupt Status
+------------------------------
+<field_enc>:
+'h1: ssi_txo_intr interrupt is active after masking
+'h0: ssi_txo_intr interrupt is not active after masking
+------------------------------
+<field_public_text>:
+Transmit FIFO Empty Interrupt Status
+------------------------------
+<field_enc>:
+'h1: ssi_txe_intr interrupt is active after masking
+'h0: ssi_txe_intr interrupt is not active after masking
+------------------------------
+<reg_short_dscr>:
+This read-only register reports the status of the DW_apb_ssi interrupts prior to masking.
+Reset Value: 0x0
+------------------------------
+<field_public_text>:
+RISR Reserved bits - Read Only
+------------------------------
+<field_public_text>:
+Multi-Master Contention Raw Interrupt Status.
+This bit field is not present if the DW_apb_ssi is configured as a
+serial-slave device.
+------------------------------
+<field_enc>:
+'h1: ssi_mst_intr interrupt is active prior masking
+'h0: ssi_mst_intr interrupt is not active prior to masking
+------------------------------
+<field_public_text>:
+Receive FIFO Full Raw Interrupt Status
+------------------------------
+<field_enc>:
+'h1: ssi_rxf_intr interrupt is active prior to masking
+'h0: ssi_rxf_intr interrupt is not active prior to masking
+------------------------------
+<field_public_text>:
+Receive FIFO Overflow Raw Interrupt Status
+------------------------------
+<field_enc>:
+'h1: ssi_rxo_intr interrupt is not active prior to masking
+'h0: ssi_rxo_intr interrupt is active prior masking
+------------------------------
+<field_public_text>:
+Receive FIFO Underflow Raw Interrupt Status
+------------------------------
+<field_enc>:
+'h1: ssi_rxu_intr interrupt is active prior to masking
+'h0: ssi_rxu_intr interrupt is not active prior to masking
+------------------------------
+<field_public_text>:
+Transmit FIFO Overflow Raw Interrupt Status
+------------------------------
+<field_enc>:
+'h1: ssi_txo_intr interrupt is active prior masking
+'h0: ssi_txo_intr interrupt is not active prior to masking
+------------------------------
+<field_public_text>:
+Transmit FIFO Empty Raw Interrupt Status
+------------------------------
+<field_enc>:
+'h1: ssi_txe_intr interrupt is active prior masking
+'h0: ssi_txe_intr interrupt is not active prior to masking
+------------------------------
+<reg_short_dscr>:
+Transmit FIFO Overflow Interrupt Clear Register.
+Reset Value: 0x0
+------------------------------
+<field_public_text>:
+TXOICR Reserved bits - Read Only
+------------------------------
+<field_public_text>:
+Clear Transmit FIFO Overflow Interrupt.
+
+This register reflects the status of the interrupt. A read from this
+register clears the ssi_txo_intr interrupt; writing has no effect.
+------------------------------
+<reg_short_dscr>:
+Receive FIFO Overflow Interrupt Clear Register.
+Reset Value: 0x0
+------------------------------
+<field_public_text>:
+RXOICR Reserved bits - Read Only
+------------------------------
+<field_public_text>:
+Clear Receive FIFO Overflow Interrupt.
+
+This register reflects the status of the interrupt. A read from this
+register clears the ssi_rxo_intr interrupt; writing has no effect.
+------------------------------
+<reg_short_dscr>:
+Receive FIFO Underflow Interrupt Clear Register.
+Reset Value: 0x0
+------------------------------
+<field_public_text>:
+RXUICR Reserved bits - Read Only
+------------------------------
+<field_public_text>:
+Clear Receive FIFO Underflow Interrupt.
+
+This register reflects the status of the interrupt. A read from this
+register clears the ssi_rxu_intr interrupt; writing has no effect.
+------------------------------
+<reg_short_dscr>:
+Multi-Master Interrupt Clear Register.
+Reset Value: 0x0
+------------------------------
+<field_public_text>:
+MSTICR Reserved bits - Read Only
+------------------------------
+<field_public_text>:
+Clear Multi-Master Contention Interrupt.
+
+This register reflects the status of the interrupt. A read from this
+register clears the ssi_mst_intr interrupt; writing has no effect.
+------------------------------
+<reg_short_dscr>:
+Interrupt Clear Register.
+Reset Value: 0x0
+------------------------------
+<field_public_text>:
+ICR Reserved bits - Read Only
+------------------------------
+<field_public_text>:
+Clear Interrupts.
+
+This register is set if any of the interrupts below are active. A read
+clears the ssi_txo_intr, ssi_rxu_intr, ssi_rxo_intr, and the ssi_mst_intr
+interrupts. Writing to this register has no effect.
+------------------------------
+<reg_short_dscr>:
+This register contains the peripherals identification code, which is
+written into the register at configuration time using coreConsultant.
+Reset Value: SSI_ID
+------------------------------
+<field_public_text>:
+Identification code.
+ The register contains the peripheral's identification code, which is written into the register at configuration time using CoreConsultant.
+------------------------------
+<reg_short_dscr>:
+This read-only register stores the specific DW_apb_ssi component version.
+Reset Value: SSI_VERSION_ID
+------------------------------
+<field_public_text>:
+Contains the hex representation of the Synopsys component version. Consists of ASCII value for each number in the version, followed by *. For example 32_30_31_2A represents the version 2.01*.
+------------------------------
+<reg_short_dscr>:
+The DW_apb_ssi data register is a 16/32-bit (depending on SSI_MAX_XFER_SIZE) read/write buffer for
+the transmit/receive FIFOs. If the configuration parameter SSI_MAX_XFER_SIZE is set to 32, then all 32 bits
+are valid, otherwise, only 16 bits ([15:0]) of the register are valid. When the register is read, data in the
+receive FIFO buffer is accessed. When it is written to, data are moved into the transmit FIFO buffer; a write
+can occur only when SSI_EN = 1. FIFOs are reset when SSI_EN = 0.
+NOTE: The DR register in the DW_apb_ssi occupies thirty-six 32-bit address locations of the memory
+map to facilitate AHB burst transfers. Writing to any of these address locations has the same
+effect as pushing the data from the pwdata bus into the transmit FIFO. Reading from any of
+these locations has the same effect as popping data from the receive FIFO onto the prdata
+bus. The FIFO buffers on the DW_apb_ssi are not addressable.
+Reset Value: 0x0
+------------------------------
+<field_public_text>:
+DR{i} Reserved bits - Read Only
+------------------------------
+<field_public_text>:
+Data Register. When writing to this register, you must right-justify the data. Read
+data are automatically right-justified. If SSI_MAX_XFER_SIZE configuration
+parameter is set to 32, all 32 bits are valid. Otherwise, only 16 bits ([15:0]) of the
+register are valid.
+Read = Receive FIFO buffer
+Write = Transmit FIFO buffer.
+------------------------------
+<reg_short_dscr>:
+The DW_apb_ssi data register is a 16/32-bit (depending on SSI_MAX_XFER_SIZE) read/write buffer for
+the transmit/receive FIFOs. If the configuration parameter SSI_MAX_XFER_SIZE is set to 32, then all 32 bits
+are valid, otherwise, only 16 bits ([15:0]) of the register are valid. When the register is read, data in the
+receive FIFO buffer is accessed. When it is written to, data are moved into the transmit FIFO buffer; a write
+can occur only when SSI_EN = 1. FIFOs are reset when SSI_EN = 0.
+NOTE: The DR register in the DW_apb_ssi occupies thirty-six 32-bit address locations of the memory
+map to facilitate AHB burst transfers. Writing to any of these address locations has the same
+effect as pushing the data from the pwdata bus into the transmit FIFO. Reading from any of
+these locations has the same effect as popping data from the receive FIFO onto the prdata
+bus. The FIFO buffers on the DW_apb_ssi are not addressable.
+Reset Value: 0x0
+------------------------------
+<field_public_text>:
+DR{i} Reserved bits - Read Only
+------------------------------
+<field_public_text>:
+Data Register. When writing to this register, you must right-justify the data. Read
+data are automatically right-justified. If SSI_MAX_XFER_SIZE configuration
+parameter is set to 32, all 32 bits are valid. Otherwise, only 16 bits ([15:0]) of the
+register are valid.
+Read = Receive FIFO buffer
+Write = Transmit FIFO buffer.
+------------------------------
+<reg_short_dscr>:
+The DW_apb_ssi data register is a 16/32-bit (depending on SSI_MAX_XFER_SIZE) read/write buffer for
+the transmit/receive FIFOs. If the configuration parameter SSI_MAX_XFER_SIZE is set to 32, then all 32 bits
+are valid, otherwise, only 16 bits ([15:0]) of the register are valid. When the register is read, data in the
+receive FIFO buffer is accessed. When it is written to, data are moved into the transmit FIFO buffer; a write
+can occur only when SSI_EN = 1. FIFOs are reset when SSI_EN = 0.
+NOTE: The DR register in the DW_apb_ssi occupies thirty-six 32-bit address locations of the memory
+map to facilitate AHB burst transfers. Writing to any of these address locations has the same
+effect as pushing the data from the pwdata bus into the transmit FIFO. Reading from any of
+these locations has the same effect as popping data from the receive FIFO onto the prdata
+bus. The FIFO buffers on the DW_apb_ssi are not addressable.
+Reset Value: 0x0
+------------------------------
+<field_public_text>:
+DR{i} Reserved bits - Read Only
+------------------------------
+<field_public_text>:
+Data Register. When writing to this register, you must right-justify the data. Read
+data are automatically right-justified. If SSI_MAX_XFER_SIZE configuration
+parameter is set to 32, all 32 bits are valid. Otherwise, only 16 bits ([15:0]) of the
+register are valid.
+Read = Receive FIFO buffer
+Write = Transmit FIFO buffer.
+------------------------------
+<reg_short_dscr>:
+The DW_apb_ssi data register is a 16/32-bit (depending on SSI_MAX_XFER_SIZE) read/write buffer for
+the transmit/receive FIFOs. If the configuration parameter SSI_MAX_XFER_SIZE is set to 32, then all 32 bits
+are valid, otherwise, only 16 bits ([15:0]) of the register are valid. When the register is read, data in the
+receive FIFO buffer is accessed. When it is written to, data are moved into the transmit FIFO buffer; a write
+can occur only when SSI_EN = 1. FIFOs are reset when SSI_EN = 0.
+NOTE: The DR register in the DW_apb_ssi occupies thirty-six 32-bit address locations of the memory
+map to facilitate AHB burst transfers. Writing to any of these address locations has the same
+effect as pushing the data from the pwdata bus into the transmit FIFO. Reading from any of
+these locations has the same effect as popping data from the receive FIFO onto the prdata
+bus. The FIFO buffers on the DW_apb_ssi are not addressable.
+Reset Value: 0x0
+------------------------------
+<field_public_text>:
+DR{i} Reserved bits - Read Only
+------------------------------
+<field_public_text>:
+Data Register. When writing to this register, you must right-justify the data. Read
+data are automatically right-justified. If SSI_MAX_XFER_SIZE configuration
+parameter is set to 32, all 32 bits are valid. Otherwise, only 16 bits ([15:0]) of the
+register are valid.
+Read = Receive FIFO buffer
+Write = Transmit FIFO buffer.
+------------------------------
+<reg_short_dscr>:
+The DW_apb_ssi data register is a 16/32-bit (depending on SSI_MAX_XFER_SIZE) read/write buffer for
+the transmit/receive FIFOs. If the configuration parameter SSI_MAX_XFER_SIZE is set to 32, then all 32 bits
+are valid, otherwise, only 16 bits ([15:0]) of the register are valid. When the register is read, data in the
+receive FIFO buffer is accessed. When it is written to, data are moved into the transmit FIFO buffer; a write
+can occur only when SSI_EN = 1. FIFOs are reset when SSI_EN = 0.
+NOTE: The DR register in the DW_apb_ssi occupies thirty-six 32-bit address locations of the memory
+map to facilitate AHB burst transfers. Writing to any of these address locations has the same
+effect as pushing the data from the pwdata bus into the transmit FIFO. Reading from any of
+these locations has the same effect as popping data from the receive FIFO onto the prdata
+bus. The FIFO buffers on the DW_apb_ssi are not addressable.
+Reset Value: 0x0
+------------------------------
+<field_public_text>:
+DR{i} Reserved bits - Read Only
+------------------------------
+<field_public_text>:
+Data Register. When writing to this register, you must right-justify the data. Read
+data are automatically right-justified. If SSI_MAX_XFER_SIZE configuration
+parameter is set to 32, all 32 bits are valid. Otherwise, only 16 bits ([15:0]) of the
+register are valid.
+Read = Receive FIFO buffer
+Write = Transmit FIFO buffer.
+------------------------------
+<reg_short_dscr>:
+The DW_apb_ssi data register is a 16/32-bit (depending on SSI_MAX_XFER_SIZE) read/write buffer for
+the transmit/receive FIFOs. If the configuration parameter SSI_MAX_XFER_SIZE is set to 32, then all 32 bits
+are valid, otherwise, only 16 bits ([15:0]) of the register are valid. When the register is read, data in the
+receive FIFO buffer is accessed. When it is written to, data are moved into the transmit FIFO buffer; a write
+can occur only when SSI_EN = 1. FIFOs are reset when SSI_EN = 0.
+NOTE: The DR register in the DW_apb_ssi occupies thirty-six 32-bit address locations of the memory
+map to facilitate AHB burst transfers. Writing to any of these address locations has the same
+effect as pushing the data from the pwdata bus into the transmit FIFO. Reading from any of
+these locations has the same effect as popping data from the receive FIFO onto the prdata
+bus. The FIFO buffers on the DW_apb_ssi are not addressable.
+Reset Value: 0x0
+------------------------------
+<field_public_text>:
+DR{i} Reserved bits - Read Only
+------------------------------
+<field_public_text>:
+Data Register. When writing to this register, you must right-justify the data. Read
+data are automatically right-justified. If SSI_MAX_XFER_SIZE configuration
+parameter is set to 32, all 32 bits are valid. Otherwise, only 16 bits ([15:0]) of the
+register are valid.
+Read = Receive FIFO buffer
+Write = Transmit FIFO buffer.
+------------------------------
+<reg_short_dscr>:
+The DW_apb_ssi data register is a 16/32-bit (depending on SSI_MAX_XFER_SIZE) read/write buffer for
+the transmit/receive FIFOs. If the configuration parameter SSI_MAX_XFER_SIZE is set to 32, then all 32 bits
+are valid, otherwise, only 16 bits ([15:0]) of the register are valid. When the register is read, data in the
+receive FIFO buffer is accessed. When it is written to, data are moved into the transmit FIFO buffer; a write
+can occur only when SSI_EN = 1. FIFOs are reset when SSI_EN = 0.
+NOTE: The DR register in the DW_apb_ssi occupies thirty-six 32-bit address locations of the memory
+map to facilitate AHB burst transfers. Writing to any of these address locations has the same
+effect as pushing the data from the pwdata bus into the transmit FIFO. Reading from any of
+these locations has the same effect as popping data from the receive FIFO onto the prdata
+bus. The FIFO buffers on the DW_apb_ssi are not addressable.
+Reset Value: 0x0
+------------------------------
+<field_public_text>:
+DR{i} Reserved bits - Read Only
+------------------------------
+<field_public_text>:
+Data Register. When writing to this register, you must right-justify the data. Read
+data are automatically right-justified. If SSI_MAX_XFER_SIZE configuration
+parameter is set to 32, all 32 bits are valid. Otherwise, only 16 bits ([15:0]) of the
+register are valid.
+Read = Receive FIFO buffer
+Write = Transmit FIFO buffer.
+------------------------------
+<reg_short_dscr>:
+The DW_apb_ssi data register is a 16/32-bit (depending on SSI_MAX_XFER_SIZE) read/write buffer for
+the transmit/receive FIFOs. If the configuration parameter SSI_MAX_XFER_SIZE is set to 32, then all 32 bits
+are valid, otherwise, only 16 bits ([15:0]) of the register are valid. When the register is read, data in the
+receive FIFO buffer is accessed. When it is written to, data are moved into the transmit FIFO buffer; a write
+can occur only when SSI_EN = 1. FIFOs are reset when SSI_EN = 0.
+NOTE: The DR register in the DW_apb_ssi occupies thirty-six 32-bit address locations of the memory
+map to facilitate AHB burst transfers. Writing to any of these address locations has the same
+effect as pushing the data from the pwdata bus into the transmit FIFO. Reading from any of
+these locations has the same effect as popping data from the receive FIFO onto the prdata
+bus. The FIFO buffers on the DW_apb_ssi are not addressable.
+Reset Value: 0x0
+------------------------------
+<field_public_text>:
+DR{i} Reserved bits - Read Only
+------------------------------
+<field_public_text>:
+Data Register. When writing to this register, you must right-justify the data. Read
+data are automatically right-justified. If SSI_MAX_XFER_SIZE configuration
+parameter is set to 32, all 32 bits are valid. Otherwise, only 16 bits ([15:0]) of the
+register are valid.
+Read = Receive FIFO buffer
+Write = Transmit FIFO buffer.
+------------------------------
+<reg_short_dscr>:
+The DW_apb_ssi data register is a 16/32-bit (depending on SSI_MAX_XFER_SIZE) read/write buffer for
+the transmit/receive FIFOs. If the configuration parameter SSI_MAX_XFER_SIZE is set to 32, then all 32 bits
+are valid, otherwise, only 16 bits ([15:0]) of the register are valid. When the register is read, data in the
+receive FIFO buffer is accessed. When it is written to, data are moved into the transmit FIFO buffer; a write
+can occur only when SSI_EN = 1. FIFOs are reset when SSI_EN = 0.
+NOTE: The DR register in the DW_apb_ssi occupies thirty-six 32-bit address locations of the memory
+map to facilitate AHB burst transfers. Writing to any of these address locations has the same
+effect as pushing the data from the pwdata bus into the transmit FIFO. Reading from any of
+these locations has the same effect as popping data from the receive FIFO onto the prdata
+bus. The FIFO buffers on the DW_apb_ssi are not addressable.
+Reset Value: 0x0
+------------------------------
+<field_public_text>:
+DR{i} Reserved bits - Read Only
+------------------------------
+<field_public_text>:
+Data Register. When writing to this register, you must right-justify the data. Read
+data are automatically right-justified. If SSI_MAX_XFER_SIZE configuration
+parameter is set to 32, all 32 bits are valid. Otherwise, only 16 bits ([15:0]) of the
+register are valid.
+Read = Receive FIFO buffer
+Write = Transmit FIFO buffer.
+------------------------------
+<reg_short_dscr>:
+The DW_apb_ssi data register is a 16/32-bit (depending on SSI_MAX_XFER_SIZE) read/write buffer for
+the transmit/receive FIFOs. If the configuration parameter SSI_MAX_XFER_SIZE is set to 32, then all 32 bits
+are valid, otherwise, only 16 bits ([15:0]) of the register are valid. When the register is read, data in the
+receive FIFO buffer is accessed. When it is written to, data are moved into the transmit FIFO buffer; a write
+can occur only when SSI_EN = 1. FIFOs are reset when SSI_EN = 0.
+NOTE: The DR register in the DW_apb_ssi occupies thirty-six 32-bit address locations of the memory
+map to facilitate AHB burst transfers. Writing to any of these address locations has the same
+effect as pushing the data from the pwdata bus into the transmit FIFO. Reading from any of
+these locations has the same effect as popping data from the receive FIFO onto the prdata
+bus. The FIFO buffers on the DW_apb_ssi are not addressable.
+Reset Value: 0x0
+------------------------------
+<field_public_text>:
+DR{i} Reserved bits - Read Only
+------------------------------
+<field_public_text>:
+Data Register. When writing to this register, you must right-justify the data. Read
+data are automatically right-justified. If SSI_MAX_XFER_SIZE configuration
+parameter is set to 32, all 32 bits are valid. Otherwise, only 16 bits ([15:0]) of the
+register are valid.
+Read = Receive FIFO buffer
+Write = Transmit FIFO buffer.
+------------------------------
+<reg_short_dscr>:
+The DW_apb_ssi data register is a 16/32-bit (depending on SSI_MAX_XFER_SIZE) read/write buffer for
+the transmit/receive FIFOs. If the configuration parameter SSI_MAX_XFER_SIZE is set to 32, then all 32 bits
+are valid, otherwise, only 16 bits ([15:0]) of the register are valid. When the register is read, data in the
+receive FIFO buffer is accessed. When it is written to, data are moved into the transmit FIFO buffer; a write
+can occur only when SSI_EN = 1. FIFOs are reset when SSI_EN = 0.
+NOTE: The DR register in the DW_apb_ssi occupies thirty-six 32-bit address locations of the memory
+map to facilitate AHB burst transfers. Writing to any of these address locations has the same
+effect as pushing the data from the pwdata bus into the transmit FIFO. Reading from any of
+these locations has the same effect as popping data from the receive FIFO onto the prdata
+bus. The FIFO buffers on the DW_apb_ssi are not addressable.
+Reset Value: 0x0
+------------------------------
+<field_public_text>:
+DR{i} Reserved bits - Read Only
+------------------------------
+<field_public_text>:
+Data Register. When writing to this register, you must right-justify the data. Read
+data are automatically right-justified. If SSI_MAX_XFER_SIZE configuration
+parameter is set to 32, all 32 bits are valid. Otherwise, only 16 bits ([15:0]) of the
+register are valid.
+Read = Receive FIFO buffer
+Write = Transmit FIFO buffer.
+------------------------------
+<reg_short_dscr>:
+The DW_apb_ssi data register is a 16/32-bit (depending on SSI_MAX_XFER_SIZE) read/write buffer for
+the transmit/receive FIFOs. If the configuration parameter SSI_MAX_XFER_SIZE is set to 32, then all 32 bits
+are valid, otherwise, only 16 bits ([15:0]) of the register are valid. When the register is read, data in the
+receive FIFO buffer is accessed. When it is written to, data are moved into the transmit FIFO buffer; a write
+can occur only when SSI_EN = 1. FIFOs are reset when SSI_EN = 0.
+NOTE: The DR register in the DW_apb_ssi occupies thirty-six 32-bit address locations of the memory
+map to facilitate AHB burst transfers. Writing to any of these address locations has the same
+effect as pushing the data from the pwdata bus into the transmit FIFO. Reading from any of
+these locations has the same effect as popping data from the receive FIFO onto the prdata
+bus. The FIFO buffers on the DW_apb_ssi are not addressable.
+Reset Value: 0x0
+------------------------------
+<field_public_text>:
+DR{i} Reserved bits - Read Only
+------------------------------
+<field_public_text>:
+Data Register. When writing to this register, you must right-justify the data. Read
+data are automatically right-justified. If SSI_MAX_XFER_SIZE configuration
+parameter is set to 32, all 32 bits are valid. Otherwise, only 16 bits ([15:0]) of the
+register are valid.
+Read = Receive FIFO buffer
+Write = Transmit FIFO buffer.
+------------------------------
+<reg_short_dscr>:
+The DW_apb_ssi data register is a 16/32-bit (depending on SSI_MAX_XFER_SIZE) read/write buffer for
+the transmit/receive FIFOs. If the configuration parameter SSI_MAX_XFER_SIZE is set to 32, then all 32 bits
+are valid, otherwise, only 16 bits ([15:0]) of the register are valid. When the register is read, data in the
+receive FIFO buffer is accessed. When it is written to, data are moved into the transmit FIFO buffer; a write
+can occur only when SSI_EN = 1. FIFOs are reset when SSI_EN = 0.
+NOTE: The DR register in the DW_apb_ssi occupies thirty-six 32-bit address locations of the memory
+map to facilitate AHB burst transfers. Writing to any of these address locations has the same
+effect as pushing the data from the pwdata bus into the transmit FIFO. Reading from any of
+these locations has the same effect as popping data from the receive FIFO onto the prdata
+bus. The FIFO buffers on the DW_apb_ssi are not addressable.
+Reset Value: 0x0
+------------------------------
+<field_public_text>:
+DR{i} Reserved bits - Read Only
+------------------------------
+<field_public_text>:
+Data Register. When writing to this register, you must right-justify the data. Read
+data are automatically right-justified. If SSI_MAX_XFER_SIZE configuration
+parameter is set to 32, all 32 bits are valid. Otherwise, only 16 bits ([15:0]) of the
+register are valid.
+Read = Receive FIFO buffer
+Write = Transmit FIFO buffer.
+------------------------------
+<reg_short_dscr>:
+The DW_apb_ssi data register is a 16/32-bit (depending on SSI_MAX_XFER_SIZE) read/write buffer for
+the transmit/receive FIFOs. If the configuration parameter SSI_MAX_XFER_SIZE is set to 32, then all 32 bits
+are valid, otherwise, only 16 bits ([15:0]) of the register are valid. When the register is read, data in the
+receive FIFO buffer is accessed. When it is written to, data are moved into the transmit FIFO buffer; a write
+can occur only when SSI_EN = 1. FIFOs are reset when SSI_EN = 0.
+NOTE: The DR register in the DW_apb_ssi occupies thirty-six 32-bit address locations of the memory
+map to facilitate AHB burst transfers. Writing to any of these address locations has the same
+effect as pushing the data from the pwdata bus into the transmit FIFO. Reading from any of
+these locations has the same effect as popping data from the receive FIFO onto the prdata
+bus. The FIFO buffers on the DW_apb_ssi are not addressable.
+Reset Value: 0x0
+------------------------------
+<field_public_text>:
+DR{i} Reserved bits - Read Only
+------------------------------
+<field_public_text>:
+Data Register. When writing to this register, you must right-justify the data. Read
+data are automatically right-justified. If SSI_MAX_XFER_SIZE configuration
+parameter is set to 32, all 32 bits are valid. Otherwise, only 16 bits ([15:0]) of the
+register are valid.
+Read = Receive FIFO buffer
+Write = Transmit FIFO buffer.
+------------------------------
+<reg_short_dscr>:
+The DW_apb_ssi data register is a 16/32-bit (depending on SSI_MAX_XFER_SIZE) read/write buffer for
+the transmit/receive FIFOs. If the configuration parameter SSI_MAX_XFER_SIZE is set to 32, then all 32 bits
+are valid, otherwise, only 16 bits ([15:0]) of the register are valid. When the register is read, data in the
+receive FIFO buffer is accessed. When it is written to, data are moved into the transmit FIFO buffer; a write
+can occur only when SSI_EN = 1. FIFOs are reset when SSI_EN = 0.
+NOTE: The DR register in the DW_apb_ssi occupies thirty-six 32-bit address locations of the memory
+map to facilitate AHB burst transfers. Writing to any of these address locations has the same
+effect as pushing the data from the pwdata bus into the transmit FIFO. Reading from any of
+these locations has the same effect as popping data from the receive FIFO onto the prdata
+bus. The FIFO buffers on the DW_apb_ssi are not addressable.
+Reset Value: 0x0
+------------------------------
+<field_public_text>:
+DR{i} Reserved bits - Read Only
+------------------------------
+<field_public_text>:
+Data Register. When writing to this register, you must right-justify the data. Read
+data are automatically right-justified. If SSI_MAX_XFER_SIZE configuration
+parameter is set to 32, all 32 bits are valid. Otherwise, only 16 bits ([15:0]) of the
+register are valid.
+Read = Receive FIFO buffer
+Write = Transmit FIFO buffer.
+------------------------------
+<reg_short_dscr>:
+The DW_apb_ssi data register is a 16/32-bit (depending on SSI_MAX_XFER_SIZE) read/write buffer for
+the transmit/receive FIFOs. If the configuration parameter SSI_MAX_XFER_SIZE is set to 32, then all 32 bits
+are valid, otherwise, only 16 bits ([15:0]) of the register are valid. When the register is read, data in the
+receive FIFO buffer is accessed. When it is written to, data are moved into the transmit FIFO buffer; a write
+can occur only when SSI_EN = 1. FIFOs are reset when SSI_EN = 0.
+NOTE: The DR register in the DW_apb_ssi occupies thirty-six 32-bit address locations of the memory
+map to facilitate AHB burst transfers. Writing to any of these address locations has the same
+effect as pushing the data from the pwdata bus into the transmit FIFO. Reading from any of
+these locations has the same effect as popping data from the receive FIFO onto the prdata
+bus. The FIFO buffers on the DW_apb_ssi are not addressable.
+Reset Value: 0x0
+------------------------------
+<field_public_text>:
+DR{i} Reserved bits - Read Only
+------------------------------
+<field_public_text>:
+Data Register. When writing to this register, you must right-justify the data. Read
+data are automatically right-justified. If SSI_MAX_XFER_SIZE configuration
+parameter is set to 32, all 32 bits are valid. Otherwise, only 16 bits ([15:0]) of the
+register are valid.
+Read = Receive FIFO buffer
+Write = Transmit FIFO buffer.
+------------------------------
+<reg_short_dscr>:
+The DW_apb_ssi data register is a 16/32-bit (depending on SSI_MAX_XFER_SIZE) read/write buffer for
+the transmit/receive FIFOs. If the configuration parameter SSI_MAX_XFER_SIZE is set to 32, then all 32 bits
+are valid, otherwise, only 16 bits ([15:0]) of the register are valid. When the register is read, data in the
+receive FIFO buffer is accessed. When it is written to, data are moved into the transmit FIFO buffer; a write
+can occur only when SSI_EN = 1. FIFOs are reset when SSI_EN = 0.
+NOTE: The DR register in the DW_apb_ssi occupies thirty-six 32-bit address locations of the memory
+map to facilitate AHB burst transfers. Writing to any of these address locations has the same
+effect as pushing the data from the pwdata bus into the transmit FIFO. Reading from any of
+these locations has the same effect as popping data from the receive FIFO onto the prdata
+bus. The FIFO buffers on the DW_apb_ssi are not addressable.
+Reset Value: 0x0
+------------------------------
+<field_public_text>:
+DR{i} Reserved bits - Read Only
+------------------------------
+<field_public_text>:
+Data Register. When writing to this register, you must right-justify the data. Read
+data are automatically right-justified. If SSI_MAX_XFER_SIZE configuration
+parameter is set to 32, all 32 bits are valid. Otherwise, only 16 bits ([15:0]) of the
+register are valid.
+Read = Receive FIFO buffer
+Write = Transmit FIFO buffer.
+------------------------------
+<reg_short_dscr>:
+The DW_apb_ssi data register is a 16/32-bit (depending on SSI_MAX_XFER_SIZE) read/write buffer for
+the transmit/receive FIFOs. If the configuration parameter SSI_MAX_XFER_SIZE is set to 32, then all 32 bits
+are valid, otherwise, only 16 bits ([15:0]) of the register are valid. When the register is read, data in the
+receive FIFO buffer is accessed. When it is written to, data are moved into the transmit FIFO buffer; a write
+can occur only when SSI_EN = 1. FIFOs are reset when SSI_EN = 0.
+NOTE: The DR register in the DW_apb_ssi occupies thirty-six 32-bit address locations of the memory
+map to facilitate AHB burst transfers. Writing to any of these address locations has the same
+effect as pushing the data from the pwdata bus into the transmit FIFO. Reading from any of
+these locations has the same effect as popping data from the receive FIFO onto the prdata
+bus. The FIFO buffers on the DW_apb_ssi are not addressable.
+Reset Value: 0x0
+------------------------------
+<field_public_text>:
+DR{i} Reserved bits - Read Only
+------------------------------
+<field_public_text>:
+Data Register. When writing to this register, you must right-justify the data. Read
+data are automatically right-justified. If SSI_MAX_XFER_SIZE configuration
+parameter is set to 32, all 32 bits are valid. Otherwise, only 16 bits ([15:0]) of the
+register are valid.
+Read = Receive FIFO buffer
+Write = Transmit FIFO buffer.
+------------------------------
+<reg_short_dscr>:
+The DW_apb_ssi data register is a 16/32-bit (depending on SSI_MAX_XFER_SIZE) read/write buffer for
+the transmit/receive FIFOs. If the configuration parameter SSI_MAX_XFER_SIZE is set to 32, then all 32 bits
+are valid, otherwise, only 16 bits ([15:0]) of the register are valid. When the register is read, data in the
+receive FIFO buffer is accessed. When it is written to, data are moved into the transmit FIFO buffer; a write
+can occur only when SSI_EN = 1. FIFOs are reset when SSI_EN = 0.
+NOTE: The DR register in the DW_apb_ssi occupies thirty-six 32-bit address locations of the memory
+map to facilitate AHB burst transfers. Writing to any of these address locations has the same
+effect as pushing the data from the pwdata bus into the transmit FIFO. Reading from any of
+these locations has the same effect as popping data from the receive FIFO onto the prdata
+bus. The FIFO buffers on the DW_apb_ssi are not addressable.
+Reset Value: 0x0
+------------------------------
+<field_public_text>:
+DR{i} Reserved bits - Read Only
+------------------------------
+<field_public_text>:
+Data Register. When writing to this register, you must right-justify the data. Read
+data are automatically right-justified. If SSI_MAX_XFER_SIZE configuration
+parameter is set to 32, all 32 bits are valid. Otherwise, only 16 bits ([15:0]) of the
+register are valid.
+Read = Receive FIFO buffer
+Write = Transmit FIFO buffer.
+------------------------------
+<reg_short_dscr>:
+The DW_apb_ssi data register is a 16/32-bit (depending on SSI_MAX_XFER_SIZE) read/write buffer for
+the transmit/receive FIFOs. If the configuration parameter SSI_MAX_XFER_SIZE is set to 32, then all 32 bits
+are valid, otherwise, only 16 bits ([15:0]) of the register are valid. When the register is read, data in the
+receive FIFO buffer is accessed. When it is written to, data are moved into the transmit FIFO buffer; a write
+can occur only when SSI_EN = 1. FIFOs are reset when SSI_EN = 0.
+NOTE: The DR register in the DW_apb_ssi occupies thirty-six 32-bit address locations of the memory
+map to facilitate AHB burst transfers. Writing to any of these address locations has the same
+effect as pushing the data from the pwdata bus into the transmit FIFO. Reading from any of
+these locations has the same effect as popping data from the receive FIFO onto the prdata
+bus. The FIFO buffers on the DW_apb_ssi are not addressable.
+Reset Value: 0x0
+------------------------------
+<field_public_text>:
+DR{i} Reserved bits - Read Only
+------------------------------
+<field_public_text>:
+Data Register. When writing to this register, you must right-justify the data. Read
+data are automatically right-justified. If SSI_MAX_XFER_SIZE configuration
+parameter is set to 32, all 32 bits are valid. Otherwise, only 16 bits ([15:0]) of the
+register are valid.
+Read = Receive FIFO buffer
+Write = Transmit FIFO buffer.
+------------------------------
+<reg_short_dscr>:
+The DW_apb_ssi data register is a 16/32-bit (depending on SSI_MAX_XFER_SIZE) read/write buffer for
+the transmit/receive FIFOs. If the configuration parameter SSI_MAX_XFER_SIZE is set to 32, then all 32 bits
+are valid, otherwise, only 16 bits ([15:0]) of the register are valid. When the register is read, data in the
+receive FIFO buffer is accessed. When it is written to, data are moved into the transmit FIFO buffer; a write
+can occur only when SSI_EN = 1. FIFOs are reset when SSI_EN = 0.
+NOTE: The DR register in the DW_apb_ssi occupies thirty-six 32-bit address locations of the memory
+map to facilitate AHB burst transfers. Writing to any of these address locations has the same
+effect as pushing the data from the pwdata bus into the transmit FIFO. Reading from any of
+these locations has the same effect as popping data from the receive FIFO onto the prdata
+bus. The FIFO buffers on the DW_apb_ssi are not addressable.
+Reset Value: 0x0
+------------------------------
+<field_public_text>:
+DR{i} Reserved bits - Read Only
+------------------------------
+<field_public_text>:
+Data Register. When writing to this register, you must right-justify the data. Read
+data are automatically right-justified. If SSI_MAX_XFER_SIZE configuration
+parameter is set to 32, all 32 bits are valid. Otherwise, only 16 bits ([15:0]) of the
+register are valid.
+Read = Receive FIFO buffer
+Write = Transmit FIFO buffer.
+------------------------------
+<reg_short_dscr>:
+The DW_apb_ssi data register is a 16/32-bit (depending on SSI_MAX_XFER_SIZE) read/write buffer for
+the transmit/receive FIFOs. If the configuration parameter SSI_MAX_XFER_SIZE is set to 32, then all 32 bits
+are valid, otherwise, only 16 bits ([15:0]) of the register are valid. When the register is read, data in the
+receive FIFO buffer is accessed. When it is written to, data are moved into the transmit FIFO buffer; a write
+can occur only when SSI_EN = 1. FIFOs are reset when SSI_EN = 0.
+NOTE: The DR register in the DW_apb_ssi occupies thirty-six 32-bit address locations of the memory
+map to facilitate AHB burst transfers. Writing to any of these address locations has the same
+effect as pushing the data from the pwdata bus into the transmit FIFO. Reading from any of
+these locations has the same effect as popping data from the receive FIFO onto the prdata
+bus. The FIFO buffers on the DW_apb_ssi are not addressable.
+Reset Value: 0x0
+------------------------------
+<field_public_text>:
+DR{i} Reserved bits - Read Only
+------------------------------
+<field_public_text>:
+Data Register. When writing to this register, you must right-justify the data. Read
+data are automatically right-justified. If SSI_MAX_XFER_SIZE configuration
+parameter is set to 32, all 32 bits are valid. Otherwise, only 16 bits ([15:0]) of the
+register are valid.
+Read = Receive FIFO buffer
+Write = Transmit FIFO buffer.
+------------------------------
+<reg_short_dscr>:
+The DW_apb_ssi data register is a 16/32-bit (depending on SSI_MAX_XFER_SIZE) read/write buffer for
+the transmit/receive FIFOs. If the configuration parameter SSI_MAX_XFER_SIZE is set to 32, then all 32 bits
+are valid, otherwise, only 16 bits ([15:0]) of the register are valid. When the register is read, data in the
+receive FIFO buffer is accessed. When it is written to, data are moved into the transmit FIFO buffer; a write
+can occur only when SSI_EN = 1. FIFOs are reset when SSI_EN = 0.
+NOTE: The DR register in the DW_apb_ssi occupies thirty-six 32-bit address locations of the memory
+map to facilitate AHB burst transfers. Writing to any of these address locations has the same
+effect as pushing the data from the pwdata bus into the transmit FIFO. Reading from any of
+these locations has the same effect as popping data from the receive FIFO onto the prdata
+bus. The FIFO buffers on the DW_apb_ssi are not addressable.
+Reset Value: 0x0
+------------------------------
+<field_public_text>:
+DR{i} Reserved bits - Read Only
+------------------------------
+<field_public_text>:
+Data Register. When writing to this register, you must right-justify the data. Read
+data are automatically right-justified. If SSI_MAX_XFER_SIZE configuration
+parameter is set to 32, all 32 bits are valid. Otherwise, only 16 bits ([15:0]) of the
+register are valid.
+Read = Receive FIFO buffer
+Write = Transmit FIFO buffer.
+------------------------------
+<reg_short_dscr>:
+The DW_apb_ssi data register is a 16/32-bit (depending on SSI_MAX_XFER_SIZE) read/write buffer for
+the transmit/receive FIFOs. If the configuration parameter SSI_MAX_XFER_SIZE is set to 32, then all 32 bits
+are valid, otherwise, only 16 bits ([15:0]) of the register are valid. When the register is read, data in the
+receive FIFO buffer is accessed. When it is written to, data are moved into the transmit FIFO buffer; a write
+can occur only when SSI_EN = 1. FIFOs are reset when SSI_EN = 0.
+NOTE: The DR register in the DW_apb_ssi occupies thirty-six 32-bit address locations of the memory
+map to facilitate AHB burst transfers. Writing to any of these address locations has the same
+effect as pushing the data from the pwdata bus into the transmit FIFO. Reading from any of
+these locations has the same effect as popping data from the receive FIFO onto the prdata
+bus. The FIFO buffers on the DW_apb_ssi are not addressable.
+Reset Value: 0x0
+------------------------------
+<field_public_text>:
+DR{i} Reserved bits - Read Only
+------------------------------
+<field_public_text>:
+Data Register. When writing to this register, you must right-justify the data. Read
+data are automatically right-justified. If SSI_MAX_XFER_SIZE configuration
+parameter is set to 32, all 32 bits are valid. Otherwise, only 16 bits ([15:0]) of the
+register are valid.
+Read = Receive FIFO buffer
+Write = Transmit FIFO buffer.
+------------------------------
+<reg_short_dscr>:
+The DW_apb_ssi data register is a 16/32-bit (depending on SSI_MAX_XFER_SIZE) read/write buffer for
+the transmit/receive FIFOs. If the configuration parameter SSI_MAX_XFER_SIZE is set to 32, then all 32 bits
+are valid, otherwise, only 16 bits ([15:0]) of the register are valid. When the register is read, data in the
+receive FIFO buffer is accessed. When it is written to, data are moved into the transmit FIFO buffer; a write
+can occur only when SSI_EN = 1. FIFOs are reset when SSI_EN = 0.
+NOTE: The DR register in the DW_apb_ssi occupies thirty-six 32-bit address locations of the memory
+map to facilitate AHB burst transfers. Writing to any of these address locations has the same
+effect as pushing the data from the pwdata bus into the transmit FIFO. Reading from any of
+these locations has the same effect as popping data from the receive FIFO onto the prdata
+bus. The FIFO buffers on the DW_apb_ssi are not addressable.
+Reset Value: 0x0
+------------------------------
+<field_public_text>:
+DR{i} Reserved bits - Read Only
+------------------------------
+<field_public_text>:
+Data Register. When writing to this register, you must right-justify the data. Read
+data are automatically right-justified. If SSI_MAX_XFER_SIZE configuration
+parameter is set to 32, all 32 bits are valid. Otherwise, only 16 bits ([15:0]) of the
+register are valid.
+Read = Receive FIFO buffer
+Write = Transmit FIFO buffer.
+------------------------------
+<reg_short_dscr>:
+The DW_apb_ssi data register is a 16/32-bit (depending on SSI_MAX_XFER_SIZE) read/write buffer for
+the transmit/receive FIFOs. If the configuration parameter SSI_MAX_XFER_SIZE is set to 32, then all 32 bits
+are valid, otherwise, only 16 bits ([15:0]) of the register are valid. When the register is read, data in the
+receive FIFO buffer is accessed. When it is written to, data are moved into the transmit FIFO buffer; a write
+can occur only when SSI_EN = 1. FIFOs are reset when SSI_EN = 0.
+NOTE: The DR register in the DW_apb_ssi occupies thirty-six 32-bit address locations of the memory
+map to facilitate AHB burst transfers. Writing to any of these address locations has the same
+effect as pushing the data from the pwdata bus into the transmit FIFO. Reading from any of
+these locations has the same effect as popping data from the receive FIFO onto the prdata
+bus. The FIFO buffers on the DW_apb_ssi are not addressable.
+Reset Value: 0x0
+------------------------------
+<field_public_text>:
+DR{i} Reserved bits - Read Only
+------------------------------
+<field_public_text>:
+Data Register. When writing to this register, you must right-justify the data. Read
+data are automatically right-justified. If SSI_MAX_XFER_SIZE configuration
+parameter is set to 32, all 32 bits are valid. Otherwise, only 16 bits ([15:0]) of the
+register are valid.
+Read = Receive FIFO buffer
+Write = Transmit FIFO buffer.
+------------------------------
+<reg_short_dscr>:
+The DW_apb_ssi data register is a 16/32-bit (depending on SSI_MAX_XFER_SIZE) read/write buffer for
+the transmit/receive FIFOs. If the configuration parameter SSI_MAX_XFER_SIZE is set to 32, then all 32 bits
+are valid, otherwise, only 16 bits ([15:0]) of the register are valid. When the register is read, data in the
+receive FIFO buffer is accessed. When it is written to, data are moved into the transmit FIFO buffer; a write
+can occur only when SSI_EN = 1. FIFOs are reset when SSI_EN = 0.
+NOTE: The DR register in the DW_apb_ssi occupies thirty-six 32-bit address locations of the memory
+map to facilitate AHB burst transfers. Writing to any of these address locations has the same
+effect as pushing the data from the pwdata bus into the transmit FIFO. Reading from any of
+these locations has the same effect as popping data from the receive FIFO onto the prdata
+bus. The FIFO buffers on the DW_apb_ssi are not addressable.
+Reset Value: 0x0
+------------------------------
+<field_public_text>:
+DR{i} Reserved bits - Read Only
+------------------------------
+<field_public_text>:
+Data Register. When writing to this register, you must right-justify the data. Read
+data are automatically right-justified. If SSI_MAX_XFER_SIZE configuration
+parameter is set to 32, all 32 bits are valid. Otherwise, only 16 bits ([15:0]) of the
+register are valid.
+Read = Receive FIFO buffer
+Write = Transmit FIFO buffer.
+------------------------------
+<reg_short_dscr>:
+The DW_apb_ssi data register is a 16/32-bit (depending on SSI_MAX_XFER_SIZE) read/write buffer for
+the transmit/receive FIFOs. If the configuration parameter SSI_MAX_XFER_SIZE is set to 32, then all 32 bits
+are valid, otherwise, only 16 bits ([15:0]) of the register are valid. When the register is read, data in the
+receive FIFO buffer is accessed. When it is written to, data are moved into the transmit FIFO buffer; a write
+can occur only when SSI_EN = 1. FIFOs are reset when SSI_EN = 0.
+NOTE: The DR register in the DW_apb_ssi occupies thirty-six 32-bit address locations of the memory
+map to facilitate AHB burst transfers. Writing to any of these address locations has the same
+effect as pushing the data from the pwdata bus into the transmit FIFO. Reading from any of
+these locations has the same effect as popping data from the receive FIFO onto the prdata
+bus. The FIFO buffers on the DW_apb_ssi are not addressable.
+Reset Value: 0x0
+------------------------------
+<field_public_text>:
+DR{i} Reserved bits - Read Only
+------------------------------
+<field_public_text>:
+Data Register. When writing to this register, you must right-justify the data. Read
+data are automatically right-justified. If SSI_MAX_XFER_SIZE configuration
+parameter is set to 32, all 32 bits are valid. Otherwise, only 16 bits ([15:0]) of the
+register are valid.
+Read = Receive FIFO buffer
+Write = Transmit FIFO buffer.
+------------------------------
+<reg_short_dscr>:
+The DW_apb_ssi data register is a 16/32-bit (depending on SSI_MAX_XFER_SIZE) read/write buffer for
+the transmit/receive FIFOs. If the configuration parameter SSI_MAX_XFER_SIZE is set to 32, then all 32 bits
+are valid, otherwise, only 16 bits ([15:0]) of the register are valid. When the register is read, data in the
+receive FIFO buffer is accessed. When it is written to, data are moved into the transmit FIFO buffer; a write
+can occur only when SSI_EN = 1. FIFOs are reset when SSI_EN = 0.
+NOTE: The DR register in the DW_apb_ssi occupies thirty-six 32-bit address locations of the memory
+map to facilitate AHB burst transfers. Writing to any of these address locations has the same
+effect as pushing the data from the pwdata bus into the transmit FIFO. Reading from any of
+these locations has the same effect as popping data from the receive FIFO onto the prdata
+bus. The FIFO buffers on the DW_apb_ssi are not addressable.
+Reset Value: 0x0
+------------------------------
+<field_public_text>:
+DR{i} Reserved bits - Read Only
+------------------------------
+<field_public_text>:
+Data Register. When writing to this register, you must right-justify the data. Read
+data are automatically right-justified. If SSI_MAX_XFER_SIZE configuration
+parameter is set to 32, all 32 bits are valid. Otherwise, only 16 bits ([15:0]) of the
+register are valid.
+Read = Receive FIFO buffer
+Write = Transmit FIFO buffer.
+------------------------------
+<reg_short_dscr>:
+The DW_apb_ssi data register is a 16/32-bit (depending on SSI_MAX_XFER_SIZE) read/write buffer for
+the transmit/receive FIFOs. If the configuration parameter SSI_MAX_XFER_SIZE is set to 32, then all 32 bits
+are valid, otherwise, only 16 bits ([15:0]) of the register are valid. When the register is read, data in the
+receive FIFO buffer is accessed. When it is written to, data are moved into the transmit FIFO buffer; a write
+can occur only when SSI_EN = 1. FIFOs are reset when SSI_EN = 0.
+NOTE: The DR register in the DW_apb_ssi occupies thirty-six 32-bit address locations of the memory
+map to facilitate AHB burst transfers. Writing to any of these address locations has the same
+effect as pushing the data from the pwdata bus into the transmit FIFO. Reading from any of
+these locations has the same effect as popping data from the receive FIFO onto the prdata
+bus. The FIFO buffers on the DW_apb_ssi are not addressable.
+Reset Value: 0x0
+------------------------------
+<field_public_text>:
+DR{i} Reserved bits - Read Only
+------------------------------
+<field_public_text>:
+Data Register. When writing to this register, you must right-justify the data. Read
+data are automatically right-justified. If SSI_MAX_XFER_SIZE configuration
+parameter is set to 32, all 32 bits are valid. Otherwise, only 16 bits ([15:0]) of the
+register are valid.
+Read = Receive FIFO buffer
+Write = Transmit FIFO buffer.
+------------------------------
+<reg_short_dscr>:
+The DW_apb_ssi data register is a 16/32-bit (depending on SSI_MAX_XFER_SIZE) read/write buffer for
+the transmit/receive FIFOs. If the configuration parameter SSI_MAX_XFER_SIZE is set to 32, then all 32 bits
+are valid, otherwise, only 16 bits ([15:0]) of the register are valid. When the register is read, data in the
+receive FIFO buffer is accessed. When it is written to, data are moved into the transmit FIFO buffer; a write
+can occur only when SSI_EN = 1. FIFOs are reset when SSI_EN = 0.
+NOTE: The DR register in the DW_apb_ssi occupies thirty-six 32-bit address locations of the memory
+map to facilitate AHB burst transfers. Writing to any of these address locations has the same
+effect as pushing the data from the pwdata bus into the transmit FIFO. Reading from any of
+these locations has the same effect as popping data from the receive FIFO onto the prdata
+bus. The FIFO buffers on the DW_apb_ssi are not addressable.
+Reset Value: 0x0
+------------------------------
+<field_public_text>:
+DR{i} Reserved bits - Read Only
+------------------------------
+<field_public_text>:
+Data Register. When writing to this register, you must right-justify the data. Read
+data are automatically right-justified. If SSI_MAX_XFER_SIZE configuration
+parameter is set to 32, all 32 bits are valid. Otherwise, only 16 bits ([15:0]) of the
+register are valid.
+Read = Receive FIFO buffer
+Write = Transmit FIFO buffer.
+------------------------------
+<reg_short_dscr>:
+The DW_apb_ssi data register is a 16/32-bit (depending on SSI_MAX_XFER_SIZE) read/write buffer for
+the transmit/receive FIFOs. If the configuration parameter SSI_MAX_XFER_SIZE is set to 32, then all 32 bits
+are valid, otherwise, only 16 bits ([15:0]) of the register are valid. When the register is read, data in the
+receive FIFO buffer is accessed. When it is written to, data are moved into the transmit FIFO buffer; a write
+can occur only when SSI_EN = 1. FIFOs are reset when SSI_EN = 0.
+NOTE: The DR register in the DW_apb_ssi occupies thirty-six 32-bit address locations of the memory
+map to facilitate AHB burst transfers. Writing to any of these address locations has the same
+effect as pushing the data from the pwdata bus into the transmit FIFO. Reading from any of
+these locations has the same effect as popping data from the receive FIFO onto the prdata
+bus. The FIFO buffers on the DW_apb_ssi are not addressable.
+Reset Value: 0x0
+------------------------------
+<field_public_text>:
+DR{i} Reserved bits - Read Only
+------------------------------
+<field_public_text>:
+Data Register. When writing to this register, you must right-justify the data. Read
+data are automatically right-justified. If SSI_MAX_XFER_SIZE configuration
+parameter is set to 32, all 32 bits are valid. Otherwise, only 16 bits ([15:0]) of the
+register are valid.
+Read = Receive FIFO buffer
+Write = Transmit FIFO buffer.
+------------------------------
+<reg_short_dscr>:
+The DW_apb_ssi data register is a 16/32-bit (depending on SSI_MAX_XFER_SIZE) read/write buffer for
+the transmit/receive FIFOs. If the configuration parameter SSI_MAX_XFER_SIZE is set to 32, then all 32 bits
+are valid, otherwise, only 16 bits ([15:0]) of the register are valid. When the register is read, data in the
+receive FIFO buffer is accessed. When it is written to, data are moved into the transmit FIFO buffer; a write
+can occur only when SSI_EN = 1. FIFOs are reset when SSI_EN = 0.
+NOTE: The DR register in the DW_apb_ssi occupies thirty-six 32-bit address locations of the memory
+map to facilitate AHB burst transfers. Writing to any of these address locations has the same
+effect as pushing the data from the pwdata bus into the transmit FIFO. Reading from any of
+these locations has the same effect as popping data from the receive FIFO onto the prdata
+bus. The FIFO buffers on the DW_apb_ssi are not addressable.
+Reset Value: 0x0
+------------------------------
+<field_public_text>:
+DR{i} Reserved bits - Read Only
+------------------------------
+<field_public_text>:
+Data Register. When writing to this register, you must right-justify the data. Read
+data are automatically right-justified. If SSI_MAX_XFER_SIZE configuration
+parameter is set to 32, all 32 bits are valid. Otherwise, only 16 bits ([15:0]) of the
+register are valid.
+Read = Receive FIFO buffer
+Write = Transmit FIFO buffer.
+------------------------------
+<reg_short_dscr>:
+The DW_apb_ssi data register is a 16/32-bit (depending on SSI_MAX_XFER_SIZE) read/write buffer for
+the transmit/receive FIFOs. If the configuration parameter SSI_MAX_XFER_SIZE is set to 32, then all 32 bits
+are valid, otherwise, only 16 bits ([15:0]) of the register are valid. When the register is read, data in the
+receive FIFO buffer is accessed. When it is written to, data are moved into the transmit FIFO buffer; a write
+can occur only when SSI_EN = 1. FIFOs are reset when SSI_EN = 0.
+NOTE: The DR register in the DW_apb_ssi occupies thirty-six 32-bit address locations of the memory
+map to facilitate AHB burst transfers. Writing to any of these address locations has the same
+effect as pushing the data from the pwdata bus into the transmit FIFO. Reading from any of
+these locations has the same effect as popping data from the receive FIFO onto the prdata
+bus. The FIFO buffers on the DW_apb_ssi are not addressable.
+Reset Value: 0x0
+------------------------------
+<field_public_text>:
+DR{i} Reserved bits - Read Only
+------------------------------
+<field_public_text>:
+Data Register. When writing to this register, you must right-justify the data. Read
+data are automatically right-justified. If SSI_MAX_XFER_SIZE configuration
+parameter is set to 32, all 32 bits are valid. Otherwise, only 16 bits ([15:0]) of the
+register are valid.
+Read = Receive FIFO buffer
+Write = Transmit FIFO buffer.
+------------------------------
+<reg_short_dscr>:
+The DW_apb_ssi data register is a 16/32-bit (depending on SSI_MAX_XFER_SIZE) read/write buffer for
+the transmit/receive FIFOs. If the configuration parameter SSI_MAX_XFER_SIZE is set to 32, then all 32 bits
+are valid, otherwise, only 16 bits ([15:0]) of the register are valid. When the register is read, data in the
+receive FIFO buffer is accessed. When it is written to, data are moved into the transmit FIFO buffer; a write
+can occur only when SSI_EN = 1. FIFOs are reset when SSI_EN = 0.
+NOTE: The DR register in the DW_apb_ssi occupies thirty-six 32-bit address locations of the memory
+map to facilitate AHB burst transfers. Writing to any of these address locations has the same
+effect as pushing the data from the pwdata bus into the transmit FIFO. Reading from any of
+these locations has the same effect as popping data from the receive FIFO onto the prdata
+bus. The FIFO buffers on the DW_apb_ssi are not addressable.
+Reset Value: 0x0
+------------------------------
+<field_public_text>:
+DR{i} Reserved bits - Read Only
+------------------------------
+<field_public_text>:
+Data Register. When writing to this register, you must right-justify the data. Read
+data are automatically right-justified. If SSI_MAX_XFER_SIZE configuration
+parameter is set to 32, all 32 bits are valid. Otherwise, only 16 bits ([15:0]) of the
+register are valid.
+Read = Receive FIFO buffer
+Write = Transmit FIFO buffer.
+------------------------------
+<reg_short_dscr>:
+The DW_apb_ssi data register is a 16/32-bit (depending on SSI_MAX_XFER_SIZE) read/write buffer for
+the transmit/receive FIFOs. If the configuration parameter SSI_MAX_XFER_SIZE is set to 32, then all 32 bits
+are valid, otherwise, only 16 bits ([15:0]) of the register are valid. When the register is read, data in the
+receive FIFO buffer is accessed. When it is written to, data are moved into the transmit FIFO buffer; a write
+can occur only when SSI_EN = 1. FIFOs are reset when SSI_EN = 0.
+NOTE: The DR register in the DW_apb_ssi occupies thirty-six 32-bit address locations of the memory
+map to facilitate AHB burst transfers. Writing to any of these address locations has the same
+effect as pushing the data from the pwdata bus into the transmit FIFO. Reading from any of
+these locations has the same effect as popping data from the receive FIFO onto the prdata
+bus. The FIFO buffers on the DW_apb_ssi are not addressable.
+Reset Value: 0x0
+------------------------------
+<field_public_text>:
+DR{i} Reserved bits - Read Only
+------------------------------
+<field_public_text>:
+Data Register. When writing to this register, you must right-justify the data. Read
+data are automatically right-justified. If SSI_MAX_XFER_SIZE configuration
+parameter is set to 32, all 32 bits are valid. Otherwise, only 16 bits ([15:0]) of the
+register are valid.
+Read = Receive FIFO buffer
+Write = Transmit FIFO buffer.
+------------------------------
+<reg_short_dscr>:
+This register is only valid when the DW_apb_ssi is configured with rxd
+sample delay logic (SSI_HAS_RX_SAMPLE_DELAY==1). When the DW_apb_ssi is
+not configured with rxd sample delay logic, this register will not exist
+and writing to its address location will have no effect; reading from
+its address will return zero. 
+This register control the number of ssi_clk
+cycles that are delayed (from the default sample time) before the actual
+sample of the rxd input occurs. It is impossible to write to this
+register when the DW_apb_ssi is enabled. The DW_apb_ssi is enabled and
+disabled by writing to the SSIENR register.
+Reset Value: 0x0
+------------------------------
+<field_public_text>:
+SAMPLE_DLY Reserved bits - Read Only
+------------------------------
+<field_public_text>:
+Rxd Sample Delay.
+
+This register is used to delay the sample of the rxd input port. Each value
+represents a single ssi_clk delay on the sample of rxd. 
+
+Note: If this register
+is programmed with a value that exceeds the depth of the internal shift
+registers (SSI_RX_DLY_SR_DEPTH) zero delay will be applied to the rxd sample.
+------------------------------
+<reg_short_dscr>:
+RSVD - Reserved address location.
+------------------------------
+<field_public_text>:
+RSVD 31to0 Reserved address location
+------------------------------

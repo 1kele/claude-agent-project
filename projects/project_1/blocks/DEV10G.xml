@@ -1,0 +1,2168 @@
+=== DOCUMENTATION FOR TARGET: DEV10G ===
+
+<string_constant> [x_DEV10G_NUM_OF_TAXI_DEV_WID]:
+2
+------------------------------
+<string_constant> [x_NUM_DEVS_PER_STATS_BLOCK]:
+1
+------------------------------
+<string_constant> [x_NUM_PTP_TIMESTAMPS]:
+3
+------------------------------
+<string_constant> [x_NUM_PTP_STICKY]:
+3
+------------------------------
+<string_constant> [x_PHASE_DETECTOR_INSTANCES]:
+2
+------------------------------
+<target_short_dscr>:
+Device 5G
+------------------------------
+<target_public_text>:
+VAUI @ 12Gbps 2 lanes, XAUI @ 10 Gbps, XAUI @ 12 Gbps, VAUI @ 10Gbps 2 lanes and SGMII @ 10/100/1000/2500 Mbps
+------------------------------
+<reggrp_short_dscr>:
+MAC10G Configuration and Status Registers
+------------------------------
+<reggrp_public_text>:
+The 10G MAC module contains configuration and status registers related to the MAC module of the 10G device.
+------------------------------
+<reg_short_dscr>:
+Mode Configuration Register
+------------------------------
+<field_public_text>:
+Enable Receiver.
+------------------------------
+<field_enc>:
+'0': Disabled
+'1': Enabled.
+------------------------------
+<field_public_text>:
+Enable Transmitter.
+------------------------------
+<field_enc>:
+'0': Disabled
+'1': Enabled.
+------------------------------
+<reg_short_dscr>:
+Mode Configuration Register
+------------------------------
+<field_public_text>:
+On a given link, Pause Frames can be either "Link Pause frames" or "Tunnel Pause Frames".
+
+"Link Pause Frames" will have standard preamble, while "Tunnel Pause Frames" will have HIH in the preamble.
+
+For "Link Pause Frames" MAC10G should not verify HIH CKSM, while for "Tunnel Pause Frames" MAC10G should verify HIH CKSM.
+------------------------------
+<field_enc>:
+0: Pause frames are expected to be Link Pause frames - No HIH CKSM verification in MAC10G
+1: Pause frames are expected to be Tunnel Pause frames - HIH CKSM is verified in MAC10G
+------------------------------
+<field_public_text>:
+This register configures the format of the preamble.
+This supports:
+1) Standard preamble = 0xFB555555555555D5
+2) Minimum preamble = 0xFB
+3) Host Interface Header (HIH) located before the SFD
+4) Host Interface Header (HIH) located after the SFD - default CRC
+5) Host Interface Header (HIH) located after the SFD - HIH included in CRC
+------------------------------
+<field_enc>:
+0: Standard Preamble
+1: Minimum Preamble = 0xFB
+2: HIH before SFD -  default CRC = 0xFB H0 H1 H2 H3 0x55 0x55 0xD5
+3: HIH after SFD - default CRC = 0xFB 0x55 0x55 0xD5 H0 H1 H2 H3
+4: HIH after SFD - HIH in CRC = 0xFB 0x55 0x55 0xD5 H0 H1 H2 H3
+5 - 7: reserved
+
+HIH is 4 bytes: H0 H1 H2 H3
+------------------------------
+<field_public_text>:
+Register configures the format of the IPG.
+1) Normal IPG : Averaging IPG for average of 12 bytes
+2) Shrinked IPG : Minimum IPG of 4 - 7 bytes (Incl. Terminate Character and IDLE BYTEs)
+------------------------------
+<field_enc>:
+'0': Normal IPG.
+'1': Shrink IPG.
+------------------------------
+<field_public_text>:
+When asserted (=1) MAC10G must check HIH checksum and discard frames if HIH checksum is not valid.
+When deasserted (=0) MAC10G must disregard the HIH checksum.
+------------------------------
+<field_enc>:
+= 0 ; MAC10G should disregard the HIH CKSM.
+= 1 ; MAC10G should discard any frame with invalid CKSM
+------------------------------
+<reg_short_dscr>:
+Max Length Configuration Register
+------------------------------
+<field_public_text>:
+Configures whether the Max Length Check takes the number of Q tags into consideration when assessing if a frame is too long.
+
+If asserted, 
+ - 4 bytes will be added to MAX_LEN for single tagged frame.
+ - 8 bytes will be added to MAX_LEN for double tagged frame.
+ - 12 bytes will be added to MAX_LEN for triple tagged frame.
+------------------------------
+<field_enc>:
+'0' : Only check max frame length against MAX_LEN
+'1' : Add 4/8/12 bytes to MAX_LEN when checking for max frame length
+------------------------------
+<field_public_text>:
+The maximum frame length accepted by the Receive Module. If the length is exceeded, this is indicated in the Statistics Engine (LONG_FRAME). The maximum length is automatically adjusted to accommodate maximum sized frames containing a VLAN tag - given that the MAC is configured to be VLAN aware (default):
+
+The default value of 2000 is as per 802.3 for Envelope frames.
+------------------------------
+<reg_short_dscr>:
+Register to specify no.of tags supported
+------------------------------
+<field_public_text>:
+Configuration for number of consecutive VLAN Tags supported by the MAC.
+Maximum value is 3.
+------------------------------
+<field_enc>:
+'0': No tags are detected by MAC.
+'n': Maximum of n consecutive VLAN Tags are detected by the MAC and accordingly MAX LEN is modified for frame length calculations.
+------------------------------
+<reg_short_dscr>:
+VLAN / Service tag configuration register
+------------------------------
+<reg_public_text>:
+The MAC can be configured to accept 0, 1, 2 and 3 tags and the TAG value can be user-defined.
+------------------------------
+<field_public_text>:
+This field defines which value is regarded as a VLAN/Service tag - besides 0x8100 and 0x88A8. The value is used for all ALL tag positions. I.e. a double tagged frame can have the following tag values:
+(INNER_TAG, OUTER_TAG):
+( 0x8100, 0x8100 )
+( 0x8100, TAG_ID ) or
+( TAG_ID, TAG_ID )
+------------------------------
+<field_enc>:
+"0x8100" - Standard Ethernet Bridge ethertype (C-tag)
+"0x88A8" - Provider Bridge Ethertype  (S-tag)
+------------------------------
+<field_public_text>:
+Enables TAG_ID apart from standard 0x8100 and 0x88A8 for Tag comparision.
+------------------------------
+<field_enc>:
+'0': The MAC does not take TAG_ID for tag identification.
+'1': The MAC looks for tag according to encoding of TAG_ID
+------------------------------
+<reg_short_dscr>:
+Advanced Check Feature Configuration Register
+------------------------------
+<field_public_text>:
+Extended End Of Packet Check: Specifies the requirement for the Rx column when holding an EOP character.
+------------------------------
+<field_enc>:
+'0': The values of the remaining Rx lanes of a column holding an EOP are ignored. E.g. if lane 1 holds an EOP, the value of lanes 2 and 3 are ignored
+'1': A received frame is error-marked if an Error character is received in any lane of the column holding the EOP character. E.g. if lane 1 holds an EOP, the frame is error-marked if lanes 0, 2, or 3 holds an Error character.
+------------------------------
+<field_public_text>:
+Extended Start Of Packet Check Enable: Specifies the requirement for the Rx column prior to SOP character.
+------------------------------
+<field_enc>:
+'0': Value of Rx column at the XGMII interface prior to a SOP character is ignored
+'1': An IDLE column at the XGMII interface must be received prior to a SOP character for the MAC to detect a start of frame.
+------------------------------
+<field_public_text>:
+Start-of-Frame-Delimiter Check Enable: Specifies the requirement for a successful frame reception.
+When disabled (='0'), MAC10G will assume that preamble is 8 bytes (incl. SOP & SFD) when SOP is received. No checking of SFD is carried out.
+When enabled (='1'), MAC10G will search for SFD in lane 3/7 after reception of SOP, before accepting frame data. MAC10G will search for SFD until SFD is found or a control character is encountered.
+------------------------------
+<field_enc>:
+'0': Skip SFD check
+'1': Strict SFD check enabled, i.e. the SFD must be "D5" for a successful frame reception.
+------------------------------
+<field_public_text>:
+Preamble Shrink Check Disable:
+The MAC can be setup to discard a frame, if a SFD is received in lane 3 of the column containing the SOP. If stacking tags must be supported, the MAC must accept any data byte at this position.
+------------------------------
+<field_enc>:
+'0': Frames with a SFD in lane 3 of the column containing the SOP are discarded.
+'1': Frames with a SFD in lane 3 of the column containing the SOP are NOT discarded.
+------------------------------
+<field_public_text>:
+Preamble Check Enable: Specifies the preamble requirement for a successful frame reception.
+------------------------------
+<field_enc>:
+'0': Skip preamble check. A SOP control character is sufficient for a successful frame reception. The minimum allowed preamble size is still 8 bytes (incl. SOP and SFD) but the preamble bytes between the SOP and SFD can have any data value.
+'1': Strict preamble check enabled, i.e. the last 6 bytes of a preamble - prior to the SFD - must all be equal to 0x55 for a successful frame reception. For preambles larger than 8 bytes, only the last 6 preamble bytes prior to the SFD are checked when this bit is set to 1.
+------------------------------
+<field_public_text>:
+Out-Of-Range Error Check Enable: Determines whether or not a received frame should be discarded if the frame length field is out of range.
+------------------------------
+<field_enc>:
+'0': Out-of-range errors are ignored
+'1': A frame is discarded if the frame length field value is out of range
+------------------------------
+<field_public_text>:
+In-Range Error Check Enable: Determines whether or not a received frame should be discarded if the frame length does not match the frame PDU size:
+------------------------------
+<field_enc>:
+'0':
+Frames which have a frame length field inconsistent with the actual frame length are not error-marked
+'1': Frames with inconsistent frame length fields are error marked and will be discarded by the Rx Queue System.
+------------------------------
+<reg_short_dscr>:
+Link Fault Signaling Register
+------------------------------
+<field_public_text>:
+Compare IEEE802.3 figure 46-11 Link Fault Signaling State Diagram. Configures the number of columns received not containing a fault_sequence required to get back into the INIT state. Should be set to 127 for standard operation mode. Might be reduced in USXGMII mode in network port speeds that require a replication size the replicator will remove some of the idle samples.
+------------------------------
+<field_enc>:
+Number of non-fault ordered sets required to get back to INIT state.
+------------------------------
+<field_public_text>:
+Compare IEEE802.3 figure 46-11 Link Fault Signaling State Diagram. Configures the number of columns received containing a fault_sequence required to get into FAULT state. Should be set to 3 for standard operation mode. Might be reduced in USXGMII mode for network port speeds that require a replication since the replicator will remove some of the fault_sequence samples.
+------------------------------
+<field_enc>:
+Number of fault ordered sets required to get to FAULT state.
+------------------------------
+<field_public_text>:
+LFS Unidirectional mode enable. Implementation of 802.3 clause 66. When asserted, this enables MAC to transmit data during reception of Local Fault and Remote Fault ordered sets from the PHY. 
+
+When in Unidirectional mode:
+When receiving LF, frames are transmitted separated by RF ordered sets.
+When receiving RF, frames are transmitted separated by IDLE symbols
+------------------------------
+<field_enc>:
+'0' : LFS unidirectional mode is disabled
+'1' : LFS unidirectional mode is enabled
+------------------------------
+<field_public_text>:
+Reserved, must set to its default value.
+------------------------------
+<field_public_text>:
+Link Fault Signaling Mode Enable: If enabled, the transmitter reacts on received Link Fault indications.
+------------------------------
+<field_enc>:
+'0': Ignore Link Faults detected by the MAC receiver module
+'1': React on detected Link Faults and transmit the appropriate Sequence Ordered Set.
+------------------------------
+<reg_short_dscr>:
+Miscellaneous Configuration Register
+------------------------------
+<field_public_text>:
+Enables loopback from egress to ingress in the device. The MAC Rx clock is automatically set equal to the MAC Tx clock when the loop back is enabled.
+------------------------------
+<field_enc>:
+'0': Host loopback disabled at XGMII interface.
+'1': Host loopback enabled at XGMII interface.
+------------------------------
+<reg_short_dscr>:
+MAC10G Tx Monitor Sticky bit Register
+------------------------------
+<field_public_text>:
+LFS: LOCAL FAULT state reached in Tx module of 10G MAC. Writing a '1' clears the sticky bit.
+------------------------------
+<field_enc>:
+'0': The LOCAL_FAULT state has never been reached.
+'1': The LOCAL_FAULT state has been reached.
+Bit is cleared by writing a '1' to this position.
+------------------------------
+<field_public_text>:
+LFS REMOTE FAULT state reached in Tx module of 10G MAC. Writing a '1' clears the sticky bit.
+------------------------------
+<field_enc>:
+'0': The REMOTE_FAULT state has never been reached.
+'1': The REMOTE_FAULT state has been reached.
+Bit is cleared by writing a '1' to this position.
+------------------------------
+<field_public_text>:
+LFS LINK_INTERRUPTION state reached in Tx module of 10G MAC. Writing a '1' clears the sticky bit.
+------------------------------
+<field_enc>:
+'0': The LINK_INTERRUPTION state has never been reached.
+'1': The LINK_INTERRUPTION state has been reached.
+Bit is cleared by writing a '1' to this position.
+------------------------------
+<field_public_text>:
+IDLE state reached in Tx module of 10G MAC. Writing a '1' clears the sticky bit.
+------------------------------
+<field_enc>:
+'0': The IDLE state has never been reached.
+'1': The  IDLE state has been reached.
+Bit is cleared by writing a '1' to this position.
+------------------------------
+<field_public_text>:
+DISABLE state reached in Tx module of 10G MAC. Writing a '1' clears the sticky bit.
+------------------------------
+<field_enc>:
+'0': The DISABLE state has never been reached.
+'1': The DISABLE state has been reached.
+Bit is cleared by writing a '1' to this position.
+------------------------------
+<reg_short_dscr>:
+Sticky Bit Register
+------------------------------
+<reg_public_text>:
+Clear the sticky bits by writing a '0' in the relevant bitgroups (writing a '1' sets the bit)!.
+------------------------------
+<field_public_text>:
+Indicates that an inter packet gap shrink was detected (IPG < 12 bytes).
+------------------------------
+<field_enc>:
+'0': no ipg shrink was detected
+'1': one or more ipg shrink were detected
+Bit is cleared by writing a '1' to this position.
+------------------------------
+<field_public_text>:
+Indicates that a preamble shrink was detected (preamble < 8 bytes).
+This sticky bit can only be set when the port is setup in 10 Gbps mode, where frames with e.g. a 4 bytes preamble will be discarded, and it requires that PRM_SHK_CHK_DIS = 0 and SFD_CHK_ENA = 1.
+In SGMII mode, all preamble sizes down to 3 bytes (including SFD) are accepted and will not cause this sticky bit to be set.
+------------------------------
+<field_enc>:
+'0': no preamble shrink detected;
+'1': one or more preamble shrinks detected;
+Bit is cleared by writing a '1' to this position.
+------------------------------
+<field_public_text>:
+If Preamble Check is enabled and a SOP is received, this bit is set if the following bytes do not match a "5555555555..55D5" pattern.
+A 12 bytes preamble of "55555555.55555555.555555D5" will not cause this sticky bit to be set.
+
+This sticky bit can only be set when the port is setup in 10 Gbps mode.
+------------------------------
+<field_enc>:
+'0': No Preamble check has failed;
+'1': One or more preamble checks have failed;
+Bit is cleared by writing a '1' to this position.
+------------------------------
+<field_public_text>:
+If a SOP is received and a following control character is received within the preamble, this bit is set. (No data is passed to the host interface of the MAC).
+------------------------------
+<field_enc>:
+'0': No Preamble error detected;
+'1': One or more preamble errors detected;
+Bit is cleared by writing a '1' to this position.
+------------------------------
+<field_public_text>:
+Indicates that a frame was received with a non-standard preamble.
+------------------------------
+<field_enc>:
+'0': No non-standard preamble detected;
+'1': One or more frames with non-standard preamble detected;
+Bit is cleared by writing a '1' to this position.
+------------------------------
+<field_public_text>:
+Indicates that a frame with MPLS multicast was received.
+------------------------------
+<field_enc>:
+'0': No frames with MPLS multicast EtherType has been detected;
+'1': One or more frames with MPLS multicast EtherType have been detected;
+Bit is cleared by writing a '1' to this position.
+------------------------------
+<field_public_text>:
+Indicates that a frame with MPLS unicast was received.
+------------------------------
+<field_enc>:
+'0': No frames with MPLS Unicast EtherType has been detected;
+'1': One or more frames with MPLS Unicast EtherType have been detected;
+Bit is cleared by writing a '1' to this position.
+------------------------------
+<field_public_text>:
+Indicates that a frame was received with a VLAN tag.
+------------------------------
+<field_enc>:
+'0': No Tagged frames have been detected;
+'1': One or more Tagged frames have been detected;
+Bit is cleared by writing a '1' to this position.
+------------------------------
+<field_public_text>:
+Sticky bit indicating that the MAC Transmit FIFO has dropped one or more frames because of underrun.
+------------------------------
+<field_enc>:
+'0': No MAC Tx FIFO underrun has occurred
+'1': One or more MAC Tx FIFO underruns have occurred
+Bit is cleared by writing a '1' to this position.
+------------------------------
+<field_public_text>:
+Indicates that the transmit host initiated abort was executed.
+------------------------------
+<field_enc>:
+'0': no tx frame was aborted
+'1': one or more tx frames were aborted
+Bit is cleared by writing a '1' to this position.
+------------------------------
+<reg_short_dscr>:
+Sticky Bit Register
+------------------------------
+<reg_public_text>:
+Clear the sticky bits by writing a '0' in the relevant bitgroups (writing a '1' sets the bit)!.
+------------------------------
+<field_public_text>:
+Indicates that a preamble shrink was detected (preamble < 8 bytes).
+This sticky bit can only be set when the port is setup in 10 Gbps mode, where frames with e.g. a 4 bytes preamble will be discarded, and it requires that PRM_SHK_CHK_DIS = 0 and SFD_CHK_ENA = 1.
+In SGMII mode, all preamble sizes down to 3 bytes (including SFD) are accepted and will not cause this sticky bit to be set.
+------------------------------
+<field_enc>:
+'0': no preamble shrink detected;
+'1': one or more preamble shrinks detected;
+Bit is cleared by writing a '1' to this position.
+------------------------------
+<field_public_text>:
+If Preamble Check is enabled and a SOP is received, this bit is set if the following bytes do not match a "5555555555..55D5" pattern.
+A 12 bytes preamble of "55555555.55555555.555555D5" will not cause this sticky bit to be set.
+
+This sticky bit can only be set when the port is setup in 10 Gbps mode.
+------------------------------
+<field_enc>:
+'0': No Preamble check has failed;
+'1': One or more preamble checks have failed;
+Bit is cleared by writing a '1' to this position.
+------------------------------
+<field_public_text>:
+If a SOP is received and a following control character is received within the preamble, this bit is set. (No data is passed to the host interface of the MAC).
+------------------------------
+<field_enc>:
+'0': No Preamble error detected;
+'1': One or more preamble errors detected;
+Bit is cleared by writing a '1' to this position.
+------------------------------
+<field_public_text>:
+Indicates that a frame was received with a non-standard preamble.
+------------------------------
+<field_enc>:
+'0': No non-standard preamble detected;
+'1': One or more frames with non-standard preamble detected;
+Bit is cleared by writing a '1' to this position.
+------------------------------
+<field_public_text>:
+Indicates that a frame with MPLS multicast was received.
+------------------------------
+<field_enc>:
+'0': No frames with MPLS multicast EtherType has been detected;
+'1': One or more frames with MPLS multicast EtherType have been detected;
+Bit is cleared by writing a '1' to this position.
+------------------------------
+<field_public_text>:
+Indicates that a frame with MPLS unicast was received.
+------------------------------
+<field_enc>:
+'0': No frames with MPLS Unicast EtherType has been detected;
+'1': One or more frames with MPLS Unicast EtherType have been detected;
+Bit is cleared by writing a '1' to this position.
+------------------------------
+<field_public_text>:
+Sticky bit indicating that the MAC Transmit FIFO has dropped one or more frames because of underrun.
+------------------------------
+<field_enc>:
+'0': No MAC Tx FIFO underrun has occurred
+'1': One or more MAC Tx FIFO underruns have occurred
+Bit is cleared by writing a '1' to this position.
+------------------------------
+<field_public_text>:
+Indicates that the transmit host initiated abort was executed.
+------------------------------
+<field_enc>:
+'0': no tx frame was aborted
+'1': one or more tx frames were aborted
+Bit is cleared by writing a '1' to this position.
+------------------------------
+<reggrp_short_dscr>:
+Device Statistics Registers
+------------------------------
+<reggrp_public_text>:
+Each MAC generates a statistics vector when receiving or transmitting a frame. This vector is used for generation of the port statistics. All counters are 32 bits wide and are not reset when read. It is up to software to detect when a counter has wrapped around. When written, the counter assumes the written value.
+------------------------------
+<reg_short_dscr>:
+Rx Symbol Carrier Error Counter
+------------------------------
+<field_public_text>:
+The number of frames received with one or more symbol errors.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Rx Pause Frame Counter
+------------------------------
+<field_public_text>:
+Number of pause control frames received.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Rx Control Frame Counter
+------------------------------
+<field_public_text>:
+Number of control frames with unsupported opcode received.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Rx Unicast Frame Counter
+------------------------------
+<field_public_text>:
+The number of good unicast frames received.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Rx Multicast Frame Counter
+------------------------------
+<field_public_text>:
+The number of good multicast frames received.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Rx Broadcast Frame Counter
+------------------------------
+<field_public_text>:
+The number of good broadcast frames received.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Rx CRC Error Counter
+------------------------------
+<field_public_text>:
+The number of frames received with CRC error only.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Rx Undersize Counter (valid frame format)
+------------------------------
+<field_public_text>:
+The number of undersize well-formed frames received.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Rx Undersize Counter (CRC error)
+------------------------------
+<field_public_text>:
+The number of undersize frames with CRC error received.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Rx In-range Length Error Counter
+------------------------------
+<field_public_text>:
+The number of frames with legal length field that does not match length of MAC client data.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Rx Out-Of-Range Length Error Counter
+------------------------------
+<field_public_text>:
+The number of frames with illegal length field (frames using type field are not counted here).
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Rx Oversize Counter (valid frame format)
+------------------------------
+<field_public_text>:
+The number of oversize well-formed frames received.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Rx Jabbers Counter
+------------------------------
+<field_public_text>:
+The number of oversize frames with CRC error received.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Rx 64 Byte Frame Counter
+------------------------------
+<field_public_text>:
+The number of 64 bytes frames received.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Rx 65-127 Byte Frame Counter
+------------------------------
+<field_public_text>:
+The number of 65 to 127 bytes frames received.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Rx 128-255 Byte Frame Counter
+------------------------------
+<field_public_text>:
+The number of 128 to 255 bytes frames received.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Rx 256-511 Byte Frame Counter
+------------------------------
+<field_public_text>:
+The number of 256 to 511 bytes frames received.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Rx 512-1023 Byte Frame Counter
+------------------------------
+<field_public_text>:
+The number of 512 to 1023 bytes frames received.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Rx 1024-1518 Byte Frame Counter
+------------------------------
+<field_public_text>:
+The number of 1024 to 1518 bytes frames received.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Rx 1519 To Max. Length Byte Frame Counter
+------------------------------
+<field_public_text>:
+The number of frames received longer than 1518 bytes and not longer than Maximum Length Register (Maximum Length Register + 4 if the frame is VLAN tagged).
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Rx Inter Packet Gap Shrink Counter
+------------------------------
+<field_public_text>:
+Number of inter packet gap shrinks detected (IPG < 12 bytes).
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Tx Pause Frame Counter
+------------------------------
+<field_public_text>:
+The number of pause control frames transmitted.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Tx Unicast Frame Counter
+------------------------------
+<field_public_text>:
+The number of unicast frames transmitted.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Tx Multicast Frame Counter
+------------------------------
+<field_public_text>:
+The number of multicast frames transmitted.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Tx Broadcast Frame Counter
+------------------------------
+<field_public_text>:
+The number of broadcast frames transmitted.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Tx 64 Byte Frame Counter
+------------------------------
+<field_public_text>:
+The number of 64 bytes frames transmitted.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Tx 65-127 Byte Frame Counter
+------------------------------
+<field_public_text>:
+The number of 65 to 127 bytes frames transmitted.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Tx 128-255 Byte Frame Counter
+------------------------------
+<field_public_text>:
+The number of 128 to 255 bytes frames transmitted.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Tx 256-511 Byte Frame Counter
+------------------------------
+<field_public_text>:
+The number of 256 to 511 bytes frames transmitted.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Tx 512-1023 Byte Frame Counter
+------------------------------
+<field_public_text>:
+The number of 512 to 1023 bytes frames transmitted.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Tx 1024-1518 Byte Frame Counter
+------------------------------
+<field_public_text>:
+The number of 1024 to 1518 bytes frames transmitted.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Tx 1519 To Max. Length Byte Frame Counter
+------------------------------
+<field_public_text>:
+The number of frames transmitted longer than 1518 bytes and not longer than Maximum Length Register (Maximum Length Register + 4 if the frame is VLAN tagged).
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Counter to track the dribble-nibble (extra nibble) errors in frames.
+------------------------------
+<field_public_text>:
+The number of frames received with Alignment (dribble-nibble) error.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Counts frames that are tagged (C-Tagged or S-Tagged).
+------------------------------
+<field_public_text>:
+The number of frames received with C-Tag or S-Tag information
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Counts frames that are Not tagged  (neither C-Tagged nor S-Tagged).
+------------------------------
+<field_public_text>:
+The number of frames received without C-Tag and S-Tag information.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Counts frames that are tagged (C-Tagged or S-Tagged).
+------------------------------
+<field_public_text>:
+The number of frames transmitted with C-Tag or S-Tag information
+------------------------------
+<reg_short_dscr>:
+Counts frames that are Not tagged  (neither C-Tagged nor S-Tagged).
+------------------------------
+<field_public_text>:
+The number of frames transmitted without C-Tag and S-Tag information.
+------------------------------
+<reg_short_dscr>:
+Rx Symbol Carrier Error Counter
+------------------------------
+<field_public_text>:
+PMAC - The number of frames received with one or more symbol errors.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Rx Pause Frame Counter
+------------------------------
+<field_public_text>:
+PMAC - Number of pause control frames received.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Rx Control Frame Counter
+------------------------------
+<field_public_text>:
+PMAC - Number of control frames with unsupported opcode received.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Rx Unicast Frame Counter
+------------------------------
+<field_public_text>:
+PMAC - The number of good unicast frames received.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Rx Multicast Frame Counter
+------------------------------
+<field_public_text>:
+PMAC - The number of good multicast frames received.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Rx Broadcast Frame Counter
+------------------------------
+<field_public_text>:
+PMAC - The number of good broadcast frames received.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Rx CRC Error Counter
+------------------------------
+<field_public_text>:
+PMAC - The number of frames received with CRC error only.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Rx Undersize Counter (valid frame format)
+------------------------------
+<field_public_text>:
+PMAC - The number of undersize well-formed frames received.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Rx Undersize Counter (CRC error)
+------------------------------
+<field_public_text>:
+PMAC - The number of undersize frames with CRC error received.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Rx In-range Length Error Counter
+------------------------------
+<field_public_text>:
+PMAC - The number of frames with legal length field that does not match length of MAC client data.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Rx Out-Of-Range Length Error Counter
+------------------------------
+<field_public_text>:
+PMAC - The number of frames with illegal length field (frames using type field are not counted here).
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Rx Oversize Counter (valid frame format)
+------------------------------
+<field_public_text>:
+PMAC - The number of oversize well-formed frames received.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Rx Jabbers Counter
+------------------------------
+<field_public_text>:
+PMAC - The number of oversize frames with CRC error received.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Rx 64 Byte Frame Counter
+------------------------------
+<field_public_text>:
+PMAC - The number of 64 bytes frames received.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Rx 65-127 Byte Frame Counter
+------------------------------
+<field_public_text>:
+PMAC - The number of 65 to 127 bytes frames received.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Rx 128-255 Byte Frame Counter
+------------------------------
+<field_public_text>:
+PMAC - The number of 128 to 255 bytes frames received.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Rx 256-511 Byte Frame Counter
+------------------------------
+<field_public_text>:
+PMAC - The number of 256 to 511 bytes frames received.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Rx 512-1023 Byte Frame Counter
+------------------------------
+<field_public_text>:
+PMAC - The number of 512 to 1023 bytes frames received.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Rx 1024-1518 Byte Frame Counter
+------------------------------
+<field_public_text>:
+PMAC - The number of 1024 to 1518 bytes frames received.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Rx 1519 To Max. Length Byte Frame Counter
+------------------------------
+<field_public_text>:
+PMAC - The number of frames received longer than 1518 bytes and not longer than Maximum Length Register (Maximum Length Register + 4 if the frame is VLAN tagged).
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Tx Pause Frame Counter
+------------------------------
+<field_public_text>:
+PMAC - The number of pause control frames transmitted.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Tx Unicast Frame Counter
+------------------------------
+<field_public_text>:
+PMAC - The number of unicast frames transmitted.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Tx Multicast Frame Counter
+------------------------------
+<field_public_text>:
+PMAC - The number of multicast frames transmitted.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Tx Broadcast Frame Counter
+------------------------------
+<field_public_text>:
+PMAC - The number of broadcast frames transmitted.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Tx 64 Byte Frame Counter
+------------------------------
+<field_public_text>:
+PMAC - The number of 64 bytes frames transmitted.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Tx 65-127 Byte Frame Counter
+------------------------------
+<field_public_text>:
+PMAC - The number of 65 to 127 bytes frames transmitted.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Tx 128-255 Byte Frame Counter
+------------------------------
+<field_public_text>:
+PMAC - The number of 128 to 255 bytes frames transmitted.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Tx 256-511 Byte Frame Counter
+------------------------------
+<field_public_text>:
+PMAC - The number of 256 to 511 bytes frames transmitted.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Tx 512-1023 Byte Frame Counter
+------------------------------
+<field_public_text>:
+PMAC - The number of 512 to 1023 bytes frames transmitted.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Tx 1024-1518 Byte Frame Counter
+------------------------------
+<field_public_text>:
+PMAC - The number of 1024 to 1518 bytes frames transmitted.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Tx 1519 To Max. Length Byte Frame Counter
+------------------------------
+<field_public_text>:
+PMAC - The number of frames transmitted longer than 1518 bytes and not longer than Maximum Length Register (Maximum Length Register + 4 if the frame is VLAN tagged).
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Counter to track the dribble-nibble (extra nibble) errors in frames.
+------------------------------
+<field_public_text>:
+PMAC - The number of frames received with Alignment (dribble-nibble) error.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Counts Pframes that are with assembly error .
+------------------------------
+<field_public_text>:
+MAC MERGE - The number of Pframes received with aseembly error.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Counts Pframes that are with SMD error .
+------------------------------
+<field_public_text>:
+MAC MERGE - The number of Pframe fragaments rejected die to unknown SMD values or arrving with SMD-C when no pframe in progress  .
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Counts Pframes that are successfully  re-assembled and sent to PMAC .
+------------------------------
+<field_public_text>:
+MAC MERGE - The number of Pframes received whitch are successfully reassembled .
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Counts Pframes which are mPackets (fragments) due to preemption.
+------------------------------
+<field_public_text>:
+MAC MERGE - The number of Pframes received whitch are mPackets (Fragments) due to preemption .
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Counts pframe fragment sent when preemption enabled .
+------------------------------
+<field_public_text>:
+MAC MERGE - The number of Pframe fragments sent when preemption enabled .
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Rx XGMII Protocol Error Counter
+------------------------------
+<field_public_text>:
+Number of XGMII protocol errors detected.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Rx XGMII Protocol Error Counter
+------------------------------
+<field_public_text>:
+PMAC - Number of XGMII protocol errors detected.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reggrp_short_dscr>:
+Device Statistics Registers
+------------------------------
+<reggrp_public_text>:
+Each MAC generates a statistics vector when receiving or transmitting a frame. This vector is used for generation of the port statistics. All counters are 32 bits wide and are not reset when read. It is up to software to detect when a counter has wrapped around. When written, the counter assumes the written value.
+------------------------------
+<reg_short_dscr>:
+Rx Byte Counter
+------------------------------
+<field_public_text>:
+The number of bytes received (good, bad, and framing).
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Rx In Bytes Counter - MSB part
+------------------------------
+<reg_public_text>:
+The number of bytes received (good, bad. Framing). 
+MSB s only)
+------------------------------
+<field_public_text>:
+The number of bytes received (good, bad, and framing) - MSBs only
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Rx OK Byte Counter
+------------------------------
+<field_public_text>:
+The number of received bytes in good frames.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Rx Ok Bytes Counter - MSB part
+------------------------------
+<reg_public_text>:
+The number of received bytes in good frames - MSBs only
+------------------------------
+<field_public_text>:
+The number of received bytes in good frames - MSBs only.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Rx Bad Byte Counter
+------------------------------
+<field_public_text>:
+The number of received bytes in bad frames.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Rx Bad Bytes Counter - MSB part
+------------------------------
+<reg_public_text>:
+The number of received bytes in bad frames -  MSBs only.
+------------------------------
+<field_public_text>:
+The number of received bytes in bad frames - MSBs only.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Tx Byte Counter
+------------------------------
+<field_public_text>:
+The number of bytes transmitted (good, bad and framing).
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Tx Out Bytes Counter - MSB part
+------------------------------
+<reg_public_text>:
+The number of bytes transmitted (good, bad, and framing) - MSBs only
+------------------------------
+<field_public_text>:
+The number of bytes transmitted (good, bad, framing) - MSBs only.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Tx OK Byte Counter
+------------------------------
+<field_public_text>:
+The number of bytes transmitted successfully.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Tx OK Bytes Counter - MSB part
+Tx OK Bytes Counter - MSB
+------------------------------
+<reg_public_text>:
+The number of bytes transmitted - MSBs only.
+------------------------------
+<field_public_text>:
+The number of transmitted bytes transmitted successfully - MSBs only.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Rx OK Byte Counter
+------------------------------
+<field_public_text>:
+PMAC - The number of received bytes in good frames.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Rx Ok Bytes Counter - MSB part
+------------------------------
+<reg_public_text>:
+PMAC - The number of received bytes in good frames - MSBs only
+------------------------------
+<field_public_text>:
+PMAC - The number of received bytes in good frames - MSBs only.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Rx Bad Byte Counter
+------------------------------
+<field_public_text>:
+PMAC - The number of received bytes in bad frames.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Rx Bad Bytes Counter - MSB part
+------------------------------
+<reg_public_text>:
+PMAC - The number of received bytes in bad frames -  MSBs only.
+------------------------------
+<field_public_text>:
+PMAC - The number of received bytes in bad frames - MSBs only.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Tx OK Byte Counter
+------------------------------
+<field_public_text>:
+PMAC - The number of bytes transmitted successfully.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Tx OK Bytes Counter - MSB part
+Tx OK Bytes Counter - MSB
+------------------------------
+<reg_public_text>:
+PMAC - The number of bytes transmitted - MSBs only.
+------------------------------
+<field_public_text>:
+PMAC - The number of transmitted bytes transmitted successfully - MSBs only.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reggrp_short_dscr>:
+Device 10G Configuration and Status Registers
+------------------------------
+<reggrp_public_text>:
+The following group of registers is used to configure the general device 10G settings such as operating clock frequency and internal loopback modes.
+------------------------------
+<reg_short_dscr>:
+Clock/Reset Control Register
+------------------------------
+<field_public_text>:
+Backplane Ethernet: Enable parallel detection mode for autonegotiation
+------------------------------
+<field_enc>:
+'0':  Parallel detection mode disabled
+'1': Parallel detection mode enabled
+------------------------------
+<field_public_text>:
+Number of USXGMII network port transported over the connected PHY.
+------------------------------
+<field_enc>:
+'00': Single Network Port
+'01': Dual Network Port
+'1-': Quad Network Port
+------------------------------
+<field_public_text>:
+This field is used to configure the SERDES clock frequency.
+------------------------------
+<field_enc>:
+'00': 10G SerDes Speed
+'01': 5G SerDes Speed
+'1-': Reserved
+------------------------------
+<field_public_text>:
+This field is used to configure the MAC and PCS Rx/Tx clock frequencies.
+------------------------------
+<field_enc>:
+'000': MAC works at 10000 Mbps
+'001': MAC works at 5000 Mbps
+'010': MAC works at 2500 Mbps
+'011': MAC works at 1000 Mbps
+'100': MAC works at 100 Mbps
+'101': MAC works at 10 Mbps
+Unused values are reserved.
+------------------------------
+<field_public_text>:
+Reset PCS Tx clock domains of the device.
+------------------------------
+<field_enc>:
+'0': The PCS Tx clock domain is NOT reset
+'1': The PCS Tx clock domain is reset 
+Note: PCS_TX_RST is NOT a one-shot operation. The PCS Tx clock domain remains reset until a '0' is written to PCS_TX_RST.
+------------------------------
+<field_public_text>:
+Reset PCS Rx clock domains of the device.
+------------------------------
+<field_enc>:
+'0': The PCS Rx clock domain is NOT reset
+'1': The PCS Rx clock domain is reset 
+Note: PCS_RX_RST is NOT a one-shot operation. The PCS Rx clock domain remains reset until a '0' is written to PCS_RX_RST.
+------------------------------
+<field_public_text>:
+Reset MAC Tx clock domain of device.
+------------------------------
+<field_enc>:
+'0': The MAC Tx clock domain is not reset.
+'1': The MAC Tx clock domain is reset.
+
+Note: The MAC Tx clock domain remains reset until 0 is written to this register field.
+------------------------------
+<field_public_text>:
+Reset MAC Rx clock domains of the device.
+------------------------------
+<field_enc>:
+'0': The MAC Rx clock domain is NOT reset
+'1': The MAC Rx clock domain is reset 
+Note: MAC_RX_RST is NOT a one-shot operation. The MAC Rx clock domain remains reset until a '0' is written to MAC_RX_RST.
+------------------------------
+<reg_short_dscr>:
+Port Protection Configuration Register
+------------------------------
+<reg_public_text>:
+When port protection is enabled the device will snoop and transmit data destined for another device 10G identified by port_protect_id.
+------------------------------
+<field_public_text>:
+Indicates from which port egress data must be copied and transmitted at this Ethernet port.
+The port from which egress data is copied must always be a port that is closer to the ASM. I.e. DEV(X) may be configured to snoop egress data destined for DEV(X+n), where DEV(X+n) is closer to the ASM - but NOT vice versa.
+------------------------------
+<field_enc>:
+0: Reserved
+1: Egress data destined for DEV(1) is also transmitted by this device.
+2: Egress data destined for DEV(2) is also transmitted by this device.
+..
+------------------------------
+<field_public_text>:
+Enables snooping of egress data from another port. The port from which egress data is copied and transmitted at the Ethernet port is determined by the PORT_PROTECT_ID configuration.
+------------------------------
+<field_enc>:
+'0': Port protection is disabled.
+'1': Port protection is enabled.
+------------------------------
+<reg_short_dscr>:
+USXGMII Tx rate adaptation FIFO threshold control
+------------------------------
+<reg_public_text>:
+Set the add and drop thresholds for the Tx rate adaptation (radapt) FIFO
+------------------------------
+<field_public_text>:
+One-shot that causes the Tx rate adaptation FIFO to be cleared and reset. Bit is reset by hardware.
+------------------------------
+<field_enc>:
+0: No action
+1: Clear FIFO
+------------------------------
+<field_public_text>:
+Set the minimum inter-frame gap to maintain during rate adaptation when dropping transactions. Setting the value to 1 means that 1 idle or ordered set is kept after a terminate. When set to 2 or 3, that many idle or ordered set transactions are kept. Each transaction is 4 bytes.
+------------------------------
+<field_enc>:
+0: INVALID
+1: 1 Idle/O set column maintained
+2: 2 Idle/O set column maintained
+3: 3 Idle/O set column maintained
+------------------------------
+<field_public_text>:
+Set the add threshold in the FIFO. Level is in 72-bit words.
+------------------------------
+<field_public_text>:
+Set the drop threshold in the FIFO. Level is in 72-bit words.
+------------------------------
+<reg_short_dscr>:
+Configures PTP timestamping logic
+------------------------------
+<field_public_text>:
+Specifies the amount of line bit times to subtract from delay in egress direction when the swap signal is asserted.
+------------------------------
+<field_enc>:
+00: Subtract 0 BT
+01: Subtract 32 BT
+10: Subtract 33 BT
+11: Subtract 34 BT
+------------------------------
+<field_public_text>:
+Specifies the amount of line bit times to subtract from delay in ingress direction when the swap signal is asserted.
+------------------------------
+<field_enc>:
+00: Subtract 0 BT
+01: Subtract 32 BT
+10: Subtract 33 BT
+11: Subtract 34 BT
+------------------------------
+<reg_short_dscr>:
+Interrupt Source Register
+------------------------------
+<reg_public_text>:
+Interrupt Source Register
+------------------------------
+<field_public_text>:
+USXGMII ANEG next page receive interrupt.
+------------------------------
+<field_enc>:
+0: No interrupt
+1: Interrupt occurred
+Bit is cleared by writing a 1 to this position.
+------------------------------
+<field_public_text>:
+USXGMII ANEG Link UP interrupt.
+------------------------------
+<field_enc>:
+0: No interrupt
+1: Interrupt occurred
+Bit is cleared by writing a 1 to this position.
+------------------------------
+<field_public_text>:
+USXGMII ANEG Link down interrupt.
+------------------------------
+<field_enc>:
+0: No interrupt
+1: Interrupt occurred
+Bit is cleared by writing a 1 to this position.
+------------------------------
+<field_public_text>:
+USXGMII rate adaptation FIFO interrupt.
+------------------------------
+<field_public_text>:
+SerDes 10G, Base-R interrupt.
+------------------------------
+<field_public_text>:
+SerDes 10G, server signal failure interrupt.
+------------------------------
+<field_public_text>:
+SerDes 10G, KR interrupt.
+------------------------------
+<field_public_text>:
+Aggregate of BaseR PCS indications, see PCS_10GBASE_R::PCS_INTR_STAT and PCS_10GBASE_R::PCS_INTR_MASK for more information. This field is set when any BaseR PCS interrupt indication is active and enabled.
+------------------------------
+<field_public_text>:
+PCS10G, PCS1G: TX Low Power Idle mode has changed
+------------------------------
+<field_enc>:
+0 = no indication
+1 = active indication
+------------------------------
+<field_public_text>:
+PCS10G, PCS1G: RX Low Power Idle mode has changed
+------------------------------
+<field_enc>:
+0 = no indication
+1 = active indication
+------------------------------
+<field_public_text>:
+Link status is up (source: PCS1G, PCS10G or PCS2x6G depending on current DEV10G mode)
+------------------------------
+<field_enc>:
+0 = no indication
+1 = active indication
+------------------------------
+<field_public_text>:
+Link status is down (source: PCS1G, PCS10G or PCS2x6G depending on current DEV10G mode)
+------------------------------
+<field_enc>:
+0 = no indication
+1 = active indication
+------------------------------
+<reg_short_dscr>:
+Interrupt Enable Register
+------------------------------
+<reg_public_text>:
+Interrupt Enable Register
+------------------------------
+<field_public_text>:
+Set to enable propagation of USXGMII ANEG Page RX interrupt.
+------------------------------
+<field_public_text>:
+Set to enable propagation of USXGMII ANEG Link up interrupt.
+------------------------------
+<field_public_text>:
+Set to enable propagation of USXGMII ANEG Link down interrupt.
+------------------------------
+<field_public_text>:
+Set to enable propagation of USXGMII rate adaptation FIFO interrupt.
+------------------------------
+<field_public_text>:
+Set to enable propagation of SerDes 10G, Base-R interrupt.
+------------------------------
+<field_public_text>:
+Set to enable propagation of SerDes 10G, server signal failure interrupt.
+------------------------------
+<field_public_text>:
+Set to enable propagation of SerDes 10G, KR interrupt.
+------------------------------
+<field_public_text>:
+Set to enable propagation of PCS_BR interrupt.
+------------------------------
+<field_public_text>:
+Set to enable propagation of TX_LPI interrupt.
+------------------------------
+<field_public_text>:
+Set to enable propagation of RX_LPI interrupt.
+------------------------------
+<field_public_text>:
+Set to enable propagation of LINK_UP interrupt.
+------------------------------
+<field_public_text>:
+Set to enable propagation of LINK_DWN interrupt.
+------------------------------
+<reg_short_dscr>:
+Interrupt Status Register
+------------------------------
+<reg_public_text>:
+Interrupt Status Register
+------------------------------
+<field_public_text>:
+Set if USXGMII aneg Page RX interrupt is currently active (indicating interrupt towards higher level interrupt controller).
+------------------------------
+<field_public_text>:
+Set if USXGMII aneg link up interrupt is currently active (indicating interrupt towards higher level interrupt controller).
+------------------------------
+<field_public_text>:
+Set if USXGMII aneg link down interrupt is currently active (indicating interrupt towards higher level interrupt controller).
+------------------------------
+<field_public_text>:
+Set if USXGMII rate adaptation FIFO interrupt is currently active (indicating interrupt towards higher level interrupt controller).
+------------------------------
+<field_public_text>:
+Set if SD10G_BR interrupt is currently active (indicating interrupt towards higher level interrupt controller).
+------------------------------
+<field_public_text>:
+Set if SD10G_SSF interrupt is currently active (indicating interrupt towards higher level interrupt controller).
+------------------------------
+<field_public_text>:
+Set if SD10G_KR interrupt is currently active (indicating interrupt towards higher level interrupt controller).
+------------------------------
+<field_public_text>:
+Set if PCS_BR interrupt is currently active (indicating interrupt towards higher level interrupt controller).
+------------------------------
+<field_public_text>:
+Set if TX_LPI interrupt is currently active (indicating interrupt towards higher level interrupt controller).
+------------------------------
+<field_public_text>:
+Set if RX_LPI interrupt is currently active (indicating interrupt towards higher level interrupt controller).
+------------------------------
+<field_public_text>:
+Set if LINK_UP interrupt is currently active (indicating interrupt towards higher level interrupt controller).
+------------------------------
+<field_public_text>:
+Set if LINK_DWN interrupt is currently active (indicating interrupt towards higher level interrupt controller).
+------------------------------
+<reg_short_dscr>:
+Control Energy Efficient Ethernet operation.
+------------------------------
+<field_public_text>:
+Enable EEE operation on the port.
+
+A port enters the low power mode when no egress queues have data ready.
+
+The port is activated when one of the following conditions is true:
+- A queue has been non-empty for EEE_TIMER_AGE.
+- A queue has more than EEE_HIGH_FRAMES frames pending.
+- A queue has more than EEE_HIGH_BYTES bytes pending.
+- A queue is marked as a fast queue, and has data pending.
+------------------------------
+<field_public_text>:
+Maximum time frames in any queue must wait before the port is activated. The default value corresponds to 48 us.
+------------------------------
+<field_enc>:
+Time = 4**(EEE_TIMER_AGE/16) * (EEE_TIMER_AGE mod 16) microseconds
+------------------------------
+<field_public_text>:
+Time from the egress port is activated until frame transmission is restarted. Default value corresponds to 16 us.
+------------------------------
+<field_enc>:
+Time = 4**(EEE_TIMER_WAKEUP/16) * (EEE_TIMER_WAKEUP mod 16) microseconds
+------------------------------
+<field_public_text>:
+When all queues are empty, the port is kept active until this time has passed. Default value corresponds to 5 us.
+------------------------------
+<field_enc>:
+Time = 4**(EEE_TIMER_HOLDOFF/16) * (EEE_TIMER_HOLDOFF mod 16) microseconds
+------------------------------
+<field_public_text>:
+Status bit indicating whether port is in low-power-idle due to the LPI algorithm (EEE_CFG). If set, transmissions are held back.
+------------------------------
+<reg_short_dscr>:
+Selects mode for which status counter will count the corresponding frames on RX and TX
+------------------------------
+<field_public_text>:
+'0' : counters will be having number of pause frame received/transmitted
+'1' : counters will be having number of PFC frame received/transmitted
+------------------------------
+<reggrp_short_dscr>:
+PCS25G Wrapper Config and Status registers
+------------------------------
+<reggrp_public_text>:
+This register group is only valid for DEV25G. It is not valid for DEV10G and DEV5G.
+------------------------------
+<reg_short_dscr>:
+PCS25G enable Configuration
+------------------------------
+<field_public_text>:
+Global PCS Enable/Disable configuration bit.
+------------------------------
+<field_enc>:
+0 = Disable PCS
+1 = Enable PCS
+------------------------------
+<reg_short_dscr>:
+PCS SignalDetect Configuration
+------------------------------
+<reg_public_text>:
+PCS signal_detect configuration
+------------------------------
+<field_public_text>:
+Signal detect selection (select input for internal signal_detect line)
+------------------------------
+<field_enc>:
+0: Select signal_detect line from hardmacro
+1: Select external signal_detect line
+------------------------------
+<field_public_text>:
+Signal detect polarity: The signal level on signal_detect input pin must be equal to SD_POL to indicate signal detection (SD_ENA must be set)
+------------------------------
+<field_enc>:
+0: Signal Detect input pin must be '0' to indicate a signal detection
+1: Signal Detect input pin must be '1' to indicate a signal detection
+------------------------------
+<field_public_text>:
+Signal Detect Enable
+------------------------------
+<field_enc>:
+0: The Signal Detect input pin is ignored. The PCS assumes an active Signal Detect at all times
+1: The Signal Detect input pin is used to determine if a signal is detected
+------------------------------
+<reg_short_dscr>:
+Receive PCS Status
+------------------------------
+<field_public_text>:
+High Bit Error Rate indication for all lanes. If asserted sync header errors exceeding the allowed maximum during the measurement time (125 micro seconds;1.25ms) have occurred indicating a high bit error rate from the line.
+As long as hi_ber stays asserted, local fault is signaled on XGMII.
+hi_ber deasserts again when the bit error rate falls below the limit again.
+------------------------------
+<field_enc>:
+0 - HI BER is not asserted.
+1 - HI BER is asserted.
+------------------------------
+<field_public_text>:
+66b Block synchronization indication. When asserted (1) the block synchronization state machines could successfully lock onto 66-bit block boundaries. The signal stays asserted as long as block lock is maintained.
+Relevant only when MLD is not used (i.e. not using RS-FEC).
+------------------------------
+<field_enc>:
+0 - Block lock is achieved
+1 - Block lock is not achieved
+------------------------------
+<field_public_text>:
+Alignment Marker Lock indication. When asserted (1) the alignment marker lock state machines could successfully lock onto detection of alignment markers on all virtual lanes. The signal stays asserted as long as alignment marker lock is maintained.
+Relevant only when MLD mode of operation is active (i.e. using RS-FEC).
+------------------------------
+<field_enc>:
+0 - Alignment lock is achieved
+1 - Alignment lock is not achieved
+------------------------------
+<reg_short_dscr>:
+Forward Error correction (FEC clause 74) configuration
+------------------------------
+<field_public_text>:
+FEC module optional function to forward indication of uncorrectable errors to the PCS layer by corrupting sync headers.
+------------------------------
+<field_public_text>:
+If set to 1, FEC encapsulation is enabled on the transmit lane.
+------------------------------
+<field_public_text>:
+If set to 1, FEC encapsulation is enabled on the receive lane.
+------------------------------
+<reg_short_dscr>:
+Forward Error correction (FEC clause 74) Status
+------------------------------
+<field_public_text>:
+Indication that FEC has achieved lock on the FEC block boundaries and valid data is being decoded.
+------------------------------
+<reg_short_dscr>:
+FEC74 correctable error counter
+------------------------------
+<field_public_text>:
+FEC corrected error counter. The FEC could detect and correct receive errors in a block. The correctable error is counted max once per FEC block (32 66-bit blocks).
+------------------------------
+<reg_short_dscr>:
+FEC74 uncorrectable error counter
+------------------------------
+<field_public_text>:
+FEC uncorrected error counter. The FEC could detect but could not correct receive errors in a block. The uncorrectable error is counted max once per FEC block (32 66-bit blocks).
+------------------------------
+<reg_short_dscr>:
+RSFEC datapath Config
+------------------------------
+<field_public_text>:
+The 25G PCS implementation does not perform compensation for the inserted alignment markers. Enabling this bit would perform rate compensation. This should be enabled when FEC91 is enabled.
+
+Note: Codeword Marker Insertion is identical to Alignment Marker Insertion in Multi-Lane Distribution
+(MLD) using four marker patterns and internally assuming calculations for the marker interval as if using
+four virtual lanes, as used in 40G Clause 82.
+------------------------------
+<field_public_text>:
+Enable RS-FEC datapath. The input is OR'ed with the RS FEC VENDOR CONTROL register bit 2.
+------------------------------
+<reggrp_short_dscr>:
+Configuration of Mac Merge block for this port
+------------------------------
+<reg_short_dscr>:
+Enables the MAC Merge layer for this port
+------------------------------
+<field_public_text>:
+Process the start of a new Packet while discarding previously received MAC_Merge layer error packet.
+
+Note: In any case, the first frame for which SMD-C was missing, is discarded.
+------------------------------
+<field_enc>:
+'1': The second frame with SMD-S that was received while MM receiver was waiting for SMD-C will be processed.
+'0': The second frame with SMD-S that was received while MM receiver was waiting for SMD-C will be discarded.
+------------------------------
+<field_public_text>:
+Enable the MAC-MERGE Layer Transmit block.
+------------------------------
+<field_enc>:
+0: MAC Merge Transmit block is not enabled. The input of MAC Merge TX is directly given to its output.
+1: MAC Merge Transmit block is enabled, and the incoming frame is processed as per 802.3br
+------------------------------
+<field_public_text>:
+Enable the MAC-MERGE Layer Receive block.
+------------------------------
+<field_enc>:
+0: MAC Merge Receive block is not enabled. The input of MAC Merge RX is directly given to its output.
+1: MAC Merge receive block is enabled, and the incoming frame is processed as per 802.3br
+------------------------------
+<reg_short_dscr>:
+Configuration to control the Preemption Verification-Response behavior of port.
+------------------------------
+<field_public_text>:
+This field configures the wait time between verification attempts to be initiated by this port in milli seconds.
+Valid range of values is from 1 to 128.
+------------------------------
+<field_enc>:
+Valid values are from 1 to 128.
+1 = Wait for 1 ms before initiating verification frame transmission.
+2 = Wait for 2 ms before initiating verification frame transmission and so on.
+------------------------------
+<field_public_text>:
+Disables the verification of preemption capabilities of link partner.
+------------------------------
+<field_enc>:
+'0' - Verification process has to be finished before a port can support preemption.
+'1' - Disable verification process (i.e., that preemption verification process need not be peformed).
+------------------------------
+<reggrp_short_dscr>:
+Statistics for MAC Merge Layer
+------------------------------
+<reggrp_public_text>:
+Statistics for MAC Merge Layer.
+------------------------------
+<reg_short_dscr>:
+Status of MAC Merge layer of this port.
+------------------------------
+<field_public_text>:
+Status bit indicating when a preemptable packet is to be preempted. 
+'1' : A P-frame is being preempted from this MM TX MAC.
+'0' : No P-frames are preempted because of no requests from E-MAC and because of min_frag_size check and because of no hold requests.
+------------------------------
+<field_public_text>:
+Status bit indicating if the last transmitted frame by MM was from a P-MAC.
+'1' - Last transmitted complete frame (not fragment) by MM was from P-MAC.
+'0' - Last transmitted frame by MM was from E-MAC.
+Note: If preemption is not enabled in switch, frames would be processed as E-Frames.
+------------------------------
+<field_enc>:
+'1' - Last transmitted complete frame (not fragment) by MM was from P-MAC.
+'0' - Last transmitted frame by MM was from E-MAC.
+------------------------------
+<field_public_text>:
+Status bit indicating if the last received frame by MM was delivered to P-MAC.
+'1' - Last received complete frame (not fragment) by MM was delivered to P-MAC.
+'0' - Last received frame by MM was delivered to E-MAC.
+Note: When MM is not enabled, then frames are delivered to E-MAC.
+------------------------------
+<field_enc>:
+'1' - Last received complete frame (not fragment) by MM was delivered to P-MAC.
+'0' - Last received frame by MM was delivered to E-MAC.
+------------------------------
+<field_public_text>:
+Sticky bit indicating that a P-Fragment was requested to be transmitted when the preemption verification is unsuccessful or not yet verified or when MM_TX_ENA = 0. Request is ignored and data will be processed using PREEMPTABLE_TX state and never getting preempted.
+------------------------------
+<field_enc>:
+1 - Request to transmit a P-Frame when preemption capabilities are yet to be verified or when MM_TX_ENA = 0.
+0 - No invalid p-frm received.
+Write '1' to clear.
+------------------------------
+<field_public_text>:
+Sticky bit indicating that an unexpected P-Frame has been received by the port when the preemption verification is unsuccessful or not yet verified.
+------------------------------
+<field_enc>:
+1 - Received a P-Frame when the preemption capabilities of the port are yet to be verified or not yet verified.
+0 - No invalid p-frm received.
+Write '1' to clear.
+------------------------------
+<field_public_text>:
+Status of MAC Merge sub-layer verification on the given port.
+------------------------------
+<field_enc>:
+0 : Initial- the verify state diagram is in the INIT_VERIFICATION state.
+1 : Verifying (indicates that verify state diagram is in state VERIFICATION_IDLE, SEND_VERIFY or WAIT_FOR_RESPONSE).
+2 : Verification successful (indicates that the verify state diagram is in state VERIFIED)
+3 : Verification failed (indicates that the verify state diagram is in state VERIFY_FAIL).
+4 : Verification process is Disabled.
+------------------------------
+<field_public_text>:
+A sticky bit indicating there was a change in prmption state of this port.
+Application layer should use this interrupt bit to identify the change in prmpt_active_status and appropriately program prempt_queues in qsys block.
+------------------------------
+<field_public_text>:
+Status bit indicating that preemption is currently active on this port.
+Note: Preemption is active if:
+a) preemption is enabled on that port AND
+b) (preemption capabilities have been verified OR preemption verification has been disabled on that port).
+------------------------------
+<field_enc>:
+'1' - Preemption is currently active on this port.
+'0' - Preemption is not currently active.
+------------------------------
+<reggrp_short_dscr>:
+USXGMII ANEG Configuration Status Registers
+------------------------------
+<reggrp_public_text>:
+Configuration and status register set for USXGMII Auto-Negotiation block
+------------------------------
+<reg_short_dscr>:
+USXGMII ANEG Configuration
+------------------------------
+<reg_public_text>:
+USXGMII Auto-Negotiation configuration register
+------------------------------
+<field_public_text>:
+MAC UsxgmiiChannelInfo: Holds the 16-bit Usxgmii Channel Information that needs to be advertised to PHY
+------------------------------
+<field_public_text>:
+Specifies the Link Timer Value in duration corresponding to multiples of 256 datapath clock cycles.
+ A configuration value of 0 is invalid. 
+ A value of 1 indicates 256 Datapath clock cycles i.e. 
+       for a data path clock frequency of 161MHz(6.2ns)   the Link timer value would be 1x256x6.2ns   = ~1.6us
+       for a data path clock frequency of   80MHz(12.4ns) the Link timer value would be 1x256x12.4ns = ~3.2us
+A value of 0xFFF(4095) indicates 4095 x 256 Datapath clock cycles i.e. 
+       for a data path clock frequency of 161MHz(6.2ns)   the Link timer value would be 4095x256x6.2ns   = ~6.5ms
+       for a data path clock frequency of   80MHz(12.4ns) the Link timer value would be 4095x256x12.4ns = ~13ms
+
+The clock frequency used is unpaused clock frequency i.e. paused clocks are also counted for the 256 clock count.
+
+This configuration is supposed to set/changed before the ANEG is enabled or restarted.
+------------------------------
+<field_enc>:
+0: Reserved
+1       : 1 x 256 x Datapath clock cycle duration.
+2       : 2 x 256 x Datapath clock cycle duration
+3       : 3 x 256 x Datapath clock cycle duration
+...
+4094 : 4094 * 256 * Datapath clock cycle duration
+4095 : 4095 * 256 * Datapath clock cycle duration
+------------------------------
+<field_public_text>:
+Software Resolve Abilities
+------------------------------
+<field_enc>:
+0: If Auto Negotiation fails (no matching HD or FD capabilities) the link is disabled
+1: The result of an Auto Negotiation is ignored - the link can be setup via software. This bit must be set in SGMII mode.
+------------------------------
+<field_public_text>:
+Block Lock Hysteresis Enable. This is a configuration to control the an_sync_status of USXGMII ANEG w.r.t. block lock. Setting this bit will set an_sync_status to fail link_timer duration after the block_lock is set to false. If the bit is cleared, loss of block lock will set an_sync_status to fail causing an autoneg restart as is mentioned in USXGMII Specification.
+------------------------------
+<field_enc>:
+1: an_sync_status is cleared after link timer duration of block_lock = 0
+0: an_sync_status is cleared immediately after block_lock = 0
+------------------------------
+<field_public_text>:
+Auto Negotiation Restart
+------------------------------
+<field_enc>:
+0: No action
+1: Restart Auto Negotiation
+------------------------------
+<field_public_text>:
+Auto Negotiation Enable
+------------------------------
+<field_enc>:
+0: Auto Negotiation Disabled
+1: Auto Negotiation Enabled
+------------------------------
+<reg_short_dscr>:
+USXGMII ANEG Status
+------------------------------
+<reg_public_text>:
+USXGMII Auto-negotiation status register
+------------------------------
+<field_public_text>:
+PHY UsxgmiiChannelInfo: Holds the 16-bit Usxgmii Channel Information received from PHY
+------------------------------
+<field_public_text>:
+USXGMII ANEG Link down status from Aneg State Machine.
+------------------------------
+<field_enc>:
+0: Link is up
+1: Link is down
+------------------------------
+<field_public_text>:
+Sticky bit indicating whether a new page has been received.
+------------------------------
+<field_enc>:
+0 : No new page received.
+1 : New page received.
+Bit is cleared by writing a 1 to this position.
+------------------------------
+<field_public_text>:
+Resolve priority
+------------------------------
+<field_enc>:
+0: ANEG is in progress
+1: ANEG nearly finished - priority can be resolved (via software)
+------------------------------
+<field_public_text>:
+Auto Negotiation Complete
+------------------------------
+<field_enc>:
+0: No Auto Negotiation has been completed
+1: Indicates that an Auto Negotiation has completed successfully
+------------------------------
+<reg_short_dscr>:
+USXGMII PCS Signal Detect Configuration
+------------------------------
+<reg_public_text>:
+USXGMII PCS Signal Detect Configuration
+------------------------------
+<field_public_text>:
+Signal detect polarity: The signal level on signal_detect input pin must be equal to SD_POL to indicate signal detection (SD_ENA must be set)
+------------------------------
+<field_enc>:
+0: Signal Detect input pin must be '0' to indicate a signal detection
+1: Signal Detect input pin must be '1' to indicate a signal detection
+------------------------------
+<field_public_text>:
+Signal Detect Enable
+------------------------------
+<field_enc>:
+0: The Signal Detect input pin is ignored. The PCS assumes an active Signal Detect at all times
+1: The Signal Detect input pin is used to determine if a signal is detected
+------------------------------
+<reg_short_dscr>:
+USXGMII PCS status register
+------------------------------
+<reg_public_text>:
+USXGMII PCS status register
+------------------------------
+<field_public_text>:
+Indicates if USXGMII PCS has reached block lock state
+------------------------------
+<field_enc>:
+0: USXGMII PCS is not in block lock state,
+1: USXGMII PCS is in block lock state
+------------------------------
+<reggrp_short_dscr>:
+Dev1g Configuration and Status Registers
+------------------------------
+<reggrp_public_text>:
+Device configuration and status register set.
+------------------------------
+<reg_short_dscr>:
+PTP Configuration per port
+------------------------------
+<field_public_text>:
+PCH Header Sub-portID. Inserted Tx direction. Checked in Rx direction.
+------------------------------
+<field_public_text>:
+Enable PTP rewriting on the port.
+------------------------------
+<field_public_text>:
+Configures the time domain this port is assigned to. This domain assignment must be made before the central counters in DEVCPU block is enabled.
+------------------------------
+<field_public_text>:
+Enable insertion of PCH in preamble on the port
+------------------------------
+<field_enc>:
+00: No PCH in transmitted frames
+01: PCH added on transmitted frames
+10: PCH added with encryption bit set
+11: PCH added with encryption bit set to inverted SMAC(40), which is then cleared.#xD
+------------------------------
+<field_public_text>:
+Set mode for ingress timestamps, in terms of nsec.subns bit widths.
+------------------------------
+<field_enc>:
+000: No PCH expected
+001: 32.0 mode
+010: 28.4 mode
+011: 24.8 mode
+100: 16.16 mode
+101,110,111: Reserved
+------------------------------
+<reg_short_dscr>:
+PTP Configuration per port
+------------------------------
+<field_public_text>:
+Time in ns/256 to subtract from timestamper in the ingress direction to compensate for static delay through the physical encoding layers.
+------------------------------
+<reg_short_dscr>:
+PTP Configuration per port
+------------------------------
+<field_public_text>:
+Time in ns/256 to add to timestamper in the egress direction to compensate for static delay through the physical encoding layers.
+------------------------------
+<reg_short_dscr>:
+PTP Predictor Configuration per port
+------------------------------
+<field_public_text>:
+Enables increased accuracy in the time stamping logic, by finding the dynamic phase between port and 1588 clocks.
+------------------------------
+<field_enc>:
+0001: 125 MHz port clock
+0010:  25 MHz port clock
+0011:  2.5 MHz port clock
+0100:  161.13 MHz port clock
+0101:  156.25 MHz port clock
+0110:  312.5 MHz port clock
+0111:  80.566 port clock
+others: Disabled
+------------------------------
+<reg_short_dscr>:
+PTP events per port
+------------------------------
+<field_public_text>:
+An ingress PCH was received with a Sub-portID different than what is configured in PTP_CFG.PCH_SUB_PORT_ID. Error also triggered if PktTy isn't 0 or ExtTy isn't 1
+------------------------------
+<field_public_text>:
+The correction field update went out of range. Valid range is -2^47 to 2^48-1. The frame CF will be changed to the maximum value. This range check is bypassed if ADDS48 mode is in use on the ingress or egress port.
+------------------------------
+<field_public_text>:
+An ingress PCH was processed and failed the CRC8 checksum verification
+------------------------------
+<reg_short_dscr>:
+Configures device transmission options
+------------------------------
+<field_public_text>:
+Configures the minimum sof-sof delay for frames being transmitted on this port. Unit is nano seconds. Cut through forwarded frames can be transmitted with constant delay by proper configuration of this field.
+------------------------------
+<field_public_text>:
+Field returns the maximum delay seen since tx domain was reset. This can be used for calibrating constants latency function.
+------------------------------
+<reg_short_dscr>:
+Configures preempting transmission options
+------------------------------
+<field_public_text>:
+Configures the inter frame gap inserted after a p-frame fragment. The MAC will for such fragments extend the frames, and the gap controller must therefore wait longer than the standard 12, to get standard IFG on the line.
+------------------------------
+<reggrp_short_dscr>:
+High precission event detection Configuration and Status Registers
+------------------------------
+<reggrp_public_text>:
+Access to the high precisson event detection. Replications are for ingress(0) and egress(1), or per load/store controller in the devcpu_ptp target.
+------------------------------
+<reg_short_dscr>:
+Phase detection control
+------------------------------
+<field_public_text>:
+Enable phase detector
+------------------------------
+<field_public_text>:
+Phase detector has lost lock since the clearing of the bit. Can be cleared writing one to this field.>
+          This field become unreliable for event clocks slower than 10 MHz, but phase detection can still be trusted. Slow event clocks are only seen in synchronuous PPS detection.
+------------------------------
+<field_public_text>:
+Reduce the number of slaves cycles to measure period with by 2**value.
+------------------------------
+<field_public_text>:
+Accuracy of lock logic
+------------------------------
+<reg_short_dscr>:
+Phase detection status
+------------------------------
+<reg_public_text>:
+Cycle time detected
+------------------------------
+<field_public_text>:
+Detected event clock period in 4.28 fixedpoint format.
+------------------------------

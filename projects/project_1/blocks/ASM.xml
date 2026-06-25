@@ -1,0 +1,1185 @@
+=== DOCUMENTATION FOR TARGET: ASM ===
+
+<target_short_dscr>:
+Assembler
+------------------------------
+<reg_short_dscr>:
+Rx Byte Counter
+------------------------------
+<field_public_text>:
+The number of bytes received (good, bad, and framing).
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Rx Symbol Carrier Error Counter
+------------------------------
+<field_public_text>:
+The number of frames received with one or more symbol errors.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Rx Pause Frame Counter
+------------------------------
+<field_public_text>:
+Number of pause control frames received.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Rx Control Frame Counter
+------------------------------
+<field_public_text>:
+Number of control frames with unsupported opcode received.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Rx OK Byte Counter
+------------------------------
+<field_public_text>:
+The number of received bytes in good frames.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Rx Bad Byte Counter
+------------------------------
+<field_public_text>:
+The number of received bytes in bad frames.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Rx Unicast Frame Counter
+------------------------------
+<field_public_text>:
+The number of good unicast frames received.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Rx Multicast Frame Counter
+------------------------------
+<field_public_text>:
+The number of good multicast frames received.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Rx Broadcast Frame Counter
+------------------------------
+<field_public_text>:
+The number of good broadcast frames received.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Rx CRC Error Counter
+------------------------------
+<field_public_text>:
+The number of frames received with CRC error only.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Rx Undersize Counter (valid frame format)
+------------------------------
+<field_public_text>:
+The number of undersize well-formed frames received.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Rx Undersize Counter (CRC error)
+------------------------------
+<field_public_text>:
+The number of undersize frames with CRC error received.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Rx In-range Length Error Counter
+------------------------------
+<field_public_text>:
+The number of frames with legal length field that does not match length of MAC client data.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Rx Out-Of-Range Length Error Counter
+------------------------------
+<field_public_text>:
+The number of frames with illegal length field (frames using type field are not counted here).
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Rx Oversize Counter (valid frame format)
+------------------------------
+<field_public_text>:
+The number of oversize well-formed frames received.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Rx Jabbers Counter
+------------------------------
+<field_public_text>:
+The number of oversize frames with CRC error received.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Rx 64 Byte Frame Counter
+------------------------------
+<field_public_text>:
+The number of 64 bytes frames received.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Rx 65-127 Byte Frame Counter
+------------------------------
+<field_public_text>:
+The number of 65 to 127 bytes frames received.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Rx 128-255 Byte Frame Counter
+------------------------------
+<field_public_text>:
+The number of 128 to 255 bytes frames received.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Rx 256-511 Byte Frame Counter
+------------------------------
+<field_public_text>:
+The number of 256 to 511 bytes frames received.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Rx 512-1023 Byte Frame Counter
+------------------------------
+<field_public_text>:
+The number of 512 to 1023 bytes frames received.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Rx 1024-1518 Byte Frame Counter
+------------------------------
+<field_public_text>:
+The number of 1024 to 1518 bytes frames received.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Rx 1519 To Max. Length Byte Frame Counter
+------------------------------
+<field_public_text>:
+The number of frames received longer than 1518 bytes and not longer than Maximum Length Register (Maximum Length Register + 4 if the frame is VLAN tagged).
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Rx Inter Packet Gap Shrink Counter
+------------------------------
+<field_public_text>:
+Number of inter packet gap shrinks detected (IPG < 12 bytes).
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Tx Byte Counter
+------------------------------
+<field_public_text>:
+The number of bytes transmitted (good, bad and framing).
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Tx Pause Frame Counter
+------------------------------
+<field_public_text>:
+The number of pause control frames transmitted.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Tx OK Byte Counter
+------------------------------
+<field_public_text>:
+The number of bytes transmitted successfully.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Tx Unicast Frame Counter
+------------------------------
+<field_public_text>:
+The number of unicast frames transmitted.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Tx Multicast Frame Counter
+------------------------------
+<field_public_text>:
+The number of multicast frames transmitted.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Tx Broadcast Frame Counter
+------------------------------
+<field_public_text>:
+The number of broadcast frames transmitted.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Tx 64 Byte Frame Counter
+------------------------------
+<field_public_text>:
+The number of 64 bytes frames transmitted.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Tx 65-127 Byte Frame Counter
+------------------------------
+<field_public_text>:
+The number of 65 to 127 bytes frames transmitted.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Tx 128-255 Byte Frame Counter
+------------------------------
+<field_public_text>:
+The number of 128 to 255 bytes frames transmitted.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Tx 256-511 Byte Frame Counter
+------------------------------
+<field_public_text>:
+The number of 256 to 511 bytes frames transmitted.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Tx 512-1023 Byte Frame Counter
+------------------------------
+<field_public_text>:
+The number of 512 to 1023 bytes frames transmitted.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Tx 1024-1518 Byte Frame Counter
+------------------------------
+<field_public_text>:
+The number of 1024 to 1518 bytes frames transmitted.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Tx 1519 To Max. Length Byte Frame Counter
+------------------------------
+<field_public_text>:
+The number of frames transmitted longer than 1518 bytes and not longer than Maximum Length Register (Maximum Length Register + 4 if the frame is VLAN tagged).
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Counter to track the dribble-nibble (extra nibble) errors in frames.
+------------------------------
+<field_public_text>:
+The number of frames received with Alignment (dribble-nibble) error.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Counts frames that are tagged (C-Tagged or S-Tagged).
+------------------------------
+<field_public_text>:
+The number of frames received with C-Tag or S-Tag information
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Counts frames that are Not tagged  (neither C-Tagged nor S-Tagged).
+------------------------------
+<field_public_text>:
+The number of frames received without C-Tag and S-Tag information.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Counts frames that are tagged (C-Tagged or S-Tagged).
+------------------------------
+<field_public_text>:
+The number of frames transmitted with C-Tag or S-Tag information
+------------------------------
+<reg_short_dscr>:
+Counts frames that are Not tagged  (neither C-Tagged nor S-Tagged).
+------------------------------
+<field_public_text>:
+The number of frames transmitted without C-Tag and S-Tag information.
+------------------------------
+<reg_short_dscr>:
+Rx Symbol Carrier Error Counter
+------------------------------
+<field_public_text>:
+PMAC - The number of frames received with one or more symbol errors.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Rx Pause Frame Counter
+------------------------------
+<field_public_text>:
+PMAC - Number of pause control frames received.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Rx Control Frame Counter
+------------------------------
+<field_public_text>:
+PMAC - Number of control frames with unsupported opcode received.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Rx OK Byte Counter
+------------------------------
+<field_public_text>:
+PMAC - The number of received bytes in good frames.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Rx Bad Byte Counter
+------------------------------
+<field_public_text>:
+PMAC - The number of received bytes in bad frames.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Rx Unicast Frame Counter
+------------------------------
+<field_public_text>:
+PMAC - The number of good unicast frames received.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Rx Multicast Frame Counter
+------------------------------
+<field_public_text>:
+PMAC - The number of good multicast frames received.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Rx Broadcast Frame Counter
+------------------------------
+<field_public_text>:
+PMAC - The number of good broadcast frames received.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Rx CRC Error Counter
+------------------------------
+<field_public_text>:
+PMAC - The number of frames received with CRC error only.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Rx Undersize Counter (valid frame format)
+------------------------------
+<field_public_text>:
+PMAC - The number of undersize well-formed frames received.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Rx Undersize Counter (CRC error)
+------------------------------
+<field_public_text>:
+PMAC - The number of undersize frames with CRC error received.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Rx In-range Length Error Counter
+------------------------------
+<field_public_text>:
+PMAC - The number of frames with legal length field that does not match length of MAC client data.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Rx Out-Of-Range Length Error Counter
+------------------------------
+<field_public_text>:
+PMAC - The number of frames with illegal length field (frames using type field are not counted here).
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Rx Oversize Counter (valid frame format)
+------------------------------
+<field_public_text>:
+PMAC - The number of oversize well-formed frames received.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Rx Jabbers Counter
+------------------------------
+<field_public_text>:
+PMAC - The number of oversize frames with CRC error received.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Rx 64 Byte Frame Counter
+------------------------------
+<field_public_text>:
+PMAC - The number of 64 bytes frames received.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Rx 65-127 Byte Frame Counter
+------------------------------
+<field_public_text>:
+PMAC - The number of 65 to 127 bytes frames received.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Rx 128-255 Byte Frame Counter
+------------------------------
+<field_public_text>:
+PMAC - The number of 128 to 255 bytes frames received.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Rx 256-511 Byte Frame Counter
+------------------------------
+<field_public_text>:
+PMAC - The number of 256 to 511 bytes frames received.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Rx 512-1023 Byte Frame Counter
+------------------------------
+<field_public_text>:
+PMAC - The number of 512 to 1023 bytes frames received.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Rx 1024-1518 Byte Frame Counter
+------------------------------
+<field_public_text>:
+PMAC - The number of 1024 to 1518 bytes frames received.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Rx 1519 To Max. Length Byte Frame Counter
+------------------------------
+<field_public_text>:
+PMAC - The number of frames received longer than 1518 bytes and not longer than Maximum Length Register (Maximum Length Register + 4 if the frame is VLAN tagged).
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Tx Pause Frame Counter
+------------------------------
+<field_public_text>:
+PMAC - The number of pause control frames transmitted.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Tx OK Byte Counter
+------------------------------
+<field_public_text>:
+PMAC - The number of bytes transmitted successfully.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Tx Unicast Frame Counter
+------------------------------
+<field_public_text>:
+PMAC - The number of unicast frames transmitted.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Tx Multicast Frame Counter
+------------------------------
+<field_public_text>:
+PMAC - The number of multicast frames transmitted.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Tx Broadcast Frame Counter
+------------------------------
+<field_public_text>:
+PMAC - The number of broadcast frames transmitted.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Tx 64 Byte Frame Counter
+------------------------------
+<field_public_text>:
+PMAC - The number of 64 bytes frames transmitted.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Tx 65-127 Byte Frame Counter
+------------------------------
+<field_public_text>:
+PMAC - The number of 65 to 127 bytes frames transmitted.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Tx 128-255 Byte Frame Counter
+------------------------------
+<field_public_text>:
+PMAC - The number of 128 to 255 bytes frames transmitted.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Tx 256-511 Byte Frame Counter
+------------------------------
+<field_public_text>:
+PMAC - The number of 256 to 511 bytes frames transmitted.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Tx 512-1023 Byte Frame Counter
+------------------------------
+<field_public_text>:
+PMAC - The number of 512 to 1023 bytes frames transmitted.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Tx 1024-1518 Byte Frame Counter
+------------------------------
+<field_public_text>:
+PMAC - The number of 1024 to 1518 bytes frames transmitted.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Tx 1519 To Max. Length Byte Frame Counter
+------------------------------
+<field_public_text>:
+PMAC - The number of frames transmitted longer than 1518 bytes and not longer than Maximum Length Register (Maximum Length Register + 4 if the frame is VLAN tagged).
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Counter to track the dribble-nibble (extra nibble) errors in frames.
+------------------------------
+<field_public_text>:
+PMAC - The number of frames received with Alignment (dribble-nibble) error.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Counts Pframes that are with assembly error .
+------------------------------
+<field_public_text>:
+MAC MERGE - The number of Pframes received with aseembly error.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Counts Pframes that are with SMD error .
+------------------------------
+<field_public_text>:
+MAC MERGE - The number of Pframe fragaments rejected die to unknown SMD values or arrving with SMD-C when no pframe in progress  .
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Counts Pframes that are successfully  re-assembled and sent to PMAC .
+------------------------------
+<field_public_text>:
+MAC MERGE - The number of Pframes received whitch are successfully reassembled .
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Counts Pframes which are mPackets (fragments) due to preemption.
+------------------------------
+<field_public_text>:
+MAC MERGE - The number of Pframes received whitch are mPackets (Fragments) due to preemption .
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Counts pframe fragment sent when preemption enabled .
+------------------------------
+<field_public_text>:
+MAC MERGE - The number of Pframe fragments sent when preemption enabled .
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Tx Multi Collision Counter
+------------------------------
+<reg_public_text>:
+Counter collecting the number of frames transmitted without errors after multiple collisions.
+------------------------------
+<field_public_text>:
+The number of frames transmitted without errors after multiple collisions.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Tx Late Collision Counter
+------------------------------
+<reg_public_text>:
+Counter collecting the number of late collisions.
+------------------------------
+<field_public_text>:
+The number of late collisions detected.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Tx Excessive Collision Counter
+------------------------------
+<reg_public_text>:
+Counter collecting the number of frames due to excessive collisions.
+------------------------------
+<field_public_text>:
+The number of frames lost due to excessive collisions.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Tx First Defer Counter
+------------------------------
+<reg_public_text>:
+Counter collecting the number of frames being deferred on first transmission attempt.
+------------------------------
+<field_public_text>:
+The number of frames being deferred on first transmission attempt. Note: This counter always counts when a defer event is present, even when it is an excessive defer (TX_XDEFER_CNT).
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Tx Excessive Defer Counter
+------------------------------
+<reg_public_text>:
+Counter collecting the number of frames sent with excessive deferral.
+------------------------------
+<field_public_text>:
+The number of frames sent with excessive deferral.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Tx 1 Backoff Counter
+------------------------------
+<reg_public_text>:
+Counter collecting the number of frames sent successfully after 1 backoff/collision.
+------------------------------
+<field_public_text>:
+Number of frames sent successfully after 1 backoff/collision.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+MSB of RX in byte Counter
+------------------------------
+<reg_public_text>:
+Register allowing to access the upper 4 bits of RX_IN_BYTE counter. Note: When writing to RX_IN_BYTES counter RX_IN_BYTES_MSB_CNT has to be written before RX_IN_BYTES_CNT is written. When reading RX_IN_BYTES counter RX_IN_BYTES_CNT has to be read before RX_IN_BYTES_MSB_CNT is read. Accessing both counters must not be interfered by other register accesses.
+------------------------------
+<field_public_text>:
+Upper 4 bits of RX_IN_BYTES_CNT.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+MSB of RX ok byte Counter
+------------------------------
+<reg_public_text>:
+Register allowing to access the upper 4 bits of RX_IN_BYTE counter. Note: When writing to RX_OK_BYTES counter RX_OK_BYTES_MSB_CNT has to be written before RX_OK_BYTES_CNT is written. When reading RX_OK_BYTES counter RX_OK_BYTES_CNT has to be read before RX_OK_BYTES_MSB_CNT is read. Accessing both counters must not be interfered by other register accesses.
+------------------------------
+<field_public_text>:
+Upper 4 bits of RX_OK_BYTES_CNT.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+MSB of PMAC RX ok byte Counter
+------------------------------
+<reg_public_text>:
+Register allowing to access the upper 4 bits of RX_IN_BYTE counter. Note: When writing to RX_OK_BYTES counter RX_OK_BYTES_MSB_CNT has to be written before RX_OK_BYTES_CNT is written. When reading RX_OK_BYTES counter RX_OK_BYTES_CNT has to be read before RX_OK_BYTES_MSB_CNT is read. Accessing both counters must not be interfered by other register accesses.
+------------------------------
+<field_public_text>:
+Upper 4 bits of RX_OK_BYTES_CNT.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+MSB of RX bad byte Counter
+------------------------------
+<reg_public_text>:
+Register allowing to access the upper 4 bits of RX_IN_BYTE counter. Note: When writing to RX_BAD_BYTES counter RX_BAD_BYTES_MSB_CNT has to be written before RX_BAD_BYTES_CNT is written. When reading RX_BAD_BYTES counter RX_BAD_BYTES_CNT has to be read before RX_BAD_BYTES_MSB_CNT is read. Accessing both counters must not be interfered by other register accesses.
+------------------------------
+<field_public_text>:
+Upper 4 bits of RX_BAD_BYTES_CNT.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+MSB of PMAC RX bad byte Counter
+------------------------------
+<reg_public_text>:
+Register allowing to access the upper 4 bits of PMAC RX_IN_BYTE counter. Note: When writing to RX_BAD_BYTES counter RX_BAD_BYTES_MSB_CNT has to be written before RX_BAD_BYTES_CNT is written. When reading RX_BAD_BYTES counter RX_BAD_BYTES_CNT has to be read before RX_BAD_BYTES_MSB_CNT is read. Accessing both counters must not be interfered by other register accesses.
+------------------------------
+<field_public_text>:
+Upper 4 bits of RX_BAD_BYTES_CNT.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+MSB of TX out byte Counter
+------------------------------
+<reg_public_text>:
+Register allowing to access the upper 4 bits of RX_IN_BYTE counter. Note: When writing to TX_OUT_BYTES counter TX_OUT_BYTES_MSB_CNT has to be written before TX_OUT_BYTES_CNT is written. When reading TX_OUT_BYTES counter TX_OUT_BYTES_CNT has to be read before TX_OUT_BYTES_MSB_CNT is read. Accessing both counters must not be interfered by other register accesses.
+------------------------------
+<field_public_text>:
+Upper 4 bits of TX_OUT_BYTES_CNT.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+MSB of TX ok byte Counter
+------------------------------
+<reg_public_text>:
+Register allowing to access the upper 4 bits of TX_OK_BYTES counter. Note: When writing to TX_OK_BYTES counter TX_OK_BYTES_MSB_CNT has to be written before TX_OK_BYTES_CNT is written. When reading TX_OK_BYTES counter TX_OK_BYTES_CNT has to be read before TX_OK_BYTES_MSB_CNT is read. Accessing both counters must not be interfered by other register accesses.
+------------------------------
+<field_public_text>:
+Upper 4 bits of TX_OK_BYTES_CNT.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+MSB of PMAC TX ok byte Counter
+------------------------------
+<reg_public_text>:
+Register allowing to access the upper 4 bits of TX_OK_BYTES counter. Note: When writing to TX_OK_BYTES counter TX_OK_BYTES_MSB_CNT has to be written before TX_OK_BYTES_CNT is written. When reading TX_OK_BYTES counter TX_OK_BYTES_CNT has to be read before TX_OK_BYTES_MSB_CNT is read. Accessing both counters must not be interfered by other register accesses.
+------------------------------
+<field_public_text>:
+Upper 4 bits of PMAC TX_OK_BYTES_CNT.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Counter to track the PCS's Sync-lost error
+------------------------------
+<field_public_text>:
+Counter to track the PCS's Sync-lost error
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reggrp_short_dscr>:
+Assembler Configuration Registers
+------------------------------
+<reggrp_public_text>:
+The following group of registers is used to setup the Assembler. The cell bus calendar must be programmed and the ASM must be assigned a MAC address offset. Each port will automatically be assigned a unique MAC address based on the MAC address offset. The MAC address offset must be equal to the MAC address offset of the Deassembler.
+------------------------------
+<reg_short_dscr>:
+Statistics counter configuration
+------------------------------
+<reg_public_text>:
+Register that contains the bitgroups to configure/control the statistics counters.
+------------------------------
+<field_public_text>:
+Setting of this bit initiates the clearing of all statistics counter.
+------------------------------
+<field_enc>:
+'0': No action
+'1': Stat cnt clr (Bit is automatically cleared)
+------------------------------
+<reg_short_dscr>:
+MAC Address Configuration Register (MSB)
+------------------------------
+<field_public_text>:
+Upper 24 bits of MAC address.
+The MAC address is used when filtering incoming Pause Control Frames - i.e. when the ASM determines whether or not a pause value must be passed to the DSM.
+------------------------------
+<field_enc>:
+The resulting MAC address of a device is determined as:
+MAC_ADDR_HIGH  & MAC_ADDR_LOW.
+------------------------------
+<reg_short_dscr>:
+MAC Address Configuration Register (LSB)
+------------------------------
+<field_public_text>:
+Lower 24 bits of MAC address.
+The MAC address is used when filtering incoming Pause Control Frames - i.e. when the ASM determines whether or not a pause value must be passed to the DSM.
+------------------------------
+<field_enc>:
+The resulting MAC address of a device is determined as:
+MAC_ADDR_HIGH  & MAC_ADDR_LOW.
+------------------------------
+<reg_short_dscr>:
+Port configuration
+------------------------------
+<reg_public_text>:
+This register holds port configuration bit groups
+------------------------------
+<field_public_text>:
+Disables updates of the ASM related counters for the common statistics counter system that is used for DEV1G/DEV2G5 devices (ASM:DEV_STATISTICS:RX_PAUSE_CNT and ASM:DEV_STATISTICS:RX_UNSUP_OPCODE_CNT).
+Set this when the port utilizes a DEV10G device as it handles the statistics locally in the device (Statistics counters in DEV10G:DEV_STATISTICS_*:*).
+------------------------------
+<field_public_text>:
+If this field is set the ASM removes the first 4 bytes of the payload and inserts it into the HIH field of the IFH.
+------------------------------
+<field_public_text>:
+If this field is set the ASM does not expect the incoming frame data to have a preamble prepended.
+------------------------------
+<field_public_text>:
+If this field is set the ASM will not store the first 8 bytes from the packet. This must be enabled when injecting with IFH without prefix from an external CPU (INJ_FORMAT_CFG=1).
+------------------------------
+<field_public_text>:
+This field determines if the ASM must zero-pad Ethernet frames that are less than 64 bytes.
+------------------------------
+<field_enc>:
+'0': Padding is disabled. Frames that are less than 64 bytes and have not been abort marked are passed to the ANA block 'as is'. Frames that are less than 64 bytes and have been abort marked are normally discarded silently by the ASM.
+'1': Padding is enabled. If the resulting frame size will be less than 64 bytes, the frame is zero-padded, so that the resulting frame size is 64 bytes.
+------------------------------
+<field_public_text>:
+Configure discard behavior depending on matching result of the selected injection format in ASM:CFG:PORT_CFG.INJ_FORMAT_CFG. If a non-matching frame is not discarded it will be forwarded as a normal frame.
+This setting is only valid for injection formats with short or long prefix.
+------------------------------
+<field_enc>:
+0: Discard none
+1: Discard frames with wrong injection format
+2: Discard frames with correct injection format
+------------------------------
+<field_public_text>:
+Set the mode for the format of incoming frames. Four different modes can be selected:
+ - Normal mode (No IFH)
+ - IFH without prefix
+ - IFH with short prefix
+ - IFH with long prefix
+
+If one of the IFH modes are selected incoming frames are expected to contain the selected prefix followed by an IFH as the first part of the frame. Frames are forwarded based on the contents in the IFH instead of normal forwarding. The prefix will be stripped from the frame before it is forwarded.
+
+Three different prefix modes are supported:
+- No prefix.
+- IFH short prefix:. any DMAC, any SMAC, EtherType=0x8880, payload=0x000B
+- IFH long prefix: any DMAC, any SMAC, VLAN Tag, EtherType=0x8880, payload=0x000B.
+
+The VLAN tag to compare against is set in ASM:CFG:INJ_VLAN_CFG. Only the VID and TPID fields of the VLAN Tag will be compared.
+
+If one of the IFH short or long prefix modes are selected and a frame with non-matching prefix is received the frame can either be forwarded as a normal frame or discarded depending on the setting of ASM:CFG:PORT_CFG.INJ_DISCARD_CFG.
+
+In the IFH short/long prefix modes, if the incoming frame's format does not comply with the prefix, then ASM:PORT_STATUS:PORT_STICKY.IFH_PREFIX_ERR_STICKY is set.
+------------------------------
+<field_enc>:
+0: Normal mode (No IFH)
+1: IFH without prefix
+2: IFH with short prefix
+3: IFH with long prefix
+------------------------------
+<field_public_text>:
+This bit defines if the ASM must be VStaX2 aware or not. If VStaX2 awareness is enabled and a frame holds a VStaX2 header following the SMAC address, this VStaX2 header is removed from the frame and placed in the IFH and the vstax_avail and update_fcs fields in the IFH will be set, so that the frame FCS is recalculated in the egress direction.
+If VStaX2 awareness is disabled or a frame does not hold a VStaX2 header, no bytes will be removed from the frame and the vstax_hdr, vstax_avail and fcs_update fields in the IFH will be cleared.
+When VStaX2 awareness is enabled INJ_FORMAT_CFG must be set to 0
+------------------------------
+<field_enc>:
+0: VStaX2 awareness is disabled. 
+1: VStaX2 awareness is enabled.
+------------------------------
+<field_public_text>:
+Flush P-frames from this port.
+------------------------------
+<reg_short_dscr>:
+Holds configuration related to Pause frame detection.
+------------------------------
+<reg_public_text>:
+This register control whether pause and control frames should be forwarded or terminated at ingress.
+------------------------------
+<field_public_text>:
+This field indicates whether or not the ASM must discard Control frames with type 0x8808 not being Pause frames, to the IQS by asserting the abort signal.
+One configuration bit is defined for each port.
+------------------------------
+<field_enc>:
+'0': The ASM must not discard Control frames.
+'1': The ASM must discard Control frames to the IQS by asserting the abort signal.
+------------------------------
+<field_public_text>:
+This field indicates whether or not the ASM must discard a valid Pause frame to the IQS by asserting the abort signal.
+One configuration bit is defined for each port.
+------------------------------
+<field_enc>:
+'0': The ASM must not discard valid Pause frames.
+'1': The ASM must discard valid Pause frames to the IQS by asserting the abort signal, but the Pause value must still be used to stall the egress data flow.
+------------------------------
+<reg_short_dscr>:
+Configure custom VLAN tag for injection
+------------------------------
+<field_public_text>:
+The VID used for VLAN tag matching when injection with long IFH prefix is selected in ASM:CFG:PORT_CFG.INJ_FORMAT_CFG.
+------------------------------
+<field_public_text>:
+The TPID used for VLAN tag matching when injection with long IFH prefix is selected in ASM:CFG:PORT_CFG.INJ_FORMAT_CFG.
+------------------------------
+<reg_short_dscr>:
+Time tick configuration
+------------------------------
+<field_public_text>:
+Counter value used to generate a tick every 16777216 ns used for ASM aging logic.
+------------------------------
+<field_enc>:
+Set to the number of system clock cycles in 16777216 ns (flooring) - 1. For example if the system clock period is 6.4 ns set TIME_TICK_VAL to 16777216/6.4 - 1.
+------------------------------
+<reggrp_short_dscr>:
+Status for ASM ingress ports
+------------------------------
+<reggrp_public_text>:
+The ASM holds a number of device specific registers.
+------------------------------
+<reg_short_dscr>:
+ASM port sticky bits
+------------------------------
+<reg_public_text>:
+This register holds all the sticky bits that exists for each port.
+------------------------------
+<field_public_text>:
+This field is set if the PORT_CFG.INJ_FORMAT_CFG field is set to one of the IFH modes and the incoming frame's format does not comply with the configured prefix.
+------------------------------
+<field_public_text>:
+This field indicates if one or more Ethernet frames have been discarded due to aging.
+------------------------------
+<field_enc>:
+'0': No Ethernet frames have been discarded due to aging.
+'1': One or more Ethernet frames have been discarded due to aging.
+Bit is cleared by writing a '1' to this position.
+------------------------------
+<reggrp_short_dscr>:
+Priority-based flow control configuration
+------------------------------
+<reg_short_dscr>:
+Priority-based flow control configuration
+------------------------------
+<field_public_text>:
+Enable PFC per priority. Bit n enables PFC on priority n.
+------------------------------
+<field_public_text>:
+Configures the link speed. This is used to evaluate the time specifications in incoming pause frames.
+------------------------------
+<field_enc>:
+0: 12000 Mbps
+1: 10000 Mbps
+2: 2500 Mbps
+3: 1000 Mbps
+4: 100 Mbps
+5: 10 Mbps
+6: 5000 Mbps
+7: Reserved
+------------------------------
+<reg_short_dscr>:
+PFC timer max count per port speed
+------------------------------
+<field_public_text>:
+The PFC pause timer max value per port speed.
+
+Index 0: 25G
+Index 1: 10G
+Index 2: 2G5
+Index 3: 1G
+Index 4: 100M
+Index 5: 10M
+Index 6: 5G
+------------------------------
+<field_enc>:
+Set to the number of systen clock cycles in 512 bit times.
+If set to 0 default values matching a system clock frequency of 625 MHz will be used.
+------------------------------
+<reggrp_short_dscr>:
+Loopback Watermark Configuration
+------------------------------
+<reggrp_public_text>:
+TBD
+------------------------------
+<reg_short_dscr>:
+Loopback watermark configuration for flow control on virtual devices
+------------------------------
+<field_public_text>:
+Flow control to QS is set when the FIFO fill level reaches this watermark.
+------------------------------
+<reg_short_dscr>:
+Configuration of LBK FIFOs
+------------------------------
+<field_public_text>:
+Flush all data in the FIFO
+------------------------------
+<reggrp_short_dscr>:
+Loopback Block Status registers
+------------------------------
+<reg_short_dscr>:
+Overflow sticky bits
+------------------------------
+<field_public_text>:
+Frames are dropped due to FIFO overflow.
+------------------------------
+<field_enc>:
+bitmask per port.
+------------------------------
+<reg_short_dscr>:
+Aging sticky bits
+------------------------------
+<field_public_text>:
+Frames are dropped due to aging in loopback FIFO.
+------------------------------
+<field_enc>:
+bitmask per port.
+------------------------------
+<reggrp_short_dscr>:
+Access core memory
+------------------------------
+<reg_short_dscr>:
+Core reset control
+------------------------------
+<reg_public_text>:
+Controls reset and initialization of the switching core. Proper startup sequence is:
+- Enable memories
+- Initialize memories
+- Enable core
+------------------------------
+<field_public_text>:
+Initialize core memories. Field is automatically cleared when operation is complete (approx. 40 us).
+------------------------------

@@ -1,0 +1,1672 @@
+=== DOCUMENTATION FOR TARGET: DEV1G ===
+
+<target_short_dscr>:
+Device 2G5
+------------------------------
+<target_public_text>:
+The device operates as an interface between the TAXI bus and SGMII / USXGMII macro supporting data rates of 10M, 100M, 1000Mbps, and 2.5 Gbps. The device includes PCS, MAC and rate adaption logic.
+------------------------------
+<reggrp_short_dscr>:
+Dev1g Configuration and Status Registers
+------------------------------
+<reggrp_public_text>:
+Device1g configuration and status register set.
+------------------------------
+<reg_short_dscr>:
+DEV_RST_CTRL register
+------------------------------
+<reg_public_text>:
+Clock/Reset Control Register
+------------------------------
+<field_public_text>:
+"This register selects the port data rate. The no clock options is intended to save power for unused ports.
+Note: The speed is also dependent on the clock the device is provided with. For 2G5-SGMII mode the clock supplied should be is 312.5M, then speed is multiplied by a factor of 2.5 even though speed_sel value is 2 which is 1000Mbps."
+------------------------------
+<field_enc>:
+0: 10 Mbps
+1: 100 Mbps
+2: 1000 Mbps
+3: No clock.
+4-5: Reserved.
+6: USXGMII 2500 Mbps. Note: Only used in USXGMII mode. In 2G5-SGMII mode use encoding 2 as the MAC/PCS clock is directly derived from the overclocked SerDes.
+7: Reserved.
+------------------------------
+<field_public_text>:
+Reset the USXGMII PCS tx clock domain in the DEV1G. The setup registers in the DEV1G is not affected by this reset.
+------------------------------
+<field_enc>:
+0: No reset
+1: Reset. Note: USX_PCS_TX_RST is NOT a one-shot operation. The clock domain remains reset until a '0' is written to USX_PCS_TX_RST.
+------------------------------
+<field_public_text>:
+Reset the USXGMII_PCS rx clock domain in the DEV1G. The setup registers in the DEV1G is not affected by this reset.
+------------------------------
+<field_enc>:
+0: No reset
+1: Reset. Note: USX_PCS_RX_RST is NOT a one-shot operation. The clock domain remains reset until a '0' is written to USX_PCS_RX_RST.
+------------------------------
+<field_public_text>:
+Reset the PCS tx clock domain in the DEV1G. The setup registers in the DEV1G is not affected by this reset.
+------------------------------
+<field_enc>:
+0: No reset
+1: Reset. Note: PCS_TX_RST is NOT a one-shot operation. The clock domain remains reset until a '0' is written to PCS_TX_RST.
+------------------------------
+<field_public_text>:
+Reset the PCS rx clock domain in the DEV1G. The setup registers in the DEV1G is not affected by this reset.
+------------------------------
+<field_enc>:
+0: No reset
+1: Reset. Note: PCS_RX_RST is NOT a one-shot operation. The clock domain remains reset until a '0' is written to PCS_RX_RST.
+------------------------------
+<field_public_text>:
+Reset the MAC tx clock domain in the DEV1G. The setup registers in the DEV1G is not affected by this reset.
+------------------------------
+<field_enc>:
+0: No reset
+1: Reset. Note: MAC_TX_RST is NOT a one-shot operation. The clock domain remains reset until a '0' is written to MAC_TX_RST.
+------------------------------
+<field_public_text>:
+Reset the MAC rx clock domain in the DEV1G. The setup registers in the DEV1G is not affected by this reset.
+------------------------------
+<field_enc>:
+0: No reset
+1: Reset. Note: MAC_RX_RST is NOT a one-shot operation. The clock domain remains reset until a '0' is written to MAC_RX_RST.
+------------------------------
+<reg_short_dscr>:
+Device Debug Config
+------------------------------
+<reg_public_text>:
+Device1G Debug Configuration Register
+------------------------------
+<field_public_text>:
+Holds the ID of the last pre counter that had an overflow. The user has to check the PRE_CNT_OFLW_STICKY up front. See the IS0076 for a mapping of the counter ID to the counter type.
+------------------------------
+<field_enc>:
+0: Pre counter 0 had an overflow (if sticky bit is set)
+1: Pre counter 1 had an overflow
+...
+------------------------------
+<field_public_text>:
+Determines the required fill level that must be EXCEEDED before the buffer full signal to the DSM is asserted.
+------------------------------
+<field_enc>:
+0: The 'buffer full' signal is asserted as soon as the Tx FIFO holds any data
+1: The 'buffer full' signal is asserted if the Tx FIFO holds more than 1 data word
+2: The 'buffer full' signal is asserted if the Tx FIFO holds more than 2 data word
+...
+31: The 'buffer full' signal is disabled
+------------------------------
+<field_public_text>:
+Controls the FCS update function of the device.
+------------------------------
+<field_enc>:
+0: Use information from DSM to control FCS updating
+1: Always update FCS
+2: Never update FCS
+3: Reserved
+------------------------------
+<field_public_text>:
+Disable of advanced rate control feature.
+------------------------------
+<field_enc>:
+0: Advanced rate control active
+1: Advanced rate control disabled
+------------------------------
+<field_public_text>:
+The TX_Size and the TX_Backoff events share the same counters. Per default the counters count TX_SIZE events. BACKOFF_CNT_ENA switches the counter to count backup events instead.
+------------------------------
+<field_enc>:
+0: Count TX_SIZE events
+1: Count TX_BACKOFF events
+------------------------------
+<reg_short_dscr>:
+Configuration for the port protection feature
+------------------------------
+<reg_public_text>:
+This register is used to configure the port protection feature of the device.
+------------------------------
+<field_public_text>:
+Indicates from which port egress data must be copied and transmitted at this Ethernet port. The port from which egress data is copied must always be a port that is closer to the ASM. I.e. DEV_X may be configured to snoop egress data destined for DEV_X+n, where DEV_X+n is closer to the ASM - but NOT vice versa.
+------------------------------
+<field_enc>:
+0: Reserved
+1: Egress data destined for DEV_1 is also transmitted by this device
+2: Egress data destined for DEV_2 is also transmitted by this device
+...
+------------------------------
+<field_public_text>:
+Enables snooping of egress data from another port. The port from which egress data is copied and transmitted at the Ethernet port is determined by the PORT_PROTECT_ID configuration.
+------------------------------
+<field_enc>:
+0: Port protection is disabled
+1: Port protection is enabled
+------------------------------
+<reg_short_dscr>:
+Loopback configuration
+------------------------------
+<field_public_text>:
+When taxi loopback is enabled data received on the taxi input will be passed through untouched to the taxi output. The loopback will work without an active MAC clock. The device statistics will not be updated when the loopback is enabled.
+------------------------------
+<reg_short_dscr>:
+USXGMII Tx rate adaptation FIFO threshold control
+------------------------------
+<reg_public_text>:
+Set the add and drop thresholds for the Tx rate adaptation (radapt) FIFO
+------------------------------
+<field_public_text>:
+One-shot that causes the Tx rate adaptation FIFO to be cleared and reset. Bit is reset by hardware.
+------------------------------
+<field_enc>:
+0: No action
+1: Clear FIFO
+------------------------------
+<field_public_text>:
+Set the minimum inter-frame gap to maintain during rate adaptation when dropping transactions. Setting the value to 1 means that 1 idle or ordered set is kept after a terminate. When set to 2 or 3, that many idle or ordered set transactions are kept. Each transaction is 4 bytes.
+------------------------------
+<field_enc>:
+0: INVALID
+1: 1 Idle/O set column maintained
+2: 2 Idle/O set column maintained
+3: 3 Idle/O set column maintained
+------------------------------
+<field_public_text>:
+Set the add threshold in the FIFO. Level is in 72-bit words.
+------------------------------
+<field_public_text>:
+Set the drop threshold in the FIFO. Level is in 72-bit words.
+------------------------------
+<reg_short_dscr>:
+USXGMII configuration register for GMII to XGMII and XGMII to GMII mapping.
+------------------------------
+<reg_public_text>:
+USXGMII configuration register for GMII to XGMII and XGMII to GMII mapping.
+------------------------------
+<field_public_text>:
+Compare IEEE802.3 figure 46-11 Link Fault Signaling State Diagram. Configures the number of columns received not containing a fault_sequence required to get back into the INIT state. Should be set to 127 for standard operation mode. Might be reduced in USXGMII mode in network port speeds that require a replication size the replicator will remove some of the idle samples.
+------------------------------
+<field_enc>:
+Number of non-fault ordered sets required to get back to INIT state.
+------------------------------
+<field_public_text>:
+Compare IEEE802.3 figure 46-11 Link Fault Signaling State Diagram. Configures the number of columns received containing a fault_sequence required to get into FAULT state. Should be set to 3 for standard operation mode. Might be reduced in USXGMII mode for network port speeds that require a replication since the replicator will remove some of the fault_sequence samples.
+------------------------------
+<field_enc>:
+Number of fault ordered sets required to get to FAULT state.
+------------------------------
+<field_public_text>:
+LFS Unidirectional mode enable. Implementation of 802.3 clause 66. When asserted, this enables MAC to transmit data during reception of Local Fault and Remote Fault ordered sets from the PHY. 
+
+When in Unidirectional mode:
+When receiving LF, frames are transmitted separated by RF ordered sets.
+When receiving RF, frames are transmitted separated by IDLE symbols
+------------------------------
+<field_enc>:
+'0' : LFS unidirectional mode is disabled
+'1' : LFS unidirectional mode is enabled
+------------------------------
+<field_public_text>:
+Link Fault Signaling Mode Enable: If enabled, the transmitter reacts on received Link Fault indications.
+------------------------------
+<field_enc>:
+'0': Ignore Link Faults detected by the MAC receiver module
+'1': React on detected Link Faults and transmit the appropriate Sequence Ordered Set.
+------------------------------
+<reg_short_dscr>:
+USXGMII Rx rate adaptation FIFO threshold control
+------------------------------
+<reg_public_text>:
+Set the add and drop thresholds for the Rx rate adaptation (radapt) FIFO
+------------------------------
+<field_public_text>:
+One-shot that causes the Rx rate adaptation FIFO to be cleared and reset. Bit is reset by hardware.
+------------------------------
+<field_enc>:
+0: No action
+1: Clear FIFO
+------------------------------
+<field_public_text>:
+Set the minimum inter-frame gap to maintain during rate adaptation when dropping transactions. Setting the value to 1 means that 1 Idle or ordered set is kept after a terminate. When set to 2 or 3, that many idle or ordered set transactions are kept. Each transaction is 4 bytes.
+------------------------------
+<field_enc>:
+0: INVALID
+1: 1 Idle/O set column maintained
+2: 2 Idle/O set column maintained
+3: 3 Idle/O set column maintained
+------------------------------
+<field_public_text>:
+Set the add threshold in the FIFO. Level is in 72-bit words.
+------------------------------
+<field_public_text>:
+Set the drop threshold in the FIFO. Level is in 72-bit words.
+------------------------------
+<reg_short_dscr>:
+Control Energy Efficient Ethernet operation.
+------------------------------
+<field_public_text>:
+Enable EEE operation on the port.
+
+A port enters the low power mode when no egress queues have data ready.
+
+The port is activated when one of the following conditions is true:
+- A queue has been non-empty for EEE_TIMER_AGE.
+- A queue has more than EEE_HIGH_FRAMES frames pending.
+- A queue has more than EEE_HIGH_BYTES bytes pending.
+- A queue is marked as a fast queue, and has data pending.
+------------------------------
+<field_public_text>:
+Maximum time frames in any queue must wait before the port is activated. The default value corresponds to 48 us.
+------------------------------
+<field_enc>:
+Time = 4**(EEE_TIMER_AGE/16) * (EEE_TIMER_AGE mod 16) microseconds
+------------------------------
+<field_public_text>:
+Time from the egress port is activated until frame transmission is restarted. Default value corresponds to 16 us.
+------------------------------
+<field_enc>:
+Time = 4**(EEE_TIMER_WAKEUP/16) * (EEE_TIMER_WAKEUP mod 16) microseconds
+------------------------------
+<field_public_text>:
+When all queues are empty, the port is kept active until this time has passed. Default value corresponds to 5 us.
+------------------------------
+<field_enc>:
+Time = 4**(EEE_TIMER_HOLDOFF/16) * (EEE_TIMER_HOLDOFF mod 16) microseconds
+------------------------------
+<field_public_text>:
+Status bit indicating whether port is in low-power-idle due to the LPI algorithm (EEE_CFG). If set, transmissions are held back.
+------------------------------
+<reggrp_short_dscr>:
+USXGMII ANEG Configuration Status Registers
+------------------------------
+<reggrp_public_text>:
+Configuration and status register set for USXGMII Auto-Negotiation block
+------------------------------
+<reg_short_dscr>:
+USXGMII ANEG Configuration
+------------------------------
+<reg_public_text>:
+USXGMII Auto-Negotiation configuration register
+------------------------------
+<field_public_text>:
+MAC UsxgmiiChannelInfo: Holds the 16-bit Usxgmii Channel Information that needs to be advertised to PHY
+------------------------------
+<field_public_text>:
+Specifies the Link Timer Value in duration corresponding to multiples of 256 datapath clock cycles.
+ A configuration value of 0 is invalid. 
+ A value of 1 indicates 256 Datapath clock cycles i.e. 
+       for a data path clock frequency of 161MHz(6.2ns)   the Link timer value would be 1x256x6.2ns   = ~1.6us
+       for a data path clock frequency of   80MHz(12.4ns) the Link timer value would be 1x256x12.4ns = ~3.2us
+A value of 0xFFF(4095) indicates 4095 x 256 Datapath clock cycles i.e. 
+       for a data path clock frequency of 161MHz(6.2ns)   the Link timer value would be 4095x256x6.2ns   = ~6.5ms
+       for a data path clock frequency of   80MHz(12.4ns) the Link timer value would be 4095x256x12.4ns = ~13ms
+
+The clock frequency used is unpaused clock frequency i.e. paused clocks are also counted for the 256 clock count.
+
+This configuration is supposed to set/changed before the ANEG is enabled or restarted.
+------------------------------
+<field_enc>:
+0: Reserved
+1       : 1 x 256 x Datapath clock cycle duration.
+2       : 2 x 256 x Datapath clock cycle duration
+3       : 3 x 256 x Datapath clock cycle duration
+...
+4094 : 4094 * 256 * Datapath clock cycle duration
+4095 : 4095 * 256 * Datapath clock cycle duration
+------------------------------
+<field_public_text>:
+Software Resolve Abilities
+------------------------------
+<field_enc>:
+0: If Auto Negotiation fails (no matching HD or FD capabilities) the link is disabled
+1: The result of an Auto Negotiation is ignored - the link can be setup via software. This bit must be set in SGMII mode.
+------------------------------
+<field_public_text>:
+Block Lock Hysteresis Enable. This is a configuration to control the an_sync_status of USXGMII ANEG w.r.t. block lock. Setting this bit will set an_sync_status to fail link_timer duration after the block_lock is set to false. If the bit is cleared, loss of block lock will set an_sync_status to fail causing an autoneg restart as is mentioned in USXGMII Specification.
+------------------------------
+<field_enc>:
+1: an_sync_status is cleared after link timer duration of block_lock = 0
+0: an_sync_status is cleared immediately after block_lock = 0
+------------------------------
+<field_public_text>:
+Auto Negotiation Restart
+------------------------------
+<field_enc>:
+0: No action
+1: Restart Auto Negotiation
+------------------------------
+<field_public_text>:
+Auto Negotiation Enable
+------------------------------
+<field_enc>:
+0: Auto Negotiation Disabled
+1: Auto Negotiation Enabled
+------------------------------
+<reg_short_dscr>:
+USXGMII ANEG Status
+------------------------------
+<reg_public_text>:
+USXGMII Auto-negotiation status register
+------------------------------
+<field_public_text>:
+PHY UsxgmiiChannelInfo: Holds the 16-bit Usxgmii Channel Information received from PHY
+------------------------------
+<field_public_text>:
+USXGMII ANEG Link down status from Aneg State Machine.
+------------------------------
+<field_enc>:
+0: Link is up
+1: Link is down
+------------------------------
+<field_public_text>:
+Sticky bit indicating whether a new page has been received.
+------------------------------
+<field_enc>:
+0 : No new page received.
+1 : New page received.
+Bit is cleared by writing a 1 to this position.
+------------------------------
+<field_public_text>:
+Resolve priority
+------------------------------
+<field_enc>:
+0: ANEG is in progress
+1: ANEG nearly finished - priority can be resolved (via software)
+------------------------------
+<field_public_text>:
+Auto Negotiation Complete
+------------------------------
+<field_enc>:
+0: No Auto Negotiation has been completed
+1: Indicates that an Auto Negotiation has completed successfully
+------------------------------
+<reg_short_dscr>:
+USXGMII PCS Signal Detect Configuration
+------------------------------
+<reg_public_text>:
+USXGMII PCS Signal Detect Configuration
+------------------------------
+<field_public_text>:
+Signal detect polarity: The signal level on signal_detect input pin must be equal to SD_POL to indicate signal detection (SD_ENA must be set)
+------------------------------
+<field_enc>:
+0: Signal Detect input pin must be '0' to indicate a signal detection
+1: Signal Detect input pin must be '1' to indicate a signal detection
+------------------------------
+<field_public_text>:
+Signal Detect Enable
+------------------------------
+<field_enc>:
+0: The Signal Detect input pin is ignored. The PCS assumes an active Signal Detect at all times
+1: The Signal Detect input pin is used to determine if a signal is detected
+------------------------------
+<reg_short_dscr>:
+USXGMII PCS status register
+------------------------------
+<reg_public_text>:
+USXGMII PCS status register
+------------------------------
+<field_public_text>:
+Indicates if USXGMII PCS has reached block lock state
+------------------------------
+<field_enc>:
+0: USXGMII PCS is not in block lock state,
+1: USXGMII PCS is in block lock state
+------------------------------
+<reggrp_short_dscr>:
+MAC1G Configuration and Status Registers
+------------------------------
+<reggrp_public_text>:
+The 1G MAC module contains configuration and status registers related to the MAC module of the 1G Device.
+------------------------------
+<reg_short_dscr>:
+Mode Configuration Register
+------------------------------
+<field_public_text>:
+Receiver Module Enable.
+------------------------------
+<field_enc>:
+'0': Receiver Module Disabled
+'1': Receiver Module Enabled
+------------------------------
+<field_public_text>:
+Transmitter Module Enable.
+------------------------------
+<field_enc>:
+'0': Transmitter Module Disabled
+'1': Transmitter Module Enabled
+------------------------------
+<reg_short_dscr>:
+Mode Configuration Register
+------------------------------
+<field_public_text>:
+Reserved, must set to its default value.
+------------------------------
+<field_public_text>:
+Enables Full-Duplex:
+------------------------------
+<field_enc>:
+'0': Half-duplex
+'1': Full-duplex.
+------------------------------
+<reg_short_dscr>:
+Max Length Configuration Register
+------------------------------
+<field_public_text>:
+The maximum frame length accepted by the Receive Module of the MAC. If the length is exceeded, this is indicated in the Statistics Engine (RX_OVERSIZE). The maximum length is automatically adjusted to accommodate maximum sized frames containing single/double VLAN tag(s) - given that the MAC is configured to be single/double VLAN aware.
+------------------------------
+<reg_short_dscr>:
+VLAN / Service tag configuration register
+------------------------------
+<reg_public_text>:
+The MAC can be configured to accept 0, 1 and 2 tags and the TAG value can be user-defined.
+------------------------------
+<field_public_text>:
+This field defines a 1st programmable VLAN/Service tag (custom TPID 1).\nThis field together with the TAG_ID2 and TAG_ID3 - as well as the default tags 0x8100 and 0x88A8 - are used for ALL possible tag positions (up to 3). Any order of known VLAN/Service tags (0x8100, 0x88A8, TAG_ID, TAG_ID2, TAG_ID3) is found. VLAN/Service tag awareness depends on VLAN_AWR_ENA and PB_ENA.
+------------------------------
+<field_public_text>:
+When set, single, double and triple tagged frames are allowed to be 4/8/12 bytes longer than the MAXLEN configuration.
+------------------------------
+<field_public_text>:
+Provider Bridge Enable (multiple VLAN awareness)
+------------------------------
+<field_enc>:
+0: The MAC operates in a single VLAN aware mode.
+1: The MAC operates in a double VLAN aware mode.
+2: The MAC operates in a triple VLAN aware mode.
+3: Reserved.
+For VLAN awareness to take effect VLAN_AWR_ENA must be set to '1'.
+------------------------------
+<field_public_text>:
+VLAN Awareness: Enables the MAC to work in a VLAN aware environment.
+------------------------------
+<field_enc>:
+'0': VLAN awareness disabled.
+'1': VLAN awareness enabled.
+------------------------------
+<reg_short_dscr>:
+VLAN / Service tag configuration register2
+------------------------------
+<reg_public_text>:
+This register contains two additional freely programmable custom VLAN tags.
+------------------------------
+<field_public_text>:
+This field defines a 3rd programmable VLAN/Service tag (custom TPID 3).
+------------------------------
+<field_enc>:
+tbd
+------------------------------
+<field_public_text>:
+This field defines a 2nd programmable VLAN/Service tag (custom TPID 2).
+------------------------------
+<field_enc>:
+tbd
+------------------------------
+<reg_short_dscr>:
+Advanced Check Feature Configuration Register
+------------------------------
+<field_public_text>:
+Length Drop Enable:\nConfigures the Receive Module to drop frames in reference to in-range and out-of-range errors:
+------------------------------
+<field_enc>:
+'0': Length Drop Disabled
+'1': Length Drop Enabled.
+------------------------------
+<reg_short_dscr>:
+Inter Frame Gap Configuration Register
+------------------------------
+<field_public_text>:
+Used to adjust the duration of the inter-frame gap in the Tx direction and must be set according to the speed and duplex settings. For correct settings, see the SW API.
+------------------------------
+<field_enc>:
+TBA: Add correct values found by validation. 10/100 Mbps, HDX, FDX 0xXX, 0xXX
+1000/2500 Mbps: 0xXX.
+------------------------------
+<field_public_text>:
+Used to adjust the duration of the second part of the inter-frame gap in the Rx direction and must be set according to the speed and duplex settings. For correct settings, see the SW API.
+------------------------------
+<field_enc>:
+TBA: Add correct values found by validation. 10/100 Mbps, HDX, FDX: 0xXX, 0xXX
+1000/2500 Mbps: 0xXX.
+------------------------------
+<field_public_text>:
+Used to adjust the duration of the first part of the inter-frame gap in the Rx direction and must be set according to the speed settings. For correct settings, see the SW API.
+------------------------------
+<field_enc>:
+TBA: Add correct values found by validation. 10/100 Mbps: 0xXX
+1000/2500 Mbps: 0xXX.
+------------------------------
+<reg_short_dscr>:
+half-duplex Configuration Register
+------------------------------
+<field_public_text>:
+Seed value loaded into the PRBS of the MAC.
+------------------------------
+<field_enc>:
+Used to prevent excessive collision events.
+------------------------------
+<field_public_text>:
+Load SEED value into PRNG register. A SEED value is loaded into the PRNG register of the MAC, when SEED_LOAD is asserted. After a load, the SEED_LOAD must be deasserted.
+------------------------------
+<field_enc>:
+'0': Do not load SEED value
+'1': Load SEED value.
+------------------------------
+<field_public_text>:
+This bit is used to setup the MAC to retransmit a frame after an early collision even though 16 (or more) early collisions have occurred. This feature violates the IEEE 802.3 standard and should only be used when running in HDX flow control, which is not defined in the IEEE standard anyway.
+------------------------------
+<field_enc>:
+'0': A frame will be discarded and counted as an excessive collision if 16 collisions occur for this frame.
+'1': The MAC will retransmit a frame after an early collision, regardless of the number of previous early collisions. The backoff sequence will be reset after every 16 collisions.
+------------------------------
+<field_public_text>:
+Adjustment of early/late collision boundary:\nThis bitgroup is used to adjust the MAC so that a collision on a shared transmission medium before bit 512 is handled as an early collision, whereas a collision after bit 512 is handled as a late collision, i.e. no retransmission is performed.
+------------------------------
+<reg_short_dscr>:
+Sticky Bit Register
+------------------------------
+<field_public_text>:
+Sticky bit indicating that an inter packet gap shrink was detected (IPG < 12 bytes).
+------------------------------
+<field_public_text>:
+Sticky bit indicating that a preamble shrink was detected (preamble < 8 bytes).
+------------------------------
+<field_enc>:
+'0': no preamble shrink was detected
+'1': a preamble shrink was detected one or more times
+Bit is cleared by writing a '1' to this position.
+------------------------------
+<field_public_text>:
+Sticky bit indicating that junk was received (bytes not recognized as a frame).
+------------------------------
+<field_enc>:
+'0': no junk was received
+'1': junk was received one or more times
+Bit is cleared by writing a '1' to this position.
+------------------------------
+<field_public_text>:
+Sticky bit indicating that the transmit MAC asked the host for a frame retransmission.
+------------------------------
+<field_enc>:
+'0': no tx retransmission was initiated
+'1': one or more tx retransmissions were initiated
+Bit is cleared by writing a '1' to this position.
+------------------------------
+<field_public_text>:
+Sticky bit indicating that the transmit host issued a jamming signal.
+------------------------------
+<field_enc>:
+'0': the transmit host issued no jamming signal
+'1': the transmit host issued one or more jamming signals
+Bit is cleared by writing a '1' to this position.
+------------------------------
+<field_public_text>:
+Sticky bit indicating that the MAC transmit FIFO has overrun.
+------------------------------
+<field_public_text>:
+Sticky bit indicating that the transmit host initiated abort was executed.
+------------------------------
+<reggrp_short_dscr>:
+PCS 1G Configuration Status Registers
+------------------------------
+<reggrp_public_text>:
+Configuration and status register set for PCS1G
+------------------------------
+<reg_short_dscr>:
+PCS1G Configuration
+------------------------------
+<reg_public_text>:
+PCS1G main configuration register
+------------------------------
+<field_public_text>:
+Set type of link_status indication at CPU-System
+------------------------------
+<field_enc>:
+0: Sync_status (from PCS synchronization state machine)
+1: Bit 15 of PCS1G_ANEG_STATUS.lp_adv_ability (Link up/down)
+------------------------------
+<field_public_text>:
+PCS enable
+------------------------------
+<field_enc>:
+0: Disable PCS
+1: Enable PCS
+------------------------------
+<reg_short_dscr>:
+PCS1G Mode Configuration
+------------------------------
+<reg_public_text>:
+PCS1G mode configuration
+------------------------------
+<field_public_text>:
+Unidirectional mode enable. Implementation of 802.3, Clause 66. When asserted, this enables MAC to transmit data independent of the state of the receive link.
+------------------------------
+<field_enc>:
+0: Unidirectional mode disabled
+1: Unidirectional mode enabled
+------------------------------
+<field_public_text>:
+Save preamble. Preamble is fully transmitted and not shorted due to IDLE sequencing
+------------------------------
+<field_enc>:
+0: Disable
+1: Enable
+------------------------------
+<field_public_text>:
+Selection of PCS operation
+------------------------------
+<field_enc>:
+0: PCS is used in SERDES mode
+1: PCS is used in SGMII mode
+------------------------------
+<reg_short_dscr>:
+PCS1G Signal Detect Configuration
+------------------------------
+<reg_public_text>:
+PCS1G signal_detect configuration
+------------------------------
+<field_public_text>:
+Signal detect selection (select input for internal signal_detect line)
+------------------------------
+<field_enc>:
+0: Select signal_detect line from hardmacro
+1: Select external signal_detect line
+------------------------------
+<field_public_text>:
+Signal detect polarity: The signal level on signal_detect input pin must be equal to SD_POL to indicate signal detection (SD_ENA must be set)
+------------------------------
+<field_enc>:
+0: Signal Detect input pin must be '0' to indicate a signal detection
+1: Signal Detect input pin must be '1' to indicate a signal detection
+------------------------------
+<field_public_text>:
+Signal Detect Enable
+------------------------------
+<field_enc>:
+0: The Signal Detect input pin is ignored. The PCS assumes an active Signal Detect at all times
+1: The Signal Detect input pin is used to determine if a signal is detected
+------------------------------
+<reg_short_dscr>:
+PCS1G Aneg Configuration
+------------------------------
+<reg_public_text>:
+PCS1G Auto-negotiation configuration register
+------------------------------
+<field_public_text>:
+Advertised Ability Register: Holds the capabilities of the device as described IEEE 802.3, Clause 37.
+------------------------------
+<field_public_text>:
+Software Resolve Abilities
+------------------------------
+<field_enc>:
+0: If Auto Negotiation fails (no matching HD or FD capabilities) the link is disabled.
+1: The result of an Auto Negotiation is ignored - the link can be setup through software. This bit must be set in SGMII mode.
+------------------------------
+<field_public_text>:
+Auto Negotiation Restart
+------------------------------
+<field_enc>:
+0: No action
+1: Restart Auto Negotiation
+------------------------------
+<field_public_text>:
+Auto Negotiation Enable
+------------------------------
+<field_enc>:
+0: Auto Negotiation Disabled
+1: Auto Negotiation Enabled
+------------------------------
+<reg_short_dscr>:
+PCS1G Aneg Next Page Configuration
+------------------------------
+<reg_public_text>:
+PCS1G Auto-negotiation configuration register for next-page function
+------------------------------
+<field_public_text>:
+Next page register: Holds the next-page information as described in IEEE 802.3, Clause 37
+------------------------------
+<field_public_text>:
+Next page loaded
+------------------------------
+<field_enc>:
+0: Next page is free and can be loaded
+1: Next page register has been filled (to be set after np_tx has been filled)
+------------------------------
+<reg_short_dscr>:
+PCS1G Loopback Configuration
+------------------------------
+<reg_public_text>:
+PCS1G loopback configuration register
+------------------------------
+<field_public_text>:
+Loops data in PCS (TBI side) from egress direction to ingress direction. The Rx clock is automatically set equal to the Tx clock
+------------------------------
+<field_enc>:
+0: TBI Loopback Disabled
+1: TBI Loopback Enabled
+------------------------------
+<reg_short_dscr>:
+PCS1G ANEG Status Register
+------------------------------
+<reg_public_text>:
+PCS1G Auto-negotiation status register
+------------------------------
+<field_public_text>:
+Advertised abilities from link partner as described in IEEE 802.3, Clause 37
+------------------------------
+<field_public_text>:
+Resolve priority
+------------------------------
+<field_enc>:
+0: ANEG is in progress
+1: ANEG nearly finished - priority can be resolved (through software)
+------------------------------
+<field_public_text>:
+Status indicating whether a new page has been received.
+------------------------------
+<field_enc>:
+0: No new page received
+1: New page received
+Bit is cleared by writing a 1 to this position.
+------------------------------
+<field_public_text>:
+Auto Negotiation Complete
+------------------------------
+<field_enc>:
+0: No Auto Negotiation has been completed
+1: Indicates that an Auto Negotiation has completed successfully
+------------------------------
+<reg_short_dscr>:
+PCS1G Aneg Next Page Status Register
+------------------------------
+<reg_public_text>:
+PCS1G Auto-negotiation next page status register
+------------------------------
+<field_public_text>:
+Next page ability register from link partner as described in IEEE 802.3, Clause 37
+------------------------------
+<reg_short_dscr>:
+PCS1G link status
+------------------------------
+<reg_public_text>:
+PCS1G link status register
+------------------------------
+<field_public_text>:
+Additional delay in rx-path; multiply the value of this field by the line-rate bit-period (800ps for 10/100/1000, 320ps for 2G5 mode.) This field is valid when the link is up, it remains constant for as long as the link is up, value may change on link-down event.
+This field shows the number of data bits that is stored in the rx comma-alignment block, values of 0-9 is possible.
+------------------------------
+<field_public_text>:
+Indicates whether or not the selected Signal Detect input line is asserted; does not consider the Polarity
+------------------------------
+<field_enc>:
+0: No signal detected
+1: Signal detected
+------------------------------
+<field_public_text>:
+Indicates whether the link is up or down. A link is up when ANEG state machine is in state LINK_OK or AN_DISABLE_LINK_OK
+------------------------------
+<field_enc>:
+0: Link down
+1: Link up
+------------------------------
+<field_public_text>:
+Indicates if PCS has successfully synchronized
+------------------------------
+<field_enc>:
+0: PCS is out of sync
+1: PCS has synchronized
+------------------------------
+<reg_short_dscr>:
+PCS1G link down counter
+------------------------------
+<reg_public_text>:
+PCS1G link down counter register
+------------------------------
+<field_public_text>:
+Link Down Counter. A counter that counts the number of times a link has been down. The counter does not saturate at 255 and is only cleared when writing 0 to the register
+------------------------------
+<reg_short_dscr>:
+PCS1G sticky register
+------------------------------
+<reg_public_text>:
+PCS1G status register for sticky bits
+------------------------------
+<field_public_text>:
+The sticky bit is set when the link has been down - i.e. if the ANEG state machine has not been in the AN_DISABLE_LINK_OK or LINK_OK state for one or more clock cycles. This occurs if e.g. ANEG is restarted or for example if signal-detect or synchronization has been lost for more than 10 ms (1.6 ms in SGMII mode). By setting the UDLT bit, the required down time can be reduced to 9,77 us (1.56 us)
+------------------------------
+<field_enc>:
+0: Link is up
+1: Link has been down
+Bit is cleared by writing a 1 to this position.
+------------------------------
+<field_public_text>:
+Sticky bit indicating if PCS synchronization has been lost
+------------------------------
+<field_enc>:
+0: Synchronization has not been lost at any time
+1: Synchronization has been lost for one or more clock cycles
+Bit is cleared by writing a 1 to this position.
+------------------------------
+<reg_short_dscr>:
+PCS1G debug status
+------------------------------
+<reg_public_text>:
+PCS1G debug status register
+------------------------------
+<field_public_text>:
+Indicates the mode of the TBI
+------------------------------
+<field_enc>:
+00: Idle mode
+01: Configuration mode
+10: Reserved
+11: Data mode
+------------------------------
+<reg_short_dscr>:
+PCS1G Low Power Idle Configuration
+------------------------------
+<reg_public_text>:
+Configuration register for Low Power Idle (Energy Efficient Ethernet)
+------------------------------
+<field_public_text>:
+QSGMII master/slave selection (only one master allowed per QSGMII). The master drives LPI timing on serdes
+------------------------------
+<field_enc>:
+0: Slave
+1: Master
+------------------------------
+<field_public_text>:
+Assert Low-Power Idle (LPI) in transmit mode
+------------------------------
+<field_enc>:
+0: Disable LPI transmission
+1: Enable LPI transmission
+------------------------------
+<reg_short_dscr>:
+PCS1G wake error counter
+------------------------------
+<reg_public_text>:
+PCS1G Low Power Idle wake error counter (Energy Efficient Ethernet)
+------------------------------
+<field_public_text>:
+Wake Error Counter. A counter that is incremented when the link partner does not send wake-up burst in due time. The counter saturates at 65535 and is cleared when writing 0 to the register
+------------------------------
+<reg_short_dscr>:
+PCS1G Low Power Idle Status
+------------------------------
+<reg_public_text>:
+Status register for Low Power Idle (Energy Efficient Ethernet)
+------------------------------
+<field_public_text>:
+Receiver Low-Power idle occurrence
+------------------------------
+<field_enc>:
+0: No LPI symbols received
+1: Receiver has received LPI symbols
+Bit is cleared by writing a 1 to this position.
+------------------------------
+<field_public_text>:
+Receiver Low-Power Quiet mode
+------------------------------
+<field_enc>:
+0: Receiver not in quiet mode
+1: Receiver is in quiet mode
+------------------------------
+<field_public_text>:
+Receiver Low-Power Idle mode
+------------------------------
+<field_enc>:
+0: Receiver not in low power idle mode
+1: Receiver is in low power idle mode
+------------------------------
+<field_public_text>:
+Transmitter Low-Power idle occurrence
+------------------------------
+<field_enc>:
+0: No LPI symbols transmitted
+1: Transmitter has transmitted LPI symbols
+Bit is cleared by writing a 1 to this position.
+------------------------------
+<field_public_text>:
+Transmitter Low-Power Quiet mode
+------------------------------
+<field_enc>:
+0: Transmitter not in quiet mode
+1: Transmitter is in quiet mode
+------------------------------
+<field_public_text>:
+Transmitter Low-Power Idle mode
+------------------------------
+<field_enc>:
+0: Transmitter not in low power idle mode
+1: Transmitter is in low power idle mode
+------------------------------
+<reggrp_short_dscr>:
+PCS1G Testpattern Configuration and Status Registers
+------------------------------
+<reggrp_public_text>:
+PCS1G testpattern configuration and status register set
+------------------------------
+<reg_short_dscr>:
+PCS1G TSTPAT MODE CFG
+------------------------------
+<reg_public_text>:
+PCS1G testpattern mode configuration register (Frame based pattern 4 and 5 might be not available depending on chip type)
+------------------------------
+<field_public_text>:
+Jitter Test Pattern Select: Enables and selects the jitter test pattern to be transmitted. The jitter test patterns are according to the IEEE 802.3, Annex 36A
+------------------------------
+<field_enc>:
+0: Disable transmission of test patterns
+1: High frequency test pattern - repeated transmission of D21.5 code group
+2: Low frequency test pattern - repeated transmission of K28.7 code group
+3: Mixed frequency test pattern - repeated transmission of K28.5 code group
+4: Long continuous random test pattern (packet length is 1524 bytes)
+5: Short continuous random test pattern (packet length is 360 bytes)
+------------------------------
+<reg_short_dscr>:
+PCS1G TSTPAT STATUS
+------------------------------
+<reg_public_text>:
+PCS1G testpattern status register
+------------------------------
+<field_public_text>:
+Jitter Test Pattern Error Counter. Due to re-sync measures it might happen that single errors are not counted (applies for 2.5gpbs mode). The counter saturates at 255 and is only cleared when writing 0 to the register
+------------------------------
+<field_public_text>:
+Jitter Test Pattern Error
+------------------------------
+<field_enc>:
+0: Jitter pattern checker has found no error
+1: Jitter pattern checker has found an error
+------------------------------
+<field_public_text>:
+Jitter Test Pattern Lock
+------------------------------
+<field_enc>:
+0: Jitter pattern checker has not locked
+1: Jitter pattern checker has locked
+------------------------------
+<reggrp_short_dscr>:
+PCS FX100 Configuration Registers
+------------------------------
+<reggrp_public_text>:
+Configuration register set for PCS 100Base-FX logic
+------------------------------
+<reg_short_dscr>:
+PCS 100Base FX Configuration
+------------------------------
+<reg_public_text>:
+Configuration bit groups for 100Base-FX PCS
+------------------------------
+<field_public_text>:
+Signal detect selection (select input for internal signal_detect line)
+------------------------------
+<field_enc>:
+0: Select signal_detect line from hardmacro
+1: Select external signal_detect line
+------------------------------
+<field_public_text>:
+Signal detect polarity: The signal level on signal_detect input pin must be equal to SD_POL to indicate signal detection (SD_ENA must be set). Use '1' when SD_SEL is set to hardmacro.
+------------------------------
+<field_enc>:
+0: Signal Detect input pin must be '0' to indicate a signal detection
+1: Signal Detect input pin must be '1' to indicate a signal detection
+------------------------------
+<field_public_text>:
+Signal Detect Enable
+------------------------------
+<field_enc>:
+0: The Signal Detect input pin is ignored. The PCS assumes an active Signal Detect at all times
+1: The Signal Detect input pin is used to determine if a signal is detected
+------------------------------
+<field_public_text>:
+Reserved, must set to its default value.
+------------------------------
+<field_public_text>:
+Link hysteresis timer configuration. The hysteresis time lasts [linkhysttimer] * 65536 ns + 2320 ns. If linkhysttime is set to 5, the hysteresis lasts the minimum time of 330 us as specified in IEEE 802.3 - 24.3.3.4.
+------------------------------
+<field_public_text>:
+Unidirectional mode enable. Implementation 0f 802.3 clause 66. When asserted, this enables MAC to transmit data independent of the state of the receive link.
+------------------------------
+<field_enc>:
+0: Unidirectional mode disabled
+1: Unidirectional mode enabled
+------------------------------
+<field_public_text>:
+Far-End Fault (FEF) detection enable
+------------------------------
+<field_enc>:
+0: Disable FEF detection
+1 Enable FEF detection
+------------------------------
+<field_public_text>:
+Far-End Fault (FEF) generation enable
+------------------------------
+<field_enc>:
+0: Disable FEF generation
+1 Enable FEF generation
+------------------------------
+<field_public_text>:
+PCS enable
+------------------------------
+<field_enc>:
+0: Disable PCS
+1: Enable PCS
+------------------------------
+<reggrp_short_dscr>:
+PCS FX100 Status Registers
+------------------------------
+<reggrp_public_text>:
+Status register set for PCS 100Base-FX logic
+------------------------------
+<reg_short_dscr>:
+PCS 100Base FX Status
+------------------------------
+<reg_public_text>:
+Status bit groups for 100Base-FX PCS. Note: If sigdet_cfg != "00" is selected status signal "signal_detect" shows the internal signal_detect value is gated with the status of rx toggle-rate control circuitry.
+------------------------------
+<field_public_text>:
+Data change position in the 10bit words received. Must be used for adjusting PTP ingress delays.
+------------------------------
+<field_public_text>:
+PCS error has occurred
+------------------------------
+<field_enc>:
+1: RX_ER was high while RX_DV active
+0: No RX_ER indication found while RX_DV active
+Bit is cleared by writing a 1 to this position.
+------------------------------
+<field_public_text>:
+Far-end Fault state has occurred
+------------------------------
+<field_enc>:
+1: A Far-End Fault has been detected
+0: No Far-End Fault occurred
+Bit is cleared by writing a 1 to this position.
+------------------------------
+<field_public_text>:
+Stream Start Delimiter error occurred
+------------------------------
+<field_enc>:
+1: A Start-of-Stream Delimiter error has been detected
+0: No SSD error occurred
+Bit is cleared by writing a 1 to this position.
+------------------------------
+<field_public_text>:
+Synchronization lost
+------------------------------
+<field_enc>:
+1: Synchronization lost
+0: No sync lost occurred
+Bit is cleared by writing a 1 to this position.
+------------------------------
+<field_public_text>:
+Current status of Far-end Fault detection state
+------------------------------
+<field_enc>:
+1: Link currently in fault state
+0: Link is in normal state
+------------------------------
+<field_public_text>:
+Current status of selected signal_detect input line
+------------------------------
+<field_enc>:
+1: Proper signal detected
+0: No proper signal found
+------------------------------
+<field_public_text>:
+Status of synchronization
+------------------------------
+<field_enc>:
+1: Link established
+0: No link found
+------------------------------
+<reggrp_short_dscr>:
+Dev1g Configuration and Status Registers
+------------------------------
+<reggrp_public_text>:
+Device configuration and status register set.
+------------------------------
+<reg_short_dscr>:
+PTP Configuration per port
+------------------------------
+<field_public_text>:
+PCH Header Sub-portID. Inserted Tx direction. Checked in Rx direction.
+------------------------------
+<field_public_text>:
+Enable PTP rewriting on the port.
+------------------------------
+<field_public_text>:
+Configures the time domain this port is assigned to. This domain assignment must be made before the central counters in DEVCPU block is enabled.
+------------------------------
+<field_public_text>:
+Enable insertion of PCH in preamble on the port
+------------------------------
+<field_enc>:
+00: No PCH in transmitted frames
+01: PCH added on transmitted frames
+10: PCH added with encryption bit set
+11: PCH added with encryption bit set to inverted SMAC(40), which is then cleared.#xD
+------------------------------
+<field_public_text>:
+Set mode for ingress timestamps, in terms of nsec.subns bit widths.
+------------------------------
+<field_enc>:
+000: No PCH expected
+001: 32.0 mode
+010: 28.4 mode
+011: 24.8 mode
+100: 16.16 mode
+101,110,111: Reserved
+------------------------------
+<reg_short_dscr>:
+PTP Configuration per port
+------------------------------
+<field_public_text>:
+Time in ns/256 to subtract from timestamper in the ingress direction to compensate for static delay through the physical encoding layers.
+------------------------------
+<reg_short_dscr>:
+PTP Configuration per port
+------------------------------
+<field_public_text>:
+Time in ns/256 to add to timestamper in the egress direction to compensate for static delay through the physical encoding layers.
+------------------------------
+<reg_short_dscr>:
+PTP Predictor Configuration per port
+------------------------------
+<field_public_text>:
+Enables increased accuracy in the time stamping logic, by finding the dynamic phase between port and 1588 clocks.
+------------------------------
+<field_enc>:
+0001: 125 MHz port clock
+0010:  25 MHz port clock
+0011:  2.5 MHz port clock
+0100:  161.13 MHz port clock
+0101:  156.25 MHz port clock
+0110:  312.5 MHz port clock
+0111:  80.566 port clock
+others: Disabled
+------------------------------
+<reg_short_dscr>:
+PTP events per port
+------------------------------
+<field_public_text>:
+An ingress PCH was received with a Sub-portID different than what is configured in PTP_CFG.PCH_SUB_PORT_ID. Error also triggered if PktTy isn't 0 or ExtTy isn't 1
+------------------------------
+<field_public_text>:
+The correction field update went out of range. Valid range is -2^47 to 2^48-1. The frame CF will be changed to the maximum value. This range check is bypassed if ADDS48 mode is in use on the ingress or egress port.
+------------------------------
+<field_public_text>:
+An ingress PCH was processed and failed the CRC8 checksum verification
+------------------------------
+<reg_short_dscr>:
+Configures device transmission options
+------------------------------
+<field_public_text>:
+Configures the minimum sof-sof delay for frames being transmitted on this port. Unit is nano seconds. Cut through forwarded frames can be transmitted with constant delay by proper configuration of this field.
+------------------------------
+<field_public_text>:
+Field returns the maximum delay seen since tx domain was reset. This can be used for calibrating constants latency function.
+------------------------------
+<reg_short_dscr>:
+Configures preempting transmission options
+------------------------------
+<field_public_text>:
+Configures the inter frame gap inserted after a p-frame fragment. The MAC will for such fragments extend the frames, and the gap controller must therefore wait longer than the standard 12, to get standard IFG on the line.
+------------------------------
+<reggrp_short_dscr>:
+High precission event detection Configuration and Status Registers
+------------------------------
+<reggrp_public_text>:
+Access to the high precisson event detection. Replications are for ingress(0) and egress(1), or per load/store controller in the devcpu_ptp target.
+------------------------------
+<reg_short_dscr>:
+Phase detection control
+------------------------------
+<field_public_text>:
+Enable phase detector
+------------------------------
+<field_public_text>:
+Phase detector has lost lock since the clearing of the bit. Can be cleared writing one to this field.>
+          This field become unreliable for event clocks slower than 10 MHz, but phase detection can still be trusted. Slow event clocks are only seen in synchronuous PPS detection.
+------------------------------
+<field_public_text>:
+Reduce the number of slaves cycles to measure period with by 2**value.
+------------------------------
+<field_public_text>:
+Accuracy of lock logic
+------------------------------
+<reg_short_dscr>:
+Phase detection status
+------------------------------
+<reg_public_text>:
+Cycle time detected
+------------------------------
+<field_public_text>:
+Detected event clock period in 4.28 fixedpoint format.
+------------------------------
+<reggrp_short_dscr>:
+Configuration of Mac Merge block for this port
+------------------------------
+<reg_short_dscr>:
+Enables the MAC Merge layer for this port
+------------------------------
+<field_public_text>:
+Process the start of a new Packet while discarding previously received MAC_Merge layer error packet.
+
+Note: In any case, the first frame for which SMD-C was missing, is discarded.
+------------------------------
+<field_enc>:
+'1': The second frame with SMD-S that was received while MM receiver was waiting for SMD-C will be processed.
+'0': The second frame with SMD-S that was received while MM receiver was waiting for SMD-C will be discarded.
+------------------------------
+<field_public_text>:
+Enable the MAC-MERGE Layer Transmit block.
+------------------------------
+<field_enc>:
+0: MAC Merge Transmit block is not enabled. The input of MAC Merge TX is directly given to its output.
+1: MAC Merge Transmit block is enabled, and the incoming frame is processed as per 802.3br
+------------------------------
+<field_public_text>:
+Enable the MAC-MERGE Layer Receive block.
+------------------------------
+<field_enc>:
+0: MAC Merge Receive block is not enabled. The input of MAC Merge RX is directly given to its output.
+1: MAC Merge receive block is enabled, and the incoming frame is processed as per 802.3br
+------------------------------
+<reg_short_dscr>:
+Configuration to control the Preemption Verification-Response behavior of port.
+------------------------------
+<field_public_text>:
+This field configures the wait time between verification attempts to be initiated by this port in milli seconds.
+Valid range of values is from 1 to 128.
+------------------------------
+<field_enc>:
+Valid values are from 1 to 128.
+1 = Wait for 1 ms before initiating verification frame transmission.
+2 = Wait for 2 ms before initiating verification frame transmission and so on.
+------------------------------
+<field_public_text>:
+Disables the verification of preemption capabilities of link partner.
+------------------------------
+<field_enc>:
+'0' - Verification process has to be finished before a port can support preemption.
+'1' - Disable verification process (i.e., that preemption verification process need not be peformed).
+------------------------------
+<reggrp_short_dscr>:
+Statistics for MAC Merge Layer
+------------------------------
+<reggrp_public_text>:
+Statistics for MAC Merge Layer.
+------------------------------
+<reg_short_dscr>:
+Status of MAC Merge layer of this port.
+------------------------------
+<field_public_text>:
+Status bit indicating when a preemptable packet is to be preempted. 
+'1' : A P-frame is being preempted from this MM TX MAC.
+'0' : No P-frames are preempted because of no requests from E-MAC and because of min_frag_size check and because of no hold requests.
+------------------------------
+<field_public_text>:
+Status bit indicating if the last transmitted frame by MM was from a P-MAC.
+'1' - Last transmitted complete frame (not fragment) by MM was from P-MAC.
+'0' - Last transmitted frame by MM was from E-MAC.
+Note: If preemption is not enabled in switch, frames would be processed as E-Frames.
+------------------------------
+<field_enc>:
+'1' - Last transmitted complete frame (not fragment) by MM was from P-MAC.
+'0' - Last transmitted frame by MM was from E-MAC.
+------------------------------
+<field_public_text>:
+Status bit indicating if the last received frame by MM was delivered to P-MAC.
+'1' - Last received complete frame (not fragment) by MM was delivered to P-MAC.
+'0' - Last received frame by MM was delivered to E-MAC.
+Note: When MM is not enabled, then frames are delivered to E-MAC.
+------------------------------
+<field_enc>:
+'1' - Last received complete frame (not fragment) by MM was delivered to P-MAC.
+'0' - Last received frame by MM was delivered to E-MAC.
+------------------------------
+<field_public_text>:
+Sticky bit indicating that a P-Fragment was requested to be transmitted when the preemption verification is unsuccessful or not yet verified or when MM_TX_ENA = 0. Request is ignored and data will be processed using PREEMPTABLE_TX state and never getting preempted.
+------------------------------
+<field_enc>:
+1 - Request to transmit a P-Frame when preemption capabilities are yet to be verified or when MM_TX_ENA = 0.
+0 - No invalid p-frm received.
+Write '1' to clear.
+------------------------------
+<field_public_text>:
+Sticky bit indicating that an unexpected P-Frame has been received by the port when the preemption verification is unsuccessful or not yet verified.
+------------------------------
+<field_enc>:
+1 - Received a P-Frame when the preemption capabilities of the port are yet to be verified or not yet verified.
+0 - No invalid p-frm received.
+Write '1' to clear.
+------------------------------
+<field_public_text>:
+Status of MAC Merge sub-layer verification on the given port.
+------------------------------
+<field_enc>:
+0 : Initial- the verify state diagram is in the INIT_VERIFICATION state.
+1 : Verifying (indicates that verify state diagram is in state VERIFICATION_IDLE, SEND_VERIFY or WAIT_FOR_RESPONSE).
+2 : Verification successful (indicates that the verify state diagram is in state VERIFIED)
+3 : Verification failed (indicates that the verify state diagram is in state VERIFY_FAIL).
+4 : Verification process is Disabled.
+------------------------------
+<field_public_text>:
+A sticky bit indicating there was a change in prmption state of this port.
+Application layer should use this interrupt bit to identify the change in prmpt_active_status and appropriately program prempt_queues in qsys block.
+------------------------------
+<field_public_text>:
+Status bit indicating that preemption is currently active on this port.
+Note: Preemption is active if:
+a) preemption is enabled on that port AND
+b) (preemption capabilities have been verified OR preemption verification has been disabled on that port).
+------------------------------
+<field_enc>:
+'1' - Preemption is currently active on this port.
+'0' - Preemption is not currently active.
+------------------------------
+<reggrp_short_dscr>:
+Device 1G Interrupt Configuration and Status Registers
+------------------------------
+<reggrp_public_text>:
+Interrupt Configuration and Interrupt register for Device 1G
+------------------------------
+<reg_short_dscr>:
+Dev1g Intr Configuration
+------------------------------
+<reg_public_text>:
+Interrupt Mask (Enable) register
+------------------------------
+<field_public_text>:
+Far-end-fault indication found interrupt enable (only PCS_fx100)
+------------------------------
+<field_enc>:
+0: Interrupt disabled
+1: Interrupt enabled
+------------------------------
+<field_public_text>:
+Low Power Idle Transmit interrupt enable (only PCS1g)
+------------------------------
+<field_enc>:
+0: Interrupt disabled
+1: Interrupt enabled
+------------------------------
+<field_public_text>:
+Low Power Idle Receive interrupt enable (only PCS1g)
+------------------------------
+<field_enc>:
+0: Interrupt disabled
+1: Interrupt enabled
+------------------------------
+<field_public_text>:
+ANEG next page receive interrupt enable (PCS1g and USXGMII)
+------------------------------
+<field_enc>:
+0: Interrupt disabled
+1: Interrupt enabled
+------------------------------
+<field_public_text>:
+ANEG Link up interrupt enable (PCS1g and USXGMII)
+------------------------------
+<field_enc>:
+0: Interrupt disabled
+1: Interrupt enabled
+------------------------------
+<field_public_text>:
+ANEG Link down interrupt enable (PCS1g and USXGMII)
+------------------------------
+<field_enc>:
+0: Interrupt disabled
+1: Interrupt enabled
+------------------------------
+<field_public_text>:
+Link up interrupt enable
+------------------------------
+<field_enc>:
+0: Interrupt disabled
+1: Interrupt enabled
+------------------------------
+<field_public_text>:
+Link down interrupt enable
+------------------------------
+<field_enc>:
+0: Interrupt disabled
+1: Interrupt enabled
+------------------------------
+<reg_short_dscr>:
+Dev1g Interrupt Reg
+------------------------------
+<reg_public_text>:
+Interrupt register
+------------------------------
+<field_public_text>:
+Far-end-fault indication found interrupt (only PCS_fx100)
+------------------------------
+<field_enc>:
+0: No interrupt
+1: Interrupt occurred
+Bit is cleared by writing a 1 to this position.
+------------------------------
+<field_public_text>:
+Low Power Idle Transmit interrupt (only PCS1g)
+------------------------------
+<field_enc>:
+0: No interrupt
+1: Interrupt occurred
+Bit is cleared by writing a 1 to this position.
+------------------------------
+<field_public_text>:
+Low Power Idle Receive interrupt (only PCS1g)
+------------------------------
+<field_enc>:
+0: No interrupt
+1: Interrupt occurred
+Bit is cleared by writing a 1 to this position.
+------------------------------
+<field_public_text>:
+ANEG next page receive interrupt (PCS1g and USXGMII)
+------------------------------
+<field_enc>:
+0: No interrupt
+1: Interrupt occurred
+Bit is cleared by writing a 1 to this position.
+------------------------------
+<field_public_text>:
+ANEG Link up interrupt (PCS1g and USXGMII)
+------------------------------
+<field_enc>:
+0: No interrupt
+1: Interrupt occurred
+Bit is cleared by writing a 1 to this position.
+------------------------------
+<field_public_text>:
+ANEG Link down interrupt (PCS1g and USXGMII)
+------------------------------
+<field_enc>:
+0: No interrupt
+1: Interrupt occurred
+Bit is cleared by writing a 1 to this position.
+------------------------------
+<field_public_text>:
+Link up interrupt
+------------------------------
+<field_enc>:
+0: No interrupt
+1: Interrupt occurred
+Bit is cleared by writing a 1 to this position.
+------------------------------
+<field_public_text>:
+Link down interrupt
+------------------------------
+<field_enc>:
+0: No interrupt
+1: Interrupt occurred
+Bit is cleared by writing a 1 to this position.
+------------------------------
+<reg_short_dscr>:
+Dev1g Interrupt Ident
+------------------------------
+<reg_public_text>:
+Pending Interrupts (only enabled interrupts are visible)
+------------------------------
+<field_public_text>:
+Far-end-fault indication found interrupt (only PCS_fx100)
+------------------------------
+<field_enc>:
+0: No interrupt
+1: Interrupt pending
+------------------------------
+<field_public_text>:
+Low Power Idle Transmit interrupt (only PCS1g)
+------------------------------
+<field_enc>:
+0: No interrupt
+1: Interrupt pending
+------------------------------
+<field_public_text>:
+Low Power Idle Receive interrupt (only PCS1g)
+------------------------------
+<field_enc>:
+0: No interrupt
+1: Interrupt pending
+------------------------------
+<field_public_text>:
+ANEG next page receive interrupt (PCS1g and USXGMII)
+------------------------------
+<field_enc>:
+0: No interrupt
+1: Interrupt pending
+------------------------------
+<field_public_text>:
+ANEG Link up interrupt (PCS1g and USXGMII)
+------------------------------
+<field_enc>:
+0: No interrupt
+1: Interrupt pending
+------------------------------
+<field_public_text>:
+ANEG Link down interrupt (PCS1g and USXGMII)
+------------------------------
+<field_enc>:
+0: No interrupt
+1: Interrupt pending
+------------------------------
+<field_public_text>:
+Link up interrupt
+------------------------------
+<field_enc>:
+0: No interrupt
+1: Interrupt pending
+------------------------------
+<field_public_text>:
+Link down interrupt
+------------------------------
+<field_enc>:
+0: No interrupt
+1: Interrupt pending
+------------------------------
+<reggrp_short_dscr>:
+Device 2G5U additional Interrupt Configuration and Status Registers
+------------------------------
+<reggrp_public_text>:
+Interrupt Configuration and Interrupt register for Device 2G5U
+------------------------------
+<reg_short_dscr>:
+Interrupt Source Register
+------------------------------
+<reg_public_text>:
+Interrupt Source Register
+------------------------------
+<field_public_text>:
+USXGMII rate adaptation FIFO interrupt.
+------------------------------
+<field_public_text>:
+LFS: LINK INTERRUPTION state seen in Rx module of XGMII to GMII mapper.
+------------------------------
+<field_enc>:
+'0': The LINK INTERRUPTION has never been seen.
+'1': The LINK INTERRUPTION has been seen.
+Bit is cleared by writing a '1' to this position.
+------------------------------
+<field_public_text>:
+LFS: LOCAL FAULT state seen in Rx module of XGMII to GMII mapper.
+------------------------------
+<field_enc>:
+'0': The LOCAL_FAULT has never been seen.
+'1': The LOCAL_FAULT has been seen.
+Bit is cleared by writing a '1' to this position.
+------------------------------
+<field_public_text>:
+LFS REMOTE FAULT seen in Rx module of XGMII to GMII mapper.
+------------------------------
+<field_enc>:
+'0': The REMOTE_FAULT has never been seen.
+'1': The REMOTE_FAULT has been seen.
+Bit is cleared by writing a '1' to this position.
+------------------------------
+<field_public_text>:
+LFS: REMOTE FAULT state reached in Rx module of XGMII to GMII mapper. Therefor transmit data has been overwritten with idles. Note: The bit is also set if the original data was already idle.
+------------------------------
+<field_enc>:
+'0': Idles have not overwritten transmit data.
+'1': Idles have overwritten transmit data.
+Bit is cleared by writing a '1' to this position.
+------------------------------
+<field_public_text>:
+LFS REMOTE FAULT has been sent in Tx module of GMII to XGMII mapper.
+------------------------------
+<field_enc>:
+'0': REMOTE_FAULT has never been sent.
+'1': REMOTE_FAULT has been sent.
+Bit is cleared by writing a '1' to this position.
+------------------------------
+<reg_short_dscr>:
+Interrupt Enable Register
+------------------------------
+<reg_public_text>:
+Interrupt Enable Register
+------------------------------
+<field_public_text>:
+Set to enable propagation of USXGMII rate adaptation FIFO interrupt.
+------------------------------
+<field_public_text>:
+Set to enable propagation of XGMII to GMII mapper RX_LINK_INTR_STATE interrupt.
+------------------------------
+<field_public_text>:
+Set to enable propagation of XGMII to GMII mapper RX_LOCAL_ERR_STATE interrupt.
+------------------------------
+<field_public_text>:
+Set to enable propagation of XGMII to GMII mapper RX_REMOTE_ERR_STATE interrupt.
+------------------------------
+<field_public_text>:
+Set to enable propagation of GMII to XGMII mapper TX_IDLE_SENT interrupt.
+------------------------------
+<field_public_text>:
+Set to enable propagation of GMII to XGMII mapper TX_REMOTE_ERR_SENT interrupt.
+------------------------------
+<reg_short_dscr>:
+Interrupt Status Register
+------------------------------
+<reg_public_text>:
+Interrupt Status Register
+------------------------------
+<field_public_text>:
+Set if USXGMII rate adaptation FIFO interrupt is currently active (indicating interrupt towards higher level interrupt controller).
+------------------------------
+<field_public_text>:
+Set, if the RX_LINK_INTR_STATE_INTR is pending and enabled.
+------------------------------
+<field_public_text>:
+Set, if the RX_LOCAL_ERR_STATE_INTR is pending and enabled.
+------------------------------
+<field_public_text>:
+Set, if the RX_REMOTE_ERR_STATE_INTR is pending and enabled.
+------------------------------
+<field_public_text>:
+Set, if the is pending and enabled.
+------------------------------
+<field_public_text>:
+Set, if the TX_REMOTE_ERR_SENT_INTR is pending and enabled.
+------------------------------

@@ -1,0 +1,255 @@
+=== DOCUMENTATION FOR TARGET: VCAP_ES2 ===
+
+<target_short_dscr>:
+Versatile Content Aware Processor
+------------------------------
+<reggrp_short_dscr>:
+VCAP operations
+------------------------------
+<reg_short_dscr>:
+Initiation of read/write/move/initialization operations
+------------------------------
+<reg_public_text>:
+Operations on the VCAP cache is done via this register. The UPDATE_CMD field specifies the operation to perform when UPDATE_SHOT is set. For all of the operations it is possible to disable read/write of entries, actions, and/or counter by setting VCAP_UPDATE_CTRL.UPDATE_ENTRY_DIS, VCAP_UPDATE_CTRL.UPDATE_ACTION_DIS, and/or VCAP_UPDATE_CTRL.UPDATE_CNT_DIS respectively. Writing/moving to unimplemented addresses are ignored. Reading/moving from unimplemented addresses returns never-match for entries, and zeros from actions/counters.
+Active rules may only be written to empty (initialized) addresses. Software must not overwrite active rules (unless when initializing rules). To initialize a region of addresses use the init operation with CLEAR_CACHE bits set to '1'. Move operations automatically disable rules when moved; so it is OK when source and destination ranges overlap.
+------------------------------
+<field_public_text>:
+Write and read operations access VCAP memory at address specified by UPDATE_ADDR.
+Move up operation moves one or more VCAP addresses from a high address to a lower address, this is equivalent to decreasing priority of a rule. The starting address is specified by UPDATE_ADDR, the number of addresses (the range) that is moved is defined by VCAP_MV_CFG.MV_SIZE, the distance to move is defined by VCAP_MV_CFG. MV_NUM_POS.
+Move down operation moves one or more VCAP addresses from a low address to a higher address, this is equivalent to increasing priority of a rule. This operation is equivalent to "Move up" except for the direction that it moves addresses, see "Move up" for more details.
+Init operation writes the contents of the cache to one or more VCAP addresses. The starting address is specified by UPDATE_ADDR, the number of addresses (the range) that is written is defined by VCAP_MV_CFG.MV_SIZE. Setting CLEAR_CACHE at the same time as starting the operation will clear the cache and cause the init operation to initialize the range of addresses.
+------------------------------
+<field_enc>:
+000: Write from cache to VCAP
+001: Read from VCAP to cache
+010: Move entry and/or action up (decreasing addresses)
+011: Move entry and/or action down (increasing addresses)
+100: Initialize VCAP with the cache-value
+101: Read and clear counter values of a full-word from the VCAP to the chache. Not supported for default actions
+------------------------------
+<field_public_text>:
+Set to disable update of entries for VCAP operations: For read-operations entry-cache will remain unchanged. For write/move/init operations the VCAP-entry will remain unchanged.
+------------------------------
+<field_public_text>:
+Set to disable update of actions for VCAP operations: For read-operations action-cache will remain unchanged. For write/move/init operations the VCAP-action will remain unchanged.
+------------------------------
+<field_public_text>:
+Set to disable update of counter for VCAP operations: For read-operations counter-cache will remain unchanged. For write/init operations the VCAP-counter will remain unchanged. For move operations the destination VCAP-counters will be set to zeros.
+------------------------------
+<field_public_text>:
+The address to access for VCAP operations.
+------------------------------
+<field_public_text>:
+Set to initiate the operation specified in UPDATE_CMD. This bit is automatically cleared by hardware when the operation is finished.
+Software must not change write fields in the VCAP target while this field is set (while operation is active.)
+------------------------------
+<field_public_text>:
+Set to clear the cache. This field is cleared immediately by hardware (at the same time as clearing the cache). The contents of the cache will be set to disabled/empty.
+------------------------------
+<reg_short_dscr>:
+Configuration for move/initialization
+------------------------------
+<field_public_text>:
+Specifies the distance during move operations. I.e. if this field is set to 4 for a move-down operation, then source address n is moved to destination address n+5.
+------------------------------
+<field_enc>:
+0: Distance is one position
+1: Distance is two positions
+n: Distance is n+1 positions
+------------------------------
+<field_public_text>:
+Specifies the number of addresses to move/initialize during  move/init operations.
+------------------------------
+<field_enc>:
+0: Address VCAP_UPDATE_CTRL.UPDATE_ADDR is moved/initialized
+n: Addresses VCAP_UPDATE_CTRL.UPDATE_ADDR through VCAP_UPDATE_CTRL.UPDATE_ADDR+n+1 are moved/initialized
+------------------------------
+<reggrp_short_dscr>:
+VCAP cache
+------------------------------
+<reg_short_dscr>:
+Entry data cache
+------------------------------
+<field_public_text>:
+The cache register that holds entry data. The register is replicated; index 0 is the 32 LSBs of the entry-data.
+Together with VCAP_MASK_DAT.MASK_DAT this field defines match parameters for TCAM entries. Version 2 VCAPs allows programming of never-match, this is needed when disabling entries. Version 1 VCAPs converts match-off to match-any when reading/writing entries.
+------------------------------
+<field_enc>:
+Match-0: Entry=0, Mask=0
+Match-1: Entry=1, Mask=0
+Match-any (don't care): Entry=0, Mask=1
+Match-off (never-match): Entry=1, Mask=1
+------------------------------
+<reg_short_dscr>:
+Entry mask cache
+------------------------------
+<field_public_text>:
+The cache register that holds entry mask. The register is replicated; index 0 is the 32 LSBs of the entry-mask.
+See VCAP_ENTRY_DAT.ENTRY_DAT for encoding information.
+------------------------------
+<reg_short_dscr>:
+Action cache
+------------------------------
+<field_public_text>:
+The cache register that holds action. The register is replicated; index 0 is the 32 LSBs of the action.
+------------------------------
+<reg_short_dscr>:
+Counter cache
+------------------------------
+<field_public_text>:
+The cache register that holds counter. The register is replicated; index 0 is the 32 LSBs of the counter.
+When the counter is 1 bit wide the counter operates as a 1 bit saturating counter; it is set by VCAP when a rule is matched by a key.
+------------------------------
+<reg_short_dscr>:
+Counter full-word cache
+------------------------------
+<field_public_text>:
+The cache register that holds full-word counter values after completing the update command that reads and clears counter values of a full-word in the VCAP.
+------------------------------
+<reg_short_dscr>:
+Entry type-group
+------------------------------
+<field_public_text>:
+This cache register holds the TypeGroup id for each subword in the TCAM. TypeGroup ids are place back to back with subword 0 at the LSBs when VCAP supports multiple subwords.
+This field applies only to version 1 VCAPs, for version 2 VCAPs it is not implemented and reading it will return zeros.
+------------------------------
+<reggrp_short_dscr>:
+Mapping of cores to interfaces
+------------------------------
+<reg_short_dscr>:
+Core index
+------------------------------
+<field_public_text>:
+Set to index of specific core to access the mapping of that core via VCAP_ES2:VCAP_CORE_MAP.
+------------------------------
+<reg_short_dscr>:
+Mapping of core
+------------------------------
+<field_public_text>:
+Configure ownership of core n (defined by VCAP_ES2:VCAP_CORE_MAP:VCAP_CORE_IDX).
+When a core is mapped to a specific VCAP; lookups for that VCAP will be applied to the core. If multiple cores are mapped to the same VCAP, they must cover a consecutive range of cores. VCAP priority is still observed, a match in two cores will only cause the most significant rule to be "hit" (highest address.)
+After reset all cores are in power-save mode.
+------------------------------
+<field_enc>:
+VCAP_SUPER:
+  0: Power-save mode - core disabled
+  1: Core mapped to CLM0
+  2: Core mapped to CLM1
+  3: Core mapped to CLM2
+  4: Core mapped to S2 (first and second lookup)
+  5: Core mapped to S2 (third and fourth lookup)
+  6: Core mapped to LPM
+
+VCAP_IP6PFX, VCAP_ES2, VCAP_ES0:
+  0: Power-save mode - core disabled
+  1: Core enabled
+------------------------------
+<reggrp_short_dscr>:
+Built-in self-test for TCAM
+------------------------------
+<reg_short_dscr>:
+TCAM BIST control
+------------------------------
+<field_public_text>:
+Enables the BIST process. The bit must be '1' while the BIST is running. When the bit is set to '0', the BIST_FAIL and BIST_PASS bits are cleared.
+------------------------------
+<reg_short_dscr>:
+TCAM BIST status
+------------------------------
+<field_public_text>:
+The overall BIST result from all TCAMs. If all TCAMs passed the BIST, this bit will be set to '1'. The bit is automatically cleared when BIST_RUN is set to '0'.
+------------------------------
+<field_public_text>:
+The overall BIST result from all TCAMs. If any of the TCAMs failed the BIST, this bit will be set to '1'. The bit is automatically cleared when BIST_RUN is set to '0'.
+------------------------------
+<field_public_text>:
+The BIST has completed for all TCAMs. The bit is automatically cleared when BIST_RUN is set to '0'.
+------------------------------
+<reggrp_short_dscr>:
+ECC Checker for TCAM
+------------------------------
+<reg_short_dscr>:
+Control register for ECC checker
+------------------------------
+<field_public_text>:
+Set to hook ECC checker up to global DEVCPU integrity monitor. By default ECC events (and integrity interrupt) are handled by local integrity monitor.
+------------------------------
+<field_public_text>:
+Set to enable automatic ECC check function. Once enabled the ECC checker block will automatically monitor the TCAM array for ECC upsets and correct single-bit upsets or report double-bit upsets via the integrity ring. See MEMITGR block in DEVCPU_GCB target for more information about integrity monitor.
+------------------------------
+<reggrp_short_dscr>:
+Memory integrity monitor
+------------------------------
+<reg_short_dscr>:
+Monitor control
+------------------------------
+<field_public_text>:
+Setting this field transitions the integrity monitor between operating modes. Transitioning between modes takes time, this field remains set until the new mode is reached. During this time the monitor also reports busy VCAP_ES2::MEMITGR_STAT.MODE_BUSY is set).
+From IDLE (VCAP_ES2::MEMITGR_STAT.MODE_IDLE is set) the monitor can transition into either DETECT or LISTEN mode, the DETECT mode is entered if a memory reports an indication - the LISTEN mode is entered if no indications are reported. The first time after reset the monitor will not detect indications, that is; it will transition directly from IDLE to LISTEN mode.
+From DETECT (VCAP_ES2::MEMITGR_STAT.MODE_DETECT is set) the monitor can transition into either DETECT or LISTEN mode, the DETECT mode is entered if more indications are reported - the LISTEN mode is entered if no more indications are reported.
+From LISTEN (VCAP_ES2::MEMITGR_STAT.MODE_LISTEN is set) the monitor can transition into IDLE mode.
+Software shall not set this field when the monitor is BUSY (when VCAP_ES2::MEMITGR_STAT.MODE_BUSY is set.)
+------------------------------
+<reg_short_dscr>:
+Monitor status
+------------------------------
+<field_public_text>:
+If this field is set then there is an indication from one of the memories that needs to be analyzed. An indication is either a parity detection or an error correction.
+This field is only set when the monitor is in LISTEN mode (VCAP_ES2::MEMITGR_STAT.MODE_LISTEN is set), in all other states (including BUSY) this field returns 0.
+------------------------------
+<field_public_text>:
+This field is set when the monitor is in LISTEN mode, during listen mode the monitor continually check for parity/correction indications from the memories.
+------------------------------
+<field_public_text>:
+This field is set when the monitor is in DETECT mode, during detect mode the VCAP_ES2::MEMITGR_INFO and VCAP_ES2::MEMITGR_IDX registers contains valid information about one indication.
+------------------------------
+<field_public_text>:
+This field is set when the monitor is in IDLE mode.
+------------------------------
+<field_public_text>:
+The busy signal is a copy of the VCAP_ES2::MEMITGR_CTRL.ACTIVATE field, see description of that field for more information about the different states/modes of the monitor.
+------------------------------
+<reg_short_dscr>:
+Memory indication
+------------------------------
+<reg_public_text>:
+This field is only valid when the monitor is in the DETECT (VCAP_ES2::MEMITGR_STAT.MODE_DETECT is set) mode.
+------------------------------
+<field_public_text>:
+This field is set if the monitor has detected a parity indication (or an unrecoverable correction).
+------------------------------
+<field_public_text>:
+This field is set if the monitor has detected a correction.
+------------------------------
+<field_public_text>:
+This field is set if the monitor has detected a parity indication (or an unrecoverable correction) for which the address has not been recorded.
+If VCAP_ES2::MEMITGR_INFO.MEM_ERR is set then there has been more than one indication, then only the address of the newest indication has been kept. 
+If VCAP_ES2::MEMITGR_INFO.MEM_ERR is cleared then an indication has occurred for which the address could not be stored, this is a very rare situation that can only happen if an indication is detected just as the memory is talking to the monitor.
+------------------------------
+<field_public_text>:
+This field is set if the monitor has correction indication for which the address has not been recorded.
+If VCAP_ES2::MEMITGR_INFO.MEM_ERR is set then there has also been a parity indication (or an unrecoverable correction) which takes priority over correction indications.
+If VCAP_ES2::MEMITGR_INFO.MEM_ERR is cleared and VCAP_ES2::MEMITGR_INFO.MEM_COR is set then there has been more than one correction indication, then only the address of the newest correction indication has been kept.
+If VCAP_ES2::MEMITGR_INFO.MEM_ERR and VCAP_ES2::MEMITGR_INFO.MEM_COR is both cleared then a correction indication has occurred for which the address could not be stored, this is a very rare situation that can only happen if an indication is detected just as the memory is talking to the monitor.
+------------------------------
+<field_public_text>:
+This field is valid only when VCAP_ES2::MEMITGR_INFO.MEM_ERR or VCAP_ES2::MEMITGR_INFO.MEM_COR is set.
+------------------------------
+<reg_short_dscr>:
+Memory index
+------------------------------
+<reg_public_text>:
+This field is only valid when the monitor is in the DETECT (VCAP_ES2::MEMITGR_STAT.MODE_DETECT is set) mode.
+------------------------------
+<field_public_text>:
+This field contains a unique index for the memory for which info is currently provided in VCAP_ES2::MEMITGR_INFO. Indexes are counted from 1 (not 0).
+------------------------------
+<reg_short_dscr>:
+Monitor speed
+------------------------------
+<field_public_text>:
+Configure divider for generating the sync-pulse to memories (controls the speed at which the monitor talks to the memories). The lower this is set the faster indications can be read out of the memories.
+------------------------------
+<field_enc>:
+See datasheet for appropriate value.
+------------------------------

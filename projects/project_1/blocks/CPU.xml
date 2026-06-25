@@ -1,0 +1,1518 @@
+=== DOCUMENTATION FOR TARGET: CPU ===
+
+<target_short_dscr>:
+CPU system registers.
+------------------------------
+<reg_short_dscr>:
+General Purpose Register
+------------------------------
+<field_public_text>:
+General purpose 8 times 32-bit registers for software development and debug.
+Note: This register is only reset by the device's reset input, i.e. it is not affected by soft reset!
+------------------------------
+<reg_short_dscr>:
+Reset Settings
+------------------------------
+<field_public_text>:
+Set this field to generate a soft reset for the VCore. This field will be cleared when the reset has taken effect.
+It is possible to protect the blocks of vcore system with protection bits.
+------------------------------
+<field_enc>:
+0: VCore is not reset
+1: Initiate soft reset of the VCore and the reset will get cleared after the reset process is done.
+------------------------------
+<field_public_text>:
+This register performs warm reset of Core 0 of ARM Processor inside Vcore system.
+Self clearing field at the end of warm reset.
+------------------------------
+<field_enc>:
+0 - Normal operation
+1 - Perform warm reset of core 0 (Self clears at the end of reset).
+------------------------------
+<field_public_text>:
+This register performs warm reset of Core 1 of ARM Processor inside Vcore system.
+Self clearing field at the end of warm reset.
+------------------------------
+<field_enc>:
+0 - Normal operation
+1 - Perform warm reset of core 1 (Self clears at the end of reset).
+------------------------------
+<field_public_text>:
+This single, cluster-wide field resets the integrated CoreSight components that connect to the external PCLK domain, such as debug logic.
+------------------------------
+<field_enc>:
+0 - No reset to debug interface due to this register.
+1 - Reset applied to debug interface due to this register.
+------------------------------
+<field_public_text>:
+This field resets the L2 cache in CPU of VCORE to be in reset.
+This block auto-clears when reset of L2 is complete.
+------------------------------
+<field_enc>:
+1 - Put the CPU L2 cache in reset (auto-clear at the end of reset).
+0 - CPU L2 cache is not in reset.
+------------------------------
+<field_public_text>:
+This field resets the DDR Memory in the Vcore Sub-system.
+------------------------------
+<field_enc>:
+1 - DDR Memory is in reset (self - clears when DDR reset is done).
+0 - DDR Memory is not in reset.
+------------------------------
+<field_public_text>:
+This field forces the WDT block in APB into reset.
+------------------------------
+<field_enc>:
+1 - Force WDT into Reset.
+0 - Bring WDT out of reset.
+------------------------------
+<field_public_text>:
+This field performs a cold reset (includes debug logic of core 0) of CPU Core 0.
+------------------------------
+<field_enc>:
+1 -  Core 0 of CPU is in cold reset
+0  - Core 0 of CPU is not in cold reset
+------------------------------
+<field_public_text>:
+This field performs a cold reset (includes debug logic of core 1) of CPU Core 1.
+------------------------------
+<field_enc>:
+1 -  Core 1 of CPU is in cold reset
+0  - Core 1 of CPU is not in cold reset
+------------------------------
+<field_public_text>:
+This field resets the GIC Block.
+------------------------------
+<field_enc>:
+0 - Do not reset GIC block.
+1 - Put GIC Block in reset.
+------------------------------
+<reg_short_dscr>:
+This register contains fields that protect certain blocks from resets.
+------------------------------
+<field_public_text>:
+This field protects the VCORE from System reset.
+------------------------------
+<field_enc>:
+0: System reset also causes VCore to go into reset.
+1: Vcore is protected from System Reset.
+------------------------------
+<field_public_text>:
+This field protects AMBA from Vcore Reset, WDT reset.
+This field also protects AXI from VCORE_RST_FORCE (that comes from GCB target)
+------------------------------
+<field_enc>:
+0: No Protection is applied to AMBA
+1: AMBA is protected from Vcore Reset and Watch dog Timeout reset.
+------------------------------
+<field_public_text>:
+Set this field to protect Watch dog Timer from Watch dog Timeout reset and Vcore Soft Reset (VCORE_RST Register).
+------------------------------
+<field_enc>:
+0: No reset protection to Watch Dog Timer block.
+1: WDT block is protected from VCORE Soft Reset and its own timeout.
+------------------------------
+<field_public_text>:
+This field protects the integrated coresight components from: Watchdog timer reset, Vcore Soft Reset (VCORE_RST Register Field), Vcore Cold Reset (CPU_CORE_x_COLD_RST).
+------------------------------
+<field_enc>:
+0 : No protection to processor's debug logic.
+1 : Protection applied to processor debug logic from Watch dog timeout, Vcore soft reset, Vcore Cold Reset.
+------------------------------
+<field_public_text>:
+By default, GIC is reset when both the cores of CPU are cold reset. 
+However, this field protects GIC from getting reset in such cases.
+------------------------------
+<field_enc>:
+0 : No protection to GIC when both the cores of CPU are cold reset.
+1 : GIC is protected from reset when both the cores of CPU are cold reset.
+------------------------------
+<field_public_text>:
+This field protects the Watch-dog timer block in the vcore-system from its own timeout.
+------------------------------
+<field_enc>:
+1 - Protect the Vcore's WDT from its own timeout.
+0 - resets the WDT block as well from VCORE's Watch-dog timer timeout.
+------------------------------
+<field_public_text>:
+This register contains the status indication to indicate that VCORE has been reset because of WDT.
+------------------------------
+<field_enc>:
+0 : Watch dog timer timeout is not the cause for Vcore Reset. 
+1 : Watch dog timer timeout is the cause for vcore reset.
+------------------------------
+<field_public_text>:
+GIC has been reset due to either ecc_fatal (Unrecoverable fatal error) indication from SRAMS inside it or
+due to fatal errors (SLVERR/DECERR) received from accessing DDR Memory.
+------------------------------
+<field_enc>:
+0 : GIC has not been reset due to the mentioned causes.
+1 : GIC has been reset due to ecc_fatal error from SRAMS.
+2 : GIC has been reset due to SLVERR/DECERR received from accessing DDR Memory.
+3 : GIC has been reset due to ecc_fatal error from SRAMS and there was also error on accessing DDR.
+------------------------------
+<field_public_text>:
+By default L2 is reset when both cores of processor are cold reset. This register protects from such auto resetting of L2
+------------------------------
+<field_enc>:
+0 - No protection from auto reset of L2.
+1 - Protect L2 when both cores of processor are cold reset.
+------------------------------
+<field_public_text>:
+This protection bits protects GIC from resetting itself.
+This occurs when there is any error on transaction towards the AXI Master port of the GIC.
+------------------------------
+<field_enc>:
+'0' : GIC is not protected from a reset by itself.
+'1': GIC is protected from a reset by itself.
+------------------------------
+<reg_short_dscr>:
+General control
+------------------------------
+<field_public_text>:
+Reserved, must set to its default value.
+------------------------------
+<field_public_text>:
+Hooked up to the master contention input (ss_in_n) of the SPI Master block.
+------------------------------
+<field_public_text>:
+The default value of this field depends on strapping of the VCore.
+Set this field to enable the MIIM slave-interface on the GPIOs.
+------------------------------
+<field_public_text>:
+The default value of this field depends on strapping of the VCore.
+Set this field to enable PI master interface (and enable PI on GPIOs).
+------------------------------
+<field_public_text>:
+The default value of this field depends on strapping of the VCore.
+Select the owner of the SPI interface.
+------------------------------
+<field_enc>:
+0: SI Slave
+1: SI Boot Master
+2: SI Master Controller
+------------------------------
+<field_public_text>:
+Select the owner of the SPI2 interface that is mapped on GPIOs.
+------------------------------
+<field_enc>:
+0: SI Slave
+1: SI Boot Master
+2: SI Master Controller
+------------------------------
+<field_public_text>:
+Enable interface mode for SPI GPIOs.
+------------------------------
+<field_public_text>:
+Enable interface mode for SPI2 GPIOs.
+------------------------------
+<field_public_text>:
+Use this field to change from Boot mode to Normal mode. In Boot mode, the reset vector of the VCore CPU maps to CS0 on the FLASH interface. When in Normal mode, this address maps instead to the DRAM Controller. The DRAM Controller must be operational before disabling Boot mode.&#13;
+After setting Boot mode, this register must be read back. The change in Boot mode takes effect during read.
+------------------------------
+<field_enc>:
+0: The VCore memory map is in Normal mode.
+1: The VCore memory map is in Boot mode.
+------------------------------
+<field_public_text>:
+Set this field to disable the ARM processor in the Vcore-system.
+------------------------------
+<field_enc>:
+0 : ARM Processor in the vcore-system is enabled.
+1 : ARM Processor in the vcore-system is disabled.
+------------------------------
+<reg_short_dscr>:
+General Status
+------------------------------
+<field_public_text>:
+Debug information for checking register read/write problems. This is a read-only field which can only be cleared by reset of the VCore System.
+------------------------------
+<field_enc>:
+0: No errors detected.
+1: Non-32bit access to VCore or SwC registers, access has been discarded, read returns 0x8888 or 0x88.
+2: SwC registers not ready when accessed, access has been discarded, read returns 0x88888888.
+3: SwC registers reported error, check DEVCPU_ORG::ERR_CNTS for error, read returns 0x88888888.
+4: Unimplemented VCore register, access has been discarded, read returns 0x88888888.
+------------------------------
+<field_public_text>:
+This bit indicates that there is a write access request to AXI bus with invalid address.
+------------------------------
+<field_enc>:
+1 - An invalid write address has been accessed on AXI.
+0 - No invalid write address request has come to AXI from the last time this bit was cleared.
+------------------------------
+<field_public_text>:
+This bit indicates that there is a read access request to AXI bus with invalid address.
+------------------------------
+<field_enc>:
+1 - An invalid read address has been accessed on AXI.
+0 - No invalid read address request has come to AXI from the last time this bit was cleared.
+------------------------------
+<reg_short_dscr>:
+Configures endianness towards CPU system and CSR registers.
+------------------------------
+<field_public_text>:
+This register is constructed so that it can always be written correctly no matter the current state of the interface. When initializing this interface, then this is the first register that must be written if the desired endianness is different than the default. 
+When writing a 1-bit value to this field construct a 32-bit data-word as follows: a) copy the 1-bit value into bits 0, 7, 8, 15, 16, 23, 24 and 31.
+
+Example: To write the value 1 to this field, the 32-bit data-word to write is "0x81818181".
+To write 0 just write "0x00000000".
+------------------------------
+<reg_short_dscr>:
+This register contains configuration fields related to POE System in Vcore CPU Sub-system
+------------------------------
+<field_public_text>:
+This register enables or disables the POE System.
+The default value of this field is defined through the strapping.
+------------------------------
+<field_enc>:
+0 - Normal operation of PoE sub-system.
+1 - Entire POE system is gated. In such case, all the read attempts through the fabric return 0xFFFFFFFF
+------------------------------
+<field_public_text>:
+This field controls whether PoE system is in reset or not.
+The default value of this field is defined through the strapping.
+------------------------------
+<field_enc>:
+0 - PoE system is not in reset.
+1 - PoE system is forced to reset.
+Note that the PoE system must be enabled (via POE_SYS_DIS) before this reset is deasserted.
+------------------------------
+<field_public_text>:
+This register limits the forced reset (POE_RST_FORCE) only to the CPU of the PoE system.
+This can be used to allow the fabric to exit from reset, while still keeping the PoE's CPU under reset.
+------------------------------
+<field_enc>:
+0 - Entire PoE system will be under reset when POE_RST_FORCE is asserted.
+1 - Only the CPU of PoE will be under reset when POE_RST_FORCE is asserted.
+------------------------------
+<reg_short_dscr>:
+Shared interrupts accessible from all CPUs.
+------------------------------
+<field_public_text>:
+Set to generate interrupt, one interrupt per bit.
+          Atomic access to this register can be implemented by the CPU::SHARED_INTR_CLR and CPU::SHARED_INTR_SET registers.
+------------------------------
+<reg_short_dscr>:
+This register interrupts accessible from all CPUs.
+------------------------------
+<field_public_text>:
+Set bit(s) in this register to clear the corresponding bits in CPU::SHARED_INTR. This register can be used for atomic access to CPU::SHARED_INTR register.
+------------------------------
+<reg_short_dscr>:
+This register interrupts accessible from all CPUs.
+------------------------------
+<field_public_text>:
+Set bit(s) in this register to set the corresponding bits in CPU::SHARED_INTR. This register can be used for atomic access to CPU::SHARED_INTR register.
+------------------------------
+<reg_short_dscr>:
+Enable slave-select forcing
+------------------------------
+<field_public_text>:
+Use to enable forcing of the slave select of the SPI master controller in Main CPU system. When set, the slave select is driven by SS_FORCE. When 0, the slave select is driven by the SPI master, and SS_FORCE must be kept at 1.
+------------------------------
+<reg_short_dscr>:
+Slave select value to force
+------------------------------
+<field_public_text>:
+Value to drive on the slave select output. This field is used when SS_FORCE_ENA is set to 1. Otherwise it must be kept to 1.
+------------------------------
+<reg_short_dscr>:
+PCIE Configuration Selection
+------------------------------
+<field_public_text>:
+The default value of this field depends on strapping of the VCore.
+Set this field to enable the Root Complex mode of PCIE Controller
+------------------------------
+<field_enc>:
+1: Root Complex mode of operation is enabled in PCIE Controller
+0: End point mode of operation is enabled in PCIE Controller.
+------------------------------
+<reg_short_dscr>:
+Register containing control configuration of Processor
+------------------------------
+<field_public_text>:
+This configuration controls whether the processor runs in 64-Bit mode of Architecture or 32-bit mode of architecture.
+By default, the processor runs in 64-bit architectural mode.
+Note that this field is to be changed only when the processor is in cold reset.
+------------------------------
+<field_enc>:
+0 - 32-bit arch mode is enabled.
+1 - 64-bit arch mode is enabled.
+------------------------------
+<field_public_text>:
+Disable Automatic L2 cache invalidate on reset.
+Only change this register when the processor is in reset state.
+------------------------------
+<field_enc>:
+'1' - Disable automatic invalidation of L2 cache on reset.
+'0' - Enable automatic invalidation of L2 cache on reset.
+------------------------------
+<field_public_text>:
+Disable L1 data cache automatic invalidate on reset functionality.
+This register is sampled only during reset of the processor.
+------------------------------
+<field_enc>:
+0 - Enable automatic invalidation of L1 data cache on reset.
+1 - Disable automatic invalidation of L1 data cache on reset.
+------------------------------
+<field_public_text>:
+Endianness configuration for exception handling.
+This register is sampled only out of processor's reset.
+------------------------------
+<field_enc>:
+0 - Little Endian data during exception handling.
+1 - Big Endian data during exception handling
+------------------------------
+<field_public_text>:
+Location of the exception vectors at reset. It sets the initial value of the V bit in the SCTLR and HSCTLR registers.
+This register is sampled only during reset of both the cores.
+------------------------------
+<field_enc>:
+0 - Exception vectors start at address 0x00000000
+1 - Exception vectors start at address 0xFFFF0000
+------------------------------
+<field_public_text>:
+Enable T32 exceptions. It sets the initial value of the TE bit in the SCTLR and HSCTLR registers.
+This register is sampled only out of processors reset.
+------------------------------
+<field_enc>:
+0 - Enables ARM Instruction set for exception handling
+1 - Enable Thumb instruction set for exception handling.
+------------------------------
+<field_public_text>:
+Disable write access to some secure CP15 registers.
+------------------------------
+<field_enc>:
+0 - Enable access to all CP15 registers.
+1 - Disable access to some secure CP15 registers.
+------------------------------
+<field_public_text>:
+This register disables the cryptography extensions of individual core of the processor.
+This register is sampled only during the reset of the processor. Hence change this register only when processor is in reset.
+------------------------------
+<field_enc>:
+0 - Crypto logic in both the cores is enabled.
+1 - Crypto logic in both the cores is disabled.
+------------------------------
+<field_public_text>:
+Enable forcing of memory type attributes on CPU slave IF.
+------------------------------
+<field_enc>:
+1: Forcing enabled
+0: Forcing disabled
+------------------------------
+<field_public_text>:
+Selects between Write-Back Write-allocate and No-allocate for write transactions when ACP_CACHE_FORCE_ENA is set.
+------------------------------
+<field_enc>:
+0: No-allocate
+1: Write-allocate
+------------------------------
+<field_public_text>:
+Selects between Write-Back Read-allocate and No-allocate for read transactions when ACP_CACHE_FORCE_ENA is set.
+------------------------------
+<field_enc>:
+0: No-allocate
+1: Write-allocate
+------------------------------
+<field_public_text>:
+Flush L2 to memory.
+------------------------------
+<field_public_text>:
+Disables ACP port. It must be asserted before flushing L2 memory.
+------------------------------
+<field_enc>:
+0: ACP enabled
+1: ACP disabled
+------------------------------
+<reg_short_dscr>:
+Core 0 of the Processor Reset Vector Base Address Register least significant 32 bits
+------------------------------
+<field_public_text>:
+Least significant 32-bits of the reset Vector Base Address for executing Core 0 of processor in 64-bit state.
+
+This register is sampled along with its LSB register only on reset of the core 0 of the processor
+------------------------------
+<field_enc>:
+Reset vector base address[33:2] for the 64-bit state.
+------------------------------
+<reg_short_dscr>:
+Core 0 of the Processor Reset Vector Base Address Register most significant 6 bits
+------------------------------
+<field_public_text>:
+Most significant 6-bits of the reset Vector Base Address for executing core 0 of processor in 64-bit state.
+
+This register is sampled along with its LSB register only on reset of the core 0 of the processor.
+------------------------------
+<field_enc>:
+Reset vector base address[39:34] for the 64-bit state
+------------------------------
+<reg_short_dscr>:
+Core 1 of the Processor Reset Vector Base Address Register least significant 32 bits
+------------------------------
+<field_public_text>:
+Least significant 32-bits of the reset Vector Base Address for executing Core 1 of processor in 64-bit state.
+
+This register is sampled along with its LSB register only on reset of the core 1 of the processor
+------------------------------
+<field_enc>:
+Reset vector base address[33:2] for the 64-bit state.
+------------------------------
+<reg_short_dscr>:
+Core 1 of the Processor Reset Vector Base Address Register most significant 6 bits
+------------------------------
+<field_public_text>:
+Most significant 6-bits of the reset Vector Base Address for executing core 1 of processor in 64-bit state.
+
+This register is sampled along with its LSB register only on reset of the core 1 of the processor.
+------------------------------
+<field_enc>:
+Reset vector base address[39:34] for the 64-bit state
+------------------------------
+<reg_short_dscr>:
+Status indications from various blocks in processor
+------------------------------
+<field_public_text>:
+Indicates whether the SWJ-DP in DAP-Lite module is in JTAG Mode or in SWD Mode.
+------------------------------
+<field_enc>:
+'1' - SWJ-DP is in JTAG Mode
+'0' - SWJ-DP is in SWD Mode
+------------------------------
+<field_public_text>:
+Wait-for-interrupt status of core 0.
+------------------------------
+<field_public_text>:
+Wait-for-interrupt status of core 1.
+------------------------------
+<reggrp_short_dscr>:
+TWI hold time configuration
+------------------------------
+<reg_short_dscr>:
+TWI hold time configuration
+------------------------------
+<field_public_text>:
+Configure the hold time delay to apply to SDA after SCK when transmitting from the device. This delay is expressed in a number of clock cycles. The delay value should be as close to 300ns as possible without going below 300ns.
+------------------------------
+<field_enc>:
+ceil(300 (ns) / T (ns)) where T is the clock period
+------------------------------
+<field_public_text>:
+Set this field to enable hold time on the TWI SDA output. When enabled the TWI_CONFIG.TWI_CNT_RELOAD field determines the amount of hold time to apply to SDA.
+------------------------------
+<reggrp_short_dscr>:
+TWI spike filter configuration
+------------------------------
+<reg_short_dscr>:
+TWI spike filter configuration
+------------------------------
+<field_public_text>:
+Configuration of the spike filter width on the SCL and SDA inputs.
+Filters spikes with a width of (SPIKE_FILTER_CFG+1)*SYSTEM_CLK or less.
+------------------------------
+<reggrp_short_dscr>:
+SPI boot master
+------------------------------
+<reg_short_dscr>:
+SPI boot master configuration
+------------------------------
+<field_public_text>:
+The number of dummy cycles in case of of FAST READ commands. Typically the value is 8, sometimes need to be set to 10 for QUAD SPI protocol mode.
+
+It is also possible to write to any other value provided that the Flash is also configured to use this value. The max frequency of operation in  case of Fast read depends on the number of dummy cycles configured.
+
+Minimum is 1 amd maximum is 15.
+------------------------------
+<field_enc>:
+0 - Do not configure to 0.
+1-15 -- Number of dummy cycles used in Fast read commands.
+------------------------------
+<field_public_text>:
+Set to enable 32bit address mode. If set 4 bytes of address is sent in address phase, otherwise 3 bytes. 
+In 24bit addressing mode CS0 to CS3 is used, the SPI address region is limited to 64MB of the 1GB reserved SI interface.
+In 32bit addressing mode CS0 to CS3 is used, the SPI address region is limited to 1GByte reserved for the SI interface.
+------------------------------
+<field_enc>:
+0: Use 24bit addressing with 4 different CS, max 64MByte
+1: Use 32bit addressing with 4 different CS, max 1GByte
+------------------------------
+<field_public_text>:
+If set, the SPI master will use 4 Byte READ / 4 Byte FAST READ commands instead of READ/FAST_READ. It implies that flash supports 32-bit addressing and SPI master sends 4 byte of address and use command codes 13h and 0Ch.
+------------------------------
+<field_public_text>:
+The type of read-instruction that the SPI Controller generates for reads. Also see USE_4BYTE_READ_CMD.
+------------------------------
+<field_enc>:
+0: READ (slow read - Instruction code - 0x03)
+1: FAST READ (fast read - Instruction code - 0x0B)
+------------------------------
+<field_public_text>:
+This field is used to configure SPI protocol mode.
+The SPI master supports Single Transfer Rate (STR). Supported protocols in STR mode is as below.
+Extended I/O protocol - DQ0 is used for CMD/ADDR. DQ1 is used for Data.
+Dual I/O protocol - DQ[1:0] is used for the complete transfer.
+Quad I/O protocol - DQ [3:0] is used for the complete transfer.
+------------------------------
+<field_enc>:
+0 - Extended I/O protocol
+1 - Dual I/O protocol
+2,3 - Quad I/O protocol
+------------------------------
+<field_public_text>:
+The minimum number of SPI clock cycles for which the SPI chip select (SI_nEn) must be deasserted in between transfers. Typical value of this is 100 ns. Setting this field to 0 is illegal.
+------------------------------
+<field_public_text>:
+Controls the clock frequency for the SPI interface (SI_Clk). The clock frequency is VCore system clock divided by the value of this field. Setting this field to 0 or 1 value is illegal.
+------------------------------
+<field_enc>:
+The SPI interface frequency is: 250MHz/CLK_DIV.
+------------------------------
+<reg_short_dscr>:
+Manual control of the SPI interface
+------------------------------
+<reg_public_text>:
+Note: There are 4 chip selects in total, but only chip select 0 is mapped to IO-pin (SI_nEn). The rest of the SPI chip selects are available as alternate functions on GPIOs, these must be enabled in the GPIO controller before they can be controlled via this register.
+------------------------------
+<field_public_text>:
+Set to enable software pin control mode (Bit banging), when set software has direct control of the SPI interface.
+This mode is used for writing into flash.
+------------------------------
+<field_public_text>:
+Value to drive on SI_Clk output. This field is only used if SW_MODE.SW_PIN_CTRL_MODE is set.
+------------------------------
+<field_public_text>:
+Set to enable drive of SI_Clk output. This field is only used if SW_MODE.SW_PIN_CTRL_MODE is set.
+------------------------------
+<field_public_text>:
+Value to drive on SI_DQ output. This field is only used if SW_MODE.SW_PIN_CTRL_MODE is set.
+------------------------------
+<field_public_text>:
+Set to enable drive of SI_DQ output. This field is only used if SW_MODE.SW_PIN_CTRL_MODE is set.
+------------------------------
+<field_public_text>:
+Set bit to activate SI_nEn output, each bit in this field maps to a corresponding chip-select (0 though 3). A value of 1 in this register cause SI_nEn output to drive 0. This field is only used if SW_MODE.SW_PIN_CTRL_MODE is set.
+Note: Chip selects 1 though 3 are available as alternate GPIO functions.
+------------------------------
+<field_public_text>:
+Set to enable drive of SI_nEn outputs, each bit in this field maps to a corresponding chip-select (0 though 3). This field is only used if SW_MODE.SW_PIN_CTRL_MODE is set.
+Note: Chip selects 1 though 3 are available as alternate GPIO functions.
+------------------------------
+<field_public_text>:
+Current value of the SI_DI input.
+------------------------------
+<reggrp_short_dscr>:
+Register group controlling MIIM slave attached to external interface AXI Master
+------------------------------
+<reg_short_dscr>:
+MIIM Slave Spike Filter
+------------------------------
+<field_public_text>:
+Configuration of the spike filter width on the MDC and MDIO inputs.
+Filters spikes with a width of (SPIKE_FILTER_CFG+1)*SYSTEM_CLK or less.
+------------------------------
+<field_public_text>:
+Set this field to enable the spike filter on the MDC and MDIO inputs. When enabled the MIIM_SLAVE_CFG.SPIKE_FILTER_CFG field determines the width of the spike filter.
+------------------------------
+<reggrp_short_dscr>:
+This register group contains configurations to control VCore Access via registers in GCB.
+------------------------------
+<reg_short_dscr>:
+This configuration controls Vcore Accesses
+------------------------------
+<field_public_text>:
+Disable Vcore Access's Read error propagation from AXI bus.
+------------------------------
+<field_enc>:
+0 : Propagate VA_RD_ERR from AXI
+1 : Do not propagate VA_RD_ERR from AXI.
+------------------------------
+<reggrp_short_dscr>:
+Register which controls MSIX access through External master
+------------------------------
+<reg_short_dscr>:
+This configuration controls Interrupt accesses that go throuhg extenral master.
+------------------------------
+<field_public_text>:
+Disable PCI-e MSIX Read error propagation from AXI bus.
+------------------------------
+<field_enc>:
+0 : Propagate MSIX RD_ERR from AXI
+1 : Do not propagate MSIX_RD_ERR from AXI.
+------------------------------
+<reggrp_short_dscr>:
+PCIe Dual mode Controller Configuration
+------------------------------
+<reggrp_public_text>:
+These are VCore based registers for configuration of PCIe Dual mode Controller support logic. PCIe configuration space registers are memory mapped via the PCIE_DM_RC, PCIE_DM_EP region of the Chip Registers.
+------------------------------
+<reg_short_dscr>:
+PCIe DM Controller configuration
+------------------------------
+<field_public_text>:
+This field is used to set the bits [21:20] of DBI Address bus during the accesses to CDM/ELBI or iATU register Space of PCIE DM Controller.
+00-- Access to CDM register space
+During this access DBI address bus layout is [31:22]- unused, [21:20]- 00, [19:16]- function number, [15:12]- Reserved, [11:2]- DWORD Register Address, [1:0]- 00
+01-- Access to CDM register space through shadow registers. Only Masks can be configured in this mode. "DBI_CS2" is set in this access.
+Enable write of PCIe BAR masks via PCIE register target. Only registers PCIE::BAR0, PCIE::BAR1, and PCIE::BAR2 may be written while this field is set.
+The minimum size for Memory and IO BARs are 64K (mask 0xFFFF). Note: The low 4 bits of all BARs can be written via the PCIe target when this field is not set.
+During this access DBI address bus layout is [31:22]- unused, [21:20]- 01, [19:16]- function number, [15:12]- Reserved, [11:2]- DWORD Register Address, [1:0]- 00
+10-- Access to ELBI register space
+During this access DBI address bus layout is [31:22]- unused, [21:20]- 10, [19:16]- function number, [15:12]- BAR number, [11:2]- DWORD Register Address, [1:0]- 00
+11-- Access to iATU register space
+During this access DBI address bus layout is [31:22]- unused, [21:20]- 11,[19] - 0, [18:0]-- iATU Address
+iATU Address consists of [18:17]- Reserved, [16:9]- Region number, [8:0] - Register Address as indicated in Controller Databook for accessing different Configuration Registers within a Region.
+------------------------------
+<field_public_text>:
+Set this field to disable initialization of the PCIe link.
+By default the PCIe core will start up and try to acchieve link when the SERDES is started, by setting this field before starting the SERDES it is possible to make changes to the PCIe configruration/registers prior to linking with the root complex.
+------------------------------
+<field_public_text>:
+Set to add the PCIe core memories to the RAM integrity ring.
+------------------------------
+<field_public_text>:
+Controls generation of WAKE signal generation during wake-up from low power modes.
+Note: Unused in RC mode of operation of controller
+------------------------------
+<field_enc>:
+0:Wake signal generation enabled
+1:Wake signal generation disabled.
+------------------------------
+<field_public_text>:
+Polarity of Wake signal as used in EP & RC modes:
+In EP Mode of Controller:
+Polarity of the PCIe WAKE output, WAKE is typically an active low output - but if an amplifier is needed for driving a large WAKE net then polarity may need to be changed.
+In RC Mode of Controller:
+Polarity of the PCIe WAKE input as received on WAKE PAD. Default is an active low signal. This can be reconfigured by changing the value in this register.
+------------------------------
+<field_enc>:
+0: Active low
+1: Active high
+------------------------------
+<field_public_text>:
+Set to permanently drive PCIe WAKE output, by default the WAKE output is only driven when active and thus allowing pull-resistor network.
+Note: Unused in RC mode of operation.
+------------------------------
+<field_enc>:
+0: Only drive output when active.
+1: Always drive output.
+------------------------------
+<reg_short_dscr>:
+PCIe DM Controller status
+------------------------------
+<field_public_text>:
+The current power management state of the PCIe core per Function. Lower 3 bits [2:0] indicate PM State of Func 0 (SwC Function), Upper 3 bits [5:3] indicate PM State of Func1(PoE Function).
+------------------------------
+<field_enc>:
+0: D0
+1: D1
+2: D2
+3: D3
+4: D0-Uninitialized
+------------------------------
+<reg_short_dscr>:
+Auxiliary power configuration
+------------------------------
+<field_public_text>:
+Set to force "detection" of PCIe auxiliary power.
+------------------------------
+<reg_short_dscr>:
+Configuration to bypass iATU(Internal Address Translation Unit) of Controller
+------------------------------
+<field_public_text>:
+When set, bypass all the issued AXI Write Requests onto PCIe AXI Slave in undergoing address translation through iATU of Controller.
+------------------------------
+<field_enc>:
+0: Don't Bypass iATU
+1: Bypass iATU
+------------------------------
+<field_public_text>:
+When set, bypass all the issued AXI Read Requests onto PCIe AXI Slave in undergoing address translation through iATU of Controller.
+------------------------------
+<field_enc>:
+0: Don't Bypass iATU
+1: Bypass iATU
+------------------------------
+<reg_short_dscr>:
+CPU access into PCIe address space
+------------------------------
+<field_public_text>:
+This field allows configuration of outbound PCIe-transaction MSG field. This is applied to all non-FDMA initiated outbound PCIe accesses.
+------------------------------
+<field_public_text>:
+This field allows configuration of outbound PCIe-transaction TC field. This is applied to all non-FDMA initiated outbound PCIe accesses.
+------------------------------
+<field_public_text>:
+This field allows configuration of outbound PCIe-transaction EP field. This is applied to all non-FDMA initiated outbound PCIe accesses.
+------------------------------
+<reg_short_dscr>:
+3rd Header DW that is to be sent in a PCIE Msg/MsgD
+------------------------------
+<field_public_text>:
+32-bit value of 3rd DW that is to be sent in outbound PCIE Msg/MsgD Type
+------------------------------
+<reg_short_dscr>:
+4th Header DW that is to be sent in a PCIE Msg/MsgD
+------------------------------
+<field_public_text>:
+32-bit value of 4th DW that is to be sent in outbound PCIE Msg/MsgD Type
+------------------------------
+<reg_short_dscr>:
+PCIe events
+------------------------------
+<field_public_text>:
+This event is set whenever the CPU::PCIE_STAT.PM_STATE field is changed.
+
+Bit 0 pertains to Func0(SwC function)
+Bit 1 pertains to Func1(PoE function)
+------------------------------
+<reg_short_dscr>:
+PCIe interrupt enable
+------------------------------
+<field_public_text>:
+Enable propagation of SYS ERR interrupt
+------------------------------
+<field_public_text>:
+Set to enable propagation of the PM_STATE interrupt.
+
+Bit 0 pertains to Func0(SwC function)
+Bit 1 pertains to Func1(PoE function)
+------------------------------
+<field_public_text>:
+Reserved, must set to its default value.
+------------------------------
+<field_public_text>:
+Reserved, must set to its default value.
+------------------------------
+<field_public_text>:
+Reserved, must set to its default value.
+------------------------------
+<field_public_text>:
+Reserved, must set to its default value.
+------------------------------
+<field_public_text>:
+Reserved, must set to its default value.
+------------------------------
+<reg_short_dscr>:
+Currently active PCIe interrupts
+------------------------------
+<field_public_text>:
+Set if SYS ERR interrupt is currently active.
+------------------------------
+<field_public_text>:
+Set if the PM_STATE interrupt is currently active.
+
+Bit 0 pertains to Func0(SwC function)
+Bit 1 pertains to Func1(PoE function)
+------------------------------
+<reg_short_dscr>:
+PCIE MSIX DOOR BELL Address to be used while generating MSIX requests towards PCIE DM Controller
+------------------------------
+<field_public_text>:
+This register value along with MSIX_DBELL_ADDR_HIGH is used in end point mode of PCIe DM Controller to generate the AXI WR requests with this special address which are detected inside PCIe DM Controller as an MSIX request and correspoding Mem Wr TLP will be generated. Value programmed in this register also needs to be programmed in the Controller MSIX_ADDRESS_MATCH_LOW_OFF register for controller to detect the MSIX requests.
+
+Note: This is a special reserved address and shouldn't be used by any other master generating any kind of requests towards AXI PCIe Slave for other purposes.
+------------------------------
+<reg_short_dscr>:
+PCIE MSIX DOOR BELL MSB Address to be used while generating MSIX requests towards PCIE DM Controller
+------------------------------
+<field_public_text>:
+See PCIE_MSIX_DBELL_LOW.MSIX_DBELL_ADDR_LOW register for description.
+------------------------------
+<reg_short_dscr>:
+PCIe outbound interrupt configuration
+------------------------------
+<reg_public_text>:
+Replicated per function. FireAnt supports two functions.
+------------------------------
+<field_public_text>:
+Set to disable wake-up on interrupt. By default the PCIe endpoint will attempt to wake up from powerdown when a change in interrupt state is detected.
+------------------------------
+<field_public_text>:
+Select the external interrupt from the VCore interrupt controller that must be used to generate PCIe legacy interrupt.
+------------------------------
+<field_enc>:
+0: Use EXT_DST0
+1: Use EXT_DST1
+------------------------------
+<field_public_text>:
+Set to enable PCIe interrupts. The PCIe DM Controller(EP Mode) MSI or MSI-X Capability Register Set must have been configured before enabling interrupts.
+------------------------------
+<field_public_text>:
+Enables MSI-X mode of interrupt generation. This field is only used by the interrupt control block surrounding the controller. Actual enabling of MSI-X mode of operation should be done in controller configuration(within MSIX capability registers in Configuration space) also for this to have an effect.
+
+Also, PCIE_INTR_ENA should be enabled for this to have an effect.
+------------------------------
+<reg_short_dscr>:
+PCIe outbound MSI interrupt configuration
+------------------------------
+<reg_public_text>:
+Replicated per EXT_DST interrupt.
+------------------------------
+<field_public_text>:
+Configure MSI or MSI-X interrupt traffic class for corresponding EXT_DST interrupt.
+------------------------------
+<field_public_text>:
+Configure MSI or MSI-X interrupt vector for falling edge of corresponding EXT_DST interrupt.
+
+Note: Only LSB 5 bits will be used when configured to generate MSI interrupts as MSI supports a maximum vector value of 31.
+------------------------------
+<field_public_text>:
+Configure MSI or MSI-X interrupt vector for rising edge of corresponding EXT_DST interrupt.
+
+Note: Only LSB 5 bits will be used when configured to generate MSI interrupts as MSI supports a maximum vector value of 31.
+------------------------------
+<field_public_text>:
+Set to enable MSI or MSI-X interrupt on falling edge of corresponding EXT_DST interrupt.
+------------------------------
+<field_public_text>:
+Set to enable MSI or MSI-X interrupt on rising edge of corresponding EXT_DST interrupt.
+------------------------------
+<reggrp_short_dscr>:
+Interrupt controller
+------------------------------
+<reggrp_public_text>:
+These are the VCore interrupt controller registers. The controller has 50 interrupt sources (inputs) which can each be mapped to one of 2 interrupt destinations (outputs). The controller has a dedicated block for handling device and serdes interrupts; the handling of these interrupts can be considered as a small interrupt controller located before the interrupt controller.
+------------------------------
+<reg_short_dscr>:
+Interrupt raw status
+------------------------------
+<field_public_text>:
+Shows the current value of individual interrupt sources. All sources are active high (the external interrupts has been corrected for polarity as configured in EXT_SRC_INTR_POL).
+------------------------------
+<reg_short_dscr>:
+Interrupt raw status
+------------------------------
+<field_public_text>:
+Bit 32-49 of field INTR_RAW.
+------------------------------
+<reg_short_dscr>:
+Interrupt trigger mode
+------------------------------
+<field_public_text>:
+Configure trigger mode of individual interrupt sources. The trigger mode determines how the value of the INTR_RAW register is transferred to the INTR_STICKY register. This register is replicated, the first replication controls bit 0 in the encoding, the second replication controls bit 1 in the encoding. I.e. to configure falling-edge-triggered interrupt for interrupt source 5; set INTR_TRIGGER[0][5]='0' and INTR_TRIGGER[1][5]='1'.
+For level-triggered interrupts INTR_STICKY is set for as long as the corresponding bit in INTR_RAW is high - i.e. is not possible to clear a bit in INTR_STICKY until the corresponding INTR_RAW is zero.
+For edge-triggeded interrupts INTR_STICKY is set when the corresponding bit in INTR_RAW changes value.
+For falling-edge-triggeded interrupts INTR_STICKY is set when the corresponding bit in INTR_RAW changes from '1' to '0'.
+For rising-edge-triggeded interrupts INTR_STICKY is set when the corresponding bit in INTR_RAW changes from '0' to '1'.
+------------------------------
+<field_enc>:
+0: Interrupt is level-activated
+1: Interrupt is edge-triggered
+2: Interrupt is falling-edge-triggered
+3: Interrupt is rising-edge-triggered
+------------------------------
+<reg_short_dscr>:
+Interrupt trigger mode
+------------------------------
+<field_public_text>:
+Bit 32-49 of field INTR_TRIGGER.
+------------------------------
+<field_enc>:
+0: Interrupt is level-activated
+1: Interrupt is edge-triggered
+2: Interrupt is falling-edge-triggered
+3: Interrupt is rising-edge-triggered
+------------------------------
+<reg_short_dscr>:
+Interrupt force sticky event
+------------------------------
+<field_public_text>:
+Set to force corresponding INTR_STICKY bits.
+This field may be useful during development of software interrupt handler functions.
+------------------------------
+<reg_short_dscr>:
+Interrupt force sticky event
+------------------------------
+<field_public_text>:
+Bit 32-49 of field INTR_FORCE.
+------------------------------
+<reg_short_dscr>:
+Interrupt sticky status
+------------------------------
+<field_public_text>:
+This register is set based on source interrupt events or by debug-force. See INTR_TRIGGER and INTR_FORCE for more information. Bits in this register remains set until cleared by software.
+------------------------------
+<reg_short_dscr>:
+Interrupt sticky status
+------------------------------
+<field_public_text>:
+Bit 32-49 of field INTR_STICKY.
+------------------------------
+<reg_short_dscr>:
+Interrupt bypass enable
+------------------------------
+<field_public_text>:
+This register allows bypass of INTR_STICKY for individual interrupt sources. When an interrupt source is in bypass mode then INTR_RAW is used instead of INTR_STICKY.
+Note: Enabling bypass does not make sense for all interrupt sources. It should only be used when the corresponding interrupt is sticky at the source. For example manual extraction data available interrupts can be configured to bypass, because the interrupt will remain asserted until the available data has been extracted.
+Note: The device interrupt is bypassed per default, "stickyness" is already implemented by DEV_INTR_STICKY.
+------------------------------
+<reg_short_dscr>:
+Interrupt bypass enable
+------------------------------
+<field_public_text>:
+Bit 32-49 of field INTR_BYPASS.
+------------------------------
+<reg_short_dscr>:
+Interrupt enable
+------------------------------
+<field_public_text>:
+Set to enable propagation of individual interrupt sources to destinations.
+Atomic access to this register (needed in a multithreaded system) can be implemented by the INTR_ENA_CLR and INTR_ENA_SET registers.
+------------------------------
+<reg_short_dscr>:
+Interrupt enable
+------------------------------
+<field_public_text>:
+Bit 32-49 of field INTR_ENA.
+------------------------------
+<reg_short_dscr>:
+Atomic clear of interrupt enable
+------------------------------
+<field_public_text>:
+Set bit(s) in this register to clear the corresponding bits in INTR_ENA. This register can be used for atomic access to INTR_ENA register.
+------------------------------
+<reg_short_dscr>:
+Atomic clear of interrupt enable
+------------------------------
+<field_public_text>:
+Bit 32-49 of field INTR_ENA_CLR.
+------------------------------
+<reg_short_dscr>:
+Atomic set of interrupt
+------------------------------
+<field_public_text>:
+Set bit(s) in this register to set the corresponding bits in INTR_ENA. This register can be used for atomic access to INTR_ENA register.
+------------------------------
+<reg_short_dscr>:
+Atomic set of interrupt
+------------------------------
+<field_public_text>:
+Bit 32-49 of field INTR_ENA_SET.
+------------------------------
+<reg_short_dscr>:
+Currently active interrupt sources
+------------------------------
+<field_public_text>:
+Shows the currently active interrupt sources. For interrupt sources that are not bypassed this register is a result of AND'ing INTR_STICKY with INTR_ENA.
+------------------------------
+<reg_short_dscr>:
+Currently active interrupt sources
+------------------------------
+<field_public_text>:
+Bit 32-49 of field INTR_IDENT.
+------------------------------
+<reg_short_dscr>:
+Mapping of source to destination interrupts
+------------------------------
+<reg_public_text>:
+Replicated per destination interrupt.
+------------------------------
+<field_public_text>:
+Set to enable mapping of individual interrupt sources to interrupt destinations. This register is replicated once for each destination interrupt.
+------------------------------
+<reg_short_dscr>:
+Mapping of source to destination interrupts
+------------------------------
+<reg_public_text>:
+Replicated per destination interrupt.
+------------------------------
+<field_public_text>:
+Bit 32-49 of field DST_INTR_MAP.
+------------------------------
+<reg_short_dscr>:
+Currently active interrupt sources per destination
+------------------------------
+<reg_public_text>:
+Replicated per destination interrupt.
+------------------------------
+<field_public_text>:
+Shows the currently active interrupt sources per destination interrupt. The contents of this register is equal to INTR_IDENT AND'ed with the corresponding DST_INTR_MAP.
+If any bit is set in this register the corresponding destination interrupt is asserted.
+------------------------------
+<reg_short_dscr>:
+Currently active interrupt sources per destination
+------------------------------
+<reg_public_text>:
+Replicated per destination interrupt.
+------------------------------
+<field_public_text>:
+Bit 32-49 of field DST_INTR_IDENT.
+------------------------------
+<reg_short_dscr>:
+External source interrupt polarity
+------------------------------
+<field_public_text>:
+Set individual bits in this register to configure polarity of the corresponding external source interrupt.
+------------------------------
+<field_enc>:
+0: External interrupt input is active low
+1: External interrupt input is active high
+------------------------------
+<reg_short_dscr>:
+External destination interrupt polarity
+------------------------------
+<field_public_text>:
+Set individual bits in this register to configure polarity of the corresponding external destination interrupt.
+------------------------------
+<field_enc>:
+0: External interrupt output is active low
+1: External interrupt output is active high
+------------------------------
+<reg_short_dscr>:
+External interrupt destination output drive mode
+------------------------------
+<field_public_text>:
+This register configures drive mode of the corresponding external destination interrupt.
+------------------------------
+<field_enc>:
+0: Only drive external interrupt output when asserted (tristate when inactive)
+1: External interrupt output is always driven
+------------------------------
+<reg_short_dscr>:
+Device interrupt polarity
+------------------------------
+<field_public_text>:
+Set individual bits in this register to configure polarity of the corresponding device interrupt.
+------------------------------
+<field_enc>:
+0: Device interrupt is active low
+1: Device interrupt is active high
+------------------------------
+<reg_short_dscr>:
+Device interrupt polarity
+------------------------------
+<field_public_text>:
+Bit 32-63 of field DEV_INTR_POL.
+------------------------------
+<field_enc>:
+0: Device interrupt is active low
+1: Device interrupt is active high
+------------------------------
+<reg_short_dscr>:
+Device interrupt polarity
+------------------------------
+<field_public_text>:
+Bit 64-64 of field DEV_INTR_POL.
+------------------------------
+<field_enc>:
+0: Device interrupt is active low
+1: Device interrupt is active high
+------------------------------
+<reg_short_dscr>:
+Device interrupt raw status
+------------------------------
+<field_public_text>:
+Shows the current value of individual device interrupt sources. All sources are active high (sources have been corrected for polarity as configured in DEV_INTR_POL).
+------------------------------
+<reg_short_dscr>:
+Device interrupt raw status
+------------------------------
+<field_public_text>:
+Bit 32-63 of field DEV_INTR_RAW.
+------------------------------
+<reg_short_dscr>:
+Device interrupt raw status
+------------------------------
+<field_public_text>:
+Bit 64-64 of field DEV_INTR_RAW.
+------------------------------
+<reg_short_dscr>:
+Device interrupt trigger mode
+------------------------------
+<field_public_text>:
+Configure trigger mode of individual device interrupt sources. The trigger mode determines how the value of the DEV_INTR_RAW register is transferred to the DEV_INTR_STICKY register. This register is replicated, the first replication controls bit 0 in the encoding, the second replication controls bit 1 in the encoding. I.e. to configure edge-triggered interrupt for device 3; set DEV_INTR_TRIGGER[0][3]='1' and DEV_INTR_TRIGGER[1][3]='0'.
+For level-triggered interrupts DEV_INTR_STICKY is set for as long as the corresponding bit in DEV_INTR_RAW is high - i.e. is not possible to clear a bit in DEV_INTR_STICKY until the corresponding DEV_INTR_RAW is zero.
+For edge-triggeded interrupts DEV_INTR_STICKY is set when the corresponding bit in DEV_INTR_RAW changes value.
+For falling-edge-triggeded interrupts DEV_INTR_STICKY is set when the corresponding bit in DEV_INTR_RAW changes from '1' to '0'.
+For rising-edge-triggeded interrupts DEV_INTR_STICKY is set when the corresponding bit in DEV_INTR_RAW changes from '0' to '1'.
+------------------------------
+<field_enc>:
+0: Interrupt is level-activated
+1: Interrupt is edge-triggered
+2: Interrupt is falling-edge-triggered
+3: Interrupt is rising-edge-triggered
+------------------------------
+<reg_short_dscr>:
+Device interrupt trigger mode
+------------------------------
+<field_public_text>:
+Bit 32-63 of field DEV_INTR_TRIGGER.
+------------------------------
+<field_enc>:
+0: Interrupt is level-activated
+1: Interrupt is edge-triggered
+2: Interrupt is falling-edge-triggered
+3: Interrupt is rising-edge-triggered
+------------------------------
+<reg_short_dscr>:
+Device interrupt trigger mode
+------------------------------
+<field_public_text>:
+Bit 64-64 of field DEV_INTR_TRIGGER.
+------------------------------
+<field_enc>:
+0: Interrupt is level-activated
+1: Interrupt is edge-triggered
+2: Interrupt is falling-edge-triggered
+3: Interrupt is rising-edge-triggered
+------------------------------
+<reg_short_dscr>:
+Device interrupt sticky status
+------------------------------
+<field_public_text>:
+This register is set based on device interrupt sourec events. See DEV_INTR_TRIGGER for more information. Bits in this register remains set until cleared by software.
+------------------------------
+<reg_short_dscr>:
+Device interrupt sticky status
+------------------------------
+<field_public_text>:
+Bit 32-63 of field DEV_INTR_STICKY.
+------------------------------
+<reg_short_dscr>:
+Device interrupt sticky status
+------------------------------
+<field_public_text>:
+Bit 64-64 of field DEV_INTR_STICKY.
+------------------------------
+<reg_short_dscr>:
+Device interrupt bypass enable
+------------------------------
+<field_public_text>:
+This register allows bypass of DEV_INTR_STICKY for individual device interrupt sources. When a device interrupt source is in bypass mode then DEV_INTR_RAW is used instead of DEV_INTR_STICKY.
+See note on bypass in INTR_BYPASS.
+------------------------------
+<reg_short_dscr>:
+Device interrupt bypass enable
+------------------------------
+<field_public_text>:
+Bit 32-63 of field DEV_INTR_BYPASS.
+------------------------------
+<reg_short_dscr>:
+Device interrupt bypass enable
+------------------------------
+<field_public_text>:
+Bit 64-64 of field DEV_INTR_BYPASS.
+------------------------------
+<reg_short_dscr>:
+Device interrupt enable
+------------------------------
+<field_public_text>:
+Set to enable propagation of individual device interrupt sources to the main interrupt controller.
+------------------------------
+<reg_short_dscr>:
+Device interrupt enable
+------------------------------
+<field_public_text>:
+Bit 32-63 of field DEV_INTR_ENA.
+------------------------------
+<reg_short_dscr>:
+Device interrupt enable
+------------------------------
+<field_public_text>:
+Bit 64-64 of field DEV_INTR_ENA.
+------------------------------
+<reg_short_dscr>:
+Currently active device interrupts
+------------------------------
+<field_public_text>:
+Shows the currently active interrupt sources. For interrupt sources that are not bypassed this register is a result of AND'ing DEV_INTR_STICKY with DEV_INTR_ENA.
+------------------------------
+<reg_short_dscr>:
+Currently active device interrupts
+------------------------------
+<field_public_text>:
+Bit 32-63 of field DEV_INTR_IDENT.
+------------------------------
+<reg_short_dscr>:
+Currently active device interrupts
+------------------------------
+<field_public_text>:
+Bit 64-64 of field DEV_INTR_IDENT.
+------------------------------
+<reg_short_dscr>:
+Device interrupt polarity
+------------------------------
+<field_public_text>:
+Set individual bits in this register to configure polarity of the corresponding device interrupt.
+------------------------------
+<field_enc>:
+0: Device interrupt is active low
+1: Device interrupt is active high
+------------------------------
+<reg_short_dscr>:
+Device interrupt raw status
+------------------------------
+<field_public_text>:
+Shows the current value of individual device interrupt sources. All sources are active high (sources have been corrected for polarity as configured in KR6G_INTR_POL).
+------------------------------
+<reg_short_dscr>:
+Device interrupt trigger mode
+------------------------------
+<field_public_text>:
+Configure trigger mode of individual device interrupt sources. The trigger mode determines how the value of the KR6G_INTR_RAW register is transferred to the KR6G_INTR_STICKY register. This register is replicated, the first replication controls bit 0 in the encoding, the second replication controls bit 1 in the encoding. I.e. to configure edge-triggered interrupt for device 3; set KR6G_INTR_TRIGGER[0][3]='1' and KR6G_INTR_TRIGGER[1][3]='0'.
+For level-triggered interrupts KR6G_INTR_STICKY is set for as long as the corresponding bit in KR6G_INTR_RAW is high - i.e. is not possible to clear a bit in KR6G_INTR_STICKY until the corresponding KR6G_INTR_RAW is zero.
+For edge-triggeded interrupts KR6G_INTR_STICKY is set when the corresponding bit in KR6G_INTR_RAW changes value.
+For falling-edge-triggeded interrupts KR6G_INTR_STICKY is set when the corresponding bit in KR6G_INTR_RAW changes from '1' to '0'.
+For rising-edge-triggeded interrupts KR6G_INTR_STICKY is set when the corresponding bit in KR6G_INTR_RAW changes from '0' to '1'.
+------------------------------
+<field_enc>:
+0: Interrupt is level-activated
+1: Interrupt is edge-triggered
+2: Interrupt is falling-edge-triggered
+3: Interrupt is rising-edge-triggered
+------------------------------
+<reg_short_dscr>:
+Device interrupt sticky status
+------------------------------
+<field_public_text>:
+This register is set based on device interrupt sourec events. See KR6G_INTR_TRIGGER for more information. Bits in this register remains set until cleared by software.
+------------------------------
+<reg_short_dscr>:
+Device interrupt bypass enable
+------------------------------
+<field_public_text>:
+This register allows bypass of KR6G_INTR_STICKY for individual device interrupt sources. When a device interrupt source is in bypass mode then KR6G_INTR_RAW is used instead of KR6G_INTR_STICKY.
+See note on bypass in INTR_BYPASS.
+------------------------------
+<reg_short_dscr>:
+Device interrupt enable
+------------------------------
+<field_public_text>:
+Set to enable propagation of individual device interrupt sources to the main interrupt controller.
+------------------------------
+<reg_short_dscr>:
+Currently active device interrupts
+------------------------------
+<field_public_text>:
+Shows the currently active interrupt sources. For interrupt sources that are not bypassed this register is a result of AND'ing KR6G_INTR_STICKY with KR6G_INTR_ENA.
+------------------------------
+<reg_short_dscr>:
+Device interrupt polarity
+------------------------------
+<field_public_text>:
+Set individual bits in this register to configure polarity of the corresponding device interrupt.
+------------------------------
+<field_enc>:
+0: Device interrupt is active low
+1: Device interrupt is active high
+------------------------------
+<reg_short_dscr>:
+Device interrupt raw status
+------------------------------
+<field_public_text>:
+Shows the current value of individual device interrupt sources. All sources are active high (sources have been corrected for polarity as configured in KR10G_INTR_POL).
+------------------------------
+<reg_short_dscr>:
+Device interrupt trigger mode
+------------------------------
+<field_public_text>:
+Configure trigger mode of individual device interrupt sources. The trigger mode determines how the value of the KR10G_INTR_RAW register is transferred to the KR10G_INTR_STICKY register. This register is replicated, the first replication controls bit 0 in the encoding, the second replication controls bit 1 in the encoding. I.e. to configure edge-triggered interrupt for device 3; set KR10G_INTR_TRIGGER[0][3]='1' and KR10G_INTR_TRIGGER[1][3]='0'.
+For level-triggered interrupts KR10G_INTR_STICKY is set for as long as the corresponding bit in KR10G_INTR_RAW is high - i.e. is not possible to clear a bit in KR10G_INTR_STICKY until the corresponding KR10G_INTR_RAW is zero.
+For edge-triggeded interrupts KR10G_INTR_STICKY is set when the corresponding bit in KR10G_INTR_RAW changes value.
+For falling-edge-triggeded interrupts KR10G_INTR_STICKY is set when the corresponding bit in KR10G_INTR_RAW changes from '1' to '0'.
+For rising-edge-triggeded interrupts KR10G_INTR_STICKY is set when the corresponding bit in KR10G_INTR_RAW changes from '0' to '1'.
+------------------------------
+<field_enc>:
+0: Interrupt is level-activated
+1: Interrupt is edge-triggered
+2: Interrupt is falling-edge-triggered
+3: Interrupt is rising-edge-triggered
+------------------------------
+<reg_short_dscr>:
+Device interrupt sticky status
+------------------------------
+<field_public_text>:
+This register is set based on device interrupt sourec events. See KR10G_INTR_TRIGGER for more information. Bits in this register remains set until cleared by software.
+------------------------------
+<reg_short_dscr>:
+Device interrupt bypass enable
+------------------------------
+<field_public_text>:
+This register allows bypass of KR10G_INTR_STICKY for individual device interrupt sources. When a device interrupt source is in bypass mode then KR10G_INTR_RAW is used instead of KR10G_INTR_STICKY.
+See note on bypass in INTR_BYPASS.
+------------------------------
+<reg_short_dscr>:
+Device interrupt enable
+------------------------------
+<field_public_text>:
+Set to enable propagation of individual device interrupt sources to the main interrupt controller.
+------------------------------
+<reg_short_dscr>:
+Currently active device interrupts
+------------------------------
+<field_public_text>:
+Shows the currently active interrupt sources. For interrupt sources that are not bypassed this register is a result of AND'ing KR10G_INTR_STICKY with KR10G_INTR_ENA.
+------------------------------
+<reggrp_short_dscr>:
+DDR3/4 memory controller + PHY config status
+------------------------------
+<reg_short_dscr>:
+DDR Controller/Phy clock configuration
+------------------------------
+<field_public_text>:
+Enable APB clock of DDR PHY.
+------------------------------
+<field_enc>:
+0 : clock disable
+1 : clock enable
+------------------------------
+<field_public_text>:
+Enable PUB/PHY controller clock.
+------------------------------
+<field_enc>:
+0 : clock disable
+1 : clock enable
+------------------------------
+<field_public_text>:
+Enable APB clock of DDR controller.
+------------------------------
+<field_enc>:
+0 : clock disable
+1 : clock enable
+------------------------------
+<field_public_text>:
+Enable AXI clock of DDR controller.
+------------------------------
+<field_enc>:
+0 : clock disable
+1 : clock enable
+------------------------------
+<field_public_text>:
+Enable ddrc_core_clk.
+------------------------------
+<field_enc>:
+0 : clock disable
+1 : clock enable
+------------------------------
+<reg_short_dscr>:
+DDR Controller/Phy reset configuration
+------------------------------
+<field_public_text>:
+Assert APB reset of DDR PHY.
+------------------------------
+<field_enc>:
+0 : No Reset
+1 : Reset.
+------------------------------
+<field_public_text>:
+Assert DDR PHY PUB/PHY controller reset
+------------------------------
+<field_enc>:
+0 : No Reset
+1 : Reset.
+------------------------------
+<field_public_text>:
+Assert APB reset of DDR controller.
+------------------------------
+<field_enc>:
+0 : No Reset
+1 : Reset.
+------------------------------
+<field_public_text>:
+Assert AXI reset of DDR controller. The controller registers must be configured when AXI channel of DDR controller is in reset.
+------------------------------
+<field_enc>:
+0 : No Reset
+1 : Reset.
+------------------------------
+<field_public_text>:
+Assert ddrc_core_rst. The controller registers must be configured when DDR controller is in reset.
+------------------------------
+<field_enc>:
+0 : No Reset
+1 : Reset.
+------------------------------
+<reg_short_dscr>:
+DDR controller interrupt raw status
+------------------------------
+<field_public_text>:
+This interrupt is asserted when a parity or CRC error is detected on the DFI interface. It may be cleared by writing to CRCPARCTL0.dfi_alert_err_int_clr
+------------------------------
+<field_enc>:
+0 : Interrupt deasserted.
+1 : Interrupt asserted.
+------------------------------
+<field_public_text>:
+This interrupt is asserted when a uncorrectable ECC error is detected. It may be cleared by writing to ECCCLR.ecc_clr_uncorr_err.
+------------------------------
+<field_enc>:
+0 : Interrupt deasserted.
+1 : Interrupt asserted.
+------------------------------
+<field_public_text>:
+This interrupt is asserted when a correctable ECC error is detected. It may be cleared by writing to ECCCLR.ecc_clr_corr_err.
+------------------------------
+<field_enc>:
+0 : Interrupt deasserted.
+1 : Interrupt asserted.
+------------------------------
+<field_public_text>:
+Scrubber interrupt indicating one full address range sweep; only asserted in certain conditions. Behaves identical to SBRSTAT.scrub_done register.
+------------------------------
+<field_enc>:
+0 : Interrupt deasserted.
+1 : Interrupt asserted.
+------------------------------
+<reg_short_dscr>:
+DDR controller interrupt mask register
+------------------------------
+<field_public_text>:
+Mask for DFI ALERT error interrupt
+------------------------------
+<field_enc>:
+0 : Interrupt disabled
+1: Interrupt enabled
+------------------------------
+<field_public_text>:
+Mask for uncorrectable ECC error interrupt
+------------------------------
+<field_enc>:
+0 : Interrupt disabled
+1: Interrupt enabled
+------------------------------
+<field_public_text>:
+Mask for correctable ECC error interrupt
+------------------------------
+<field_enc>:
+0 : Interrupt disabled
+1: Interrupt enabled
+------------------------------
+<field_public_text>:
+Mask for Scrubber done interrupt.
+------------------------------
+<field_enc>:
+0 : Interrupt disabled
+1: Interrupt enabled
+------------------------------
+<reg_short_dscr>:
+DDR controller interrupt masked status
+------------------------------
+<field_public_text>:
+Status for DFI ALERT error interrupt after taking interrupt mask into account.
+------------------------------
+<field_enc>:
+0 : Interrupt deasserted.
+1 : Interrupt asserted.
+------------------------------
+<field_public_text>:
+Status for Uncorrectable ECC error interrupt after taking interrupt mask into account.
+------------------------------
+<field_enc>:
+0 : Interrupt deasserted.
+1 : Interrupt asserted.
+------------------------------
+<field_public_text>:
+Status for correctable ECC error interrupt after taking interrupt mask into account.
+------------------------------
+<field_enc>:
+0 : Interrupt deasserted.
+1 : Interrupt asserted.
+------------------------------
+<field_public_text>:
+Status for Scrubber done interrupt after taking interrupt mask into account.
+------------------------------
+<field_enc>:
+0 : Interrupt deasserted.
+1 : Interrupt asserted.
+------------------------------

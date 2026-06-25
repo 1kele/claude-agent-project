@@ -1,0 +1,45 @@
+=== DOCUMENTATION FOR TARGET: SD_CMU_NONTERM_TARGET ===
+
+<reg_short_dscr>:
+SD CMU Configuration
+------------------------------
+<field_public_text>:
+Software Reset for SD configuration interface.
+------------------------------
+<field_enc>:
+1: Reset active
+0: Reset incactive
+------------------------------
+<field_public_text>:
+Software Reset for SD LCPLL macro.
+------------------------------
+<field_enc>:
+1: Reset active
+0: Reset inactive
+------------------------------
+<reg_short_dscr>:
+SD CMU Status
+------------------------------
+<reg_public_text>:
+SD CMU Status as not available from internal SD registers
+------------------------------
+<field_public_text>:
+Access to internal serdes state
+------------------------------
+<reggrp_short_dscr>:
+Configuration of SD local parallel configuration interface (EXT_CFG)
+------------------------------
+<reg_short_dscr>:
+Configuration of SD local parallel configuration interface (EXT_CFG)
+------------------------------
+<field_public_text>:
+EXTCFG Interface Timing configuration.
+
+Additional N wait states before read data is sampled.
+------------------------------
+<field_enc>:
+Total Wait States (i.e. pulse width) are N+3 clock cycles of EXT_CFG clock signal.
+------------------------------
+<field_public_text>:
+Reserved, must set to its default value.
+------------------------------

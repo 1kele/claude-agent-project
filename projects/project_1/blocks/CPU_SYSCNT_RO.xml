@@ -1,0 +1,131 @@
+=== DOCUMENTATION FOR TARGET: CPU_SYSCNT_RO ===
+
+<reg_short_dscr>:
+Current value of Counter. Lower 32-bits.
+------------------------------
+<field_public_text>:
+Current value of Counter. Lower 32-bits
+------------------------------
+<reg_short_dscr>:
+Current value of Counter. Upper 32-bits.
+------------------------------
+<field_public_text>:
+Current value of Counter. Upper 32-bits
+------------------------------
+<reg_short_dscr>:
+Part of the set of Peripheral Identification registers. Contains part of the designer specific part number.
+------------------------------
+<field_public_text>:
+Bits [7:0] of the component part number. This is selected by the designer of the component.
+------------------------------
+<field_enc>:
+0x01: Time_Stamp_Generator_Part_Number_Bits7to0 : Lowest 8 bits of the Part Number, 0x101.
+------------------------------
+<reg_short_dscr>:
+Part of the set of Peripheral Identification registers. Contains part of the designer specific part number and part of the designer identity.
+------------------------------
+<field_public_text>:
+Bits [3:0] of the JEDEC identity code indicating the designer of the component, together with the continuation code.
+------------------------------
+<field_enc>:
+0xB: ARM_JEP106_Identity_Code_Bits7to0 : Lowest 4 bits of the JEP106 Identity Code.
+------------------------------
+<field_public_text>:
+Bits [11:8] of the component part number. This is selected by the designer of the component.
+------------------------------
+<field_enc>:
+0x1: Time_Stamp_Generator_Part_Number_Bits11to8 : Upper 4 bits of the Part Number, 0x101.
+------------------------------
+<reg_short_dscr>:
+Part of the set of Peripheral Identification registers. Contains part of the designer identity and the product revision.
+------------------------------
+<field_public_text>:
+The Revision field is an incremental value starting at 0x0 for the first design of this component. This only increases by 1 for both major and minor revisions and is used as a look-up to establish the exact major and minor revision.
+------------------------------
+<field_enc>:
+0x1: r0p1 : This device is at r0p1.
+------------------------------
+<field_public_text>:
+Always set. Indicates that a JEDEC assigned value is used.
+------------------------------
+<field_enc>:
+0x1: JEDEC_Identity : The designer ID is specified by JEDEC (http://www.jedec.org).
+------------------------------
+<field_public_text>:
+Bits [6:4] of the JEDEC identity code indicating the designer of the component, together with the continuation code.
+------------------------------
+<field_enc>:
+0x3: ARM_JEP106_Identity_Code_Bits6to4 : Upper 3 bits of the JEP106 Identity Code.
+------------------------------
+<reg_short_dscr>:
+Part of the set of Peripheral Identification registers. Contains the RevAnd and Customer Modified fields.
+------------------------------
+<field_public_text>:
+This field indicates minor errata fixes specific to this design, for example metal fixes after implementation. In most cases this field is zero. It is recommended that component designers ensure this field can be changed by a metal fix if required, for example by driving it from registers that reset to zero.
+------------------------------
+<field_enc>:
+0x0: No_Mods : Indicates that there have been no metal fixes to this component.
+------------------------------
+<field_public_text>:
+Where the component is reusable IP, this value indicates if the customer has modified the behavior of the component. In most cases this field is zero.
+------------------------------
+<field_enc>:
+0x0: No_Mods : Indicates that there have been no modifications made.
+------------------------------
+<reg_short_dscr>:
+Part of the set of Peripheral Identification registers. Contains part of the designer identity and the memory footprint indicator.
+------------------------------
+<field_public_text>:
+This is a 4-bit value that indicates the total contiguous size of the memory window used by this component in powers of 2 from the standard 4KB. If a component only requires the standard 4KB, this must read as 0x0, 4KB only. For 8KB set to 0x1, for 16KB set to 0x2, for 32KB set to 0x3, and so on.
+------------------------------
+<field_enc>:
+0x0: Size_4kB : Indicates that the device only occupies 4KB of memory.
+------------------------------
+<field_public_text>:
+JEDEC continuation code indicating the designer of the component, together with the identity code.
+------------------------------
+<field_enc>:
+0x4: ARM_JEP106_Continuation_Code : Indicates that ARM's JEDEC identity code is on the 5th bank.
+------------------------------
+<reg_short_dscr>:
+A component identification register, that indicates that the identification registers are present.
+------------------------------
+<field_public_text>:
+Contains bits [24:31] of the component identification.
+------------------------------
+<field_enc>:
+0x0D: ID_Value_0D : Identification value.
+------------------------------
+<reg_short_dscr>:
+A component identification register, that indicates that the identification registers are present. This register also indicates the component class.
+------------------------------
+<field_public_text>:
+Class of the component, for example, ROM table or CoreSight component.
+------------------------------
+<field_enc>:
+0xF: Primecell_component : Indicates the component is a CoreSight component.
+------------------------------
+<field_public_text>:
+Contains bits [19:16] of the component identification.
+------------------------------
+<field_enc>:
+0x0: ID_Value_0 : Identification value.
+------------------------------
+<reg_short_dscr>:
+A component identification register, that indicates that the identification registers are present.
+------------------------------
+<field_public_text>:
+Contains bits [15:8] of the component identification.
+------------------------------
+<field_enc>:
+0x05: ID_Value_05 : Identification value.
+------------------------------
+<reg_short_dscr>:
+A component identification register, that indicates that the identification registers are present.
+------------------------------
+<field_public_text>:
+Contains bits [7:0] of the component identification.
+------------------------------
+<field_enc>:
+0xB1: ID_Value_B1 : Identification value.
+------------------------------

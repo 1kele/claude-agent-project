@@ -1,0 +1,467 @@
+=== DOCUMENTATION FOR TARGET: SD_LANE_TARGET ===
+
+<reg_short_dscr>:
+Software Reset for Serializer Clock
+------------------------------
+<field_public_text>:
+Software Reset for SD Serializer Clock
+------------------------------
+<field_enc>:
+1: Reset active
+0: Reset inactive
+------------------------------
+<reg_short_dscr>:
+Software Reset for Deserializer Clock
+------------------------------
+<field_public_text>:
+Software Reset for SD Deserializer Clock
+------------------------------
+<field_enc>:
+1: Reset active
+0: Reset inactive
+------------------------------
+<reggrp_short_dscr>:
+SD Lane configuration and Status
+------------------------------
+<reg_short_dscr>:
+SD Lane Configuration
+------------------------------
+<reg_public_text>:
+Configuration of SD lane macro via core interface signals
+------------------------------
+<field_public_text>:
+Software Reset for SD Lane reset for RX data path.
+------------------------------
+<field_enc>:
+1: Reset active
+0: Reset inactive
+------------------------------
+<field_public_text>:
+Software Reset for SD Lane reset for TX data path.
+------------------------------
+<field_enc>:
+1: Reset active
+0: Reset inactive
+------------------------------
+<field_public_text>:
+Software Reset for SD Lane reset.
+------------------------------
+<field_enc>:
+1: Reset active
+0: Reset inactive
+------------------------------
+<field_public_text>:
+Select reference clock signal from one of attached CMUs depending on required High Speed Reference clock
+------------------------------
+<field_enc>:
+00:  10.3125GHz  (MAIN)
+01:  10.0GHz  (AUXCK1)
+10:  12.5GHz  (AUXCK2)
+11:  12.5GHz  (AUXCK2)
+------------------------------
+<field_public_text>:
+Select sideband signals from one of attached CMUs depending on required High Speed Reference clock
+------------------------------
+<field_enc>:
+00:  10.3125GHz  (MAIN)
+01:  10.0GHz  (AUXCK1)
+10:  12.5GHz  (AUXCK2)
+11:  12.5GHz  (AUXCK2)
+------------------------------
+<field_public_text>:
+Software Reset for SD configuration interface.
+------------------------------
+<field_enc>:
+1: Reset active
+0: Reset incactive
+------------------------------
+<field_public_text>:
+Software Reset for SD Lane macro for fundamental reset.
+------------------------------
+<field_enc>:
+1: Reset active
+0: Reset inactive
+------------------------------
+<reg_short_dscr>:
+SD Lane Status
+------------------------------
+<reg_public_text>:
+SD Lane Status as not available from internal SD register
+------------------------------
+<field_public_text>:
+Access to internal serdes state
+------------------------------
+<field_public_text>:
+DFE Reset done
+------------------------------
+<field_enc>:
+1:  Reset done
+0:  Reset pending or in progress
+------------------------------
+<field_public_text>:
+PMA Reset done
+------------------------------
+<field_enc>:
+1:  Reset done
+0:  Reset pending or in progress
+------------------------------
+<reggrp_short_dscr>:
+SD Signal Detect Configuration
+------------------------------
+<reggrp_public_text>:
+SD Signal Detect Configuration
+------------------------------
+<reg_short_dscr>:
+SD Signal Detect Configuration
+------------------------------
+<reg_public_text>:
+Serdes Signal Detect Configuration
+------------------------------
+<field_public_text>:
+Signal detect selection (select input for internal signal_detect line)
+------------------------------
+<field_enc>:
+0: Select signal_detect line from hardmacro
+1: Select external signal_detect line
+------------------------------
+<field_public_text>:
+Signal detect polarity: The signal level on signal_detect input pin must be equal to SD_POL to indicate signal detection (SD_ENA must be set)
+------------------------------
+<field_enc>:
+0: Signal Detect input pin must be '0' to indicate a signal detection
+1: Signal Detect input pin must be '1' to indicate a signal detection
+------------------------------
+<field_public_text>:
+Signal Detect Enable
+------------------------------
+<field_enc>:
+0: The Signal Detect input pin is ignored active Signal Detect is assumed at all times
+1: The Signal Detect input pin is used to determine if a signal is detected
+------------------------------
+<reggrp_short_dscr>:
+Gating all macro generated clocks
+------------------------------
+<reggrp_public_text>:
+Gate SD generated clocks during speed change
+------------------------------
+<reg_short_dscr>:
+Gating all macro generated clocks
+------------------------------
+<reg_public_text>:
+Gate SD generated clocks during speed change
+------------------------------
+<field_enc>:
+0 :  enable macro clock generation towards core (RX & TX)
+1 :  disable (gate) macro clock generation towards core (TX & TX)
+------------------------------
+<reggrp_short_dscr>:
+SD Power configuration
+------------------------------
+<reggrp_public_text>:
+Contains set of two power configurations which are applied to the SD lane in normal mode or in quiet mode.
+------------------------------
+<reg_short_dscr>:
+Power settings for NORMAL mode.
+------------------------------
+<field_public_text>:
+Power Down Control settings for SD Lane in NORMAL mode
+
+Bits 17 to 19 are for TX direction, other bits are for RX direction.
+The default value is power-down mode, to ensure low power usage after reset. Needs to be configured to a power-up mode as part of serdes configuration.
+------------------------------
+<field_enc>:
+Refer to GUC documentation
+------------------------------
+<reg_short_dscr>:
+Power settings for QUIET mode.
+------------------------------
+<field_public_text>:
+Power Down Control settings for SD Lane in NORMAL mode.
+
+Bits 17 to 19 are for TX direction, other bits are for RX direction.
+------------------------------
+<field_enc>:
+Refer to GUC documentation
+------------------------------
+<reggrp_short_dscr>:
+Configuration of SD local parallel configuration interface (EXT_CFG)
+------------------------------
+<reg_short_dscr>:
+Configuration of SD local parallel configuration interface (EXT_CFG)
+------------------------------
+<field_public_text>:
+EXTCFG Interface Timing configuration.
+
+Additional N wait states before read data is sampled.
+------------------------------
+<field_enc>:
+Total Wait States (i.e. pulse width) are N+3 clock cycles of EXT_CFG clock signal.
+------------------------------
+<field_public_text>:
+Reserved, must set to its default value.
+------------------------------
+<reggrp_short_dscr>:
+Registers for precise FIFO delay measurement
+------------------------------
+<reggrp_public_text>:
+Registers for precise FIFO delay measurement
+------------------------------
+<reg_short_dscr>:
+FIFO delay measurement configuration
+------------------------------
+<reg_public_text>:
+FIFO delay measurement configuration register
+------------------------------
+<field_public_text>:
+Configures the number of cycles the skew detector should run before returning serdes delay
+------------------------------
+<reg_short_dscr>:
+FIFO delay measurement
+------------------------------
+<reg_public_text>:
+FIFO delay measurement register
+------------------------------
+<field_public_text>:
+Link-up dynamic delay to be added to the PTP TX I/O link delay configuration. 
+Value is the fraction of 65536 of the maximum delay at a given speed and lane index.
+
+1.0 Gbps: 128 ns
+2.5 Gbps: 51.2 ns
+5.0 Gbps : 15.5 ns (lane 0-12), 49.6 ns (lane 13-24)
+10.0 Gbps: 24.8ns
+
+NOTE: Lane 25+ have different delays than these.
+------------------------------
+<field_public_text>:
+Link-up dynamic delay to be added to the PTP RX I/O link delay configuration. 
+Value is the fraction of 65536 of the maximum delay at a given speed and lane index.
+
+1.0 Gbps: 64 ns
+2.5 Gbps: 25.6 ns
+5.0 Gbps : 12.4 ns (lane 0-12), 37.2 ns (lane 13-24)
+10.0 Gbps: 18.6 ns
+
+Example: Value on lane 22 running at 5 Gbps is 25000.
+Add 25000/65536*37.2 ns = 14.2 ns to PTP RX I/O delay for port 53 (serdes mapping)
+
+NOTE: Lane 25+ have different delays than these.
+------------------------------
+<reggrp_short_dscr>:
+SYNC_ETH Configuration Registers
+------------------------------
+<reg_short_dscr>:
+10G Recovered Clock Configuration
+------------------------------
+<field_public_text>:
+Divider setting for the SD recovered clock output. These settings are applied prior to sending recovered clock to the optional PAD-divider (see HSIOWRAP::SYNC_ETH_CFG[X].SEL_RECO_CLK_DIV.)
+For the TX clock recovery value 2 is also reserved, it is not possible to divide by 66/32 for TX clock.
+------------------------------
+<field_enc>:
+0: No clock dividing
+1: Divide clock by 2
+2: Divide clock by (66/32)
+3: reserved
+------------------------------
+<field_public_text>:
+Use Link Status information of connected PCS or extender for squelching of recovered clock.
+------------------------------
+<field_enc>:
+1: Use link status information for squelching
+0: Don't use link status information for squelching
+------------------------------
+<field_public_text>:
+Set to enable auto-squelching for sync. ethernet clock output: when set the clock output will stop toggling (keep its last value constantly) when when SerDes looses signal detect state.
+------------------------------
+<reggrp_short_dscr>:
+Configuration and statistics parameters for 100Base-FX
+------------------------------
+<reg_short_dscr>:
+Miscellaneous parameters
+------------------------------
+<field_public_text>:
+Core clock frequency.
+------------------------------
+<field_enc>:
+0: 625MHz
+1: 500MHz
+2: 250MHz
+3: Reserved
+------------------------------
+<field_public_text>:
+Enable signaling of 100Base-FX clock, reset, data and lock to device.
+------------------------------
+<field_public_text>:
+Enable extraction of 100FX clock and data, and clear outgoing reset.
+------------------------------
+<field_public_text>:
+Disable reset for part of 100FX block, which is clocked by 125MHz clock from SD10G.
+------------------------------
+<reg_short_dscr>:
+Sticky bits
+------------------------------
+<field_public_text>:
+Underflow in FIFO of received bits encountered.
+This may occur during initial enabling of fx100, but following that it should never happen.
+------------------------------
+<field_public_text>:
+Overflow in FIFO of received bits encountered.
+
+This could be caused by the SerDes not being configured for 1.25Gbps mode.
+
+Related parameters:
+SD10G_LANE:LANE_GRP_0:LANE_35.CFG_RXRATE_1_0
+SD10G_LANE:LANE_GRP_0:LANE_35.CFG_TXRATE_1_0
+------------------------------
+<reg_short_dscr>:
+Parameters related to locating rising edge in bit stream from SD10G
+------------------------------
+<field_public_text>:
+Reserved, must set to its default value.
+------------------------------
+<field_public_text>:
+Threshold for when to adjust rising edge pointer.
+------------------------------
+<reg_short_dscr>:
+Parameters related to lock period.
+------------------------------
+<field_public_text>:
+Current lock state.
+------------------------------
+<field_public_text>:
+Length in FX cycles of the period over which lock criterion is evaluated.
+------------------------------
+<reg_short_dscr>:
+Criterion for declaring locked state.
+------------------------------
+<field_public_text>:
+Maximum absolute sum of edge pointer changes allowed during LOCK_PERIOD_LEN FX cycles.
+------------------------------
+<reg_short_dscr>:
+Filter configuration
+------------------------------
+<reg_public_text>:
+A pattern mask is found if any a sequence of SD bits matching the following expression is found.
+
+FILTER_ENA=1: 
+(sd_bit_seq & FILTER_MASK) == (FILTER_PATTERN & FILTER_MASK)
+
+FILTER_INV_ENA=1: 
+(sd_bit_seq & FILTER_MASK) == (~FILTER_PATTERN & FILTER_MASK)
+
+If a match is found, then the following modification is performed
+sd_bit_seq[FILTER_BIT_IDX_INV] = !sd_bit_seq[FILTER_BIT_IDX_INV]
+------------------------------
+<field_public_text>:
+See register description.
+------------------------------
+<field_public_text>:
+See register description.
+------------------------------
+<field_public_text>:
+See register description.
+------------------------------
+<field_public_text>:
+See register description.
+------------------------------
+<field_public_text>:
+See register description.
+------------------------------
+<reg_short_dscr>:
+Measurement control
+------------------------------
+<reg_public_text>:
+To help configure filters, measurement can be used to determine characteristics of the received bit stream.
+------------------------------
+<field_public_text>:
+Length of measurement period.
+Unit is controlled by M_PERIOD_LEN_TYPE.
+
+0 => Run until SW sets M_START=0.
+------------------------------
+<field_public_text>:
+Control how M_PERIOD_LEN is measured.
+------------------------------
+<field_enc>:
+0: M_PERIOD_LEN is measured in FX bits received.
+1: M_PERIOD_LEN is measured in FX edges (0->1, 1->0)
+------------------------------
+<field_public_text>:
+Latch the following information:
+M_STAT_MISC.M_RIS_EDGE_PTR_ADJ_SUM
+M_STAT_MISC.M_LOCK_CNT
+M_STAT_FX_ONE_CNT.M_FX_ONE_CNT
+M_STAT_SD_ONE_CNT.M_SD_ONE_CNT
+M_STAT_FILTER_MATCH_CNT.M_FILTER_MATCH_CNT
+
+To latch the information M_LATCH must be set to 0 and then immediately after to 1.
+
+The latched information is available a few clock cycles after setting M_LATCH=1.
+------------------------------
+<field_public_text>:
+Measurement has completed.
+
+HW clears this bit shortly after M_START is set and sets it again when measurement has completed.
+------------------------------
+<field_public_text>:
+To start a new measurement, M_START must be set to 0 and then immediately after to 1.
+
+When measurement has completed, HW will set M_DONE (unless M_PERIOD_LEN=0).
+
+If M_PERIOD_LEN=0, then the measurement will run until M_START is set to 0.
+------------------------------
+<reg_short_dscr>:
+M_PERIOD_LEN miscellaneous statistics.
+------------------------------
+<field_public_text>:
+Number of times lock state has been entered during measurement period.
+The field is set to 0 when measurement is started.
+
+Saturates at maximum value.
+
+Before reading this field, M_LATCH must be set to latch current value.
+------------------------------
+<field_public_text>:
+The sum of all rising edge pointer adjustments during measurement period.
+Two's complement encoded.
+The field is set to 0 when measurement is started.
+
+If sender is faster than receiver, then the number will become postive.
+If sender is slower than receiver, then the number will become negative.
+
+Saturates at maximum/minimum value.
+
+Before reading this field, M_LATCH must be set to latch current value.
+------------------------------
+<reg_short_dscr>:
+M_PERIOD_LEN statistics for "1 counting".
+------------------------------
+<field_public_text>:
+Number of SD 1s seen, minus M_FX_ONE_CNT*10 seen during measurement period.
+Two's complement encoded.
+Saturates at maximum/minimum value.
+The field is set to 0 when measurement is started.
+
+May be used to detect duty cycle distortion in received bit stream.
+
+Before reading this field, M_LATCH must be set to latch current value.
+------------------------------
+<reg_short_dscr>:
+M_PERIOD_LEN statistics for "1 counting".
+------------------------------
+<field_public_text>:
+Number of FX 1s seen during measurement period.
+Saturates at maximum value.
+The field is set to 0 when measurement is started.
+
+Before reading this field, M_LATCH must be set to latch current value.
+------------------------------
+<reg_short_dscr>:
+M_PERIOD_LEN statistics for number of filter matches.
+------------------------------
+<field_public_text>:
+Number of times filter has matched (due to either FILTER_ENA or FILTER_INV_ENA) during measurement period.
+Saturates at maximum value.
+The field is set to 0 when measurement is started.
+
+Before reading this field, M_LATCH must be set to latch current value.
+------------------------------

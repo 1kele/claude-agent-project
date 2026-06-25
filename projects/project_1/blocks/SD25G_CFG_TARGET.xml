@@ -1,0 +1,353 @@
+=== DOCUMENTATION FOR TARGET: SD25G_CFG_TARGET ===
+
+<reg_short_dscr>:
+Software Reset for Serializer Clock
+------------------------------
+<field_public_text>:
+Software Reset for SD Serializer Clock
+------------------------------
+<field_enc>:
+1: Reset active
+0: Reset inactive
+------------------------------
+<reg_short_dscr>:
+Software Reset for Deserializer Clock
+------------------------------
+<field_public_text>:
+Software Reset for SD Deserializer Clock
+------------------------------
+<field_enc>:
+1: Reset active
+0: Reset inactive
+------------------------------
+<reggrp_short_dscr>:
+SD Lane configuration and Status
+------------------------------
+<reg_short_dscr>:
+SD Lane Configuration
+------------------------------
+<reg_public_text>:
+Configuration of SD lane macro via core interface signals
+------------------------------
+<field_public_text>:
+Transmitter voltage level control
+------------------------------
+<field_public_text>:
+Transmit path electrical idle
+------------------------------
+<field_public_text>:
+Controls transmitter voltage swing level
+------------------------------
+<field_enc>:
+0: full swing
+1: low swing
+------------------------------
+<field_public_text>:
+RX fast eye scan monitor enable
+------------------------------
+<field_enc>:
+1: enable
+0: disable
+------------------------------
+<field_public_text>:
+RX traditional eye scan monitor enable
+------------------------------
+<field_enc>:
+1: enable
+0: disable
+------------------------------
+<field_public_text>:
+PCS link train control: 1st-stage post-equalization level control of TX
+------------------------------
+<field_public_text>:
+PCS link train control: TX data path setting
+------------------------------
+<field_public_text>:
+PCS link train control: pre-equalization level control of TX
+------------------------------
+<field_public_text>:
+PCS link train control: 1st-stage post-equalization
+------------------------------
+<field_enc>:
+1: enable
+0: disable
+------------------------------
+<field_public_text>:
+PCS link train control: TX data path control
+------------------------------
+<field_enc>:
+1: enable
+0: disable
+------------------------------
+<field_public_text>:
+PCS link train control: pre-equalization control of TX
+------------------------------
+<field_enc>:
+1: enable
+0: disable
+------------------------------
+<field_public_text>:
+Software Reset for SD Lane reset.
+------------------------------
+<field_enc>:
+1: Reset active
+0: Reset inactive
+------------------------------
+<field_public_text>:
+Software Reset for SD configuration interface.
+------------------------------
+<field_enc>:
+1: Reset active
+0: Reset incactive
+------------------------------
+<field_public_text>:
+Software Reset for SD Lane macro for fundamental reset.
+------------------------------
+<field_enc>:
+1: Reset active
+0: Reset inactive
+------------------------------
+<reg_short_dscr>:
+SD Lane Configuration
+------------------------------
+<reg_public_text>:
+Configuration of SD lane macro via core interface signals
+------------------------------
+<field_public_text>:
+PMA receive clock full/subrate frequency selection
+------------------------------
+<field_enc>:
+00: full
+01: 1/2
+10: 1/4
+11: 1/8
+------------------------------
+<field_public_text>:
+PMA transmit clock full/subrate frequency selection
+------------------------------
+<field_enc>:
+00: full
+01: 1/2
+10: 1/4
+11: 1/8
+------------------------------
+<field_public_text>:
+PLL multiplying factor (Fref*N)
+------------------------------
+<field_public_text>:
+PMA VCO post divider ratio selection (or reference clock multiplying factor)
+------------------------------
+<field_public_text>:
+RXFIFO clock divider
+------------------------------
+<field_public_text>:
+TXFIFO clock divider
+------------------------------
+<field_public_text>:
+PMA receiver clock frequency selection
+------------------------------
+<field_public_text>:
+PMA transmit clock frequency selection
+------------------------------
+<field_public_text>:
+TX/RX data width selection
+------------------------------
+<field_enc>:
+000: 10-bit mode
+001: 16-bit mode
+010: 20-bit mode
+011: 32-bit mode
+100: 40-bit mode
+101: 64-bit mode
+110: Reserved
+111: Reserved
+------------------------------
+<reg_short_dscr>:
+SD Lane Status
+------------------------------
+<reg_public_text>:
+SD Lane Status as not available from internal SD register
+------------------------------
+<field_public_text>:
+Access to internal serdes state
+------------------------------
+<field_public_text>:
+Lane Reset done. Asserted when reset is completed following LANE_RST deassertion
+------------------------------
+<field_enc>:
+1:  Reset done
+0:  Reset pending or in progress
+------------------------------
+<field_public_text>:
+PMA Reset done. Asserted when reset is completed following MACRO_RST deassertion.
+------------------------------
+<field_enc>:
+1:  Reset done
+0:  Reset pending or in progress
+------------------------------
+<reggrp_short_dscr>:
+SD Signal Detect Configuration
+------------------------------
+<reggrp_public_text>:
+SD Signal Detect Configuration
+------------------------------
+<reg_short_dscr>:
+SD Signal Detect Configuration
+------------------------------
+<reg_public_text>:
+Serdes Signal Detect Configuration
+------------------------------
+<field_public_text>:
+Signal detect selection (select input for internal signal_detect line)
+------------------------------
+<field_enc>:
+0: Select signal_detect line from hardmacro
+1: Select external signal_detect line
+------------------------------
+<field_public_text>:
+Signal detect polarity: The signal level on signal_detect input pin must be equal to SD_POL to indicate signal detection (SD_ENA must be set)
+------------------------------
+<field_enc>:
+0: Signal Detect input pin must be '0' to indicate a signal detection
+1: Signal Detect input pin must be '1' to indicate a signal detection
+------------------------------
+<field_public_text>:
+Signal Detect Enable
+------------------------------
+<field_enc>:
+0: The Signal Detect input pin is ignored active Signal Detect is assumed at all times
+1: The Signal Detect input pin is used to determine if a signal is detected
+------------------------------
+<reggrp_short_dscr>:
+Gating all macro generated clocks
+------------------------------
+<reggrp_public_text>:
+Gate SD generated clocks during speed change
+------------------------------
+<reg_short_dscr>:
+Gating all macro generated clocks
+------------------------------
+<reg_public_text>:
+Gate SD generated clocks during speed change
+------------------------------
+<field_enc>:
+0 :  enable macro clock generation towards core (RX & TX)
+1 :  disable (gate) macro clock generation towards core (TX & TX)
+------------------------------
+<reggrp_short_dscr>:
+SD Power configuration
+------------------------------
+<reggrp_public_text>:
+Contains set of two power configurations which are applied to the SD lane in normal mode or in quiet mode.
+------------------------------
+<reg_short_dscr>:
+Power settings for NORMAL mode.
+------------------------------
+<field_public_text>:
+Power Down Control settings for SD Lane in NORMAL mode
+
+Bits 17 to 19 are for TX direction, other bits are for RX direction.
+The default value is power-down mode, to ensure low power usage after reset. Needs to be configured to a power-up mode as part of serdes configuration.
+------------------------------
+<field_enc>:
+Refer to GUC documentation
+------------------------------
+<reg_short_dscr>:
+Power settings for QUIET mode.
+------------------------------
+<field_public_text>:
+Power Down Control settings for SD Lane in NORMAL mode.
+
+Bits 17 to 19 are for TX direction, other bits are for RX direction.
+------------------------------
+<field_enc>:
+Refer to GUC documentation
+------------------------------
+<reggrp_short_dscr>:
+Configuration of SD local parallel configuration interface (EXT_CFG)
+------------------------------
+<reg_short_dscr>:
+Configuration of SD local parallel configuration interface (EXT_CFG)
+------------------------------
+<field_public_text>:
+EXTCFG Interface Timing configuration.
+
+Additional N wait states before read data is sampled.
+------------------------------
+<field_enc>:
+Total Wait States (i.e. pulse width) are N+3 clock cycles of EXT_CFG clock signal.
+------------------------------
+<field_public_text>:
+Reserved, must set to its default value.
+------------------------------
+<reggrp_short_dscr>:
+Registers for precise FIFO delay measurement
+------------------------------
+<reggrp_public_text>:
+Registers for precise FIFO delay measurement
+------------------------------
+<reg_short_dscr>:
+FIFO delay measurement configuration
+------------------------------
+<reg_public_text>:
+FIFO delay measurement configuration register
+------------------------------
+<field_public_text>:
+Configures the number of cycles the skew detector should run before returning serdes delay
+------------------------------
+<reg_short_dscr>:
+FIFO delay measurement
+------------------------------
+<reg_public_text>:
+FIFO delay measurement register
+------------------------------
+<field_public_text>:
+Link-up dynamic delay to be added to the PTP TX I/O link delay configuration. 
+Value is the fraction of 65536 of the maximum delay at a given speed and lane index.
+
+1.0 Gbps: 128 ns
+2.5 Gbps: 51.2 ns
+5.0 Gbps : 37.2 ns
+10.0 Gbps: 18.6 ns
+25.0 Gbps: 6.2 ns
+
+NOTE: Lane 0-24 have different delays than these.
+------------------------------
+<field_public_text>:
+Link-up dynamic delay to be added to the PTP RX I/O link delay configuration. 
+Value is the fraction of 65536 of the maximum delay at a given speed and lane index.
+
+1.0 Gbps: 128 ns
+2.5 Gbps: 51.2 ns
+5.0 Gbps : 49.6 ns
+10.0 Gbps: 24.8 ns
+25.0 Gbps: 6.2 ns
+
+NOTE: Lane 0-24 have different delays than these.
+------------------------------
+<reggrp_short_dscr>:
+SYNC_ETH Configuration Registers
+------------------------------
+<reg_short_dscr>:
+10G Recovered Clock Configuration
+------------------------------
+<field_public_text>:
+Divider setting for the SD recovered clock output. These settings are applied prior to sending recovered clock to the optional PAD-divider (see HSIOWRAP::SYNC_ETH_CFG[X].SEL_RECO_CLK_DIV.)
+For the TX clock recovery value 2 is also reserved, it is not possible to divide by 66/32 for TX clock.
+------------------------------
+<field_enc>:
+0: No clock dividing
+1: Divide clock by 2
+2: Divide clock by (66/32)
+3: reserved
+------------------------------
+<field_public_text>:
+Use Link Status information of connected PCS or extender for squelching of recovered clock.
+------------------------------
+<field_enc>:
+1: Use link status information for squelching
+0: Don't use link status information for squelching
+------------------------------
+<field_public_text>:
+Set to enable auto-squelching for sync. ethernet clock output: when set the clock output will stop toggling (keep its last value constantly) when when SerDes looses signal detect state.
+------------------------------

@@ -1,0 +1,3251 @@
+=== DOCUMENTATION FOR TARGET: MSHC ===
+
+<target_short_dscr>:
+DWC MSHC Memory Map
+------------------------------
+<reggrp_short_dscr>:
+This register block defines the standard SD Host Controller register set
+------------------------------
+<reg_short_dscr>:
+This register is used to configure a 32-bit Block Count or an SDMA System Address based on the Host Version 4 Enable bit in the Host Control 2 register. This register is applicable for both SD and eMMC modes.
+------------------------------
+<field_public_text>:
+32-bit Block Count (SDMA System Address)
+ - SDMA System Address (Host Version 4 Enable = 0): This register contains the system memory address for an SDMA transfer in the 32-bit addressing mode. When the Host Controller stops an SDMA
+   transfer, this register points to the system address of the next contiguous data position. It can be accessed only if no transaction is executing. Reading this register during data transfers may
+return an invalid value.
+ - 32-bit Block Count (Host Version 4 Enable = 1): From the Host Controller Version 4.10 specification, this register is redefined as 32-bit Block Count. The Host Controller decrements the block count of this register for every block transfer and the data transfer stops when the count reaches zero. This register must be accessed when no transaction is executing. Reading this register during data transfers may return invalid value.
+Following are the values for BLOCKCNT_SDMASA:
+ - 0xFFFF_FFFF - 4G - 1 Block
+ - ......   
+ - 0x0000_0002 - 2 Blocks
+ - 0x0000_0001 - 1 Block
+ - 0x0000_0000 - Stop Count
+Note: 
+ - For Host Version 4 Enable = 0, the Host driver does not program the system address in this register while operating in ADMA mode. The system address must be programmed in the ADMA System Address register.
+ - For Host Version 4 Enable = 0, the Host driver programs a non-zero 32-bit block count value in this register when Auto CMD23 is enabled for non-DMA and ADMA modes. Auto CMD23 cannot be used with SDMA.
+ - This register must be programmed with a non-zero value for data transfer if the 32-bit Block count register is used instead of the 16-bit Block count register.
+------------------------------
+<reg_short_dscr>:
+This register is used to configure an SDMA buffer boundary and the number of bytes in a data block. This register is applicable for both SD and eMMC modes.
+------------------------------
+<field_public_text>:
+This bit of the BLOCKSIZE_R register is reserved. It always returns 0.
+------------------------------
+<field_public_text>:
+SDMA Buffer Boundary
+
+These bits specify the size of contiguous buffer in system memory. The SDMA transfer waits at every boundary specified by these fields and the Host Controller generates the DMA interrupt to request the Host Driver to update the SDMA System Address register.
+------------------------------
+<field_enc>:
+'h5: 128K bytes SDMA Buffer Boundary
+'h2: 16K bytes SDMA Buffer Boundary
+'h6: 256K bytes SDMA Buffer Boundary
+'h3: 32K bytes SDMA Buffer Boundary
+'h0: 4K bytes SDMA Buffer Boundary
+'h7: 512K bytes SDMA Buffer Boundary
+'h4: 64K bytes SDMA Buffer Boundary
+'h1: 8K bytes SDMA Buffer Boundary
+------------------------------
+<field_public_text>:
+Transfer Block Size
+
+These bits specify the block size of data transfers. In case of memory, it is set to 512 bytes. It can be accessed only if no transaction is executing. Read operations during transfers may return
+an invalid value, and write operations are ignored.
+Following are the values for XFER_BLOCK_SIZE:
+ - 0x1: 1 byte
+ - 0x2: 2 bytes
+ - 0x3: 3 bytes
+ - ......  
+ - 0x1FF: 511 byte
+ - 0x200: 512 bytes
+ - ......    
+ - 0x800: 2048 bytes
+Note: This register must be programmed with a non-zero value for data transfer.
+------------------------------
+<reg_short_dscr>:
+This register is used to configure the number of data blocks. This register is applicable for both SD and eMMC modes.
+------------------------------
+<field_public_text>:
+16-bit Block Count
+ - If the Host Version 4 Enable bit is set 0 or the 16-bit Block Count register is set to non-zero, the 16-bit Block Count register is selected.
+ - If the Host Version 4 Enable bit is set 1 and the 16-bit Block Count register is set to zero, the 32-bit Block Count register is selected.
+Following are the values for BLOCK_CNT:
+ - 0x0: Stop Count
+ - 0x1: 1 Block
+ - 0x2: 2 Blocks
+ - ... - ...
+ - 0xFFFF: 65535 Blocks
+Note: For Host Version 4 Enable = 0, this register must be set to 0000h before programming the 32-bit block count register when Auto CMD23 is enabled for non-DMA and ADMA modes.
+------------------------------
+<reg_short_dscr>:
+This register is used to configure the SD/eMMC command argument.
+------------------------------
+<field_public_text>:
+Command Argument
+
+These bits specify the SD/eMMC command argument that is specified in bits 39-8 of the Command format.
+------------------------------
+<reg_short_dscr>:
+This register is used to control the operation of data transfers for an SD/eMMC mode. The Host driver sets this register before issuing a command that transfers data.
+------------------------------
+<field_public_text>:
+These bits of the XFER_MODE_R register are reserved. They always return 0.
+------------------------------
+<field_public_text>:
+Response Interrupt Disable
+
+The Host Controller supports response check function to avoid overhead of response error check by the Host driver. Response types of only R1 and R5 can be checked by the Controller.
+If Host Driver checks the response error, set this bit to 0 and wait for Command Complete Interrupt and then check
+the response register.
+If the Host Controller checks the response error, set this bit to 1 and set the Response Error Check Enable bit to 1. The Command Complete Interrupt is disabled by this bit
+regardless of the Command Complete Signal Enable.
+
+Note: During tuning (when the Execute Tuning bit in the Host Control2 register is set), the Command Complete Interrupt is not generated irrespective of the Response Interrupt Disable setting.
+------------------------------
+<field_enc>:
+'h1: Response Interrupt is disabled
+'h0: Response Interrupt is enabled
+------------------------------
+<field_public_text>:
+Response Error Check Enable
+
+The Host Controller supports response check function to avoid overhead of response error check by Host driver. Response types of only R1 and R5 can be checked by the Controller.
+If the Host Controller checks the response error, set this bit to 1 and set Response Interrupt Disable to 1. If an error is detected, the Response Error interrupt is generated in the Error Interrupt Status register.
+
+Note: 
+ - Response error check must not be enabled for any response type other than R1 and R5. 
+ - Response check must not be enabled for the tuning command.
+------------------------------
+<field_enc>:
+'h0: Response Error Check is disabled
+'h1: Response Error Check is enabled
+------------------------------
+<field_public_text>:
+Response Type R1/R5
+
+This bit selects either R1 or R5 as a response type when the Response Error Check is selected.
+
+Error statuses checked in R1:
+ - OUT_OF_RANGE
+ - ADDRESS_ERROR
+ - BLOCK_LEN_ERROR
+ - WP_VIOLATION
+ - CARD_IS_LOCKED
+ - COM_CRC_ERROR
+ - CARD_ECC_FAILED
+ - CC_ERROR
+ - ERROR
+
+Response Flags checked in R5:
+ - COM_CRC_ERROR
+ - ERROR
+ - FUNCTION_NUMBER
+ - OUT_OF_RANGE
+------------------------------
+<field_enc>:
+'h0: R1 (Memory)
+'h1: R5 (SDIO)
+------------------------------
+<field_public_text>:
+Multi/Single Block Select
+
+This bit is set when issuing multiple-block transfer commands using the DAT line. If this bit is set to 0, it is not necessary to set the Block Count register.
+------------------------------
+<field_enc>:
+'h1: Multiple Block
+'h0: Single Block
+------------------------------
+<field_public_text>:
+Data Transfer Direction Select
+
+This bit defines the direction of DAT line data transfers. This bit is set to 1 by the Host Driver to transfer data
+from the SD/eMMC card to the Host Controller and it is set to 0 for all other commands.
+------------------------------
+<field_enc>:
+'h1: Read (Card to Host)
+'h0: Write (Host to Card)
+------------------------------
+<field_public_text>:
+Auto Command Enable
+
+This field determines use of Auto Command functions.
+
+Note: In SDIO, this field must be set as 00b (Auto Command Disabled).
+------------------------------
+<field_enc>:
+'h1: Auto CMD12 Enable
+'h2: Auto CMD23 Enable
+'h3: Auto CMD Auto Select
+'h0: Auto Command Disabled
+------------------------------
+<field_public_text>:
+Block Count Enable
+
+This bit is used to enable the Block Count register, which is relevant for multiple block transfers.
+If this bit is set to 0, the Block Count register is disabled, which is useful in executing an infinite transfer. The Host Driver must set this bit to 0 when ADMA is used.
+------------------------------
+<field_enc>:
+'h0: Disable
+'h1: Enable
+------------------------------
+<field_public_text>:
+DMA Enable
+
+This bit enables the DMA functionality. If this bit is set to 1, a DMA operation begins when the Host Driver writes to the Command register. You can select one of the DMA modes by using DMA Select in the Host Control 1 register.
+------------------------------
+<field_enc>:
+'h0: No data transfer or Non-DMA data transfer
+'h1: DMA Data transfer
+------------------------------
+<reg_short_dscr>:
+This register is used to provide the information related to a command and a response packet. This register is applicable for an SD/eMMC mode.
+------------------------------
+<field_public_text>:
+These bits of the CMD_R register are reserved. They always return 0.
+------------------------------
+<field_public_text>:
+Command Index
+
+These bits are set to the command number that is specified in bits 45-40 of the Command Format.
+------------------------------
+<field_public_text>:
+Command Type
+
+These bits indicate the command type.
+ 
+Note: While issuing Abort CMD using CMD12/CMD52 or reset CMD using CMD0/CMD52, CMD_TYPE field shall be set to 0x3.
+------------------------------
+<field_enc>:
+'h3: Abort
+'h0: Normal
+'h2: Resume
+'h1: Suspend
+------------------------------
+<field_public_text>:
+Data Present Select
+
+This bit is set to 1 to indicate that data is present and that the data is transferred using the DAT line.
+This bit is set to 0 in the following instances:
+ - Command using the CMD line
+ - Command with no data transfer but using busy signal on the DAT[0] line
+ - Resume Command
+------------------------------
+<field_enc>:
+'h1: Data Present
+'h0: No Data Present
+------------------------------
+<field_public_text>:
+Command Index Check Enable
+
+This bit enables the Host Controller to check the index field in the response to verify if it has the same value as the command index. If the value is not the same, it is reported as a Command Index error.
+
+Note: 
+ - Index Check enable must be set to 0 for the command with no response, R2 response, R3 response and R4 response.
+ - For the tuning command, this bit must always be set to enable the index check.
+------------------------------
+<field_enc>:
+'h0: Disable
+'h1: Enable
+------------------------------
+<field_public_text>:
+Command CRC Check Enable
+
+This bit enables the Host Controller to check the CRC field in the response. If an error is detected, it is reported as a Command CRC error.
+
+Note: 
+ - CRC Check enable must be set to 0 for the command with no response, R3 response, and R4 response.
+ - For the tuning command, this bit must always be set to 1 to enable the CRC check.
+------------------------------
+<field_enc>:
+'h0: Disable
+'h1: Enable
+------------------------------
+<field_public_text>:
+Sub Command Flag
+
+This bit distinguishes between a main command and a sub command.
+------------------------------
+<field_enc>:
+'h0: Main Command
+'h1: Sub Command
+------------------------------
+<field_public_text>:
+Response Type Select
+
+This bit indicates the type of response expected from the card.
+------------------------------
+<field_enc>:
+'h0: No Response
+'h1: Response Length 136
+'h2: Response Length 48
+'h3: Response Length 48; Check Busy after response
+------------------------------
+<reg_short_dscr>:
+This register stores 39-08 bits of the Response Field for an SD/eMMC mode.  The response for an SD/eMMC command can be a maximum of 128 bits. These 128 bits are segregated into four 32-bit registers: RESP01_R, RESP23_R, RESP45_R and RESP67_R.
+------------------------------
+<field_public_text>:
+Command Response 
+
+These bits reflect 39-8 bits of SD/eMMC Response Field. 
+
+Note: For Auto CMD, the 32-bit response (bits 39-8 of the Response Field) is updated in the RESP67_R register.
+------------------------------
+<reg_short_dscr>:
+This register stores 71-40 bits of the Response Field for an SD/eMMC mode. This register is used to store the response from the cards. The response can be a maximum of 128 bits. These 128 bits are segregated into four 32-bit
+registers: RESP01_R, RESP23_R, RESP45_R and RESP67_R.
+------------------------------
+<field_public_text>:
+Command Response
+
+These bits reflect 71-40 bits of the SD/eMMC Response Field.
+------------------------------
+<reg_short_dscr>:
+This register stores 103-72 bits of the Response Field for an SD/eMMC mode.  The response for SD/eMMC command can be a maximum of 128 bits. These 128 bits are segregated into four 32-bit registers: RESP01_R, RESP23_R, RESP45_R and RESP67_R.
+------------------------------
+<field_public_text>:
+Command Response 
+
+These bits reflect 103-72 bits of the Response Field.
+------------------------------
+<reg_short_dscr>:
+This register stores 135-104 bits of the Response Field for an SD/eMMC mode.    The SD/eMMC response can be a maximum of 128 bits. These 128 bits are segregated into four 32-bit registers: RESP01_R, RESP23_R, RESP45_R and RESP67_R.
+------------------------------
+<field_public_text>:
+Command Response 
+
+ These bits reflect bits 135-104 of SD/EMMC Response Field. 
+
+Note: For Auto CMD, this register also reflects the 32-bit response (bits 39-8 of the Response Field).
+------------------------------
+<reg_short_dscr>:
+This register is used to access the packet buffer. This register is applicable for an SD/eMMC/UHS-II mode.
+------------------------------
+<field_public_text>:
+Buffer Data
+
+These bits enable access to the Host Controller packet buffer.
+------------------------------
+<reg_short_dscr>:
+This register indicates the present status of the Host Controller. This register is applicable for an SD/eMMC/UHS-II mode.
+------------------------------
+<field_public_text>:
+UHS-II Interface Detection
+
+ For SD/eMMC mode, this bit always returns 0.
+------------------------------
+<field_enc>:
+'h0: UHS-II interface is not detected
+'h1: UHS-II interface is detected
+------------------------------
+<field_public_text>:
+Lane Synchronization
+
+ For SD/eMMC mode, this bit always returns 0.
+------------------------------
+<field_enc>:
+'h0: UHS-II PHY is not initialized
+'h1: UHS-II PHY is initialized
+------------------------------
+<field_public_text>:
+In Dormant Status
+
+ For SD/eMMC mode, this bit always returns 0.
+------------------------------
+<field_enc>:
+'h0: Not in DORMANT state
+'h1: In DORMANT state
+------------------------------
+<field_public_text>:
+Sub Command Status
+
+This bit is used to distinguish between a main command and a sub command status.
+------------------------------
+<field_enc>:
+'h0: Main Command Status
+'h1: Sub Command Status
+------------------------------
+<field_public_text>:
+Command Not Issued by Error
+
+This bit is set if a command cannot be issued after setting the command register due to an error except the Auto CMD12 error.
+------------------------------
+<field_enc>:
+'h0: No error for issuing a command
+'h1: Command cannot be issued
+------------------------------
+<field_public_text>:
+This bit of the PRESENT_ST_R register is reserved bits. It always returns 0.
+------------------------------
+<field_public_text>:
+Host Regulator Voltage Stable
+
+This bit is used to check whether the host regulator voltage is stable for switching the voltage of UHS-I mode. This bit reflects the synchronized value of the host_reg_vol_stable signal.
+------------------------------
+<field_enc>:
+'h0: Host Regulator Voltage is not stable
+'h1: Host Regulator Voltage is stable
+------------------------------
+<field_public_text>:
+Command-Line Signal Level
+
+This bit is used to check the CMD line level to recover from errors and for debugging. These bits reflect the value of the sd_cmd_in signal.
+------------------------------
+<field_public_text>:
+DAT[3:0] Line Signal Level
+
+This bit is used to check the DAT line level to recover from errors and for debugging. These bits reflect the value of the sd_dat_in (lower nibble) signal.
+------------------------------
+<field_public_text>:
+Write Protect Switch Pin Level
+
+This bit is supported only for memory and combo cards. This bit reflects the synchronized value of the card_write_prot signal.
+------------------------------
+<field_enc>:
+'h0: Write protected
+'h1: Write enabled
+------------------------------
+<field_public_text>:
+Card Detect Pin Level
+
+This bit reflects the inverse synchronized value of the card_detect_n signal.
+------------------------------
+<field_enc>:
+'h0: No card present
+'h1: Card Present
+------------------------------
+<field_public_text>:
+Card Stable
+
+This bit indicates the stability of the Card Detect Pin Level. A card is not detected if this bit is set to 1 and the value of the CARD_INSERTED bit is 0.
+------------------------------
+<field_enc>:
+'h0: Reset or Debouncing
+'h1: No Card or Inserted
+------------------------------
+<field_public_text>:
+Card Inserted
+
+This bit indicates whether a card has been inserted. The Host Controller debounces this signal so that Host Driver need not wait for it to stabilize.
+------------------------------
+<field_enc>:
+'h0: Reset, Debouncing, or No card
+'h1: Card Inserted
+------------------------------
+<field_public_text>:
+These bits of the PRESENT_STAT_R register are reserved. They always return 0.
+------------------------------
+<field_public_text>:
+Buffer Read Enable
+
+This bit is used for non-DMA transfers. This bit is set if valid data exists in the Host buffer.
+------------------------------
+<field_enc>:
+'h0: Read disable
+'h1: Read enable
+------------------------------
+<field_public_text>:
+Buffer Write Enable
+
+This bit is used for non-DMA transfers. This bit is set if space is available for writing data.
+------------------------------
+<field_enc>:
+'h0: Write disable
+'h1: Write enable
+------------------------------
+<field_public_text>:
+Read Transfer Active 
+
+ This bit indicates whether a read transfer is active for SD/eMMC mode.
+------------------------------
+<field_enc>:
+'h1: Transferring data
+'h0: No valid data
+------------------------------
+<field_public_text>:
+Write Transfer Active 
+
+This status indicates whether a write transfer is active  for SD/eMMC mode.
+------------------------------
+<field_enc>:
+'h1: Transferring data
+'h0: No valid data
+------------------------------
+<field_public_text>:
+DAT[7:4] Line Signal Level
+
+This bit is used to check the DAT line level to recover from errors and for debugging. These bits reflect the value of the sd_dat_in (upper nibble) signal.
+------------------------------
+<field_public_text>:
+Re-Tuning Request
+
+DWC_mshc does not generate retuning request. The software must maintain the Retuning timer.
+------------------------------
+<field_public_text>:
+DAT Line Active (SD/eMMC Mode only)
+
+This bit indicates whether one of the DAT lines on the SD/eMMC bus is in use. 
+
+
+In the case of read transactions, this bit indicates whether a read transfer is executing on the SD/eMMC bus.
+
+In the case of write transactions, this bit indicates whether a write transfer is executing on the SD/eMMC bus.
+
+For a command with busy, this status indicates whether the command executing busy is executing on an SD or eMMC bus.
+------------------------------
+<field_enc>:
+'h1: DAT Line Active
+'h0: DAT Line Inactive
+------------------------------
+<field_public_text>:
+Command Inhibit (DAT)
+
+
+This bit is applicable for SD/eMMC mode and is generated if either DAT line active or Read transfer active is set to 1.
+If this bit is set to 0, it indicates that the Host Controller can issue subsequent SD/eMMC commands.
+------------------------------
+<field_enc>:
+'h1: Cannot issue command which used DAT line
+'h0: Can issue command which used DAT line
+------------------------------
+<field_public_text>:
+Command Inhibit (CMD)
+
+This bit indicates the following : 
+
+ - SD/eMMC mode: If this bit is set to 0, it indicates that the CMD line is not in use and the Host controller can issue an SD/eMMC command using the CMD line. This bit is set when the command register is written. This bit is cleared when the command response is received. This bit is not cleared by the response of auto CMD12/23 but cleared by the response of read/write command.
+------------------------------
+<field_enc>:
+'h1: Host Controller is not ready to issue a command
+'h0: Host Controller is ready to issue a command
+------------------------------
+<reg_short_dscr>:
+This register is used to control the operation of the Host Controller. This register is applicable for an SD/eMMC/UHS-II mode.
+------------------------------
+<field_public_text>:
+Card Detect Signal Selection
+
+This bit selects a source for card detection. When the source for the card detection is switched, the interrupt must be disabled during the switching period.
+------------------------------
+<field_enc>:
+'h1: Card Detect Test Level is selected (for test purpose)
+'h0: SDCD# (card_detect_n signal) is selected (for normal use)
+------------------------------
+<field_public_text>:
+Card Detect Test Level
+
+This bit is enabled while the Card Detect Signal Selection is set to 1 and it indicates whether a card inserted or not.
+------------------------------
+<field_enc>:
+'h1: Card Inserted
+'h0: No Card
+------------------------------
+<field_public_text>:
+Extended Data Transfer Width 
+
+ This bit controls 8-bit bus width mode of embedded device.
+------------------------------
+<field_enc>:
+'h0: Bus Width is selected by the Data Transfer Width
+'h1: 8-bit Bus Width
+------------------------------
+<field_public_text>:
+DMA Select
+
+This field is used to select the DMA type.
+
+When Host Version 4 Enable is 1 in Host Control 2 register:
+ - 0x0 - SDMA is selected
+ - 0x1 - Reserved
+ - 0x2 - ADMA2 is selected
+ - 0x3 - ADMA2 or ADMA3 is selected
+
+When Host Version 4 Enable is 0 in Host Control 2 register:
+ - 0x0 - SDMA is selected
+ - 0x1 - Reserved
+ - 0x2 - 32-bit Address ADMA2 is selected
+ - 0x3 - 64-bit Address ADMA2 is selected
+------------------------------
+<field_enc>:
+'h2: ADMA2 is selected
+'h3: ADMA2 or ADMA3 is selected
+'h1: Reserved
+'h0: SDMA is selected
+------------------------------
+<field_public_text>:
+High Speed Enable (SD/eMMC Mode only)
+
+
+In SD/eMMC mode, this bit is used to determine the selection of preset value for High Speed mode.
+Before setting this bit, the Host Driver checks the High Speed Support in the Capabilities register.
+
+Note: DWC_MSHC always outputs the sd_cmd_out and sd_dat_out lines at the rising edge of cclk_tx clock irrespective of this bit.Please refer the section Connecting the Clock IO interface  in the Mobile Storage Host Controller user guide on clocking requirement for an SD/eMMC card.
+------------------------------
+<field_enc>:
+'h1: High Speed mode
+'h0: Normal Speed mode
+------------------------------
+<field_public_text>:
+Data Transfer Width 
+
+For SD/eMMC mode,this bit selects the data transfer width of the Host Controller. The Host Driver sets it to match the data width of the SD/eMMC card.
+------------------------------
+<field_enc>:
+'h1: 4-bit mode
+'h0: 1-bit mode
+------------------------------
+<field_public_text>:
+LED Control
+
+This bit is used to caution the user not to remove the card while the SD card is being accessed. The value is reflected on the led_control signal.
+------------------------------
+<field_enc>:
+'h0: LED off
+'h1: LED on
+------------------------------
+<reg_short_dscr>:
+This register is used to control the bus power for the Card. This register is applicable for an SD, eMMC, and UHS-II modes.
+------------------------------
+<field_public_text>:
+SD Bus Voltage Select for VDD2.
+  This is irrelevant for SD/eMMC card.
+------------------------------
+<field_enc>:
+'h6: Not used
+'h7: Not used
+'h0: VDD2 Not Supported
+'h1: Reserved
+'h2: Reserved
+'h3: Reserved
+'h4: Reserved for 1.2V
+'h5: 1.8V
+------------------------------
+<field_public_text>:
+SD Bus Power for VDD2.
+  This is irrelevant for SD/eMMC card.
+------------------------------
+<field_enc>:
+'h0: Power off
+'h1: Power on
+------------------------------
+<field_public_text>:
+SD Bus Voltage Select for VDD1/eMMC Bus Voltage Select for VDD
+
+These bits enable the Host Driver to select the voltage level for an SD/eMMC card. Before setting this register, the Host Driver checks the Voltage Support bits in the Capabilities register.
+If an unsupported voltage is selected, the Host System does not supply the SD Bus voltage. The value set in this field is available on the DWC_mshc output signal (sd_vdd1_sel), which is used by the voltage switching circuitry.
+
+SD Bus Voltage Select options:
+ - 0x7 - 3.3V(Typical)
+ - 0x6 - 3.0V(Typical)
+ - 0x5 - 1.8V(Typical) for Embedded
+ - 0x4 - 0x0   - Reserved
+
+eMMC Bus Voltage Select options:
+ - 0x7 - 3.3V(Typical)
+ - 0x6 - 1.8V(Typical)
+ - 0x5 - 1.2V(Typical)
+ - 0x4 - 0x0   - Reserved
+------------------------------
+<field_enc>:
+'h0: Reserved
+'h1: Reserved
+'h2: Reserved
+'h3: Reserved
+'h4: Reserved
+'h5: 1.8V (Typ.) for Embedded
+'h6: 3.0V (Typ.)
+'h7: 3.3V (Typ.)
+------------------------------
+<field_public_text>:
+SD Bus Power for VDD1
+
+This bit enables VDD1 power of the card. This setting is available on the sd_vdd1_on output of DWC_mshc so that it can be used to control the VDD1 power supply of the card. Before setting this bit, the SD Host Driver sets the SD Bus Voltage Select bit. If the Host Controller detects a No Card state, this bit is cleared.
+
+In SD mode, if this bit is cleared, the Host Controller stops the SD Clock by clearing the SD_CLK_IN bit in the CLK_CTRL_R register.
+------------------------------
+<field_enc>:
+'h0: Power off
+'h1: Power on
+------------------------------
+<reg_short_dscr>:
+This register is used by the host driver to control any operation related to Block Gap. This register is applicable for an SD/eMMC/UHS-II mode.
+------------------------------
+<field_public_text>:
+These bits of the Block Gap Control register are reserved. They always return 0.
+------------------------------
+<field_public_text>:
+Interrupt At Block Gap 
+
+This bit is valid only in the 4-bit mode of an SDIO card and is used to select a sample point in the interrupt cycle. Setting to 1 enables interrupt detection at the block gap for a multiple block transfer.
+------------------------------
+<field_enc>:
+'h0: Disabled
+'h1: Enabled
+------------------------------
+<field_public_text>:
+Read Wait Control
+
+This bit is used to enable the read wait protocol to stop read data using DAT[2] line if the card supports read wait. Otherwise, the Host Controller has to stop the card clock to hold the read data.
+------------------------------
+<field_enc>:
+'h0: Disable Read Wait Control
+'h1: Enable Read Wait Control
+------------------------------
+<field_public_text>:
+Continue Request
+
+This bit is used to restart the transaction, which was stopped using the Stop At Block Gap Request. The Host Controller automatically clears this bit when the transaction restarts. If stop at block gap request is set to 1, any write to this bit is ignored.
+------------------------------
+<field_enc>:
+'h0: No Affect
+'h1: Restart
+------------------------------
+<field_public_text>:
+Stop At Block Gap Request
+
+This bit is used to stop executing read and write transactions at the next block gap for non-DMA, SDMA, and ADMA transfers.
+------------------------------
+<field_enc>:
+'h1: Stop
+'h0: Transfer
+------------------------------
+<reg_short_dscr>:
+This register is mandatory for the Host Controller, but the wakeup functionality depends on the Host Controller system hardware and software. The Host Driver maintains voltage on the SD Bus by
+setting the SD Bus Power to 1 in the Power Control Register, while a wakeup event through the Card Interrupt is desired.
+------------------------------
+<field_public_text>:
+These bits of Wakeup Control register are reserved. They always return 0.
+------------------------------
+<field_public_text>:
+Wakeup Event Enable on SD Card Removal
+
+This bit enables wakeup event through Card Removal assertion in the Normal Interrupt Status register. For the SDIO card, Wake Up Support (FN_WUS) in the Card Information Structure (CIS) register does not affect this bit.
+------------------------------
+<field_enc>:
+'h0: Disable
+'h1: Enable
+------------------------------
+<field_public_text>:
+Wakeup Event Enable on SD Card Insertion
+
+This bit enables wakeup event through Card Insertion assertion in the Normal Interrupt Status register. FN_WUS (Wake Up Support) in CIS does not affect this bit.
+------------------------------
+<field_enc>:
+'h0: Disable
+'h1: Enable
+------------------------------
+<field_public_text>:
+Wakeup Event Enable on Card Interrupt 
+
+This bit enables wakeup event through a Card Interrupt assertion in the Normal Interrupt Status register. This bit can be set to 1 if FN_WUS (Wake Up Support) in CIS is set to 1.
+------------------------------
+<field_enc>:
+'h0: Disable
+'h1: Enable
+------------------------------
+<reg_short_dscr>:
+This register controls SDCLK (card clock) in an SD/eMMC mode and RCLK in the UHS-II mode. This register is applicable for an SD/eMMC/UHS-II mode.
+------------------------------
+<field_public_text>:
+SDCLK/RCLK Frequency Select
+
+These bits are used to select the frequency of the SDCLK signal. These bits depend on setting of Preset Value Enable in the Host Control 2 register. If Preset Value Enable = 0, these bits are set by
+the Host
+Driver. If Preset Value Enable = 1, these bits are automatically set to a value specified in one of the Preset Value register. The value is reflected on the lower 8-bit of the card_clk_freq_sel
+signal.  
+
+
+
+10-bit Divided Clock Mode:
+ - 0x3FF - 1/2046 Divided clock
+ - ..........
+ - N    - 1/2N Divided Clock
+ - ..........
+ - 0x002  - 1/4 Divided Clock
+ - 0x001 - 1/2 Divided Clock
+ - 0x000 - Base clock (10MHz - 255 MHz)
+
+
+
+Programmable Clock Mode - Enables the Host System to select a fine grain SD clock frequency: 
+ - 0x3FF - Base clock  * M /1024
+ - ..........
+ - N-1  - Base clock  * M /N
+ - ..........
+ - 0x002  - Base clock  * M /3
+ - 0x001 - Base clock  * M /2
+ - 0x000 - Base clock  * M
+------------------------------
+<field_public_text>:
+These bits specify the upper 2 bits of 10-bit SDCLK/RCLK Frequency Select control. The value is reflected on the upper 2 bits of the card_clk_freq_sel signal.
+------------------------------
+<field_public_text>:
+Clock Generator Select
+
+This bit is used to select the clock generator mode in SDCLK/RCLK Frequency Select. If Preset Value Enable = 0, this bit is set by the Host Driver. If Preset Value Enable = 1, this bit is
+automatically set to a value specified in one of the Preset Value registers. The value is reflected on the card_clk_gen_sel signal.
+------------------------------
+<field_enc>:
+'h0: Divided Clock Mode
+'h1: Programmable Clock Mode
+------------------------------
+<field_public_text>:
+This bit of the CLK_CTRL_R register is reserved. It always returns 0.
+------------------------------
+<field_public_text>:
+PLL Enable
+
+This bit is used to activate the PLL (applicable when Host Version 4 Enable = 1). When Host Version 4 Enable = 0, INTERNAL_CLK_EN bit may be used to activate PLL. The value is reflected on the card_clk_en signal.
+
+Note: If this bit is not used to to active the PLL when Host Version 4 Enable = 1, it is recommended to set this bit to '1' .
+------------------------------
+<field_enc>:
+'h0: PLL is in low power mode
+'h1: PLL is enabled
+------------------------------
+<field_public_text>:
+SD/eMMC Clock Enable
+
+This bit stops the SDCLK or RCLK when set to 0. The SDCLK/RCLK Frequency Select bit can be changed when this bit is set to 0.
+The value is reflected on the clk2card_on pin.
+------------------------------
+<field_enc>:
+'h0: Disable providing SDCLK/RCLK
+'h1: Enable providing SDCLK/RCLK
+------------------------------
+<field_public_text>:
+Internal Clock Stable
+
+This bit enables the Host Driver to check the clock stability twice after the Internal Clock Enable bit is set and after the PLL Enable bit is set. 
+This bit reflects the synchronized value of the intclk_stable signal after the Internal Clock Enable bit is set to 1 and also reflects 
+the synchronized value of the card_clk_stable signal after the PLL Enable bit is set to 1.
+------------------------------
+<field_enc>:
+'h0: Not Ready
+'h1: Ready
+------------------------------
+<field_public_text>:
+Internal Clock Enable
+
+This bit is set to 0 when the Host Driver is not using the Host Controller or the Host Controller awaits a wakeup interrupt. The Host Controller
+must stop its internal clock to enter a very low power state. However, registers can still be read and written to. The value is reflected on the intclk_en signal.
+
+Note: If this bit is not used to control the internal clock (base clock and master clock), it is recommended to set this bit to '1' .
+------------------------------
+<field_enc>:
+'h0: Stop
+'h1: Oscillate
+------------------------------
+<reg_short_dscr>:
+This register is used to set the Data Timeout Counter value for an SD/eMMC mode according to the timer clock defined by the Capabilities register, while
+initializig the Host Controller.
+------------------------------
+<field_public_text>:
+These bits of the Timeout Control register are reserved. They always return 0.
+------------------------------
+<field_public_text>:
+Data Timeout Counter Value.
+
+This value determines the interval by which DAT line timeouts are detected. The Timeout clock frequency is generated by dividing the base clock TMCLK value by this value. When setting this
+register, prevent inadvertent timeout events by clearing the Data Timeout Error Status Enable (in the Error Interrupt Status Enable register).
+The values for these bits are:
+ - 0xF - Reserved
+ - 0xE - TMCLK x 2^27
+ - .........
+ - 0x1 - TMCLK x 2^14
+ - 0x0 - TMCLK x 2^13
+
+Note: During a boot operating in an eMMC mode, an application must configure the boot data timeout value (approximately 1 sec) in this bit.
+------------------------------
+<reg_short_dscr>:
+This register is used to generate a reset pulse by writing 1 to each bit of this register. After completing the reset, the Host Controller clears each bit. As it takes some time to complete a software reset, the Host Driver confirms that these bits are 0. This register is applicable for an SD/eMMC/UHS-II mode.
+
+Note: Refer Software Reset section in the DWC_mshc Databook for additional details.
+------------------------------
+<field_public_text>:
+These bits of the SW_RST_R register are reserved. They always return 0.
+------------------------------
+<field_public_text>:
+Software Reset For DAT line
+ 
+
+This bit is used in SD/eMMC mode and it resets only a part of the data circuit and the DMA circuit is also reset.
+
+The following registers and bits are cleared by this bit:
+ - Buffer Data Port register
+ -- Buffer is cleared and initialized. 	
+ - Present state register
+ -- Buffer Read Enable
+ -- Buffer Write Enable
+ -- Read Transfer Active
+ -- Write Transfer Active
+ -- DAT Line Active
+ -- Command Inhibit (DAT)
+ - Block Gap Control register
+ -- Continue Request	
+ -- Stop At Block Gap Request
+ - Normal Interrupt status register
+ -- Buffer Read Ready
+ -- Buffer Write Ready
+ -- DMA Interrupt
+ -- Block Gap Event
+ -- Transfer Complete
+------------------------------
+<field_enc>:
+'h0: Work
+'h1: Reset
+------------------------------
+<field_public_text>:
+Software Reset For CMD line
+
+This bit resets only a part of the command circuit to be able to issue a command.  This reset is effective only for a command issuing circuit (including response error statuses related to Command Inhibit (CMD) control) and does not affect the data transfer circuit. Host Controller can continue data transfer even after this reset is executed while handling subcommand-response errors.
+
+The following registers and bits are cleared by this bit:
+ - Present State register - Command Inhibit (CMD) bit
+ - Normal Interrupt Status register - Command Complete bit
+ - Error Interrupt Status - Response error statuses related to Command Inhibit (CMD) bit
+------------------------------
+<field_enc>:
+'h0: Work
+'h1: Reset
+------------------------------
+<field_public_text>:
+Software Reset For All
+This reset affects the entire Host Controller except for the card detection circuit. During its initialization, the Host Driver sets this bit to 1 to reset the Host Controller. All registers are reset except the capabilities register. If this bit is set to 1, the Host Driver must issue reset command and reinitialize the card.
+------------------------------
+<field_enc>:
+'h0: Work
+'h1: Reset
+------------------------------
+<reg_short_dscr>:
+This register reflects the status of the Normal Interrupt. This register is applicable for an SD/eMMC/UHS-II mode.
+------------------------------
+<field_public_text>:
+Error Interrupt
+
+If any of the bits in the Error Interrupt Status register are set, then this bit is set.
+------------------------------
+<field_enc>:
+'h0: No Error
+'h1: Error
+------------------------------
+<field_public_text>:
+Command Queuing Event
+
+This status is set if Command Queuing/Crypto related event has occurred in eMMC/SD mode. Read CQHCI's CQIS/CRNQIS register for more details.
+------------------------------
+<field_enc>:
+'h0: No Event
+'h1: Command Queuing Event is detected
+------------------------------
+<field_public_text>:
+FX Event
+
+This status is set when R[14] of response register is set to 1 and Response Type R1/R5 is set to 0 in Transfer Mode register. This interrupt is used with response check function.
+------------------------------
+<field_enc>:
+'h0: No Event
+'h1: FX Event is detected
+------------------------------
+<field_public_text>:
+Re-tuning Event 
+
+This bit is set if the Re-Tuning Request changes from 0 to 1. Re-Tuning request is not supported.
+------------------------------
+<field_public_text>:
+INT_C (Embedded)
+
+This bit is set if INT_C is enabled and if INT_C# pin is in low level. The INT_C# pin is not supported.
+------------------------------
+<field_public_text>:
+INT_B (Embedded)
+
+This bit is set if INT_B is enabled and if INT_B# pin is in low level. The INT_B# pin is not supported.
+------------------------------
+<field_public_text>:
+INT_A (Embedded)
+
+This bit is set if INT_A is enabled and if INT_A# pin is in low level. The INT_A# pin is not supported.
+------------------------------
+<field_public_text>:
+Card Interrupt
+
+This bit reflects the synchronized value of:
+ - DAT[1] Interrupt Input for SD Mode
+ - DAT[2] Interrupt Input for UHS-II Mode
+------------------------------
+<field_enc>:
+'h0: No Card Interrupt
+'h1: Generate Card Interrupt
+------------------------------
+<field_public_text>:
+Card Removal
+
+This bit is set if the Card Inserted in the Present State register changes from 1 to 0.
+------------------------------
+<field_enc>:
+'h0: Card state stable or Debouncing
+'h1: Card Removed
+------------------------------
+<field_public_text>:
+Card Insertion
+
+This bit is set if the Card Inserted in the Present State register changes from 0 to 1.
+------------------------------
+<field_enc>:
+'h0: Card state stable or Debouncing
+'h1: Card Inserted
+------------------------------
+<field_public_text>:
+Buffer Read Ready
+
+This bit is set if the Buffer Read Enable changes from 0 to 1.
+------------------------------
+<field_enc>:
+'h0: Not ready to read buffer
+'h1: Ready to read buffer
+------------------------------
+<field_public_text>:
+Buffer Write Ready
+
+This bit is set if the Buffer Write Enable changes from 0 to 1.
+------------------------------
+<field_enc>:
+'h0: Not ready to write buffer
+'h1: Ready to write buffer
+------------------------------
+<field_public_text>:
+DMA Interrupt
+
+This bit is set if the Host Controller detects the SDMA Buffer Boundary during transfer. In case of ADMA, by setting the Int field in the descriptor
+table, the Host controller generates this interrupt. This interrupt is not generated after a Transfer Complete.
+------------------------------
+<field_enc>:
+'h0: No DMA Interrupt
+'h1: DMA Interrupt is generated
+------------------------------
+<field_public_text>:
+Block Gap Event
+
+This bit is set when both read/write transaction is stopped at block gap due to a Stop at Block Gap Request.
+------------------------------
+<field_enc>:
+'h0: No Block Gap Event
+'h1: Transaction stopped at block gap
+------------------------------
+<field_public_text>:
+Transfer Complete
+
+This bit is set when a read/write transfer and a command with status busy is completed.
+------------------------------
+<field_enc>:
+'h0: Not complete
+'h1: Command execution is completed
+------------------------------
+<field_public_text>:
+Command Complete
+
+ In an SD/eMMC Mode, this bit is set when the end bit of a response except for Auto CMD12 and Auto CMD23. 
+
+This interrupt is not generated when the Response Interrupt Disable in Transfer Mode Register is set to 1.
+------------------------------
+<field_enc>:
+'h0: No command complete
+'h1: Command Complete
+------------------------------
+<reg_short_dscr>:
+This register enables an interrupt when the Error Interrupt Status Enable is enabled and at least one of the statuses is set to 1. Writing to 1 clears the bit
+and writing to 0 retains the bit unchanged. Signals defined in this register can be enabled by the Error Interrupt Status Enable register, but not by the Error Interrupt Signal Enable register. More than one status can be cleared with a single register write. This register is applicable for an SD/eMMC/UHS-II mode.
+------------------------------
+<field_public_text>:
+This bit (VENDOR_ERR3) of the ERROR_INT_STAT_R register is reserved. It always returns 0.
+------------------------------
+<field_public_text>:
+This bit (VENDOR_ERR2) of the ERROR_INT_STAT_R register is reserved. It always returns 0.
+------------------------------
+<field_public_text>:
+This bit (VENDOR_ERR1) of the ERROR_INT_STAT_R register is reserved. It always returns 0.
+------------------------------
+<field_public_text>:
+Boot Acknowledgement Error 
+
+This bit is set when there is a timeout for boot acknowledgement or when detecting boot ack status having a value other than 010. This is applicable only when boot acknowledgement is expected in eMMC mode.
+------------------------------
+<field_enc>:
+'h0: No error
+'h1: Error
+------------------------------
+<field_public_text>:
+Response Error 
+
+Host Controller Version 4.00 supports response error check function to avoid overhead of response error check by Host Driver during DMA execution. If Response Error Check Enable is set to 1 in the Transfer Mode register, Host Controller Checks R1 or R5 response. If an error is detected in a response, this bit is set to 1.This is applicable in SD/eMMC mode.
+------------------------------
+<field_enc>:
+'h0: No error
+'h1: Error
+------------------------------
+<field_public_text>:
+Tuning Error
+
+This bit is set when an unrecoverable error is detected in a tuning circuit except during the tuning procedure (occurrence of an error during tuning procedure is indicated by Sampling Clock Select in the Host Control 2 register). By detecting Tuning Error, Host Driver needs to abort a command executing and perform tuning. To reset tuning circuit, Sampling Clock Select is set to 0 before executing tuning procedure. The Tuning Error is higher priority than the other error interrupts generated during data transfer. By detecting Tuning Error, the Host Driver must discard data transferred by a current read/write command and retry data transfer after the Host Controller retrieved from the tuning circuit error. This is applicable in SD/eMMC mode.
+------------------------------
+<field_enc>:
+'h0: No error
+'h1: Error
+------------------------------
+<field_public_text>:
+ADMA Error
+
+This bit is set when the Host Controller detects error during ADMA-based data transfer. The error could be due to following reasons:
+ - Error response received from System bus (Master I/F)
+ - ADMA3,ADMA2 Descriptors invalid
+ - CQE Task or Transfer descriptors invalid
+When the error occurs, the state of the ADMA is saved in the ADMA Error Status register.
+
+In eMMC CQE mode: 
+
+The Host Controller generates this Interrupt when it detects an invalid descriptor data (Valid=0) at the ST_FDS state. ADMA Error State in the ADMA Error Status indicates that an error has occurred in ST_FDS state. The Host Driver may find that Valid bit is not set at the error descriptor.
+------------------------------
+<field_enc>:
+'h0: No error
+'h1: Error
+------------------------------
+<field_public_text>:
+Auto CMD Error 
+
+This error status is used by Auto CMD12 and Auto CMD23 in SD/eMMC mode. This bit is set when detecting that any of the bits D00 to D05 in Auto CMD Error Status register has changed from 0 to 1. D07 is effective in case of Auto CMD12. Auto CMD Error Status register is valid while this bit is set to 1 and may be cleared by clearing of this bit.
+------------------------------
+<field_enc>:
+'h0: No error
+'h1: Error
+------------------------------
+<field_public_text>:
+Current Limit Error 
+
+By setting the SD Bus Power bit in the Power Control register, the Host Controller is requested to supply power for the SD Bus. If the Host Controller supports the Current Limit function, it can
+be protected from an illegal card by stopping power supply to the card in which case this bit indicates a failure status. A reading of 1 for this bit means that the Host Controller is not supplying
+power to the SD card due to some failure. A reading of 0 for this bit means that the Host Controller is supplying power and no error has occurred. The Host Controller may require some sampling time to
+detect the current limit. DWC_mshc Host Controller does not support this function, this bit is always set to 0.
+------------------------------
+<field_enc>:
+'h0: No error
+'h1: Power Fail
+------------------------------
+<field_public_text>:
+Data End Bit Error 
+
+This error occurs in SD/eMMC mode either when detecting 0 at the end bit position of read data that uses the DAT line or at the end bit position of the CRC status.
+------------------------------
+<field_enc>:
+'h0: No error
+'h1: Error
+------------------------------
+<field_public_text>:
+Data CRC Error
+
+This error occurs in SD/eMMC mode when detecting CRC error when transferring read data which uses the DAT line, when detecting the Write CRC status having a value of other than 010 or when write CRC status timeout.
+------------------------------
+<field_enc>:
+'h0: No error
+'h1: Error
+------------------------------
+<field_public_text>:
+Data Timeout Error
+
+This bit is set in SD/eMMC mode when detecting one of the following timeout conditions:
+ - Busy timeout for R1b, R5b type
+ - Busy timeout after Write CRC status
+ - Write CRC Status timeout
+ - Read Data timeout
+------------------------------
+<field_enc>:
+'h0: No error
+'h1: Time out
+------------------------------
+<field_public_text>:
+Command Index Error
+
+This bit is set if a Command Index error occurs in the command respons in SD/eMMC mode.
+------------------------------
+<field_enc>:
+'h0: No error
+'h1: Error
+------------------------------
+<field_public_text>:
+Command End Bit Error
+
+This bit is set when detecting that the end bit of a command response is 0 in SD/eMMC mode.
+------------------------------
+<field_enc>:
+'h0: No error
+'h1: End Bit error generated
+------------------------------
+<field_public_text>:
+Command CRC Error 
+
+Command CRC Error is generated in SD/eMMC mode for following two cases.
+ - If a response is returned and the Command Timeout Error is set to 0 (indicating no timeout), this bit is set to 1 when detecting a CRC error in the command response.
+ - The Host Controller detects a CMD line conflict by monitoring the CMD line when a command is issued. If the Host Controller drives the CMD line to 1 level, but detects 0 level on the CMD line at the next SD clock edge, then the Host Controller aborts the command (stop driving CMD line) and set this bit to 1. The Command Timeout Error is also set to 1 to distinguish a CMD line conflict.
+------------------------------
+<field_enc>:
+'h0: No error
+'h1: CRC error generated
+------------------------------
+<field_public_text>:
+Command Timeout Error
+
+ In SD/eMMC Mode,this bit is set only if no response is returned within 64 SD clock cycles from the end bit of the command. If the Host Controller detects a CMD line conflict, along with Command CRC Error bit, this bit is set to 1, without waiting for 64 SD/eMMC card clock cycles.
+------------------------------
+<field_enc>:
+'h0: No error
+'h1: Time out
+------------------------------
+<reg_short_dscr>:
+This register enables the Interrupt Status for Normal Interrupt Status register (NORMAL_INT_STAT_R) when NORMAL_INT_STAT_R is set to 1. This register is applicable for an SD/eMMC/UHS-II mode.
+------------------------------
+<field_public_text>:
+This bit of the NORMAL_INT_STAT_EN_R register is reserved. It always returns 0.
+------------------------------
+<field_public_text>:
+CQE Event Status Enable
+------------------------------
+<field_enc>:
+'h0: Masked
+'h1: Enabled
+------------------------------
+<field_public_text>:
+FX Event Status Enable
+
+This bit is added from Version 4.10.
+------------------------------
+<field_enc>:
+'h0: Masked
+'h1: Enabled
+------------------------------
+<field_public_text>:
+Re-Tuning Event (UHS-I only) Status Enable
+------------------------------
+<field_enc>:
+'h0: Masked
+'h1: Enabled
+------------------------------
+<field_public_text>:
+INT_C (Embedded) Status Enable 
+
+If this bit is set to 0, the Host Controller clears the interrupt request to the System. The Host Driver may clear this bit before servicing the INT_C and may set this bit again after all interrupt requests to INT_C pin are cleared to prevent inadvertent interrupts.
+------------------------------
+<field_enc>:
+'h0: Masked
+'h1: Enabled
+------------------------------
+<field_public_text>:
+INT_B (Embedded) Status Enable
+
+If this bit is set to 0, the Host Controller clears the interrupt request to the System. The Host Driver may clear this bit before servicing the INT_B and may set this bit again after all interrupt requests to INT_B pin are cleared to prevent inadvertent interrupts.
+------------------------------
+<field_enc>:
+'h0: Masked
+'h1: Enabled
+------------------------------
+<field_public_text>:
+INT_A (Embedded) Status Enable
+
+If this bit is set to 0, the Host Controller clears the interrupt request to the System. The Host Driver may clear this bit before servicing the INT_A and may set this bit again after all interrupt requests to INT_A pin are cleared to prevent inadvertent interrupts.
+------------------------------
+<field_enc>:
+'h0: Masked
+'h1: Enabled
+------------------------------
+<field_public_text>:
+Card Interrupt Status Enable
+
+If this bit is set to 0, the Host Controller clears the interrupt request to the System. The Card Interrupt detection is stopped when this bit is cleared and restarted when this bit is set to 1. The Host Driver may clear the Card Interrupt Status Enable before servicing the Card Interrupt and may set this bit again after all interrupt requests from the card are cleared to prevent inadvertent interrupts.
+
+By setting this bit to 0, interrupt input must be masked by implementation so that the interrupt input is not affected by external signal in any state (for example, floating).
+------------------------------
+<field_enc>:
+'h0: Masked
+'h1: Enabled
+------------------------------
+<field_public_text>:
+Card Removal Status Enable
+------------------------------
+<field_enc>:
+'h0: Masked
+'h1: Enabled
+------------------------------
+<field_public_text>:
+Card Insertion Status Enable
+------------------------------
+<field_enc>:
+'h0: Masked
+'h1: Enabled
+------------------------------
+<field_public_text>:
+Buffer Read Ready Status Enable
+------------------------------
+<field_enc>:
+'h0: Masked
+'h1: Enabled
+------------------------------
+<field_public_text>:
+Buffer Write Ready Status Enable
+------------------------------
+<field_enc>:
+'h0: Masked
+'h1: Enabled
+------------------------------
+<field_public_text>:
+DMA Interrupt Status Enable
+------------------------------
+<field_enc>:
+'h0: Masked
+'h1: Enabled
+------------------------------
+<field_public_text>:
+Block Gap Event Status Enable
+------------------------------
+<field_enc>:
+'h0: Masked
+'h1: Enabled
+------------------------------
+<field_public_text>:
+Transfer Complete Status Enable
+------------------------------
+<field_enc>:
+'h0: Masked
+'h1: Enabled
+------------------------------
+<field_public_text>:
+Command Complete Status Enable
+------------------------------
+<field_enc>:
+'h0: Masked
+'h1: Enabled
+------------------------------
+<reg_short_dscr>:
+This register sets the Interrupt Status for Error Interrupt Status register (ERROR_INT_STAT_R), when ERROR_INT_STAT_EN_R is set to 1. This register is applicable for an SD/eMMC/UHS-II mode.
+------------------------------
+<field_public_text>:
+The 15th bit of Error Interrupt Status Enable register is reserved.
+------------------------------
+<field_enc>:
+'h0: Masked
+'h1: Enabled
+------------------------------
+<field_public_text>:
+The 14th bit of Error Interrupt Status Enable register is reserved.
+------------------------------
+<field_enc>:
+'h0: Masked
+'h1: Enabled
+------------------------------
+<field_public_text>:
+The 13th bit of Error Interrupt Status Enable register is reserved.
+------------------------------
+<field_enc>:
+'h0: Masked
+'h1: Enabled
+------------------------------
+<field_public_text>:
+Boot Acknowledgment Error (eMMC Mode only)
+
+ Setting this bit to 1 enables setting of Boot Acknowledgment Error in Error Interrupt Status register (ERROR_INT_STAT_R).
+------------------------------
+<field_enc>:
+'h0: Masked
+'h1: Enabled
+------------------------------
+<field_public_text>:
+Response Error Status Enable (SD Mode only)
+------------------------------
+<field_enc>:
+'h0: Masked
+'h1: Enabled
+------------------------------
+<field_public_text>:
+Tuning Error Status Enable (UHS-I Mode only)
+------------------------------
+<field_enc>:
+'h0: Masked
+'h1: Enabled
+------------------------------
+<field_public_text>:
+ADMA Error Status Enable
+------------------------------
+<field_enc>:
+'h0: Masked
+'h1: Enabled
+------------------------------
+<field_public_text>:
+Auto CMD Error Status Enable (SD/eMMC Mode only).
+------------------------------
+<field_enc>:
+'h0: Masked
+'h1: Enabled
+------------------------------
+<field_public_text>:
+Current Limit Error Status Enable
+------------------------------
+<field_enc>:
+'h0: Masked
+'h1: Enabled
+------------------------------
+<field_public_text>:
+Data End Bit Error Status Enable (SD/eMMC Mode only).
+------------------------------
+<field_enc>:
+'h0: Masked
+'h1: Enabled
+------------------------------
+<field_public_text>:
+Data CRC Error Status Enable (SD/eMMC Mode only)
+------------------------------
+<field_enc>:
+'h0: Masked
+'h1: Enabled
+------------------------------
+<field_public_text>:
+Data Timeout Error Status Enable (SD/eMMC Mode only)
+------------------------------
+<field_enc>:
+'h0: Masked
+'h1: Enabled
+------------------------------
+<field_public_text>:
+Command Index Error Status Enable (SD/eMMC Mode only)
+------------------------------
+<field_enc>:
+'h0: Masked
+'h1: Enabled
+------------------------------
+<field_public_text>:
+Command End Bit Error Status Enable (SD/eMMC Mode only)
+------------------------------
+<field_enc>:
+'h0: Masked
+'h1: Enabled
+------------------------------
+<field_public_text>:
+Command CRC Error Status Enable (SD/eMMC Mode only)
+------------------------------
+<field_enc>:
+'h0: Masked
+'h1: Enabled
+------------------------------
+<field_public_text>:
+Command Timeout Error Status Enable (SD/eMMC Mode only).
+------------------------------
+<field_enc>:
+'h0: Masked
+'h1: Enabled
+------------------------------
+<reg_short_dscr>:
+This register is used to select the interrupt status that is indicated to the Host System as the interrupt. All these status bits share the same 1-bit interrupt line. Setting any of these bits to 1, enables interrupt generation. This register is applicable for an SD/eMMC/UHS-II mode.
+------------------------------
+<field_public_text>:
+This bit of the NORMAL_INT_STAT_R register is reserved. It always returns 0.
+------------------------------
+<field_public_text>:
+Command Queuing Engine Event Signal Enable
+------------------------------
+<field_enc>:
+'h0: Masked
+'h1: Enabled
+------------------------------
+<field_public_text>:
+FX Event Signal Enable
+------------------------------
+<field_enc>:
+'h0: Masked
+'h1: Enabled
+------------------------------
+<field_public_text>:
+Re-Tuning Event (UHS-I only) Signal Enable.
+------------------------------
+<field_enc>:
+'h0: Masked
+'h1: Enabled
+------------------------------
+<field_public_text>:
+INT_C (Embedded) Signal Enable
+------------------------------
+<field_enc>:
+'h0: Masked
+'h1: Enabled
+------------------------------
+<field_public_text>:
+INT_B (Embedded) Signal Enable
+------------------------------
+<field_enc>:
+'h0: Masked
+'h1: Enabled
+------------------------------
+<field_public_text>:
+INT_A (Embedded) Signal Enable
+------------------------------
+<field_enc>:
+'h0: Masked
+'h1: Enabled
+------------------------------
+<field_public_text>:
+Card Interrupt Signal Enable
+------------------------------
+<field_enc>:
+'h0: Masked
+'h1: Enabled
+------------------------------
+<field_public_text>:
+Card Removal Signal Enable
+------------------------------
+<field_enc>:
+'h0: Masked
+'h1: Enabled
+------------------------------
+<field_public_text>:
+Card Insertion Signal Enable
+------------------------------
+<field_enc>:
+'h0: Masked
+'h1: Enabled
+------------------------------
+<field_public_text>:
+Buffer Read Ready Signal Enable
+------------------------------
+<field_enc>:
+'h0: Masked
+'h1: Enabled
+------------------------------
+<field_public_text>:
+Buffer Write Ready Signal Enable
+------------------------------
+<field_enc>:
+'h0: Masked
+'h1: Enabled
+------------------------------
+<field_public_text>:
+DMA Interrupt Signal Enable
+------------------------------
+<field_enc>:
+'h0: Masked
+'h1: Enabled
+------------------------------
+<field_public_text>:
+Block Gap Event Signal Enable
+------------------------------
+<field_enc>:
+'h0: Masked
+'h1: Enabled
+------------------------------
+<field_public_text>:
+Transfer Complete Signal Enable
+------------------------------
+<field_enc>:
+'h0: Masked
+'h1: Enabled
+------------------------------
+<field_public_text>:
+Command Complete Signal Enable
+------------------------------
+<field_enc>:
+'h0: Masked
+'h1: Enabled
+------------------------------
+<reg_short_dscr>:
+This register is used to select the interrupt status that is notified to the Host System as an interrupt. All these status bits share the same 1-bit interrupt line. Setting any of these bits to 1 enables interrupt generation. This register is applicable for an SD/eMMC/UHS-II mode.
+------------------------------
+<field_public_text>:
+The 16th bit of Error Interrupt Signal Enable is reserved.
+------------------------------
+<field_enc>:
+'h0: Masked
+'h1: Enabled
+------------------------------
+<field_public_text>:
+The 15th bit of Error Interrupt Signal Enable is reserved.
+------------------------------
+<field_enc>:
+'h0: Masked
+'h1: Enabled
+------------------------------
+<field_public_text>:
+The 14th bit of Error Interrupt Signal Enable is reserved.
+------------------------------
+<field_enc>:
+'h0: Masked
+'h1: Enabled
+------------------------------
+<field_public_text>:
+Boot Acknowledgment Error (eMMC Mode only).
+
+Setting this bit to 1 enables generating interrupt signal when Boot Acknowledgement Error in Error Interrupt Status register is set.
+------------------------------
+<field_enc>:
+'h0: Masked
+'h1: Enabled
+------------------------------
+<field_public_text>:
+Response Error Signal Enable (SD Mode only)
+------------------------------
+<field_enc>:
+'h0: Masked
+'h1: Enabled
+------------------------------
+<field_public_text>:
+Tuning Error Signal Enable (UHS-I Mode only)
+------------------------------
+<field_enc>:
+'h0: Masked
+'h1: Enabled
+------------------------------
+<field_public_text>:
+ADMA Error Signal Enable
+------------------------------
+<field_enc>:
+'h0: Masked
+'h1: Enabled
+------------------------------
+<field_public_text>:
+Auto CMD Error Signal Enable (SD/eMMC Mode only)
+------------------------------
+<field_enc>:
+'h0: Masked
+'h1: Enabled
+------------------------------
+<field_public_text>:
+Current Limit Error Signal Enable
+------------------------------
+<field_enc>:
+'h0: Masked
+'h1: Enabled
+------------------------------
+<field_public_text>:
+Data End Bit Error Signal Enable (SD/eMMC Mode only)
+------------------------------
+<field_enc>:
+'h0: Masked
+'h1: Enabled
+------------------------------
+<field_public_text>:
+Data CRC Error Signal Enable (SD/eMMC Mode only)
+------------------------------
+<field_enc>:
+'h0: Masked
+'h1: Enabled
+------------------------------
+<field_public_text>:
+Data Timeout Error Signal Enable (SD/eMMC Mode only)
+------------------------------
+<field_enc>:
+'h0: Masked
+'h1: Enabled
+------------------------------
+<field_public_text>:
+Command Index Error Signal Enable (SD/eMMC Mode only)
+------------------------------
+<field_enc>:
+'h0: No error
+'h1: Error
+------------------------------
+<field_public_text>:
+Command End Bit Error Signal Enable (SD/eMMC Mode only)
+------------------------------
+<field_enc>:
+'h0: Masked
+'h1: Enabled
+------------------------------
+<field_public_text>:
+Command CRC Error Signal Enable (SD/eMMC Mode only)
+------------------------------
+<field_enc>:
+'h0: Masked
+'h1: Enabled
+------------------------------
+<field_public_text>:
+Command Timeout Error Signal Enable (SD/eMMC Mode only)
+------------------------------
+<field_enc>:
+'h0: Masked
+'h1: Enabled
+------------------------------
+<reg_short_dscr>:
+This register is used to indicate the CMD12 response error of Auto CMD12, and the CMD23 response error of Auto CMD23. The Host driver can determine the kind of Auto CMD12/CMD23 errors that can occur in this register. Auto CMD23 errors are indicated in bit 04-01. This register is valid only when Auto CMD Error is set. This register is applicable for an SD/eMMC mode.
+------------------------------
+<field_public_text>:
+These bits of the AUTO_CMD_STAT_R register are reserved bits. They always return 0.
+------------------------------
+<field_public_text>:
+Command Not Issued By Auto CMD12 Error 
+
+If this bit is set to 1, CMD_wo_DAT is not executed due to an Auto CMD12 Error (D04-D01) in this register.
+
+This bit is set to 0 when Auto CMD Error is generated by Auto CMD23.
+------------------------------
+<field_enc>:
+'h0: No Error
+'h1: Not Issued
+------------------------------
+<field_public_text>:
+This bit of the AUTO_CMD_STAR_R register is reserved. It always returns 0.
+------------------------------
+<field_public_text>:
+Auto CMD Response Error 
+
+This bit is set when Response Error Check Enable in the Transfer Mode register is set to 1 and an error is detected in R1 response of either Auto CMD12 or CMD13. This status is ignored if any bit between D00 to D04 is set to 1.
+------------------------------
+<field_enc>:
+'h0: No Error
+'h1: Error
+------------------------------
+<field_public_text>:
+Auto CMD Index Error 
+
+This bit is set if the command index error occurs in response to a command.
+------------------------------
+<field_enc>:
+'h0: No Error
+'h1: Error
+------------------------------
+<field_public_text>:
+Auto CMD End Bit Error 
+
+This bit is set when detecting that the end bit of command response is 0.
+------------------------------
+<field_enc>:
+'h0: No Error
+'h1: End Bit Error Generated
+------------------------------
+<field_public_text>:
+Auto CMD CRC Error 
+
+This bit is set when detecting a CRC error in the command response.
+------------------------------
+<field_enc>:
+'h0: No Error
+'h1: CRC Error Generated
+------------------------------
+<field_public_text>:
+Auto CMD Timeout Error 
+
+This bit is set if no response is returned with 64 SDCLK cycles from the end bit of the command.
+
+If this bit is set to 1, error status bits (D04-D01) are meaningless.
+------------------------------
+<field_enc>:
+'h0: No Error
+'h1: Time out
+------------------------------
+<field_public_text>:
+Auto CMD12 Not Executed 
+
+If multiple memory block data transfer is not started due to a command error, this bit is not set because it is not necessary to issue an Auto CMD12. Setting this bit to 1 means that the Host Controller cannot issue Auto CMD12 to stop multiple memory block data transfer, due to some error. If this bit is set to 1, error status bits (D04-D01) is meaningless.
+
+This bit is set to 0 when Auto CMD Error is generated by Auto CMD23.
+------------------------------
+<field_enc>:
+'h0: Executed
+'h1: Not Executed
+------------------------------
+<reg_short_dscr>:
+This register is used to control how the Host Controller operates. This register is applicable for an SD/eMMC/UHS-II mode.
+------------------------------
+<field_public_text>:
+Preset Value Enable
+
+This bit enables automatic selection of SDCLK frequency and Driver strength Preset Value registers. When Preset Value Enable is set, SDCLK frequency generation (Frequency Select and Clock Generator
+Select) and the driver strength selection are performed by the controller. These values are selected from set of Preset Value registers based on selected speed mode.
+
+Note: For more information, see the FAQ on Preset Register in the DWC_mshc Databook.
+------------------------------
+<field_enc>:
+'h0: SDCLK and Driver Strength are controlled by Host Driver
+'h1: Automatic Selection by Preset Value are Enabled
+------------------------------
+<field_public_text>:
+Asynchronous Interrupt Enable
+
+This bit can be set if a card supports asynchronous interrupts and Asynchronous Interrupt Support is set to 1 in the Capabilities register.
+------------------------------
+<field_enc>:
+'h0: Disabled
+'h1: Enabled
+------------------------------
+<field_public_text>:
+64-bit Addressing
+
+This bit is effective when Host Version 4 Enable is set to 1.
+------------------------------
+<field_enc>:
+'h0: 32 bits addressing
+'h1: 64 bits addressing
+------------------------------
+<field_public_text>:
+Host Version 4 Enable
+
+This bit selects either Version 3.00 compatible mode or Version 4 mode.
+
+Functions of following fields are modified for Host Version 4 mode:
+ - SDMA Address: SDMA uses ADMA System Address (05Fh-058h) instead of SDMA System Address register (003h-000h)
+ - ADMA2/ADMA3 selection: ADMA3 is selected by DMA select in Host Control 1 register
+ - 64-bit ADMA Descriptor Size: 128-bit descriptor is used instead of 96-bit descriptor when 64-bit Addressing is set to 1
+ - Selection of 32-bit/64-bit System Addressing: Either 32-bit or 64-bit system addressing is selected by 64-bit Addressing bit in this register
+ - 32-bit Block Count: SDMA System Address register (003h-000h) is modified to 32-bit Block Count register
+ 
+Note: It is recommended not to program ADMA3 Integrated Descriptor Address registers, UHS-II registers and Command Queuing registers (if applicable) while operating in Host version less than 4 mode (Host Version 4 Enable = 0).
+------------------------------
+<field_enc>:
+'h0: Version 3.00 compatible mode
+'h1: Version 4 mode
+------------------------------
+<field_public_text>:
+CMD23 Enable
+
+If the card supports CMD23, this bit is set to 1. This bit is used to select Auto CMD23 or Auto CMD12 for ADMA3 data transfer.
+------------------------------
+<field_enc>:
+'h0: Auto CMD23 is disabled
+'h1: Auto CMD23 is enabled
+------------------------------
+<field_public_text>:
+ADMA2 Length Mode
+
+This bit selects ADMA2 Length mode to be either 16-bit or 26-bit.
+------------------------------
+<field_enc>:
+'h0: 16-bit Data Length Mode
+'h1: 26-bit Data Length Mode
+------------------------------
+<field_public_text>:
+This bit of the HOST_CTRL2_R register is reserved. It always returns 0.
+------------------------------
+<field_public_text>:
+UHS-II Interface Enable
+
+This bit is used to enable the UHS-II Interface. The value is reflected on the uhs2_if_en pin.
+------------------------------
+<field_enc>:
+'h0: SD/eMMC Interface Enabled
+'h1: UHS-II Interface Enabled
+------------------------------
+<field_public_text>:
+Sampling Clock Select 
+
+This bit is used by the Host Controller to select the sampling clock in SD/eMMC mode to receive CMD and DAT. This bit is set by the tuning procedure and is valid after the completion of tuning (when Execute Tuning is cleared). Setting this bit to 1 means that tuning is completed successfully and setting this bit to 0 means that tuning has failed. The value is reflected on the sample_cclk_sel pin.
+------------------------------
+<field_enc>:
+'h0: Fixed clock is used to sample data
+'h1: Tuned clock is used to sample data
+------------------------------
+<field_public_text>:
+Execute Tuning 
+
+This bit is set to 1 to start the tuning procedure in UHS-I/eMMC speed modes and this bit is automatically cleared when tuning procedure is completed.
+------------------------------
+<field_enc>:
+'h0: Not Tuned or Tuning completed
+'h1: Execute Tuning
+------------------------------
+<field_public_text>:
+Driver Strength Select
+
+This bit is used to select the Host Controller output driver in 1.8V signaling UHS-I/eMMC speed modes. The bit depends on setting of Preset Value Enable. The value is reflected on the uhs1_drv_sth pin.
+------------------------------
+<field_enc>:
+'h1: Driver TYPEA is selected
+'h0: Driver TYPEB is selected
+'h2: Driver TYPEC is selected
+'h3: Driver TYPED is selected
+------------------------------
+<field_public_text>:
+1.8V Signaling Enable 
+
+This bit controls voltage regulator for I/O cell in UHS-I/eMMC speed modes. Setting this bit from 0 to 1 starts changing the signal voltage from 3.3V to 1.8V. Host Controller clears this bit if switching to 1.8 signaling
+fails. The value is reflected on the uhs1_swvolt_en pin.
+
+Note: This bit must be set for all UHS-I speed modes (SDR12/SDR25/SDR50/SDR104/DDR50).
+------------------------------
+<field_enc>:
+'h1: 1.8V Signaling
+'h0: 3.3V Signaling
+------------------------------
+<field_public_text>:
+UHS Mode/eMMC Speed Mode Select
+
+These bits are used to select UHS mode in the SD mode of operation. In eMMC mode, these bits are used to select eMMC Speed mode.
+
+
+UHS Mode (SD/UHS-II mode only):
+ - 0x0: SDR12
+ - 0x1: SDR25
+ - 0x2: SDR50
+ - 0x3: SDR104
+ - 0x4: DDR50
+ - 0x5: Reserved
+ - 0x6: Reserved
+ - 0x7: UHS-II
+  
+eMMC Speed Mode (eMMC mode only):
+ - 0x0: Legacy
+ - 0x1: High Speed SDR
+ - 0x2: Reserved
+ - 0x3: HS200
+ - 0x4: High Speed DDR
+ - 0x5: Reserved
+ - 0x6: Reserved
+ - 0x7: HS400
+------------------------------
+<field_enc>:
+'h4: DDR50/High Speed DDR
+'h5: Reserved
+'h6: Reserved
+'h3: SDR104/HS200
+'h0: SDR12/Legacy
+'h1: SDR25/High Speed SDR
+'h2: SDR50
+'h7: UHS-II/HS400
+------------------------------
+<reg_short_dscr>:
+This register provides the Host Driver with information specific to the Host Controller implementation. The host controller may implement these values as fixed or loaded from the flash memory during power on initialization. Capabilities register is segregated into two 32-bit registers: CAPABILITIES1_R and CAPABILITIES2_R. The CAPABILITIES1_R register is the lower part of Capabilities register.
+------------------------------
+<field_public_text>:
+Slot Type 
+
+These bits indicate usage of a slot by a specific Host System.
+------------------------------
+<field_enc>:
+'h1: Embedded Slot for one Device
+'h0: Removable Card Slot
+'h2: Shared Bus Slot (SD mode)
+'h3: UHS-II Multiple Embedded Devices
+------------------------------
+<field_public_text>:
+Asynchronous Interrupt Support (SD Mode only)
+------------------------------
+<field_enc>:
+'h0: Asynchronous Interrupt Not Supported
+'h1: Asynchronous Interrupt Supported
+------------------------------
+<field_public_text>:
+64-bit System Address Support for V3
+
+This bit sets the Host controller to support 64-bit System Addressing of V3 mode. 
+
+SDMA cannot be used in 64-bit Addressing in Version 3 Mode. 
+
+If this bit is set to 1, 64-bit ADMA2 with using 96-bit Descriptor can be enabled by setting Host Version 4 Enable (HOST_VER4_ENABLE = 0) and DMA select (DMA_SEL = 11b).
+------------------------------
+<field_enc>:
+'h0: 64-bit System Address for V3 is Not Supported
+'h1: 64-bit System Address for V3 is Supported
+------------------------------
+<field_public_text>:
+64-bit System Address Support for V4
+
+This bit sets the Host Controller to support 64-bit System Addressing of V4 mode. When this bit is set to 1, full or part of 64-bit address must be used to decode the Host Controller Registers so that Host Controller Registers can be placed above system memory area. 64-bit address decode of Host Controller registers is effective regardless of setting to 64-bit Addressing in Host Control 2.
+
+If this bit is set to 1, 64-bit DMA Addressing for version 4 is enabled by setting Host Version 4 Enable 
+(HOST_VER4_ENABLE = 1) and by setting 64-bit Addressing (ADDRESSING =1) in the Host Control 2 register. SDMA can be used and ADMA2 uses 128-bit Descriptor.
+------------------------------
+<field_enc>:
+'h0: 64-bit System Address for V4 is Not Supported
+'h1: 64-bit System Address for V4 is Supported
+------------------------------
+<field_public_text>:
+Voltage Support for 1.8V
+------------------------------
+<field_enc>:
+'h0: 1.8V Not Supported
+'h1: 1.8V Supported
+------------------------------
+<field_public_text>:
+Voltage Support for SD 3.0V or Embedded 1.2V
+------------------------------
+<field_enc>:
+'h0: SD 3.0V or Embedded 1.2V Not Supported
+'h1: SD 3.0V or Embedded Supported
+------------------------------
+<field_public_text>:
+Voltage Support for 3.3V
+------------------------------
+<field_enc>:
+'h0: 3.3V Not Supported
+'h1: 3.3V Supported
+------------------------------
+<field_public_text>:
+Suspense/Resume Support
+
+This bit indicates whether the Host Controller supports Suspend/Resume functionality. If this bit is 0, the Host Driver does not issue either Suspend or Resume commands because the Suspend and Resume mechanism is not supported.
+------------------------------
+<field_enc>:
+'h0: Not Supported
+'h1: Supported
+------------------------------
+<field_public_text>:
+SDMA Support
+
+This bit indicates whether the Host Controller is capable of using SDMA to transfer data between the system memory and the Host Controller directly.
+------------------------------
+<field_enc>:
+'h0: SDMA not Supported
+'h1: SDMA Supported
+------------------------------
+<field_public_text>:
+High Speed Support 
+
+This bit indicates whether the Host Controller and the Host System supports High Speed mode and they can supply the SD Clock frequency from 25 MHz to 50 MHz.
+------------------------------
+<field_enc>:
+'h0: High Speed not Supported
+'h1: High Speed Supported
+------------------------------
+<field_public_text>:
+This bit of the CAPABILITIES1_R is a reserved. It always returns 0.
+------------------------------
+<field_public_text>:
+ADMA2 Support
+
+This bit indicates whether the Host Controller is capable of using ADMA2.
+------------------------------
+<field_enc>:
+'h0: ADMA2 not Supported
+'h1: ADMA2 Supported
+------------------------------
+<field_public_text>:
+8-bit Support for Embedded Device
+
+This bit indicates whether the Host Controller is capable of using an 8-bit bus width mode. This bit is not effective when the Slot Type is set to 10b.
+------------------------------
+<field_enc>:
+'h0: 8-bit Bus Width not Supported
+'h1: 8-bit Bus Width Supported
+------------------------------
+<field_public_text>:
+Maximum Block Length
+ 
+This bit indicates the maximum block size that the Host driver can read and write to the buffer in the Host Controller. The buffer transfers this block size without wait cycles. The transfer block length is always 512 bytes for the SD Memory irrespective of this bit
+------------------------------
+<field_enc>:
+'h1: 1024 Byte
+'h3: Reserved
+'h2: 2048 Byte
+'h0: 512 Byte
+------------------------------
+<field_public_text>:
+Base Clock Frequency for SD clock 
+
+These bits indicate the base (maximum) clock frequency for the SD Clock. The definition of these bits depend on the Host Controller Version.
+ - 6-Bit Base Clock Frequency: This mode is supported by the Host Controller version 1.00 and 2.00. The upper 2 bits are not effective and are always 0. The unit values are 1 MHz. The supported clock range is 10 MHz to 63 MHz.
+ -- 0x00 - Get information through another method 
+ -- 0x01 - 1 MHz
+ -- 0x02 - 2 MHz
+ -- .............
+ -- 0x3F - 63 MHz
+ -- 0x40-0xFF - Not Supported 
+ - 8-Bit Base Clock Frequency: This mode is supported by the Host Controller version 3.00. The unit values are 1 MHz. The supported clock range is 10 MHz to 255 MHz.
+ -- 0x00 - Get information through another method 
+ -- 0x01 - 1 MHz
+ -- 0x02 - 2 MHz
+ -- ............
+ -- 0xFF - 255 MHz
+If the frequency is 16.5 MHz, the larger value is set to 0001001b (17 MHz) because the Host Driver uses this value to calculate the clock divider value and it does not exceed the upper limit of the SD Clock frequency. If these bits are all 0, the Host system has to get information using a different method.
+------------------------------
+<field_public_text>:
+Timeout Clock Unit 
+
+This bit shows the unit of base clock frequency used to detect Data TImeout Error.
+------------------------------
+<field_enc>:
+'h0: KHz
+'h1: MHz
+------------------------------
+<field_public_text>:
+This bit of the CAPABILITIES1_R register is reserved. It always returns 0.
+------------------------------
+<field_public_text>:
+Timeout Clock Frequency 
+
+This bit shows the base clock frequency used to detect Data Timeout Error. The Timeout Clock unit defines the unit of timeout clock frequency. It can be KHz or MHz.
+ - 0x00 - Get information through another method
+ - 0x01 -  1KHz /  1MHz
+ - 0x02 -  2KHz /  2MHz
+ - 0x03 -  3KHz /  3MHz
+ -  ...........
+ - 0x3F - 63KHz / 63MHz
+------------------------------
+<reg_short_dscr>:
+This register provides the Host Driver with information specific to the Host Controller implementation. The host controller may implement these values as fixed or as loaded from flash memory during power on initialization. Capabilities register is segregated into two 32-bit registers, namely CAPABILITIES1_R and CAPABILITIES2_R. The CAPABILITIES2_R register is upper part of Capabilities register.
+------------------------------
+<field_public_text>:
+These bits (RSVD_62_63) of the CAPABILITIES2_R register are reserved bits. They always return 0.
+------------------------------
+<field_public_text>:
+This bit (RSVD_61) of the CAPABILITIES2_R register is reserved. It always returns 0.
+------------------------------
+<field_public_text>:
+1.8V VDD2 Support
+
+This bit indicates support of VDD2 for the Host System.
+------------------------------
+<field_enc>:
+'h0: 1.8V VDD2 is not Supported
+'h1: 1.8V VDD2 is Supported
+------------------------------
+<field_public_text>:
+ADMA3 Support 
+
+This bit indicates whether the Host Controller is capable of using ADMA3.
+------------------------------
+<field_enc>:
+'h0: ADMA3 not Supported
+'h1: ADMA3 Supported
+------------------------------
+<field_public_text>:
+These bits (RSVD_56_58) of the CAPABILITIES2_R register are reserved. They always return 0.
+------------------------------
+<field_public_text>:
+Clock Multiplier
+
+These bits indicate the clock multiplier of the programmable clock generator. Setting these bits to 0 means that the Host Controller does not support a programmable clock generator.
+ - 0x0: Clock Multiplier is not Supported
+ - 0x1: Clock Multiplier M = 2
+ - 0x2: Clock Multiplier M = 3
+ -   .........
+ - 0xFF: Clock Multiplier M = 256
+------------------------------
+<field_public_text>:
+Re-Tuning Modes (UHS-I only)
+
+These bits select the re-tuning method and limit the maximum data length.
+------------------------------
+<field_enc>:
+'h0: Timer
+'h1: Timer and Re-Tuning Request (Not supported)
+'h2: Auto Re-Tuning (for transfer)
+'h3: Reserved
+------------------------------
+<field_public_text>:
+Use Tuning for SDR50 (UHS-I only)
+------------------------------
+<field_enc>:
+'h1: SDR50 requires tuning
+'h0: SDR50 does not require tuning
+------------------------------
+<field_public_text>:
+This bit (RSVD_44) of the CAPABILITIES2_R register is reserved. It always returns 0.
+------------------------------
+<field_public_text>:
+Timer Count for Re-Tuning (UHS-I only)
+ - 0x0: Re-Tuning Timer disabled
+ - 0x1: 1 seconds
+ - 0x2: 2 seconds
+ - 0x3: 4 seconds
+ -  ........
+ - 0xB: 1024 seconds
+ - 0xC: Reserved
+ - 0xD: Reserved
+ - 0xE: Reserved
+ - 0xF: Get information from other source
+------------------------------
+<field_public_text>:
+This bit (RSVD_39) of the CAPABILITIES2_R register is reserved. It always returns 0.
+------------------------------
+<field_public_text>:
+Driver Type D Support (UHS-I only) 
+
+This bit indicates support of Driver Type D for 1.8 Signaling.
+------------------------------
+<field_enc>:
+'h0: Driver Type D is not supported
+'h1: Driver Type D is supported
+------------------------------
+<field_public_text>:
+Driver Type C Support (UHS-I only)
+
+This bit indicates support of Driver Type C for 1.8 Signaling.
+------------------------------
+<field_enc>:
+'h0: Driver Type C is not supported
+'h1: Driver Type C is supported
+------------------------------
+<field_public_text>:
+Driver Type A Support (UHS-I only)
+
+This bit indicates support of Driver Type A for 1.8 Signaling.
+------------------------------
+<field_enc>:
+'h0: Driver Type A is not supported
+'h1: Driver Type A is supported
+------------------------------
+<field_public_text>:
+UHS-II Support (UHS-II only)
+
+This bit indicates whether Host Controller supports UHS-II.
+------------------------------
+<field_enc>:
+'h0: UHS-II is not supported
+'h1: UHS-II is supported
+------------------------------
+<field_public_text>:
+DDR50 Support (UHS-I only)
+------------------------------
+<field_enc>:
+'h0: DDR50 is not supported
+'h1: DDR50 is supported
+------------------------------
+<field_public_text>:
+SDR104 Support (UHS-I only)
+
+This bit mentions that SDR104 requires tuning.
+------------------------------
+<field_enc>:
+'h0: SDR104 is not supported
+'h1: SDR104 is supported
+------------------------------
+<field_public_text>:
+SDR50 Support (UHS-I only)
+
+Thsi bit indicates that SDR50 is supported. The bit 13 (USE_TUNING_SDR50) indicates whether SDR50 requires tuning or not.
+------------------------------
+<field_enc>:
+'h0: SDR50 is not supported
+'h1: SDR50 is supported
+------------------------------
+<reg_short_dscr>:
+This register indicate the maximum current capability for each voltage, for VDD1. The value is meaningful if the Voltage Support is set in the Capabilities
+register. If this information is supplied by the Host System through another method, all the Maximum Current Capabilities registers are set to 0.
+------------------------------
+<field_public_text>:
+These bits of the CURR_CAPABILITIES1_R register are reserved. They always return 0.
+------------------------------
+<field_public_text>:
+Maximum Current for 1.8V
+This bit specifies the Maximum Current for 1.8V VDD1 power supply for the card.
+ - 0: Get information through another method
+ - 1: 4mA
+ - 2: 8mA
+ - 3: 13mA
+ - .......
+ - 255: 1020mA
+------------------------------
+<field_public_text>:
+Maximum Current for 3.0V
+This bit specifies the Maximum Current for 3.0V VDD1 power supply for the card.
+ - 0: Get information through another method
+ - 1: 4mA
+ - 2: 8mA
+ - 3: 13mA
+ - .......
+ - 255: 1020mA
+------------------------------
+<field_public_text>:
+Maximum Current for 3.3V
+This bit specifies the Maximum Current for 3.3V VDD1 power supply for the card.
+ - 0: Get information through another method
+ - 1: 4mA
+ - 2: 8mA
+ - 3: 13mA
+ - .......
+ - 255: 1020mA
+------------------------------
+<reg_short_dscr>:
+This register indicates the maximum current capability for each voltage (for VDD2). The value is meaningful if Voltage Support is set in the Capabilities
+register. If this information is supplied by the Host System through another method, all the Maximum Current Capabilities registers are set to 0.
+------------------------------
+<field_public_text>:
+These bits of the CURR_CAPABILITIES2_R register are reserved. They always return 0.
+------------------------------
+<field_public_text>:
+Maximum Current for 1.8V VDD2
+This bit specifies the Maximum Current for 1.8V VDD2 power supply for the UHS-II card.
+ - 0: Get information through another method
+ - 1: 4mA
+ - 2: 8mA
+ - 3: 13mA
+ - .......
+ - 255: 1020mA
+------------------------------
+<reg_short_dscr>:
+The register is not a physically implemented but is an address at which the Auto CMD Error Status register can be written.This register is applicable for an SD/eMMC mode.
+ - 1 : Sets each bit of the Auto CMD Error Status register
+ - 0 : No effect
+------------------------------
+<field_public_text>:
+These bits of the FORCE_AUTO_CMD_STAT_R register are reserved. They always return 0.
+------------------------------
+<field_public_text>:
+Force Event for Command Not Issued By Auto CMD12 Error
+------------------------------
+<field_enc>:
+'h0: Not Affected
+'h1: Command Not Issued By Auto CMD12 Error Status is set
+------------------------------
+<field_public_text>:
+This bit of the FORCE_AUTO_CMD_STAT_R register are reserved. They always return 0.
+------------------------------
+<field_public_text>:
+Force Event for Auto CMD Response Error
+------------------------------
+<field_enc>:
+'h0: Not Affected
+'h1: Auto CMD Response Error Status is set
+------------------------------
+<field_public_text>:
+Force Event for Auto CMD Index Error
+------------------------------
+<field_enc>:
+'h0: Not Affected
+'h1: Auto CMD Index Error Status is set
+------------------------------
+<field_public_text>:
+Force Event for Auto CMD End Bit Error
+------------------------------
+<field_enc>:
+'h0: Not Affected
+'h1: Auto CMD End Bit Error Status is set
+------------------------------
+<field_public_text>:
+Force Event for Auto CMD CRC Error
+------------------------------
+<field_enc>:
+'h0: Not Affected
+'h1: Auto CMD CRC Error Status is set
+------------------------------
+<field_public_text>:
+Force Event for Auto CMD Timeout Error
+------------------------------
+<field_enc>:
+'h0: Not Affected
+'h1: Auto CMD Timeout Error Status is set
+------------------------------
+<field_public_text>:
+Force Event for Auto CMD12 Not Executed
+------------------------------
+<field_enc>:
+'h0: Not Affected
+'h1: Auto CMD12 Not Executed Status is set
+------------------------------
+<reg_short_dscr>:
+This register is not physically implemented but is an address at which the Error Interrupt Status register can be written. The effect of a write to this
+address is reflected in the Error Interrupt Status register if the corresponding bit of the Error Interrupt Status Enable register is set. This register is applicable for an SD/eMMC/UHS-II mode.
+------------------------------
+<field_public_text>:
+This bit (FORCE_VENDOR_ERR3) of the FORCE_ERROR_INT_STAT_R register is reserved. It always returns 0.
+------------------------------
+<field_public_text>:
+This bit (FORCE_VENDOR_ERR2) of the FORCE_ERROR_INT_STAT_R register is reserved. It always returns 0.
+------------------------------
+<field_public_text>:
+This bit (FORCE_VENDOR_ERR1) of the FORCE_ERROR_INT_STAT_R register is reserved. It always returns 0.
+------------------------------
+<field_public_text>:
+Force Event for Boot Ack error
+------------------------------
+<field_enc>:
+'h0: Not Affected
+'h1: Boot ack Error Status is set
+------------------------------
+<field_public_text>:
+Force Event for Response Error (SD Mode only)
+------------------------------
+<field_enc>:
+'h0: Not Affected
+'h1: Response Error  Status is set
+------------------------------
+<field_public_text>:
+Force Event for Tuning Error (UHS-I Mode only)
+------------------------------
+<field_enc>:
+'h0: Not Affected
+'h1: Tuning Error  Status is set
+------------------------------
+<field_public_text>:
+Force Event for ADMA Error
+------------------------------
+<field_enc>:
+'h0: Not Affected
+'h1: ADMA  Error  Status is set
+------------------------------
+<field_public_text>:
+Force Event for Auto CMD Error (SD/eMMC Mode only)
+------------------------------
+<field_enc>:
+'h0: Not Affected
+'h1: Auto CMD Error  Status is set
+------------------------------
+<field_public_text>:
+Force Event for Current Limit Error
+------------------------------
+<field_enc>:
+'h0: Not Affected
+'h1: Current Limit Error  Status is set
+------------------------------
+<field_public_text>:
+Force Event for Data End Bit Error (SD/eMMC Mode only)
+------------------------------
+<field_enc>:
+'h0: Not Affected
+'h1: Data End Bit Error  Status is set
+------------------------------
+<field_public_text>:
+Force Event for Data CRC Error (SD/eMMC Mode only)
+------------------------------
+<field_enc>:
+'h0: Not Affected
+'h1: Data CRC Error  Status is set
+------------------------------
+<field_public_text>:
+Force Event for Data Timeout Error (SD/eMMC Mode only)
+------------------------------
+<field_enc>:
+'h0: Not Affected
+'h1: Data Timeout Error  Status is set
+------------------------------
+<field_public_text>:
+Force Event for Command Index Error (SD/eMMC Mode only)
+------------------------------
+<field_enc>:
+'h0: Not Affected
+'h1: Command Index Error  Status is set
+------------------------------
+<field_public_text>:
+Force Event for Command End Bit Error (SD/eMMC Mode only)
+------------------------------
+<field_enc>:
+'h0: Not Affected
+'h1: Command End Bit Error  Status is set
+------------------------------
+<field_public_text>:
+Force Event for Command CRC Error (SD/eMMC Mode only)
+------------------------------
+<field_enc>:
+'h0: Not Affected
+'h1: Command CRC Error  Status is set
+------------------------------
+<field_public_text>:
+Force Event for Command Timeout Error (SD/eMMC Mode only)
+------------------------------
+<field_enc>:
+'h0: Not Affected
+'h1: Command Timeout Error  Status is set
+------------------------------
+<reg_short_dscr>:
+This register stores the ADMA state during an ADMA error. This register is applicable for an SD/eMMC/UHS-II mode.
+------------------------------
+<field_public_text>:
+These bits of the ADMA_ERR_STAT_R register are reserved. They always return 0.
+------------------------------
+<field_public_text>:
+ADMA Length Mismatch Error States
+
+This error occurs in the following instances:
+ - While the Block Count Enable is being set, the total data length specified by the Descriptor table is different from that specified by the Block Count and Block Length
+ - When the total data length cannot be divided by the block length
+------------------------------
+<field_enc>:
+'h1: Error
+'h0: No Error
+------------------------------
+<field_public_text>:
+ADMA Error States
+
+These bits indicate the state of ADMA when an error occurs during ADMA data transfer.
+------------------------------
+<field_enc>:
+'h1: Fetch Descriptor - SYS_ADR register points to the error descriptor
+'h0: Stop DMA - SYS_ADR register points to a location next to the error descriptor
+'h3: Transfer Data - SYS_ADR register points to a location next to the error descriptor
+'h2: Never set this state
+------------------------------
+<reg_short_dscr>:
+This register holds the lower 32-bit system address for DMA transfer. This register is applicable for an SD/eMMC/UHS-II mode.
+------------------------------
+<field_public_text>:
+ADMA System Address
+
+These bits indicate the lower 32 bits of the ADMA system address.
+ - SDMA: If Host Version 4 Enable is set to 1, this register stores the system address of the data location
+ - ADMA2: This register stores the byte address of the executing command of the descriptor table
+ - ADMA3: This register is set by ADMA3. ADMA2 increments the address of this register that points to the next line, every time a Descriptor line is fetched.
+------------------------------
+<reg_short_dscr>:
+This register holds the upper 32-bit system address for the DMA transfer. This register is applicable for an SD/eMMC/UHS-II mode.
+------------------------------
+<field_public_text>:
+ADMA System Address
+
+These bits indicate the higher 32-bit of the ADMA system address.
+------------------------------
+<reg_short_dscr>:
+This register defines Preset Value for Initialization in SD/eMMC mode.
+------------------------------
+<field_public_text>:
+Driver Strength Select Value
+
+These bits indicate that the Driver strength is supported by 1.8V signaling bus speed modes. These bits are meaningless for 3.3V signaling.
+------------------------------
+<field_enc>:
+'h1: Driver Type A is selected
+'h0: Driver Type B is selected
+'h2: Driver Type C is selected
+'h3: Driver Type D is selected
+------------------------------
+<field_public_text>:
+These bits of the PRESET_INIT_R register are reserved. They always return 0.
+------------------------------
+<field_public_text>:
+Clock Generator Select Value
+
+This bit is effective when the Host Controller supports a programmable clock generator.
+------------------------------
+<field_enc>:
+'h0: Host Controller Ver2.0 Compatible Clock Generator
+'h1: Programmable Clock Generator
+------------------------------
+<field_public_text>:
+SDCLK/RCLK Frequency Select Value
+
+10-bit preset value to be set in SDCLK/RCLK Frequency Select field of the Clock Control register described by a Host System.
+------------------------------
+<reg_short_dscr>:
+This register defines Preset Value for Default Speed mode in SD mode.
+------------------------------
+<field_public_text>:
+Driver Strength Select Value
+
+These bits indicate the Driver strength value supported by 1.8V signaling bus speed modes. This field is meaningless for the Default speed mode as it uses 3.3V signaling.
+------------------------------
+<field_enc>:
+'h1: Driver Type A is selected
+'h0: Driver Type B is selected
+'h2: Driver Type C is selected
+'h3: Driver Type D is selected
+------------------------------
+<field_public_text>:
+These bits of the PRESET_DS_R register are reserved. They always return 0.
+------------------------------
+<field_public_text>:
+Clock Generator Select Value
+
+This bit is effective when Host Controller supports programmable clock generator.
+------------------------------
+<field_enc>:
+'h0: Host Controller Ver2.0 Compatible Clock Generator
+'h1: Programmable Clock Generator
+------------------------------
+<field_public_text>:
+SDCLK/RCLK Frequency Select Value
+
+10-bit preset value to be set in SDCLK/RCLK Frequency Select field of the Clock Control register described by a Host System.
+------------------------------
+<reg_short_dscr>:
+This register defines Preset Value for High Speed mode in SD mode.
+------------------------------
+<field_public_text>:
+Driver Strength Select Value
+
+These bits indicate the Driver strength value supported by 1.8V signaling bus speed modes. This field is meaningless for High speed mode as it uses 3.3V signaling.
+------------------------------
+<field_enc>:
+'h1: Driver Type A is selected
+'h0: Driver Type B is selected
+'h2: Driver Type C is selected
+'h3: Driver Type D is selected
+------------------------------
+<field_public_text>:
+These bits of the PRESET_HS_R register are reserved. They always return 0.
+------------------------------
+<field_public_text>:
+Clock Generator Select Value
+
+This bit is effective when Host Controller supports programmable clock generator.
+------------------------------
+<field_enc>:
+'h0: Host Controller Ver2.0 Compatible Clock Generator
+'h1: Programmable Clock Generator
+------------------------------
+<field_public_text>:
+SDCLK/RCLK Frequency Select Value
+
+10-bit preset value to be set in SDCLK/RCLK Frequency Select field of the Clock Control register described by a Host System.
+------------------------------
+<reg_short_dscr>:
+This register defines Preset Value for SDR12 and Legacy speed mode in SD and eMMC mode respectively.
+------------------------------
+<field_public_text>:
+Driver Strength Select Value
+
+These bits indicate the Driver strength value supported for the SDR12 bus speed mode. These bits are meaningless for 3.3V signaling.
+------------------------------
+<field_enc>:
+'h1: Driver Type A is selected
+'h0: Driver Type B is selected
+'h2: Driver Type C is selected
+'h3: Driver Type D is selected
+------------------------------
+<field_public_text>:
+These bits of the PRESET_SDR12_R register are reserved. They always return 0.
+------------------------------
+<field_public_text>:
+Clock Generator Select Value
+
+This bit is effective when Host Controller supports programmable clock generator
+------------------------------
+<field_enc>:
+'h0: Host Controller Ver2.0 Compatible Clock Generator
+'h1: Programmable Clock Generator
+------------------------------
+<field_public_text>:
+SDCLK/RCLK Frequency Select Value
+
+10-bit preset value to be set in SDCLK/RCLK Frequency Select field of the Clock Control register described by a Host System.
+------------------------------
+<reg_short_dscr>:
+This register defines Preset Value for SDR25 and High Speed SDR speed mode in SD and eMMC mode respectively.
+------------------------------
+<field_public_text>:
+Driver Strength Select Value
+
+These bits indicate the Driver strength value supported for the SDR25 bus speed mode. These bits are meaningless for 3.3V signaling.
+------------------------------
+<field_enc>:
+'h1: Driver Type A is selected
+'h0: Driver Type B is selected
+'h2: Driver Type C is selected
+'h3: Driver Type D is selected
+------------------------------
+<field_public_text>:
+These bits of the PRESET_SDR25_R register are reserved. They always return 0.
+------------------------------
+<field_public_text>:
+Clock Generator Select Value
+
+This bit is effective when Host Controller supports programmable clock generator.
+------------------------------
+<field_enc>:
+'h0: Host Controller Ver2.0 Compatible Clock Generator
+'h1: Programmable Clock Generator
+------------------------------
+<field_public_text>:
+SDCLK/RCLK Frequency Select Value
+
+10-bit preset value to be set in SDCLK/RCLK Frequency Select field of the Clock Control register described by a Host System.
+------------------------------
+<reg_short_dscr>:
+This register defines Preset Value for SDR50 speed mode in SD mode.
+------------------------------
+<field_public_text>:
+Driver Strength Select Value
+
+These bits indicate Driver strength value supported for SDR50 bus speed mode. These bits are meaningless for 3.3V signaling.
+------------------------------
+<field_enc>:
+'h1: Driver Type A is selected
+'h0: Driver Type B is selected
+'h2: Driver Type C is selected
+'h3: Driver Type D is selected
+------------------------------
+<field_public_text>:
+These bits of the PRESET_SDR50_R register are reserved. They always return 0.
+------------------------------
+<field_public_text>:
+Clock Generator Select Value
+
+This bit is effective when Host Controller supports programmable clock generator.
+------------------------------
+<field_enc>:
+'h0: Host Controller Ver2.0 Compatible Clock Generator
+'h1: Programmable Clock Generator
+------------------------------
+<field_public_text>:
+SDCLK/RCLK Frequency Select Value
+
+10-bit preset value to be set in SDCLK/RCLK Frequency Select field of the Clock Control register described by a Host System.
+------------------------------
+<reg_short_dscr>:
+This register defines Preset Value for SDR104 and HS200 speed modes in the SD and eMMC modes, respectively.
+------------------------------
+<field_public_text>:
+Driver Strength Select Value
+
+These bits indicate Driver strength value supported for SDR104 bus speed mode. These bits are meaningless for 3.3V signaling.
+------------------------------
+<field_enc>:
+'h1: Driver Type A is selected
+'h0: Driver Type B is selected
+'h2: Driver Type C is selected
+'h3: Driver Type D is selected
+------------------------------
+<field_public_text>:
+These bits of the PRESET_SDR104_R register are reserved. They always return 0.
+------------------------------
+<field_public_text>:
+Clock Generator Select Value
+
+This bit is effective when Host Controller supports programmable clock generator.
+------------------------------
+<field_enc>:
+'h0: Host Controller Ver2.0 Compatible Clock Generator
+'h1: Programmable Clock Generator
+------------------------------
+<field_public_text>:
+SDCLK/RCLK Frequency Select Value
+
+These bits specify a 10-bit preset value that must be set in the SDCLK/RCLK Frequency Select field of the Clock Control register described by a Host System.
+------------------------------
+<reg_short_dscr>:
+This register defines the Preset Value for DDR50 and High Speed DDR speed modes in the SD and eMMC modes, respectively.
+------------------------------
+<field_public_text>:
+Driver Strength Select Value
+
+These bits indicate Driver strength value supported for DDR50 bus speed mode. These bits are meaningless for 3.3V signaling.
+------------------------------
+<field_enc>:
+'h1: Driver Type A is selected
+'h0: Driver Type B is selected
+'h2: Driver Type C is selected
+'h3: Driver Type D is selected
+------------------------------
+<field_public_text>:
+These bits of the PRESET_DDR50_R register are reserved. They always return 0.
+------------------------------
+<field_public_text>:
+Clock Generator Select Value
+
+This bit is effective when Host Controller supports programmable clock generator.
+------------------------------
+<field_enc>:
+'h0: Host Controller Ver2.0 Compatible Clock Generator
+'h1: Programmable Clock Generator
+------------------------------
+<field_public_text>:
+SDCLK/RCLK Frequency Select Value
+
+These bits specify a 10-bit preset value that must be set in the SDCLK/RCLK Frequency Select field of the Clock Control register, as described by a Host System.
+------------------------------
+<reg_short_dscr>:
+This register is used to hold the preset value for UHS-II and HS400 speed modes in the SD and eMMC modes, respectively.
+------------------------------
+<field_public_text>:
+Driver Strength Select Value
+These bits indicate the Driver strength value supported by 1.8V signaling bus speed modes in the SD mode. This field is meaningless for UHS-II mode. In eMMC mode, these bits can be used for selecting
+the Drive strength value for HS400 mode.
+------------------------------
+<field_enc>:
+'h1: Driver Type A is selected
+'h0: Driver Type B is selected
+'h2: Driver Type C is selected
+'h3: Driver Type D is selected
+------------------------------
+<field_public_text>:
+These bits of UHS-II Preset register are reserved. They always return 0.
+------------------------------
+<field_public_text>:
+Clock Generator Select Value
+
+This bit is effective when the Host Controller supports a programmable clock generator.
+------------------------------
+<field_enc>:
+'h0: Host Controller Ver2.0 Compatible Clock Generator
+'h1: Programmable Clock Generator
+------------------------------
+<field_public_text>:
+SDCLK/RCLK Frequency Select Value
+
+These bits specify the 10-bit preset value that must be set in the SDCLK/RCLK Frequency Select field of the Clock Control register, as described by a Host System.
+------------------------------
+<reg_short_dscr>:
+This register holds the lower 32-bit Integrated Descriptor address.This register is applicable for an SD/eMMC/UHS-II mode.
+------------------------------
+<field_public_text>:
+ADMA Integrated Descriptor Address
+
+These bits indicate the lower 32-bit of the ADMA Integrated Descriptor address. The start address of Integrated Descriptor is set to these register bits. The ADMA3 fetches one Descriptor Address and
+increments these bits to indicate the next Descriptor address.
+------------------------------
+<reg_short_dscr>:
+This register holds the upper 32-bit Integrated Descriptor address.This register is applicable for an SD/eMMC/UHS-II mode.
+------------------------------
+<field_public_text>:
+ADMA Integrated Descriptor Address
+
+These bits indicate the higher 32 bit of the ADMA Integrated Descriptor address.
+------------------------------
+<reg_short_dscr>:
+This register points to the location of UHS-II embedded control registers.
+------------------------------
+<field_public_text>:
+These bits of the P_EMBEDDED_CNTRL register are reserved. They always return 0.
+------------------------------
+<field_public_text>:
+Offset Address of Embedded Control register.
+------------------------------
+<reg_short_dscr>:
+This register used as a pointer for the Vendor Specific Area 1.
+------------------------------
+<field_public_text>:
+These bits of the P_VENDOR_SPECIFIC_AREA register are reserved. They always return 0.
+------------------------------
+<field_public_text>:
+Base offset Address for Vendor-Specific registers.
+------------------------------
+<reg_short_dscr>:
+This register is used as a pointer for the Vendor Specific Area 2.
+------------------------------
+<field_public_text>:
+Base offset Address for Command Queuing registers.
+------------------------------
+<reg_short_dscr>:
+This register indicates the Interrupt status of each slot.
+------------------------------
+<field_public_text>:
+These bits of the SLOT_INTR_STATUS_R register are reserved. They always return 0.
+------------------------------
+<field_public_text>:
+Interrupt signal for each Slot      
+
+These status bits indicate the logical OR of Interrupt signal and Wakeup signal for each slot. A maximum of 8 slots can be defined. If one interrupt signal is associated with multiple slots, the Host
+Driver can identify the interrupt that is generated by reading these bits. By a power on reset or by setting Software Reset For All bit, the interrupt signals are deasserted and this status reads 00h.
+ - Bit 00: Slot 1
+ - Bit 01: Slot 2
+ - Bit 02: Slot 3
+ - .......... 
+ - .......... 
+ - Bit 07: Slot 8
+
+ Note: MSHC Host Controller support single card slot. This register shall always return 0.
+------------------------------
+<reg_short_dscr>:
+This register is used to indicate the Host Controller Version number.
+------------------------------
+<field_public_text>:
+Vendor Version Number              
+
+This field is reserved for the vendor version number. Host Driver must not use this status.
+------------------------------
+<field_public_text>:
+Specification Version Number 
+
+These bits indicate the Host controller specification version. The upper and lower 4-bits indicate the version. Values 0x06-0xFF are reserved.
+------------------------------
+<field_enc>:
+'h0: SD Host Controller Specification Version 1.00
+'h1: SD Host Controller Specification Version 2.00
+'h2: SD Host Controller Specification Version 3.00
+'h3: SD Host Controller Specification Version 4.00
+'h4: SD Host Controller Specification Version 4.10
+'h5: SD Host Controller Specification Version 4.20
+------------------------------
+<reggrp_short_dscr>:
+This register block defines embedded control registers
+------------------------------
+<reg_short_dscr>:
+This register controls the embedded device. When the Host Controller is connected to a removable device, this register is not used.
+------------------------------
+<field_public_text>:
+This bit (RSVD_31) of the EMBEDDED_CTRL_R register is reserved. It always returns 0.
+------------------------------
+<field_public_text>:
+Back-End Power Control (SD Mode)
+
+Each bit of this field controls back-end power supply for an embedded device.
+ - 0 - Back-End Power is off
+ - 1 - Back-End Power is supplied
+
+D24 - Back-End Power for Device 1
+
+D25 - Back-End Power for Device 2
+
+D26 - Back-End Power for Device 3
+
+D27 - Back-End Power for Device 4
+
+D28 - Back-End Power for Device 5
+
+D29 - Back-End Power for Device 6
+
+D30 - Back-End Power for Device 7
+------------------------------
+<field_public_text>:
+This bit (RSVD_23) of the EMBEDDED_CTRL_R register is reserved. It always returns 0.
+------------------------------
+<field_public_text>:
+Interrupt Pin Select
+
+These bits enable the interrupt pin inputs.
+ - 000 - Interrupts (INT_A,INT_B,INT_C) are disabled
+ - xx1 - INT_A is enabled
+ - x1x - INT_B is enabled
+ - 1xx - INT_C is enabled
+------------------------------
+<field_public_text>:
+This bit (RSVD_19) of the EMBEDDED_CTRL_R register is reserved. It always returns 0.
+------------------------------
+<field_public_text>:
+Clock Pin Select (SD Mode)
+
+This bit is selected by one of clock pin outputs.
+ - 0x0 - Clock pins are disabled
+ - 0x1 - CLK[1] is selected
+ - 0x2 - CLK[2] is selected
+ -  .      .  
+ -  .      .  
+ -  .      .  
+ - 0x7 - CLK[7] is selected
+------------------------------
+<field_public_text>:
+This bit (RSVD_15) of the EMBEDDED_CTRL_R register is reserved. It always returns 0.
+------------------------------
+<field_public_text>:
+Bus Width Preset (SD Mode)
+
+Each bit of this field specifies the bus width for each embedded device. The shared bus supports mixing of 4-bit and 8-bit bus width devices.
+ - D08 - Bus Width Preset for Device 1
+ - D09 - Bus Width Preset for Device 2
+ - D10 - Bus Width Preset for Device 3
+ - D11 - Bus Width Preset for Device 4
+ - D12 - Bus Width Preset for Device 5
+ - D13 - Bus Width Preset for Device 6
+ - D14 - Bus Width Preset for Device 7
+
+Function of each bit is defined as follows:
+ - 0 - 4-bit bus width mode
+ - 1 - 8-bit bus width mode
+------------------------------
+<field_public_text>:
+These bits (RSVD_7_6) of the EMBEDDED_CTRL_R register are reserved. They always return 0.
+------------------------------
+<field_public_text>:
+Number of Interrupt Input Pins
+
+This field indicates support of interrupt input pins for an embedded system.
+------------------------------
+<field_public_text>:
+This bit (RSVD_3) of the EMBEDDED_CTRL_R register is reserved. It always returns 0.
+------------------------------
+<field_public_text>:
+Number of Clock Pins (SD Mode)
+
+This field indicates support of clock pins to select one of devices for shared bus system. Up to 7 clock pins can be supported.
+ - 0x0 - Shared bus is not supported
+ - 0x1 - 1 SDCLK is supported
+ - 0x2 - 2 SDCLK is supported
+ -  .    . 
+ -  .    . 
+ -  .    . 
+ - 0x7 - 7 SDCLK is supported
+------------------------------
+<reggrp_short_dscr>:
+This register block defines Vendor-1 related registers
+------------------------------
+<reg_short_dscr>:
+This register reflects the current release number of DWC_mshc/DWC_mshc_lite.
+------------------------------
+<field_public_text>:
+Current release number
+
+This field indicates the Synopsys DesignWare Cores DWC_mshc/DWC_mshc_lite current release number that is read by an application.
+
+For example, release number "1.70a" is represented in ASCII as 0x313730. Lower 8 bits read from this register can be ignored by the application.
+
+An application reading this register in conjunction with the MSHC_VER_TYPE_R register, gathers details of the current release.
+------------------------------
+<reg_short_dscr>:
+This register reflects the current release type of DWC_mshc/DWC_mshc_lite.
+------------------------------
+<field_public_text>:
+Current release type
+
+This field indicates the Synopsys DesignWare Cores DWC_mshc/DWC_mshc_lite current release type that is read by an application. 
+
+For example, release type is "ga" is represented in ASCII as 0x6761. Lower 16 bits read from this register can be ignored by the application.
+
+An application reading this register in conjunction with the MSHC_VER_ID_R register, gathers details of the current release.
+------------------------------
+<reg_short_dscr>:
+This register is used to control the operation of MSHC Host Controller.
+------------------------------
+<field_public_text>:
+Internal clock gating disable control 
+
+This bit must be used to disable IP's internal clock gating when required. when disabled clocks are not gated. Clocks to the core (except hclk) must be stopped when programming this bit.
+------------------------------
+<field_enc>:
+'h1: Internal clock gating is disabled, clocks are not gated internally
+'h0: Internal clock gates are active and clock gating is controlled internally
+------------------------------
+<field_public_text>:
+These bits (RSVD1) of the MSHC_CTRL_R register are reserved. They always return 0.
+------------------------------
+<field_public_text>:
+Command conflict check 
+
+This bit enables command conflict check.
+
+Note: DWC_mshc controller monitors the CMD line whenever a command is issued and checks whether the value driven on sd_cmd_out matches the value on sd_cmd_in at next subsequent edge
+of cclk_tx to determine command conflict error. This bit is cleared only if the feed back delay (including IO Pad delay) is more than (t_card_clk_period - t_setup), where t_setup is the setup time of
+a flop in DWC_mshc. The I/O pad delay is consistent across CMD and DATA lines, and it is within the value:
+(2*t_card_clk_period - t_setup)
+------------------------------
+<field_enc>:
+'h1: Check for command conflict after 1 card clock cycle
+'h0: Disable command conflict check
+------------------------------
+<reg_short_dscr>:
+This register is used to select the valid burst types that the AHB Master bus interface can generate. 
+When more than one bit is set the master selects the burst it prefers among those that are enabled in this register.
+------------------------------
+<field_public_text>:
+Reserved field
+------------------------------
+<field_public_text>:
+INCR16 Burst 
+ Controls generation of INCR16 transfers on Master interface.
+------------------------------
+<field_enc>:
+'h0: AHB INCR16 burst type is not generated on Master I/F
+'h1: AHB INCR16 burst type can be generated on Master I/F
+------------------------------
+<field_public_text>:
+INCR8 Burst 
+ Controls generation of INCR8 transfers on Master interface.
+------------------------------
+<field_enc>:
+'h0: AHB INCR8 burst type is not generated on Master I/F
+'h1: AHB INCR8 burst type can be generated on Master I/F
+------------------------------
+<field_public_text>:
+INCR4 Burst 
+ Controls generation of INCR4 transfers on Master interface.
+------------------------------
+<field_enc>:
+'h0: AHB INCR4 burst type is not generated on Master I/F
+'h1: AHB INCR4 burst type can be generated on Master I/F
+------------------------------
+<field_public_text>:
+Undefined INCR Burst 
+ Controls generation of undefined length INCR transfer on Master interface.
+------------------------------
+<field_enc>:
+'h0: Undefined INCR type burst is the least preferred burst on AHB Master I/F
+'h1: Undefined INCR type burst is the most preferred burst on AHB Master I/F
+------------------------------
+<reg_short_dscr>:
+This register is used to control the eMMC operation.
+------------------------------
+<field_public_text>:
+These bits (RSVD) of the EMMC_CTRL_R register are reserved. They always return 0.
+------------------------------
+<field_public_text>:
+Output Enable control for EMMC Device Reset signal PAD control.
+
+This field drived sd_rst_n_oe output of DWC_mshc
+------------------------------
+<field_enc>:
+'h0: sd_rst_n_oe is 0
+'h1: sd_rst_n_oe is 1
+------------------------------
+<field_public_text>:
+EMMC Device Reset signal control.
+
+This register field controls the sd_rst_n output of DWC_mshc
+------------------------------
+<field_enc>:
+'h0: Reset to eMMC device asserted (active low)
+'h1: Reset to eMMC device is deasserted
+------------------------------
+<field_public_text>:
+Disable Data CRC Check
+
+This bit controls masking of CRC16 error for Card Write in eMMC mode. This is useful in bus testing (CMD19) for an eMMC device. In bus testing, an eMMC card does not send CRC status for a block, which may generate CRC error. This CRC error can be masked using this bit during bus testing.
+------------------------------
+<field_enc>:
+'h1: DATA CRC check is disabled
+'h0: DATA CRC check is enabled
+------------------------------
+<field_public_text>:
+eMMC Card present
+
+This bit indicates the type of card connected. An application program this bit based on the card connected to MSHC.
+------------------------------
+<field_enc>:
+'h1: Card connected to MSHC is an eMMC card
+'h0: Card connected to MSHC is a non-eMMC card
+------------------------------
+<reg_short_dscr>:
+This register is used to control the eMMC Boot operation.
+------------------------------
+<field_public_text>:
+Boot Ack Timeout Counter Value.
+
+This value determines the interval by which boot ack timeout (50 ms) is detected when boot ack is expected during boot operation.
+ - 0xF - Reserved
+ - 0xE - TMCLK x 2^27
+ - ..   - ............
+ - 0x1 - TMCLK x 2^14
+ - 0x0 - TMCLK x 2^13
+------------------------------
+<field_public_text>:
+These bits (RSVD_11_9) of the BOOT_CTRL_R register are reserved. They always return 0.
+------------------------------
+<field_public_text>:
+Boot Acknowledge Enable
+
+When this bit set, DWC_mshc checks for boot acknowledge start pattern of 0-1-0 during boot operation. This bit is applicable for both mandatory and alternate boot mode.
+------------------------------
+<field_enc>:
+'h0: Boot Ack disable
+'h1: Boot Ack enable
+------------------------------
+<field_public_text>:
+Validate Mandatory Boot Enable bit
+
+This bit is used to validate the MAN_BOOT_EN bit.
+------------------------------
+<field_enc>:
+'h0: Ignore Mandatory boot Enable bit
+'h1: Validate Mandatory boot enable bit
+------------------------------
+<field_public_text>:
+These bits (RSVD _6_1) of the BOOT_CTRL_R register are reserved. They always return 0.
+------------------------------
+<field_public_text>:
+Mandatory Boot Enable
+
+This bit is used to initiate the mandatory boot operation. The application sets this bit along with VALIDATE_BOOT bit. Writing 0 is ignored. The DWC_mshc clears this bit after the boot transfer is completed or terminated.
+------------------------------
+<field_enc>:
+'h0: Mandatory boot disable
+'h1: Mandatory boot enable
+------------------------------
+<reg_short_dscr>:
+This register controls some aspects of tuning and auto-tuning features. Do not program this register when HOST_CTRL2_R.SAMPLE_CLK_SEL is '1'
+------------------------------
+<field_public_text>:
+Sampling window threshold value setting
+
+The maximum value that can be set here depends on the length of delayline used for tuning. A delayLine with 128 taps can use values from 0x0 to 0x7F.
+
+This field is valid only when SWIN_TH_EN is '1'. Should be programmed only when SAMPLE_CLK_SEL is '0' 
+     - 0x0 - Threshold values is 0x1, windows of length 1 tap and above can be selected as sampling window.
+     - 0x1 - Threshold values is 0x2, windows of length 2 taps and above can be selected as sampling window.
+     - 0x2 - Threshold values is 0x1, windows of length 3 taps and above can be selected as sampling window.
+     - ........ 
+     - 0x7F - Threshold values is 0x1, windows of length 127 taps and above can be selected as sampling window.
+------------------------------
+<field_public_text>:
+Time taken for phase switching and stable clock output.
+ 
+Specifies the maximum time (in terms of cclk cycles) that the delay line can take to switch its output phase after a change in tuning_cclk_sel or autotuning_cclk_sel.
+------------------------------
+<field_enc>:
+'h0: Less than 1-cycle latency
+'h1: Less than 2-cycle latency
+'h2: Less than 3-cycle latency
+'h3: Less than 4-cycle latency
+------------------------------
+<field_public_text>:
+Maximum Latency specification between cclk_tx and cclk_rx.
+------------------------------
+<field_enc>:
+'h0: Less than 1-cycle latency
+'h1: Less than 2-cycle latency
+'h2: Less than 3-cycle latency
+'h3: Less than 4-cycle latency
+------------------------------
+<field_public_text>:
+Clock stopping control for Tuning and auto-tuning circuit. 
+
+When enabled, clock gate control output of DWC_mshc (clk2card_on) is pulled low before changing phase select codes on tuning_cclk_sel and autotuning_cclk_sel. This effectively stops the Device/Card
+clock, cclk_rx and also drift_cclk_rx. Changing phase code when clocks are stopped ensures glitch free phase switching. Set this bit to 0 if the PHY or delayline can guarantee glitch free switching.
+------------------------------
+<field_enc>:
+'h0: Clocks not stopped. PHY ensures glitch free phase switching.
+'h1: Clocks stopped during phase code change
+------------------------------
+<field_public_text>:
+These bits (RSVD3) of the AT_CTRL_R register are reserved. They always return 0.
+------------------------------
+<field_public_text>:
+These bits (RSVD2) of the AT_CTRL_R register are reserved. They always return 0.
+------------------------------
+<field_public_text>:
+This fields enables software-managed tuning flow.
+------------------------------
+<field_enc>:
+'h0: Software-managed tuning disabled.
+'h1: Software-managed tuning enabled. AT_STAT_R.CENTER_PH_CODE Field is now writable.
+------------------------------
+<field_public_text>:
+Framing errors are not generated when executing tuning. This debug bit allows users to report these errors.
+------------------------------
+<field_enc>:
+'h1: Debug mode for reporting framing errors
+'h0: Default mode where as per SD-HCI no errors are reported.
+------------------------------
+<field_public_text>:
+Sampling window Threshold enable 
+
+Selects the tuning mode 
+
+Field should be programmed only when SAMPLE_CLK_SEL is '0'
+------------------------------
+<field_enc>:
+'h0: Tuning engine sweeps all taps and settles at the largest window
+'h1: Tuning engine selects the first complete sampling window that meets the threshold set by SWIN_TH_VAL field
+------------------------------
+<reg_short_dscr>:
+Register to read the Center, Left and Right codes used by tuning and auto-tuning engines. Center code field is also used for software managed tuning.
+------------------------------
+<field_public_text>:
+These bits of the AT_STAT_R register are reserved. They always return 0.
+------------------------------
+<field_public_text>:
+Left Edge Phase code. Reading this field returns the phase code value used by Auto-tuning engine to sample data on Left edge of sampling window.
+------------------------------
+<field_public_text>:
+Right Edge Phase code. Reading this field returns the phase code value used by Auto-tuning engine to sample data on Right edge of sampling window.
+------------------------------
+<field_public_text>:
+Centered Phase code. Reading this field returns the current value on tuning_cclk_sel output. Setting AT_CTRL_R.SW_TUNE_EN enables software to write to this field and its contents are reflected on tuning_cclk_sel.
+------------------------------
+<reggrp_short_dscr>:
+This register block defines Vendor-2 related registers
+------------------------------
+<reg_short_dscr>:
+This register indicates the capabilities of the command queuing engine.
+------------------------------
+<field_public_text>:
+These bits [31:29] of the CQCAP register are reserved. They always return 0.
+------------------------------
+<field_public_text>:
+Crypto Support
+    
+This bit indicates whether the Host Controller supports cryptographic operations.
+------------------------------
+<field_enc>:
+'h0: Crypto not Supported
+'h1: Crypto Supported
+------------------------------
+<field_public_text>:
+These bits [27:16] of the CQCAP register are reserved. They always return 0.
+------------------------------
+<field_public_text>:
+Internal Timer Clock Frequency Multiplier (ITCFMUL)
+This field indicates the frequency of the clock used for interrupt coalescing timer and for
+determining the SQS polling period. See ITCFVAL definition for details. Values 0x5 to 0xF are reserved.
+------------------------------
+<field_enc>:
+'h2: 100KHz clock
+'h1: 10KHz clock
+'h4: 10MHz clock
+'h0: 1KHz clock
+'h3: 1MHz clock
+------------------------------
+<field_public_text>:
+These bits of the CQCAP register are reserved. They always return 0.
+------------------------------
+<field_public_text>:
+Internal Timer Clock Frequency Value (ITCFVAL)
+This field scales the frequency of the timer clock provided by ITCFMUL. The Final clock frequency of actual timer clock is calculated as ITCFVAL* ITCFMUL.
+------------------------------

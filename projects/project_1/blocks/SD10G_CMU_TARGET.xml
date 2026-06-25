@@ -1,0 +1,449 @@
+=== DOCUMENTATION FOR TARGET: SD10G_CMU_TARGET ===
+
+<reggrp_short_dscr>:
+Register group for register 0x00
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Simulation speed up mode enable.0: no speed up.1: speed up. Note loss of lock related functions will not be speed up.
+------------------------------
+<reggrp_short_dscr>:
+Register group for registers 0x05 to 0x15
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+1: enable reference clock buffer.0: power down reference clock buffer.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Enable forced VCO calibration value. When set to 1 the value in CFG_VCO_BYP_CTUNE_3_0 is used.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Forced value for VCO calibration. Value is bit-inverted compared to the value in READ_VCO_CTUNE_3_0. Active when CFG_VCO_CAL_BYP is set to 1.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal..
+------------------------------
+<field_public_text>:
+Internal use signal..
+------------------------------
+<field_public_text>:
+1: enable PLL clock output buffers to the left hand side of common block. PLL clock will output to the left at lower set of clock routing in TX/RX lane.0: disable PLL clock output buffers to the left.
+------------------------------
+<field_public_text>:
+1: enable PLL clock output buffers to the right hand side of common block. PLL clock will output to the right at upper set of clock routing in TX/RX lane.0: disable PLL clock output buffers to the right.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+VCO sub-rate divided ratio.000: /1001: /2010: /41: enable PLL clock output buffers to the right hand side of common block. PLL clock will output to the right at upper set of clock routing in TX/RX lane.0: disable PLL clock output buffers to the right.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Charge pump base current coarse-tune.
+------------------------------
+<field_public_text>:
+VCO bias current setting.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Charge pump current fine-tune.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Reserved.
+------------------------------
+<field_public_text>:
+Reserved.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Fine tune the swing of ssc refclk swing.
+------------------------------
+<field_public_text>:
+Fine tune bias current for refclk ssc PI.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Reserved.
+------------------------------
+<field_public_text>:
+Fine tune the swing of pll distributed clock.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Fine tune swing of PLL clock buffer.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+reference current/voltage fine-tune control. +/- 2.5% increase/decrease code per step.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+PLL multiplying factor(Fref*N):00000: 64.00001: 66.00010: 80.00011: 100.00100: 120.01011: 400.01100: 480.10100: 240.
+------------------------------
+<reggrp_short_dscr>:
+Register group for register 0x17
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Reserved.
+------------------------------
+<field_public_text>:
+Reserved.
+------------------------------
+<reggrp_short_dscr>:
+Register group for registers 0x1A to 0x1C
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+REFCLKP/REFCLKN termination resistor enable.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Reserved
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Reserved
+------------------------------
+<reggrp_short_dscr>:
+Register group for registers 0x1F to 0x26
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+0: All bias are reference to internal BG resistor.1: Some bias currents are reference to external 10K BG resistor.
+------------------------------
+<field_public_text>:
+Enable BG bias current source (20 lines) from common block to the right hand side of TX/RX lane. Enable the desired current source from one common block only. If more than 1 common block are used and both enabled for this bit, bias current will be almost twice to the TX/RX lane which will cause function improperly.
+------------------------------
+<field_public_text>:
+Enable BG bias current source (20 lines) from common block to the left hand side of TX/RX lane. Enable the desired current source from one common block only. If more than 1 common block are used and both enabled for this bit, bias current will be almost twice to the TX/RX lane which will cause function improperly.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+For TX lane to lane skew requirement, if more than 5 lanes in one side of CMU to share the same TX clock transmission line, then insert common block in between and activate TX clock buffer/repeater inside this common block with this bit set to '1'. Refer to "IGPSERT15A_configuration_application_note.docx"
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reggrp_short_dscr>:
+Register group for registers 0x30 to 0x38
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+PLL lol (loss of lock) status output enable
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+PLL loss of lock deassert timing.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+PLL loss of lock deassert timing.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+PLL loss of lock assert timing.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+PLL loss of lock assert timing.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+PLL loss of lock deassert dppm control.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+PLL loss of lock deassert dppm control.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+PLL loss of lock assert dppm control.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+PLL loss of lock assert dppm control.
+------------------------------
+<reggrp_short_dscr>:
+Register group for registers 0x42 to 0x47
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+T1 in Figure 3.2-1 (reset scheme).00: 30t01: 10000t10: 20000t11: 30000t
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Reset signal for pll, low active.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Reset tree buffer power down control selection.0 : Configuration registers1 : internal circuit.
+------------------------------
+<field_public_text>:
+The source of cfg_bias_dn_en/ cfg_bias_dn_en selection0 : configuration register1 : hwt_bias_dn_en / hwt_bias_up_en
+------------------------------
+<field_public_text>:
+The source of link_buf_en selection0 : configuration register1 : hwt_link_buf_en
+------------------------------
+<field_public_text>:
+Reserved.
+------------------------------
+<field_public_text>:
+The source of hwt_refck_* control signals  selection0 : configuration register1 : configuration from pins:hwt_refck_ssc_en,   hwt_refck_ssc_resetb   hwt_refck_center_spreading   hwt_refck_mcntMaxVal[4:0]   hwt_refck_ncntMaxVal[10:0]   hwt_refck_ssc_pi_bw[2:0]   hwt_refck_ssc_pi_step[1:0]   hwt_refck_ssc_rtl_clk_sel
+------------------------------
+<field_public_text>:
+Reserved
+------------------------------
+<field_public_text>:
+Data width/data rate/termination resistor of reference clock control from register or hardware pin.0: cfg control 1: pcs2pma_phymode[[4:0],hwt_cfg_sel_div[4:0]hwt_vco_sel_div[2:0]hwt_refck_r_en
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+5'b00_0000
+------------------------------
+<reggrp_short_dscr>:
+Register group for registers 0xE0 to 0xE1
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Loss of lock of PLL
+------------------------------
+<field_public_text>:
+Result of VCO calibration.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Reserved.
+------------------------------

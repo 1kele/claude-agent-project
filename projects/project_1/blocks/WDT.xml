@@ -1,0 +1,257 @@
+=== DOCUMENTATION FOR TARGET: WDT ===
+
+<reg_short_dscr>:
+Control Register
+Reset Value: Register fields WDT_DFLT_RPL (3 bits), WDT_DFLT_RMOD (1 bit) and WDT_ALWAYS_EN (1 bit)
+------------------------------
+<field_public_text>:
+Redundant R/W bit. Included for ping test purposes, as it is the only R/W register bit that is in every configuration of the DW_apb_wdt.
+------------------------------
+<field_public_text>:
+Reset pulse length.
+Writes have no effect when the configuration parameter WDT_HC_RPL is 1, making the register bits read-only. This is used to select
+the number of pclk cycles for which the system reset stays asserted. The range of values available is 2 to 256 pclk cycles.
+Reset Value: WDT_DFLT_RPL
+Note: When
+WDT_SYNC_CLK_MOPE_ENABLE = 1, the total reset pulse length also includes the reset synchronization delay and the time taken for pclk to be made available. For details, refer to "System Resets" section of DW_apb_wdt Databook.
+------------------------------
+<field_enc>:
+0x6: 128 pclk cycles
+0x3: 16  pclk cycles
+0x0: 2   pclk cycles
+0x7: 256 pclk cycles
+0x4: 32  pclk cycles
+0x1: 4   pclk cycles
+0x5: 64  pclk cycles
+0x2: 8   pclk cycles
+------------------------------
+<field_public_text>:
+Response mode.
+ Writes have no effect when the parameter WDT_HC_RMOD = 1, thus this register becomes read-only. Selects the output response generated to a timeout.
+Reset Value: WDT_DFLT_RMOD
+------------------------------
+<field_enc>:
+0x1: First generate an interrupt and even if it is cleared by the time a second timeout occurs then generate a system reset
+0x0: Generate a system reset
+------------------------------
+<field_public_text>:
+WDT enable.
+ When the configuration parameter WDT_ALWAYS_EN = 0, this bit can be set; otherwise, it is read-only. This bit is used to enable and disable the DW_apb_wdt. When disabled, the counter does not decrement. Thus, no interrupts or system resets are generated.
+ The DW_apb_wdt is used to prevent system lock-up. To prevent a software bug from disabling the DW_apb_wdt, once this bit has been enabled, it can be cleared only by a system reset.
+Reset Value: WDT_ALWAYS_EN
+------------------------------
+<field_enc>:
+0x0: Watchdog timer disabled
+0x1: Watchdog timer enabled
+------------------------------
+<reg_short_dscr>:
+Timeout Range Register
+Reset Value: WDT_TOP_RST
+------------------------------
+<field_public_text>:
+WDT_TORR[31:24] Reserved and read as zero (0).
+------------------------------
+<field_public_text>:
+Timeout period.
+ Writes have no effect when the configuration parameter WDT_HC_TOP = 1, thus making this register read-only. This field is used to select the timeout period from which the watchdog counter restarts. A change of the timeout period takes effect only after the next counter restart (kick).
+ The range of values is limited by the WDT_CNT_WIDTH. If TOP is programmed to select a range that is greater than the counter width, the timeout period is truncated to fit to the counter width. This affects only the non-user specified values as users are limited to these boundaries during configuration.
+ The range of values available for a 32-bit watchdog counter are:
+
+          Where i = TOP and t = timeout period 
+
+          For i = 0 to 15 
+
+            if WDT_USE_FIX_TOP==1 
+
+              t = 2(16 + i) 
+ 
+            else 
+
+              t = WDT_USER_TOP_(i) 
+
+Reset Value: WDT_DFLT_TOP
+------------------------------
+<field_enc>:
+0x0: Time out of WDT_USER_TOP_0 or 64K Clocks
+0xa: Time out of WDT_USER_TOP_10 or 64M Clocks
+0xb: Time out of WDT_USER_TOP_11 or 128M Clocks
+0xc: Time out of WDT_USER_TOP_12 or 256M Clocks
+0xd: Time out of WDT_USER_TOP_13 or 512M Clocks
+0xe: Time out of WDT_USER_TOP_14 or 1G Clocks
+0xf: Time out of WDT_USER_TOP_15 or 2G Clocks
+0x1: Time out of WDT_USER_TOP_1 or 128K Clocks
+0x2: Time out of WDT_USER_TOP_2 or 256K Clocks
+0x3: Time out of WDT_USER_TOP_3 or 512K Clocks
+0x4: Time out of WDT_USER_TOP_4 or 1M Clocks
+0x5: Time out of WDT_USER_TOP_5 or 2M Clocks
+0x6: Time out of WDT_USER_TOP_6 or 4M Clocks
+0x7: Time out of WDT_USER_TOP_7 or 8M Clocks
+0x8: Time out of WDT_USER_TOP_8 or 16M Clocks
+0x9: Time out of WDT_USER_TOP_9 or 32M Clocks
+------------------------------
+<reg_short_dscr>:
+Current Counter Value Register.
+Reset Value: WDT_CNT_RST
+------------------------------
+<field_public_text>:
+WDT Current Counter Value Register.
+ This register, when read, is the current value of the internal counter. This value is read coherently whenever it is read, which is relevant when the APB_DATA_WIDTH is less than the counter width.
+Reset Value: WDT_CNT_RST
+------------------------------
+<reg_short_dscr>:
+Counter Restart Register
+Reset Value: 0x0
+------------------------------
+<field_public_text>:
+Counter Restart Register.
+ This register is used to restart the WDT counter. As a safety feature to prevent accidental restarts, the value 0x76 must be written. A restart also clears the WDT interrupt. Reading this register returns zero.
+Reset Value: 0
+------------------------------
+<field_enc>:
+0x76: Watchdog timer restart command
+------------------------------
+<reg_short_dscr>:
+Interrupt Status Register
+Reset Value: 0x0
+------------------------------
+<field_public_text>:
+Interrupt status register
+ This register shows the interrupt status of the WDT.
+Reset Value  0
+------------------------------
+<field_enc>:
+0x1: Interrupt is active regardless of polarity
+0x0: Interrupt is inactive
+------------------------------
+<reg_short_dscr>:
+Interrupt Clear Register
+Reset Value: 0x0
+------------------------------
+<field_public_text>:
+Interrupt Clear Register.
+ Clears the watchdog interrupt. This can be used to clear the interrupt without restarting the watchdog counter.
+Reset Value: 0
+------------------------------
+<reg_short_dscr>:
+Component Parameters Register 5
+Note: This is a constant read-only register that contains encoded information about the component's parameter settings. The reset value depends on coreConsultant parameter(s).
+------------------------------
+<field_public_text>:
+Upper limit of Timeout Period parameters. The value of this register is derived from the WDT_USER_TOP_* coreConsultant parameters.
+------------------------------
+<reg_short_dscr>:
+Component Parameters Register 4
+Note: This is a constant read-only register that contains encoded information about the component's parameter settings. The reset value depends on coreConsultant parameter(s).
+------------------------------
+<field_public_text>:
+Upper limit of Initial Timeout Period parameters. The value of this register is derived from the WDT_USER_TOP_INIT_* coreConsultant parameters.
+------------------------------
+<reg_short_dscr>:
+Component Parameters Register 3
+Note: This is a constant read-only register that contains encoded information about the component's parameter settings. The reset value depends on coreConsultant parameter(s).
+------------------------------
+<field_public_text>:
+The value of this register is derived from the WDT_TOP_RST coreConsultant parameter.
+------------------------------
+<reg_short_dscr>:
+Component Parameters Register 2
+Note: This is a constant read-only register that contains encoded information about the component's parameter settings. The reset value depends on coreConsultant parameter(s).
+------------------------------
+<field_public_text>:
+The value of this register is derived from the WDT_RST_CNT coreConsultant parameter.
+------------------------------
+<reg_short_dscr>:
+Component Parameters Register 1
+Note:This is a constant read-only register that contains encoded information about the component's parameter settings. Some of the reset values depend on coreConsultant parameter(s).
+Reset Value:  Configuration dependent
+------------------------------
+<field_public_text>:
+The Watchdog Timer counter width.
+------------------------------
+<field_public_text>:
+Describes the initial timeout period that is available directly after reset.  It controls the reset value of the register. If WDT_HC_TOP is 1, then the default initial time period is the only possible period.
+------------------------------
+<field_public_text>:
+Selects the timeout period that is available directly after reset. It controls the reset value of the register. If WDT_HC_TOP is set to 1, then the default timeout period is the only possible timeout period. Can choose one of 16 values.
+------------------------------
+<field_public_text>:
+The reset pulse length that is available directly after reset.
+------------------------------
+<field_public_text>:
+Width of the APB Data Bus to which this component is attached.
+------------------------------
+<field_enc>:
+0x1: APB data width is 16 bits
+0x2: APB data width is 32 bits
+0x0: APB data width is 8 bits
+------------------------------
+<field_public_text>:
+Configures the peripheral to have a pause enable signal (pause) on the interface that can be used to freeze the watchdog counter during pause mode.
+------------------------------
+<field_enc>:
+0x0: Pause enable signal is non existent
+0x1: Pause enable signal is included
+------------------------------
+<field_public_text>:
+When this parameter is set to 1, timeout period range is fixed. The range increments by the power of 2 from 2^16 to 2^(WDT_CNT_WIDTH-1). When this parameter is set to 0, the user must define the timeout period range (2^8 to 2^(WDT_CNT_WIDTH)-1) using the WDT_USER_TOP_(i) parameter.
+------------------------------
+<field_enc>:
+0x1: Use predefined timeout values
+0x0: User must define timeout values
+------------------------------
+<field_public_text>:
+When set to 1, the selected timeout period(s) is set to be hard coded.
+------------------------------
+<field_enc>:
+0x1: Timeout period is hard coded
+0x0: Timeout period is programmable
+------------------------------
+<field_public_text>:
+Configures the reset pulse length to be hard coded.
+------------------------------
+<field_enc>:
+0x1: Reset pulse length is hardcoded
+0x0: Reset pulse length is programmable
+------------------------------
+<field_public_text>:
+Configures the output response mode to be hard coded.
+------------------------------
+<field_enc>:
+0x1: Output response mode is hard coded
+0x0: Output response mode is programmable
+------------------------------
+<field_public_text>:
+When set to 1, includes a second timeout period that is used for initialization prior to the first kick.
+------------------------------
+<field_enc>:
+0x0: Second timeout period is not present
+0x1: Second timeout period is present
+------------------------------
+<field_public_text>:
+Describes the output response mode that is available directly after reset. Indicates the output response the WDT gives if a zero count is reached; that is, a system reset if equals 0 and an interrupt followed by a system reset, if equals 1. If WDT_HC_RMOD is 1, then default response mode is the only possible output response mode.
+------------------------------
+<field_enc>:
+0x0: System reset only
+0x1: Interrupt and system reset
+------------------------------
+<field_public_text>:
+Configures the WDT to be enabled from reset. If this setting is 1, the WDT is always enabled and a write to the WDT_EN field (bit 0) of the Watchdog Timer Control Register (WDT_CR) to disable it has no effect.
+------------------------------
+<field_enc>:
+0x0: Watchdog timer disabled on reset
+0x1: Watchdog timer enabled on reset
+------------------------------
+<reg_short_dscr>:
+Component Version Register
+Reset Value: WDT_VERSION_ID
+------------------------------
+<field_public_text>:
+ASCII value for each number in the version, followed by *. For example, 32_30_31_2A represents the version 2.01*.
+------------------------------
+<reg_short_dscr>:
+Component Type Register
+ Reset Value: WDT_PERIPHERAL_ID
+------------------------------
+<field_public_text>:
+Designware Component Type number = 0x44_57_01_20. This assigned unique hex value is constant, and is derived from the two ASCII letters "DW" followed by a 16-bit unsigned number.
+------------------------------

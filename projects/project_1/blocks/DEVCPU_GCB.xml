@@ -1,0 +1,955 @@
+=== DOCUMENTATION FOR TARGET: DEVCPU_GCB ===
+
+<target_short_dscr>:
+General Configuration Block
+------------------------------
+<reg_short_dscr>:
+Chip ID register
+------------------------------
+<field_public_text>:
+Revision ID : Chip revision starting from 0.
+------------------------------
+<field_public_text>:
+Part ID: Part ID for identification of Microchip chips.
+------------------------------
+<field_public_text>:
+Manufacturer ID.
+------------------------------
+<field_public_text>:
+Always 1.
+------------------------------
+<reg_short_dscr>:
+General purpose register
+------------------------------
+<field_public_text>:
+General purpose register for software development.
+------------------------------
+<reg_short_dscr>:
+Reset control register
+------------------------------
+<field_public_text>:
+Set this field to reset the switch core (everything except the SERDES IO and PLL blocks.) This field is automatically cleared by the reset.
+Note: It is possible for the VCore to protect itself from this soft-reset, for more info see ICPU_CFG::RESET.CORE_RST_PROTECT.
+------------------------------
+<field_public_text>:
+Set this field to reset the whole chip. This field is automatically cleared by the reset.
+Note: It is possible for the VCore to protect itself from this soft-reset, for more info see ICPU_CFG::RESET.CORE_RST_PROTECT.
+------------------------------
+<reg_short_dscr>:
+Various status indications
+------------------------------
+<field_public_text>:
+PLL0_CONF strapping value from GPIOs sampled after reset release.
+------------------------------
+<reg_short_dscr>:
+Additional configuration of SGPIO signal detect
+------------------------------
+<field_public_text>:
+Select configurable mapping of SGPIOs to front port signal detect.
+To configure the mapping see SGPIO_TO_SD_SEL.
+This mapping may be overriden by DEVCPU_GCB::GPIO_SD_MAP.
+------------------------------
+<reg_short_dscr>:
+SGPIO to Signal Detect map
+------------------------------
+<field_public_text>:
+Select which SGPIO provides the Signal Detect for this port.
+This mapping is enabled with SD_MAP_SEL.
+------------------------------
+<reg_short_dscr>:
+SGPIO to SerDes Signal Detect map
+------------------------------
+<field_public_text>:
+Select which SGPIO provides the Signal Detect for this SerDes.
+------------------------------
+<reggrp_short_dscr>:
+Serial interface registers
+------------------------------
+<reg_short_dscr>:
+Physical interface control
+------------------------------
+<field_public_text>:
+This register configures critical interface parameters, it is constructed so that it can always be written correctly no matter the current state of the interface. When initializing a physical interface, then this is the first register that must be written, the state of the interface at that point may be unknown and therefore the following scheme is required to bring the interface to a known state:
+When writing a 4-bit value to this field construct a 32-bit data-word as follows: a) copy the 4-bit value into bits 3:0, 11:8, 19:16, and 27:24. b) reverse the 4-bit value and copy into bits 7:4, 15:12, 23:20, and 31:28. Example: To write the value 2 to this field; the 32-bit data-word to write is "0x42424242".
+Bit 0 configures endianness, 0:Little-Endian, 1:Big-Endian (default).
+Bit 1 configures bit-order, 0:MSB-first (default), 1:LSB-first.
+Bit 2,3 are reserved and should be kept 0.
+------------------------------
+<reg_short_dscr>:
+Physical interface configuration and status
+------------------------------
+<field_public_text>:
+SI interface: This field is set if the SI interface has read data from device before it was ready (this can happen if the SI frequency is too high or when too few padding bytes has been specified).
+------------------------------
+<field_public_text>:
+SI interface: This is the number of padding bytes to insert before read-data is shifted out of the device.This is needed when using high serial interface frequencies. Minimum value is 1.
+------------------------------
+<reggrp_short_dscr>:
+Mapping configuration of shared slave-select of serial interfaces
+------------------------------
+<reg_short_dscr>:
+Set mapping of slave select
+------------------------------
+<field_public_text>:
+Each bit corresponds to a shared slave-select. Multiple bits may be cleared for broadcasting. The final slave-select mapping depends on the following configurations:
+
+DEVCPU_GCB:SI_SS_MAP:SPI_MASTER_SS0_MASK
+DEVCPU_GCB:SI_SS_MAP:SPI_MASTER_SS1_MASK
+DEVCPU_GCB:SI_SS_MAP:SPI_MASTER_SS2_MASK
+DEVCPU_GCB:SI_SS_MAP:SPI_MASTER_SS3_MASK
+DEVCPU_GCB:SI_SS_MAP:SI_SLV_SS_MASK
+CPU:CPU_REGS:SS_FORCE
+SIMC:SSI:SER
+------------------------------
+<field_enc>:
+one-cold encoding
+------------------------------
+<reg_short_dscr>:
+Set mapping of slave select
+------------------------------
+<field_public_text>:
+Each bit corresponds to a shared slave-select. Multiple bits may be cleared for broadcasting. The final slave-select mapping depends on the following configurations:
+
+DEVCPU_GCB:SI_SS_MAP:SPI_MASTER_SS0_MASK
+DEVCPU_GCB:SI_SS_MAP:SPI_MASTER_SS1_MASK
+DEVCPU_GCB:SI_SS_MAP:SPI_MASTER_SS2_MASK
+DEVCPU_GCB:SI_SS_MAP:SPI_MASTER_SS3_MASK
+DEVCPU_GCB:SI_SS_MAP:SI_SLV_SS_MASK
+CPU:CPU_REGS:SS_FORCE
+SIMC:SSI:SER
+------------------------------
+<field_enc>:
+one-cold encoding
+------------------------------
+<reg_short_dscr>:
+Set mapping of slave select
+------------------------------
+<field_public_text>:
+Each bit corresponds to a shared slave-select. Multiple bits may be cleared for broadcasting. The final slave-select mapping depends on the following configurations:
+
+DEVCPU_GCB:SI_SS_MAP:SPI_MASTER_SS0_MASK
+DEVCPU_GCB:SI_SS_MAP:SPI_MASTER_SS1_MASK
+DEVCPU_GCB:SI_SS_MAP:SPI_MASTER_SS2_MASK
+DEVCPU_GCB:SI_SS_MAP:SPI_MASTER_SS3_MASK
+DEVCPU_GCB:SI_SS_MAP:SI_SLV_SS_MASK
+CPU:CPU_REGS:SS_FORCE
+SIMC:SSI:SER
+------------------------------
+<field_enc>:
+one-cold encoding
+------------------------------
+<reg_short_dscr>:
+Set mapping of slave select
+------------------------------
+<field_public_text>:
+Each bit corresponds to a shared slave-select. Multiple bits may be cleared for broadcasting. The final slave-select mapping depends on the following configurations:
+
+DEVCPU_GCB:SI_SS_MAP:SPI_MASTER_SS0_MASK
+DEVCPU_GCB:SI_SS_MAP:SPI_MASTER_SS1_MASK
+DEVCPU_GCB:SI_SS_MAP:SPI_MASTER_SS2_MASK
+DEVCPU_GCB:SI_SS_MAP:SPI_MASTER_SS3_MASK
+DEVCPU_GCB:SI_SS_MAP:SI_SLV_SS_MASK
+CPU:CPU_REGS:SS_FORCE
+SIMC:SSI:SER
+------------------------------
+<field_enc>:
+one-cold encoding
+------------------------------
+<reg_short_dscr>:
+Set mapping of slave select
+------------------------------
+<field_public_text>:
+Select which slave-select to use when the SI slave owns the GPIO-mapped serial interface. When the SI slave owns the dedicated serial interface, then the dedicated slave-select is always used.
+------------------------------
+<field_enc>:
+one-cold encoding
+------------------------------
+<reggrp_short_dscr>:
+Registers for accessing the VCore
+------------------------------
+<reg_short_dscr>:
+Control register for VCore accesses
+------------------------------
+<field_public_text>:
+If the VCore access logic detects an error this field is set based on the nature of the error. This is a read-only field which is cleared by the VCore access logic when a new access is (sucessfully) accepted.
+------------------------------
+<field_enc>:
+0: No errors detected.
+1: SBA not ready when accessed.
+2: SBA reported error.
+3: DATA or ADDR written during active access.
+------------------------------
+<field_public_text>:
+This field is set to the value of VA_CTRL.VA_BUSY whenever one of the data registers VA_DATA, VA_DATA_INCR, or VA_DATA_RO is read. By examining this field it is possible to determine if VA_BUSY was set at the time a read from one of these registers was performed.
+------------------------------
+<field_public_text>:
+This field is set by hardware when an access into VCore domain is started, and cleared when the access is done.
+------------------------------
+<reg_short_dscr>:
+Least significant 32-bit Address register for VCore accesses
+------------------------------
+<field_public_text>:
+The address to access in the VCore domain, all addresses must be 32-bit aligned (i.e. the two least significant bit must always be 0).
+When accesses are initiated using the VA_DATA_INCR register, then this field is autoincremented by 4 at the end of the transfer.
+The memory region of the VCore that maps to switch-core registers may not be accessed by using these registers.
+------------------------------
+<reg_short_dscr>:
+Most significant 32-bit Address register for VCore accesses
+------------------------------
+<field_public_text>:
+Most significant 4-bits of Vcore  Address to be accessed by this register.
+------------------------------
+<field_enc>:
+To perform a 36-bit Vcore Access, first write into the address registers LSB, MSB followed by VA_DATA/VA_DATA_INCR/VA_DATA_INERT registers.
+------------------------------
+<reg_short_dscr>:
+Data register for VCore accesses
+------------------------------
+<reg_public_text>:
+The VA_DATA, VA_DATA_INCR, and VA_DATA_INERT registers are used for indirect access into the VCore domain. The functionality of the VA_DATA_INCR and VA_DATA_INERT registers are similar to this register - but with minor exceptions. These exceptions are fleshed out in the description of the respective registers.
+------------------------------
+<field_public_text>:
+Reading or writing from/to this field initiates accesses into the VCore domain. While an access is ongoing (VA_CTRL.VA_BUSY is set) this field may not be written. It is possible to read this field while an access is ongoing, but the data returned will be 0x80000000.
+When writing to this field; a write into the VCore domain is initiated to the address specified in the VA_ADDR register, with the data that was written to this field. Only 32-bit writes are supported. This field may not be written to until the VA_CTRL.VA_BUSY indicates that no accesses is ongoing.
+When reading from this field; a read from the VCore domain is initiated from the address specified in the VA_ADDR register. Important: The data that is returned from reading this field (and stating an access) is not the result of the newly initiated read, instead the data from the last access is returned. The result of the newly initiated read access will be ready once the VA_CTRL.VA_BUSY field shows that the access is done.
+Note: When the result of a read-access is read from this field (the second read), a new access will automatically be intiated. This is desirable when reading a series of addresses from VCore domain. If a new access is not desirable, then the result should be read from the VA_DATA_INERT register instead of this field!
+------------------------------
+<reg_short_dscr>:
+Data register for VCore accesses (w. auto increment of address)
+------------------------------
+<field_public_text>:
+This field behaves in the same way as VA_DATA.VA_DATA. Except when an access is initiated by using this field (either read or write); the address register (VA_ADDR) is automatically incremented by 4 at the end of the access, i.e. when VA_CTRL.VA_BUSY is deasserted.
+------------------------------
+<reg_short_dscr>:
+Data register for VCore accesses (will not initiate access)
+------------------------------
+<field_public_text>:
+This field behaves in the same way as VA_DATA.VA_DATA. Except accesses (read or write) does not initiate VCore accesses. Writing to this register just overwrites the value currently held by all of the data registers (VA_DATA, VA_DATA_INCR, and VA_DATA_INERT).
+------------------------------
+<reggrp_public_text>:
+General Purpose I/O Control configuration and status registers.
+Each register in this group contains one field with one bit per GPIO pin. Bit 0 in each field correponds to GPIO0, bit 1 to GPIO1, and so on.
+------------------------------
+<reg_short_dscr>:
+GPIO output set
+------------------------------
+<field_public_text>:
+Setting a bit in this field will immediately set the corresponding bit in GPIO_OUT.G_OUT. Reading this register always return 0.
+------------------------------
+<field_enc>:
+'0': No change
+'1': Corresponding bit in GPIO_OUT.G_OUT is set.
+------------------------------
+<reg_short_dscr>:
+GPIO output set
+------------------------------
+<field_public_text>:
+Bit 32-63 of field G_OUT_SET.
+------------------------------
+<field_enc>:
+'0': No change
+'1': Corresponding bit in GPIO_OUT.G_OUT is set.
+------------------------------
+<reg_short_dscr>:
+GPIO output clear
+------------------------------
+<field_public_text>:
+Setting a bit in this field will immediately clear the corresponding bit in GPIO_OUT.G_OUT. Reading this register always return 0.
+------------------------------
+<field_enc>:
+'0': No change
+'1': Corresponding bit in GPIO_OUT.G_OUT is cleared.
+------------------------------
+<reg_short_dscr>:
+GPIO output clear
+------------------------------
+<field_public_text>:
+Bit 32-63 of field G_OUT_CLR.
+------------------------------
+<field_enc>:
+'0': No change
+'1': Corresponding bit in GPIO_OUT.G_OUT is cleared.
+------------------------------
+<reg_short_dscr>:
+GPIO output
+------------------------------
+<reg_public_text>:
+In a multi-threaded software environment using the registers GPIO_OUT_SET and GPIO_OUT_CLR for modifying GPIO values removes the need for software-locked access.
+------------------------------
+<field_public_text>:
+Controls the value on the GPIO pins enabled for output (via the GPIO_OE register). This field can be modified directly or by using the GPIO_O_SET and GPIO_O_CLR registers.
+------------------------------
+<reg_short_dscr>:
+GPIO output
+------------------------------
+<reg_public_text>:
+In a multi-threaded software environment using the registers GPIO_OUT_SET and GPIO_OUT_CLR for modifying GPIO values removes the need for software-locked access.
+------------------------------
+<field_public_text>:
+Bit 32-63 of field G_OUT.
+------------------------------
+<reg_short_dscr>:
+GPIO input
+------------------------------
+<field_public_text>:
+GPIO input register. Reflects the current state of the corresponding GPIO pins.
+------------------------------
+<reg_short_dscr>:
+GPIO input
+------------------------------
+<field_public_text>:
+Bit 32-63 of field G_IN.
+------------------------------
+<reg_short_dscr>:
+GPIO pin direction
+------------------------------
+<field_public_text>:
+Configures the direction of the GPIO pins.
+------------------------------
+<field_enc>:
+'0': Input
+'1': Output
+------------------------------
+<reg_short_dscr>:
+GPIO pin direction
+------------------------------
+<field_public_text>:
+Bit 32-63 of field G_OE.
+------------------------------
+<field_enc>:
+'0': Input
+'1': Output
+------------------------------
+<reg_short_dscr>:
+GPIO interrupt
+------------------------------
+<field_public_text>:
+Indicates whether a GPIO input has changed since last clear.
+------------------------------
+<field_enc>:
+'0': No change
+'1': GPIO has changed
+------------------------------
+<reg_short_dscr>:
+GPIO interrupt
+------------------------------
+<field_public_text>:
+Bit 32-63 of field G_INTR.
+------------------------------
+<field_enc>:
+'0': No change
+'1': GPIO has changed
+------------------------------
+<reg_short_dscr>:
+GPIO interrupt enable
+------------------------------
+<field_public_text>:
+Enables individual GPIO pins for interrupt.
+------------------------------
+<reg_short_dscr>:
+GPIO interrupt enable
+------------------------------
+<field_public_text>:
+Bit 32-63 of field G_INTR_ENA.
+------------------------------
+<reg_short_dscr>:
+GPIO interrupt identity
+------------------------------
+<field_public_text>:
+Shows which GPIO sources that are currently interrupting. This field is the result of an AND-operation between the GPIO_INTR and the GPIO_INTR_ENA registers.
+------------------------------
+<reg_short_dscr>:
+GPIO interrupt identity
+------------------------------
+<field_public_text>:
+Bit 32-63 of field G_INTR_IDENT.
+------------------------------
+<reg_short_dscr>:
+GPIO alternate functions
+------------------------------
+<field_public_text>:
+Configures alternate functions for individual GPIOs. See datasheet for information on possible alternate functions.
+The LSB of the GPIO encoding is placed in replication 0, MSB is placed in replication 1. For example; to encode Alternate mode 2 for GPIO[n] write DEVCPU_GCB::GPIO_ALT[0][n] = 0, and DEVCPU_GCB::GPIO_ALT[1][n] = 1.
+Note: This register is only reset by the device's reset input, i.e. it is not affected by soft reset!
+------------------------------
+<field_enc>:
+00: GPIO mode
+01: Alternate mode 1
+10: Alternate mode 2
+11: Alternate mode 3
+------------------------------
+<reg_short_dscr>:
+GPIO alternate functions
+------------------------------
+<field_public_text>:
+Bit 32-63 of field G_ALT.
+------------------------------
+<field_enc>:
+00: GPIO mode
+01: Alternate mode 1
+10: Alternate mode 2
+11: Alternate mode 3
+------------------------------
+<reg_short_dscr>:
+GPIO Signal Detect Mapping
+------------------------------
+<field_public_text>:
+Set to map a specific GPIO mapped signal detect input to specific front-port index. There is one replication for each GPIO mapped signal detect input. If multiple signal detects are enabled and map to same front-port index, then the higher replication index will take priority. For example to map 3'rd signal detect input asif it was provided by 2'nd SERDES; set DEVCPU_GCB::GPIO_SD_MAP[2].G_SD_MAP = 1 and enable SD2 via DEVCPU_GCB::GPIO_ALT registers.
+------------------------------
+<reg_short_dscr>:
+MIIM Status
+------------------------------
+<field_public_text>:
+Signals if all PHYs have been scanned ( with auto scan ) at least once.
+------------------------------
+<field_enc>:
+0 : Auto scan has not scanned all PHYs.
+1 : Auto scan has scanned all PHY at least once.
+------------------------------
+<field_public_text>:
+Indicates the current state of the MIIM controller. When read operations are done (no longer busy), then read data is available via the DEVCPU_GCB::MII_DATA register.
+------------------------------
+<field_enc>:
+0: MIIM controller is in idle state
+1: MIIM controller is busy performing MIIM cmd (Either read or read cmd).
+------------------------------
+<field_public_text>:
+The MIIM controller has a CMD fifo of depth one. When this field is 0, then it is safe to write another MIIM command to the MIIM controller.
+------------------------------
+<field_enc>:
+0 : Read or write not pending
+1 : Read or write pending.
+------------------------------
+<field_public_text>:
+Indicates whether a read operation via the MIIM interface is in progress or not.
+------------------------------
+<field_enc>:
+0 : Read not in progress
+1 : Read in progress.
+------------------------------
+<field_public_text>:
+Indicates whether a write operation via the MIIM interface is in progress or not.
+------------------------------
+<field_enc>:
+0 : Write not in progress
+1 : Write in progress.
+------------------------------
+<reg_short_dscr>:
+MIIM Command
+------------------------------
+<field_public_text>:
+Must be set for starting a new PHY access. This bit is automatically cleared.
+------------------------------
+<field_enc>:
+0 : Write to this register is ignored.
+1 : Write to this register is processed.
+------------------------------
+<field_public_text>:
+Indicates the addressed PHY number.
+------------------------------
+<field_public_text>:
+Indicates the addressed of the register within the PHY that shall be accessed.
+------------------------------
+<field_public_text>:
+Data to be written in the PHY register.
+------------------------------
+<field_public_text>:
+Select if scanning of the PHY shall be done once, or scanning should be done continuously.
+------------------------------
+<field_enc>:
+0 : Do continuously PHY scanning 
+1 : Stop once all PHY have been scanned.
+------------------------------
+<field_public_text>:
+Indicates type of operation.
+------------------------------
+<field_enc>:
+Clause 22:
+
+01 : Write
+10 : Read
+
+Clause 45:
+
+00 : Address
+01 : Write
+10 : Read inc.
+11 : Read.
+------------------------------
+<field_public_text>:
+Indicates whether automatic scanning of PHY registers is enabled. When enabled, the PHY-number for each automatic read is continuously round-robined from PHY_ADDR_LOW through PHY_ADDR_HIGH. This function is started upon a read operation (ACCESS_TYPE).
+Scan MUST be disabled when doing any configuration of the MIIM controller.
+------------------------------
+<field_enc>:
+0 : Disabled
+1 : Enabled.
+------------------------------
+<reg_short_dscr>:
+MIIM Reply Data
+------------------------------
+<field_public_text>:
+Indicates whether a read operation failed or succeeded.
+------------------------------
+<field_enc>:
+00 : OK
+11 : Error
+------------------------------
+<field_public_text>:
+Data read from PHY register.
+------------------------------
+<reg_short_dscr>:
+MIIM Configuration
+------------------------------
+<field_public_text>:
+The ST (start-of-frame) field of the MIIM frame format adopts the value of this field. This must be configured for either clause 22 or 45 MIIM operation.
+------------------------------
+<field_enc>:
+"01": Clause 22
+"00": Clause 45
+Other values are reserved.
+------------------------------
+<field_public_text>:
+Configures the MIIM clock frequency. This is computed as system_clk/(2*(1+X)), where X is the value written to this register.
+Note : Setting X to 0 is invalid and will result in the same frequency as setting X to 1.
+------------------------------
+<reg_short_dscr>:
+MIIM Scan 0
+------------------------------
+<field_public_text>:
+Indicates the high PHY number to scan during automatic scanning.
+------------------------------
+<field_public_text>:
+Indicates the low PHY number to scan during automatic scanning.
+------------------------------
+<reg_short_dscr>:
+MIIM Scan 1
+------------------------------
+<field_public_text>:
+Indicates the mask for comparing the PHY registers during automatic scan.
+------------------------------
+<field_public_text>:
+Indicates the expected value for comparing the PHY registers during automatic scan.
+------------------------------
+<reg_short_dscr>:
+MIIM Results
+------------------------------
+<field_public_text>:
+Indicates for each PHY if a PHY register has matched the expected value (with mask).
+This register reflects the value of the last reading of the phy register.
+------------------------------
+<field_enc>:
+0 : Mismatch.
+1 : Match.
+------------------------------
+<reg_short_dscr>:
+MIIM Results
+------------------------------
+<field_public_text>:
+Indicates for each PHY if a PHY register matched are valid or not.
+------------------------------
+<field_enc>:
+0 : Scan result not valid. 
+1 : Scan result valid.
+------------------------------
+<reg_short_dscr>:
+MIIM Results
+------------------------------
+<field_public_text>:
+Indicates for each PHY if a PHY register has had a mismatch of the expected value (with mask) since last reading of MIIM_SCAN_RSLTS_STICKY.
+
+Result is sticky, and result will indicate if there has been a mismatch since the last reading of this register.
+
+Upon reading this register, all bits are reset to '1'.
+------------------------------
+<field_enc>:
+0 : Mismatch
+1 : Match.
+------------------------------
+<reggrp_short_dscr>:
+Serial IO control configuration
+------------------------------
+<reg_short_dscr>:
+Last value at SGPIO pins
+------------------------------
+<field_public_text>:
+Serial input data. Each replication, N, holds bit N from all ports - bit N from port M is mapped to replication N bit M. Values of disabled gpios are undefined.
+------------------------------
+<reg_short_dscr>:
+General configurations
+------------------------------
+<field_public_text>:
+Configure the size of the PWM window.
+------------------------------
+<field_enc>:
+0 : 255 cycles
+1-254 : 2-255 cycles
+255 : Reserved.
+------------------------------
+<field_public_text>:
+When set, the SIO_BURST_GAP is divided by 32.
+------------------------------
+<field_public_text>:
+Configuration for blink mode 1.
+Supports three different blink modes and a "burst toggle" mode in which blink mode 1 will alternate for each burst.
+------------------------------
+<field_enc>:
+0: Blink freq appr. 20Hz
+1: Blink freq appr. 10Hz
+2: Blink freq appr. 5Hz
+3: Burst toggle
+------------------------------
+<field_public_text>:
+Configuration of blink mode 0. Supports four different blink modes.
+------------------------------
+<field_enc>:
+0 : Blink freq appr. 20Hz
+1 : Blink freq appr. 10Hz
+2 : Blink freq appr. 5Hz
+3 : Blink freq appr. 2.5Hz
+------------------------------
+<field_public_text>:
+Reset the blink counters. Used to synchronize the blink modes between different chips.
+------------------------------
+<field_enc>:
+0: Blink counter is running
+1: Blink counter is reset until sio_blink_reset is unset again
+------------------------------
+<field_public_text>:
+Set to disable burst gap.
+------------------------------
+<field_public_text>:
+Configures the length of burst gap in steps. Burst gap can be disabled by setting DEVCPU_GCB::SIO_CFG.SIO_BURST_GAP_DIS. For smaller burst gap set DEVCPU_GCB::SIO_CFG.SIO_REDUCED_GAP. The gap is calculated by (Value+1) * (2^18) * (system clock period).
+------------------------------
+<field_public_text>:
+Use this to output a single burst. Will be cleared by hardware when the burst has finished.
+------------------------------
+<field_public_text>:
+Use this to output repeated bursts interleaved with burst gaps. Must be manually reset again to stop output of bursts.
+------------------------------
+<field_public_text>:
+Polarity of the "Ld" signal
+------------------------------
+<field_enc>:
+0: load signal is active low
+1: load signal is active high
+------------------------------
+<field_public_text>:
+Number of SGPIOs pr. port.
+------------------------------
+<field_enc>:
+0: 1 gpio pr. port
+1: 2 gpios pr. port
+2: 3 gpios pr. port
+3: 4 gpios pr. port
+------------------------------
+<field_public_text>:
+Reverse the output bitstream.
+The default order of the output bit stream is (displayed in transmitted order):
+(portN bit3, portN bit2, ...., port0 bit1, port0 bit0)
+The reverse order of the output bit stream is (displayed in transmitted order):
+(port0 bit0, port0 bit1, ...., portN bit2, portN bit3)
+------------------------------
+<field_enc>:
+0: Do not reverse
+1: Reverse
+------------------------------
+<field_public_text>:
+Reverse the input bitstream.
+The default order of the input bit stream is (displayed in received order):
+(port0 bit0, port0 bit1, ...., portN bit2, portN bit3)
+The reverse order of the input bit stream is (displayed in received order):
+(portN bit3, portN bit2, ...., port0 bit1, port0 bit0)
+------------------------------
+<field_enc>:
+0: Do not reverse
+1: Reverse
+------------------------------
+<field_public_text>:
+Master interrupt enable. Enables interrupts. Is applied to all sgpios on all ports. This field only has effect on the interrupt output signal of the sio_ctrl block. It has no effect on the interrupt registers.
+------------------------------
+<field_enc>:
+0: Interrupt is disabled for all bits for all ports
+1: Interrupt is enabled for all bits for all ports
+------------------------------
+<reg_short_dscr>:
+SGPIO shift clock frequency
+------------------------------
+<field_public_text>:
+SIO controller clock frequency. Divides the system clk with the value of this field.
+------------------------------
+<field_enc>:
+0: Disable clock
+1: Reserved, do not use
+Others : Clock divider value.
+------------------------------
+<field_public_text>:
+The system clock period given in the clock period in PS divided by 100.
+------------------------------
+<reg_short_dscr>:
+Output configuration
+------------------------------
+<field_public_text>:
+Output source select for the four outputs from each port.The source select is encoded using three bits for each output bit: Output bit0 is defined by (2 down to 0), output bit1 is defined by (5 down to 3), output bit2 is defined by (8 down to 6), and output bit3 is defined by (11 down to 9).
+------------------------------
+<field_enc>:
+0: Forced 0
+1: Forced 1
+2: Blink mode 0
+3: Blink mode 1
+4: Link activity blink mode 0
+5: Link activity blink mode 1
+6: Reserved
+7: Reserved
+------------------------------
+<field_public_text>:
+PWM source select for the four outputs from each port.The PWM source select is encoded using two bits for each output bit: Output bit0 is defined by (1 down to 0), output bit1 is defined by (3 down to 2), output bit2 is defined by (5 down to 4), and output bit3 is defined by (7 down to 6).
+------------------------------
+<field_enc>:
+0: PWM disabled
+1: PWM 0 used
+2: PWM 1 used
+3: PWM 2 used
+------------------------------
+<field_public_text>:
+Output polarity select for the four outputs from each port.The polarity select is encoded using one bit for each output bit.
+------------------------------
+<field_enc>:
+0: Normal polarity
+1: Inversed polarity
+------------------------------
+<reg_short_dscr>:
+Port enable
+------------------------------
+<field_public_text>:
+Port enable vector with one enable bit for each port.
+Port order: (portN down to port0)
+------------------------------
+<field_enc>:
+0: Port is disabled
+1: Port is enabled
+------------------------------
+<reg_short_dscr>:
+Pulse-width modulation configuration
+------------------------------
+<field_public_text>:
+Define the duty cycle for the PWMs.
+------------------------------
+<field_enc>:
+0x00: Always "off"
+0xFF: Always "on"
+------------------------------
+<reg_short_dscr>:
+SGPIO interrupt polarity
+------------------------------
+<field_public_text>:
+Interrupt polarity. This register defines at which logic value an interrupt is generated. For bit0 this register is also used to define the polarity of the "loss of signal" output.
+------------------------------
+<field_enc>:
+0: interrupt and "loss of signal" is active high
+1: interrupt and "loss of signal" is active low
+------------------------------
+<reg_short_dscr>:
+Interrupt raw status
+------------------------------
+<field_public_text>:
+Shows the current value of individual interrupts. All interrupts are active high (but has been corrected for polarity as configured in SIO_INTR_POL).
+------------------------------
+<reg_short_dscr>:
+Interrupt trigger mode 0
+------------------------------
+<field_public_text>:
+Configure trigger mode of individual interrupts. The trigger mode determines how the value of the SIO_INTR_RAW register is transferred to the SIO_INTR register.
+
+This register is the LSB of the encoding. Register SIO_INTR_TRIGGER1 is the MSB of the encoding.
+
+For level-triggered interrupts SIO_INTR is set when an input is received that results in a high corresponding bit in SIO_INTR_RAW.
+For edge-triggered interrupts SIO_INTR is set when an input is received that results in a change of the corresponding bit in SIO_INTR_RAW.
+For falling-edge-triggered interrupts SIO_INTR is set when an input is received that results in a change from '1' to '0' of the corresponding bit in SIO_INTR_RAW.
+For rising-edge-triggered interrupts SIO_INTR is set when an input is received that results in a change from '0' to '1' of the corresponding bit in SIO_INTR_RAW.
+------------------------------
+<field_enc>:
+00: Interrupt is level-activated
+01: Interrupt is edge-triggered
+10: Interrupt is falling-edge-triggered
+11: Interrupt is rising-edge-triggered
+------------------------------
+<reg_short_dscr>:
+Interrupt trigger mode 1
+------------------------------
+<field_public_text>:
+See description of SIO_INTR_TRIGGER0.
+------------------------------
+<reg_short_dscr>:
+Currently interrupting SGPIOs
+------------------------------
+<field_public_text>:
+Interrupt register. These sticky bits are set when an input is received that are triggered by the corresponding SIO_INTR_TRIGGER configuration.
+------------------------------
+<field_enc>:
+0: No interrupt for given gpio
+1: Interrupt for given gpio
+------------------------------
+<reg_short_dscr>:
+SGPIO interrupt enable per port
+------------------------------
+<field_public_text>:
+Interrupt enable vector with one enable bit for each port.
+Port order: (portN down to port0).
+Replicated for each SGPIO of the port.
+------------------------------
+<field_enc>:
+0: Interrupt is disabled for the port
+1: Interrupt is enabled for the port
+------------------------------
+<reg_short_dscr>:
+Currently active interrupts
+------------------------------
+<field_public_text>:
+Shows the currently active interrupts. This register is the result of the SIO_INTR interrupts with the disabled interrupts (from SIO_INTR_ENA and SIO_GPIO_INTR_ENA) removed.
+------------------------------
+<field_enc>:
+0: No active interrupt for given gpio
+1: Active interrupt for given gpio
+------------------------------
+<reggrp_short_dscr>:
+Fan controller configuration and status
+------------------------------
+<reg_short_dscr>:
+Fan controller configuration
+------------------------------
+<field_public_text>:
+Define the duty cycle
+------------------------------
+<field_enc>:
+0x00: Always "off"
+0xFF: Always "on"
+------------------------------
+<field_public_text>:
+Define the polarity of the PWM output.
+------------------------------
+<field_enc>:
+0: PWM is logic 1 when "on"
+1: PWM is logic 0 when "on"
+------------------------------
+<field_public_text>:
+Enable gating of the TACH input by the PWM output so that only TACH pulses received when PWM is "on" are counted.
+------------------------------
+<field_enc>:
+0: Disabled
+1: Enabled
+------------------------------
+<field_public_text>:
+Configure the PWM output to be open collector
+------------------------------
+<field_public_text>:
+Configure behavior of TACH input tick counter, see DEVCPU_GCB::FAN_CNT for more infromation.
+------------------------------
+<reg_short_dscr>:
+Configuration of the PWM frequency.
+------------------------------
+<field_public_text>:
+The number of system clock cycles that fit in 10 us.
+------------------------------
+<field_public_text>:
+Set the frequency of the PWM output. The value of this field must be (System clock frequency)/(PWM frequency)/256.
+------------------------------
+<reg_short_dscr>:
+TACH counter
+------------------------------
+<field_public_text>:
+Counts the number of TACH input ticks. If DEVCPU_GCB::FAN_CFG.FAN_STAT_CFG is set then this is a wrapping counter that shows the total number of registered TACH ticks. If DEVCPU_GCB::FAN_CFG.FAN_STAT_CFG is cleared then this counter is updated once every second with the number of TACH ticks registered during the last second.
+------------------------------
+<reggrp_short_dscr>:
+Memory integrity monitor
+------------------------------
+<reg_short_dscr>:
+Monitor control
+------------------------------
+<field_public_text>:
+Setting this field transitions the integrity monitor between operating modes. Transitioning between modes takes time, this field remains set until the new mode is reached. During this time the monitor also reports busy DEVCPU_GCB::MEMITGR_STAT.MODE_BUSY is set).
+From IDLE (DEVCPU_GCB::MEMITGR_STAT.MODE_IDLE is set) the monitor can transition into either DETECT or LISTEN mode, the DETECT mode is entered if a memory reports an indication - the LISTEN mode is entered if no indications are reported. The first time after reset the monitor will not detect indications, that is; it will transition directly from IDLE to LISTEN mode.
+From DETECT (DEVCPU_GCB::MEMITGR_STAT.MODE_DETECT is set) the monitor can transition into either DETECT or LISTEN mode, the DETECT mode is entered if more indications are reported - the LISTEN mode is entered if no more indications are reported.
+From LISTEN (DEVCPU_GCB::MEMITGR_STAT.MODE_LISTEN is set) the monitor can transition into IDLE mode.
+Software shall not set this field when the monitor is BUSY (when DEVCPU_GCB::MEMITGR_STAT.MODE_BUSY is set.)
+------------------------------
+<reg_short_dscr>:
+Monitor status
+------------------------------
+<field_public_text>:
+If this field is set then there is an indication from one of the memories that needs to be analyzed. An indication is either a parity detection or an error correction.
+This field is only set when the monitor is in LISTEN mode (DEVCPU_GCB::MEMITGR_STAT.MODE_LISTEN is set), in all other states (including BUSY) this field returns 0.
+------------------------------
+<field_public_text>:
+This field is set when the monitor is in LISTEN mode, during listen mode the monitor continually check for parity/correction indications from the memories.
+------------------------------
+<field_public_text>:
+This field is set when the monitor is in DETECT mode, during detect mode the DEVCPU_GCB::MEMITGR_INFO and DEVCPU_GCB::MEMITGR_IDX registers contains valid information about one indication.
+------------------------------
+<field_public_text>:
+This field is set when the monitor is in IDLE mode.
+------------------------------
+<field_public_text>:
+The busy signal is a copy of the DEVCPU_GCB::MEMITGR_CTRL.ACTIVATE field, see description of that field for more information about the different states/modes of the monitor.
+------------------------------
+<reg_short_dscr>:
+Memory indication
+------------------------------
+<reg_public_text>:
+This field is only valid when the monitor is in the DETECT (DEVCPU_GCB::MEMITGR_STAT.MODE_DETECT is set) mode.
+------------------------------
+<field_public_text>:
+This field is set if the monitor has detected a parity indication (or an unrecoverable correction).
+------------------------------
+<field_public_text>:
+This field is set if the monitor has detected a correction.
+------------------------------
+<field_public_text>:
+This field is set if the monitor has detected a parity indication (or an unrecoverable correction) for which the address has not been recorded.
+If DEVCPU_GCB::MEMITGR_INFO.MEM_ERR is set then there has been more than one indication, then only the address of the newest indication has been kept. 
+If DEVCPU_GCB::MEMITGR_INFO.MEM_ERR is cleared then an indication has occurred for which the address could not be stored, this is a very rare situation that can only happen if an indication is detected just as the memory is talking to the monitor.
+------------------------------
+<field_public_text>:
+This field is set if the monitor has correction indication for which the address has not been recorded.
+If DEVCPU_GCB::MEMITGR_INFO.MEM_ERR is set then there has also been a parity indication (or an unrecoverable correction) which takes priority over correction indications.
+If DEVCPU_GCB::MEMITGR_INFO.MEM_ERR is cleared and DEVCPU_GCB::MEMITGR_INFO.MEM_COR is set then there has been more than one correction indication, then only the address of the newest correction indication has been kept.
+If DEVCPU_GCB::MEMITGR_INFO.MEM_ERR and DEVCPU_GCB::MEMITGR_INFO.MEM_COR is both cleared then a correction indication has occurred for which the address could not be stored, this is a very rare situation that can only happen if an indication is detected just as the memory is talking to the monitor.
+------------------------------
+<field_public_text>:
+This field is valid only when DEVCPU_GCB::MEMITGR_INFO.MEM_ERR or DEVCPU_GCB::MEMITGR_INFO.MEM_COR is set.
+------------------------------
+<reg_short_dscr>:
+Memory index
+------------------------------
+<reg_public_text>:
+This field is only valid when the monitor is in the DETECT (DEVCPU_GCB::MEMITGR_STAT.MODE_DETECT is set) mode.
+------------------------------
+<field_public_text>:
+This field contains a unique index for the memory for which info is currently provided in DEVCPU_GCB::MEMITGR_INFO. Indexes are counted from 1 (not 0).
+------------------------------
+<reg_short_dscr>:
+Monitor speed
+------------------------------
+<field_public_text>:
+Configure divider for generating the sync-pulse to memories (controls the speed at which the monitor talks to the memories). The lower this is set the faster indications can be read out of the memories.
+------------------------------
+<field_enc>:
+See datasheet for appropriate value.
+------------------------------
+<reggrp_short_dscr>:
+VRAP controller
+------------------------------
+<reg_short_dscr>:
+VRAP events
+------------------------------
+<field_public_text>:
+This field is set if a valid VRAP frame has been received.
+------------------------------
+<field_public_text>:
+This field is set if an invalid command inside a valid VRAP frame has been received. The VRAP engine has ignored the command.
+------------------------------
+<field_public_text>:
+This field is set if an invalid VRAP frame has been received and discarded by the VRAP-engine. Frames with a VRAP header different from V1 are considered invalid.
+------------------------------
+<field_public_text>:
+This field is set if a VRAP reply frame has been aborted. This my happen if a protocol violation is detected during VRAP request frame processing.
+------------------------------

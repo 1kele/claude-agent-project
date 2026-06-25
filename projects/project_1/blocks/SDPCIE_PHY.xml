@@ -1,0 +1,2591 @@
+=== DOCUMENTATION FOR TARGET: SDPCIE_PHY ===
+
+<reggrp_short_dscr>:
+Register group for registers 0x00 to 0x01
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+TXEI emulation enable/disable. 1'b1: enable 1'b0: disable
+------------------------------
+<field_public_text>:
+PMA lane reset done delay threshold. 1'b0: 8T refclk 1'b1: 12T refclk
+------------------------------
+<field_public_text>:
+PMA lane reset done selection. 2'h0: from rx_reset_done 2'h1: from dfe_reset_done 2'h2: from tx_reset_done 2'h3: from pma_reset_done
+------------------------------
+<field_public_text>:
+PMA multi-lane mode control. 1'b1: multi-lane 1'b0: standalone-lane
+------------------------------
+<field_public_text>:
+Simulation speedup control. 1'b1: simulation mode 1'b0: normal mode
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Bifurcation mode setting for manual mode control bit[0]:1'b1:x4      1'b0:x2x2 Bit[3:1]: reserved
+------------------------------
+<field_public_text>:
+IDDQ setting for manual mode control
+------------------------------
+<field_public_text>:
+PIPE resetn setting for manual mode control
+------------------------------
+<field_public_text>:
+Bifurcation manual control 1'b1: x2x2 1'b0: x4
+------------------------------
+<field_public_text>:
+IDDQ mode manual control 1'b1: IDDQ mode 1'b0: normal mode
+------------------------------
+<field_public_text>:
+PIPE reset manual control 1'b1: manual mode 1'b0: normal mode
+------------------------------
+<reggrp_short_dscr>:
+Register group for registers 0x03 to 0x09
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+PCSWrap debug page selection
+------------------------------
+<field_public_text>:
+Phy top debug page selection
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Pre-emphasis control for Gen 2.
+------------------------------
+<field_public_text>:
+Pre-emphasis control for Gen 1.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Pre-emphasis control for Gen 4.
+------------------------------
+<field_public_text>:
+Pre-emphasis control for Gen 3.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Enable bias current source from common block to the right hand side.
+------------------------------
+<field_public_text>:
+Enable bias current source from common block to the left hand side.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Common block link buffer control.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+PD3/L2 exiting switch counter enable/disable.
+------------------------------
+<field_public_text>:
+PD3/L2 entering switch counter enable/disable.
+------------------------------
+<field_public_text>:
+PD2/L1 to non-PD3/L2 switch counter enable/disable.
+------------------------------
+<field_public_text>:
+PD1/L0s to non-PD3/L2 switch counter enable/disable.
+------------------------------
+<field_public_text>:
+PD0/L0 to non-PD3/L2 switch counter enable/disable.
+------------------------------
+<field_public_text>:
+Gate clocks in L1PM substate.
+------------------------------
+<field_public_text>:
+Gate clocks in PD3/L2.
+------------------------------
+<field_public_text>:
+Assert pclk_gating when exiting PD3/L2.
+------------------------------
+<field_public_text>:
+Current L1PM substate status. Bit[0]:l1p1_state Bit[1]:l1p2_entry Bit[2]:l1p2_idle Bit[3]:l1p2_exit
+------------------------------
+<field_public_text>:
+Current power down state. 2'b00:PD0/L0 2'b01:PD1/L0s 2'b10:PD2/L1 2'b11:PD3/L2
+------------------------------
+<field_public_text>:
+L1PM substate setting for manual power control. Bit[0]:l1p1_state Bit[1]:l1p2_entry Bit[2]:l1p2_idle Bit[3]:l1p2_exit
+------------------------------
+<field_public_text>:
+PIPE power down setting for manual power control. 2'b00:PD0/L0 2'b01:PD1/L0s 2'b10:PD2/L1 2'b11:PD3/L2
+------------------------------
+<field_public_text>:
+Manual power control. 1'b1: manual mode 1'b0: normal mode
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+L1PM substate exiting switch time.
+------------------------------
+<field_public_text>:
+PD3/L2 exiting switch time.
+------------------------------
+<field_public_text>:
+PD3/L2 entering switch time.
+------------------------------
+<field_public_text>:
+PD2/L1 to non-PD3/L2 switch time.
+------------------------------
+<field_public_text>:
+PD1/L0s to non-PD3/L2 switch time.
+------------------------------
+<field_public_text>:
+PD0/L0 to non-PD3/L2 switch time.
+------------------------------
+<field_public_text>:
+PD3/L2 entering delay time. 1'b0: 8T refclk 1'b1: 12T refclk
+------------------------------
+<field_public_text>:
+L1PM substate extension time. 1'b0:8T refclk 1'b1:12T refclk
+------------------------------
+<field_public_text>:
+Refclk stable threshold in L1PM substate.
+------------------------------
+<field_public_text>:
+Pclk_gating duration for power mode change. 2'h0: 8T refclk 2'h1: 16T refclk 2'h2: 32T refclk 2'h3: 64T refclk
+------------------------------
+<reggrp_short_dscr>:
+Register group for registers 0x10 to 0x15
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+PD0:power-State table setting
+------------------------------
+<field_public_text>:
+PD0:power-State table setting
+------------------------------
+<field_public_text>:
+PD0:power-State table setting
+------------------------------
+<field_public_text>:
+PD0:power-State table setting
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+PD1:power-State table setting
+------------------------------
+<field_public_text>:
+PD1:power-State table setting
+------------------------------
+<field_public_text>:
+PD1:power-State table setting
+------------------------------
+<field_public_text>:
+PD1:power-State table setting
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+PD2:power-State table setting
+------------------------------
+<field_public_text>:
+PD2:power-State table setting
+------------------------------
+<field_public_text>:
+PD2:power-State table setting
+------------------------------
+<field_public_text>:
+PD2:power-State table setting
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+PD3:power-State table setting
+------------------------------
+<field_public_text>:
+PD3:power-State table setting
+------------------------------
+<field_public_text>:
+PD3:power-State table setting
+------------------------------
+<field_public_text>:
+PD3:power-State table setting
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+L1.1:power-state table setting
+------------------------------
+<field_public_text>:
+L1.1:power-state table setting
+------------------------------
+<field_public_text>:
+L1.1:power-state table setting
+------------------------------
+<field_public_text>:
+L1.1:power-state table setting
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+L1.2:power-state table setting
+------------------------------
+<field_public_text>:
+L1.2:power-state table setting
+------------------------------
+<field_public_text>:
+L1.2:power-state table setting
+------------------------------
+<field_public_text>:
+L1.2:power-state table setting
+------------------------------
+<reggrp_short_dscr>:
+Register group for registers 0x18 to 0x1D
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+PD0:power-State table setting
+------------------------------
+<field_public_text>:
+PD0:power-State table setting
+------------------------------
+<field_public_text>:
+PD0:power-State table setting
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+PD1:power-State table setting
+------------------------------
+<field_public_text>:
+PD1:power-State table setting
+------------------------------
+<field_public_text>:
+PD1:power-State table setting
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+PD2:power-State table setting
+------------------------------
+<field_public_text>:
+PD2:power-State table setting
+------------------------------
+<field_public_text>:
+PD2:power-State table setting
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+PD3:power-State table setting
+------------------------------
+<field_public_text>:
+PD3:power-State table setting
+------------------------------
+<field_public_text>:
+PD3:power-State table setting
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+L1.1:power-state table setting
+------------------------------
+<field_public_text>:
+L1.1:power-state table setting
+------------------------------
+<field_public_text>:
+L1.1:power-state table setting
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+L1.2:power-state table setting
+------------------------------
+<field_public_text>:
+L1.2:power-state table setting
+------------------------------
+<field_public_text>:
+L1.2:power-state table setting
+------------------------------
+<reggrp_short_dscr>:
+Register group for register 0x20
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Rate change delay time. 1'b0: 8T refclk 1'b1: 12T refclk
+------------------------------
+<field_public_text>:
+Pclk_gating duration for speed change. 2'h0: 8T refclk 2'h1: 16T refclk 2'h2: 32T refclk 2'h3: 64T refclk
+------------------------------
+<field_public_text>:
+Refclk termination resister enable/disable.
+------------------------------
+<field_public_text>:
+Speed change clock gating enable/disable. 1'b1:enable 1'b0:disable
+------------------------------
+<field_public_text>:
+Current rate indication. 2'b00/2'b01/2'b10/2'b11:Gen-1/2/3/4
+------------------------------
+<field_public_text>:
+Speed setting for manual rate control. 2'b00/2'b01/2'b10/2'b11:Gen-1/2/3/4
+------------------------------
+<field_public_text>:
+Manual rate control. 1'b1: manual mode 1'b0: normal mode
+------------------------------
+<reggrp_short_dscr>:
+Register group for registers 0x24 to 0x28
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+PMA RX divider selection of Gen1
+------------------------------
+<field_public_text>:
+PMA TX clock selection of Gen1
+------------------------------
+<field_public_text>:
+PMA data width selection of Gen1
+------------------------------
+<field_public_text>:
+PMA RX rate selection of Gen1
+------------------------------
+<field_public_text>:
+PMA TX rate selection of Gen1
+------------------------------
+<field_public_text>:
+PMA VCO post divider ratio selection of Gen1
+------------------------------
+<field_public_text>:
+PMA PHY mode of Gen1
+------------------------------
+<field_public_text>:
+PLL multiplying factor of Gen1
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+PMA RX divider selection of Gen2
+------------------------------
+<field_public_text>:
+PMA TX clock selection of Gen2
+------------------------------
+<field_public_text>:
+PMA data width selection of Gen2
+------------------------------
+<field_public_text>:
+PMA RX rate selection of Gen2
+------------------------------
+<field_public_text>:
+PMA TX rate selection of Gen2
+------------------------------
+<field_public_text>:
+PMA VCO post divider ratio selection of Gen2
+------------------------------
+<field_public_text>:
+PMA PHY mode of Gen2
+------------------------------
+<field_public_text>:
+PLL multiplying factor of Gen2
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+PMA RX divider selection of Gen3
+------------------------------
+<field_public_text>:
+PMA TX clock selection of Gen3
+------------------------------
+<field_public_text>:
+PMA data width selection of Gen3
+------------------------------
+<field_public_text>:
+PMA RX rate selection of Gen3
+------------------------------
+<field_public_text>:
+PMA TX rate selection of Gen3
+------------------------------
+<field_public_text>:
+PMA VCO post divider ratio selection of Gen3
+------------------------------
+<field_public_text>:
+PMA PHY mode of Gen3
+------------------------------
+<field_public_text>:
+PLL multiplying factor of Gen3
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+PMA RX divider selection of Gen4
+------------------------------
+<field_public_text>:
+PMA TX clock selection of Gen4
+------------------------------
+<field_public_text>:
+PMA data width selection of Gen4
+------------------------------
+<field_public_text>:
+PMA RX rate selection of Gen4
+------------------------------
+<field_public_text>:
+PMA TX rate selection of Gen4
+------------------------------
+<field_public_text>:
+PMA VCO post divider ratio selection of Gen4
+------------------------------
+<field_public_text>:
+PMA PHY mode of Gen4
+------------------------------
+<field_public_text>:
+PLL multiplying factor of Gen4
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Eye monitor amplitude resolution. //Vertical direction
+------------------------------
+<field_public_text>:
+Eye monitor timing resolution. //Horizontal direction
+------------------------------
+<field_public_text>:
+RX margin termination duration. 2'b00: 10T pclk 2'b01: 20T pclk 2'b10: 24T pclk 2'b11: 32T pclk
+------------------------------
+<reggrp_short_dscr>:
+Register group for registers 0x2C to 0x44
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Reserved.
+------------------------------
+<field_public_text>:
+TX margin setting-1. 1200.0 mV
+------------------------------
+<field_public_text>:
+Reserved.
+------------------------------
+<field_public_text>:
+TX margin setting-0. 1000.0 mV
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Reserved.
+------------------------------
+<field_public_text>:
+TX margin setting-3. 1100.0 mV
+------------------------------
+<field_public_text>:
+Reserved.
+------------------------------
+<field_public_text>:
+TX margin setting-2. 1150.0 mV
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Reserved.
+------------------------------
+<field_public_text>:
+TX margin setting-5. 850.0 mV
+------------------------------
+<field_public_text>:
+Reserved.
+------------------------------
+<field_public_text>:
+TX margin setting-4. 900.0 mV
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Reserved.
+------------------------------
+<field_public_text>:
+TX margin setting-7. 400.0 mV
+------------------------------
+<field_public_text>:
+Reserved.
+------------------------------
+<field_public_text>:
+TX margin setting-6. 800.0 mV
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Control hwt_refck_ncntMaxVal[10:8].
+------------------------------
+<field_public_text>:
+Control hwt_refck_mcntMaxVal.
+------------------------------
+<field_public_text>:
+Control hwt_refck_ssc_pi_bw.
+------------------------------
+<field_public_text>:
+Control hwt_refck_ssc_pi_step.
+------------------------------
+<field_public_text>:
+Control hwt_refck_ssc_rtl_clk_sel.
+------------------------------
+<field_public_text>:
+Refclk SSC center spreading selection. 0: down spreading 1: center spreading
+------------------------------
+<field_public_text>:
+Refclk SSC reset. 1'b0: reset
+------------------------------
+<field_public_text>:
+Refclk SSC enable. 1'b1: enable 1'b0: disable
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Control hwt_refck_ncntMaxVal[7:0].
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+SSC reset. Low-active 1'b0: reset. 1'b1: normal
+------------------------------
+<field_public_text>:
+SSC enable. 1'b1: enable 1'b0: disable
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Control pcs2pma_pi_floop_steps.
+------------------------------
+<field_public_text>:
+Control pcs2pma_rx_ssc_lh.
+------------------------------
+<field_public_text>:
+RX SSC disable. 1'b0: enable 1'b1: disable
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Control pcs2pma_ncntMaxVal[7:0] of Gen1.
+------------------------------
+<field_public_text>:
+Control pcs2pma_ncntMaxVal[10:8] of Gen1.
+------------------------------
+<field_public_text>:
+Control pcs2pma_mcntMaxVal of Gen1.
+------------------------------
+<field_public_text>:
+Control pcs2pma_ssc_pi_bw of Gen1.
+------------------------------
+<field_public_text>:
+Control pcs2pma_ssc_pi_step of Gen1
+------------------------------
+<field_public_text>:
+Control pcs2pma_ssc_rtl_clk_sel of Gen1
+------------------------------
+<field_public_text>:
+Center spreading selection. 0: down spreading 1: center spreading
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Control pcs2pma_ncntMaxVal[7:0] of Gen2
+------------------------------
+<field_public_text>:
+Control pcs2pma_ncntMaxVal[10:8] of Gen2
+------------------------------
+<field_public_text>:
+Control pcs2pma_mcntMaxVal of Gen2
+------------------------------
+<field_public_text>:
+Control pcs2pma_ssc_pi_bw of Gen2
+------------------------------
+<field_public_text>:
+Control pcs2pma_ssc_pi_step of Gen2
+------------------------------
+<field_public_text>:
+Control pcs2pma_ssc_rtl_clk_sel of Gen2
+------------------------------
+<field_public_text>:
+Center spreading selection. 0: down spreading 1: center spreading
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Control pcs2pma_ncntMaxVal[7:0] of Gen3
+------------------------------
+<field_public_text>:
+Control pcs2pma_ncntMaxVal[10:8] of Gen3
+------------------------------
+<field_public_text>:
+Control pcs2pma_mcntMaxVal of Gen3
+------------------------------
+<field_public_text>:
+Control pcs2pma_ssc_pi_bw of Gen3
+------------------------------
+<field_public_text>:
+Control pcs2pma_ssc_pi_step of Gen3
+------------------------------
+<field_public_text>:
+Control pcs2pma_ssc_rtl_clk_sel of Gen3
+------------------------------
+<field_public_text>:
+Center spreading selection. 0: down spreading 1: center spreading
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Control pcs2pma_ncntMaxVal[7:0] of Gen4
+------------------------------
+<field_public_text>:
+Control pcs2pma_ncntMaxVal[10:8] of Gen4
+------------------------------
+<field_public_text>:
+Control pcs2pma_mcntMaxVal of Gen4
+------------------------------
+<field_public_text>:
+Control pcs2pma_ssc_pi_bw of Gen4
+------------------------------
+<field_public_text>:
+Control pcs2pma_ssc_pi_step of Gen4
+------------------------------
+<field_public_text>:
+Control pcs2pma_ssc_rtl_clk_sel of Gen4
+------------------------------
+<field_public_text>:
+Center spreading selection. 0: down spreading 1: center spreading
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Control pcs2pma_pi_ext_dac_b23tb21 of Gen1
+------------------------------
+<field_public_text>:
+Control pcs2pma_pi_ext_dac_b20tb14 of Gen1
+------------------------------
+<field_public_text>:
+Control pcs2pma_ iscan_ext_dac_b7 of Gen1
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Control pcs2pma_pi_ext_dac_b23tb21 of Gen2
+------------------------------
+<field_public_text>:
+Control pcs2pma_pi_ext_dac_b20tb14 of Gen2
+------------------------------
+<field_public_text>:
+Control pcs2pma_ iscan_ext_dac_b7 of Gen2
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Control pcs2pma_pi_ext_dac_b23tb21 of Gen3
+------------------------------
+<field_public_text>:
+Control pcs2pma_pi_ext_dac_b20tb14 of Gen3
+------------------------------
+<field_public_text>:
+Control pcs2pma_ iscan_ext_dac_b7 of Gen3
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Control pcs2pma_pi_ext_dac_b23tb21 of Gen4
+------------------------------
+<field_public_text>:
+Control pcs2pma_pi_ext_dac_b20tb14 of Gen4
+------------------------------
+<field_public_text>:
+Control pcs2pma_ iscan_ext_dac_b7 of Gen4
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Reserved
+------------------------------
+<field_public_text>:
+Gen3/4 Decide SKPOS Length, PCS  supports 8/12/16/20/24-symbol SKPOS  or always 16-symbol SKPOS 1: variable length SKPOS 0: fixed Length SKPOS
+------------------------------
+<field_public_text>:
+Gen3/4 SKPEND error detect
+------------------------------
+<field_public_text>:
+Gen3/4 enable block state machine entry unalign state whe pipe BAC asserted 1: entry unalign state 0: entry align state
+------------------------------
+<field_public_text>:
+Gen3/4 block align for EIEOS  detect num setting
+------------------------------
+<field_public_text>:
+Gen1/2 Coding err Threshold for symbol unlock 1:3'h7  0:3'h3
+------------------------------
+<field_public_text>:
+Gen1/2 Enable symbol lock check with rxei state 1: w/o checking rxei state 0: w/ check rxei state
+------------------------------
+<field_public_text>:
+PMA rxelecidle confirm selection 1: rxei filtered 0: rxei raw status
+------------------------------
+<field_public_text>:
+PMA txelecidle truncate/extension control 1:truncate 0:extension
+------------------------------
+<field_public_text>:
+EDB symbol selection, when B8/10 coding error 1:8'h7C 0:8'hFE
+------------------------------
+<field_public_text>:
+Pipe rxstandbystatus control 1: internal logic 0:pipe rxstandby delay 1T
+------------------------------
+<field_public_text>:
+Gen3/4 Pipe BlockAlignControl manual control 1: enable 0: disable
+------------------------------
+<field_public_text>:
+PCS loopback master mode 1: enable 0: disable
+------------------------------
+<field_public_text>:
+PCS Loopback slave mode 1: enable, loopback slave after elastic buffer 0: disable
+------------------------------
+<field_public_text>:
+PCS Gen1/2, symbol lock threshold setting after hit COMMA 0/1/2/3: 8/4/16/64 continue symbol PCS Gen3/4, block alignment threshold setting after hit EIEOS
+------------------------------
+<field_public_text>:
+PCS Bypass receiver detection 1: bypass TX P/N receiver detection 0: normal operation
+------------------------------
+<field_public_text>:
+PCS Receiver detection check timing setting 0~7:1.6/1.5/1.4/1.2/1.0/0.8/0.6/3.2ms,when refclk is 100MHz
+------------------------------
+<field_public_text>:
+PCS simulation mode 1'b1: enable 1'b0: disable
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Reset PIPE Message Bus. Reset PIPE Message Bus design. 0: Normal mode 1: Reset mode
+------------------------------
+<field_public_text>:
+Sample count saturation mode. Sample counter overflow or saturation mode. 0: Overflow 1: Saturation
+------------------------------
+<field_public_text>:
+Error count periodic update. 0 :Disable 1: Enable
+------------------------------
+<field_public_text>:
+Error count periodic update select. The counter value same as mg_cnt[12:0]. 00:0x3FF 01:0x7FF 10:0xFFF 11:0x1FFF
+------------------------------
+<field_public_text>:
+Margin Status update mode. PIPE Message bus register "Status" respond mode when PIPE Message bus register "Start_margin" or "Offset" are written the same value. 00: No update 01: Reserve 10: Update and Status=0 11: Update and Status=1
+------------------------------
+<field_public_text>:
+Sample and Error count update mode. When one of counter update, both value respond to MAC 0: Normal mode 1: Both mode
+------------------------------
+<field_public_text>:
+Sample and Error count reset mode. Auto reset sample counter and Error counter when PIPE Message Bus Register "start margin" asserted. 0 :Normal mode 1: Auto mode
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+PCS debug page mux selection. Debug purpose ONLY.
+------------------------------
+<field_public_text>:
+PCS observation enable/disable.  Observation purpose ONLY. Bit[0]: pipe status observation control 1'b1: enable 1'b0: disable Bits[7:6]:reserved
+------------------------------
+<field_public_text>:
+Elastic buffer depth setting 2'b00: low 2'b01: med 2'b1x: high
+------------------------------
+<field_public_text>:
+Elastic buffer depth setting 2'b00: low 2'b01: med 2'b1x: high
+------------------------------
+<field_public_text>:
+PCS BIST Check enable , apply all-lanes in one-Link 1'b1:enable 1'b0:disable
+------------------------------
+<field_public_text>:
+PCS BIST Generation Enable , apply all-lanes in one-Link. 1'b1:enable 1'b0:disable
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+PCS Observation Status register
+------------------------------
+<field_public_text>:
+Current l1p1 state
+------------------------------
+<field_public_text>:
+Current l1p2 entry state
+------------------------------
+<field_public_text>:
+Current l1p2 idle state
+------------------------------
+<field_public_text>:
+Current l1p2 exit state
+------------------------------
+<field_public_text>:
+Current PIPE powerdown
+------------------------------
+<field_public_text>:
+Current PIPE rate
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+RX EQ 1us timer interval.
+------------------------------
+<field_public_text>:
+RX EQ auto-flow watchdog timer interval. 3'b000: 1 ms 3'b001: 2 ms 3'b010: 4 ms 3'b011: 8 ms 3'b100: 16 ms 3'b101: 32 ms 3'b110: 64 ms 3'b111: 100 us
+------------------------------
+<field_public_text>:
+RX EQ auto-flow watchdog timer enable.
+------------------------------
+<field_public_text>:
+RX EQ auto-flow reset. 1: reset
+------------------------------
+<field_public_text>:
+RX EQ auto-flow enable/disable.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Rx preset-0~15 bit-vector setting. Each bit indication Preset-N is enable/disable 1'b1:enable 1'b0:disable For example: 16'h1F, indicate Preset-0~4 are enabled when Link Equalization Phase. Bit[7:0]: for Gen-3 Bit[15:8]: for Gen-4
+------------------------------
+<field_public_text>:
+Rx preset-0~15 bit-vector setting. Each bit indication Preset-N is enable/disable 1'b1:enable 1'b0:disable For example: 16'h1F, indicate Preset-0~4 are enabled when Link Equalization Phase. Bit[7:0]: for Gen-3 Bit[15:8]: for Gen-4
+------------------------------
+<field_public_text>:
+Tx preset P0~P10 bit-vector setting. Each bit indication Preset-N is enable/disable 1'b1:enable 1'b0:disable For example: 16'h7_FF, indicate P0~P10 are enabled when Link Equalization Phase.
+------------------------------
+<field_public_text>:
+Tx preset P0~P10 bit-vector setting. Each bit indication Preset-N is enable/disable 1'b1:enable 1'b0:disable For example: 16'h7_FF, indicate P0~P10 are enabled when Link Equalization Phase.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+VGA fine-tune enable vector.
+------------------------------
+<field_public_text>:
+VGA fine-tune enable vector.
+------------------------------
+<field_public_text>:
+EQ C fine-tune adjustment.
+------------------------------
+<field_public_text>:
+EQ R fine-tune adjustment.
+------------------------------
+<field_public_text>:
+CTLE fine-tune adaptive mode.
+------------------------------
+<field_public_text>:
+CTLE fine-tune enable/disable vector. Bit[0]: EQ R Bit[1]: EQ C Bit[2]: VGA
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Maximum FDC iterations for one direction of C-1. 3'h0: 1 iteration 3'h1: 2 iterations  3'h7: 8 iterations
+------------------------------
+<field_public_text>:
+Maximum FDC iterations for one direction of C1. 3'h0: 1 iteration 3'h1: 2 iterations  3'h7: 8 iterations
+------------------------------
+<field_public_text>:
+Maximum FDC iterations. 4'h0: 1 iteration 4'h1: 2 iterations 4'hf: 16 iterations
+------------------------------
+<field_public_text>:
+Swap FDC results.
+------------------------------
+<field_public_text>:
+Enable FDC in auto-flow.
+------------------------------
+<field_public_text>:
+DFE adaptation time.
+------------------------------
+<field_public_text>:
+DFE switch time. 2'b00: 4T pclk 2'b01: 8T pclk 2'b10: 12T pclk 2'b11: 16T pclk
+------------------------------
+<field_public_text>:
+DFE free-running mode while doing eye scan. 0: use convergence coefficients 1: use preset coefficients
+------------------------------
+<field_public_text>:
+DFE Dlev preset enable/disable.
+------------------------------
+<field_public_text>:
+CTLE adaptation time.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+FOM iterations. 4'h0: 1 iteration 4'h1: 2 iterations 4'hf: 16 iterations
+------------------------------
+<field_public_text>:
+Check eye-width when C-1 fine-tune.
+------------------------------
+<reggrp_short_dscr>:
+Register group for registers 0x48 to 0x66
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Preset value of DFE Dlev. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+Preset value of DFE Dlev. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+Preset value of DFE Dlev. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+Preset value of DFE Dlev. Gen3: 0~7 Gen4:15~8
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Preset value of DFE Dlev. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+Preset value of DFE Dlev. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+Preset value of DFE Dlev. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+Preset value of DFE Dlev. Gen3: 0~7 Gen4:15~8
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Preset value of DFE Dlev. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+Preset value of DFE Dlev. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+Preset value of DFE Dlev. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+Preset value of DFE Dlev. Gen3: 0~7 Gen4:15~8
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Preset value of DFE Dlev. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+Preset value of DFE Dlev. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+Preset value of DFE Dlev. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+Preset value of DFE Dlev. Gen3: 0~7 Gen4:15~8
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Preset value of DFE H1 tap. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+Preset value of DFE H1 tap. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+Preset value of DFE H1 tap. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+Preset value of DFE H1 tap. Gen3: 0~7 Gen4:15~8
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Preset value of DFE H1 tap. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+Preset value of DFE H1 tap. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+Preset value of DFE H1 tap. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+Preset value of DFE H1 tap. Gen3: 0~7 Gen4:15~8
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Preset value of DFE H1 tap. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+Preset value of DFE H1 tap. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+Preset value of DFE H1 tap. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+Preset value of DFE H1 tap. Gen3: 0~7 Gen4:15~8
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Preset value of DFE H1 tap. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+Preset value of DFE H1 tap. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+Preset value of DFE H1 tap. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+Preset value of DFE H1 tap. Gen3: 0~7 Gen4:15~8
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Preset value of DFE H2 tap. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+Preset value of DFE H2 tap. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+Preset value of DFE H2 tap. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+Preset value of DFE H2 tap. Gen3: 0~7 Gen4:15~8
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Preset value of DFE H2 tap. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+Preset value of DFE H2 tap. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+Preset value of DFE H2 tap. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+Preset value of DFE H2 tap. Gen3: 0~7 Gen4:15~8
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Preset value of DFE H2 tap. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+Preset value of DFE H2 tap. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+Preset value of DFE H2 tap. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+Preset value of DFE H2 tap. Gen3: 0~7 Gen4:15~8
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Preset value of DFE H2 tap. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+Preset value of DFE H2 tap. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+Preset value of DFE H2 tap. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+Preset value of DFE H2 tap. Gen3: 0~7 Gen4:15~8
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Preset value of DFE H3 tap. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+Preset value of DFE H3 tap. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+Preset value of DFE H3 tap. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+Preset value of DFE H3 tap. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+Preset value of DFE H3 tap. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+Preset value of DFE H3 tap. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+Preset value of DFE H3 tap. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+Preset value of DFE H3 tap. Gen3: 0~7 Gen4:15~8
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Preset value of DFE H3 tap. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+Preset value of DFE H3 tap. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+Preset value of DFE H3 tap. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+Preset value of DFE H3 tap. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+Preset value of DFE H3 tap. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+Preset value of DFE H3 tap. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+Preset value of DFE H3 tap. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+Preset value of DFE H3 tap. Gen3: 0~7 Gen4:15~8
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Preset value of DFE H4 tap. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+Preset value of DFE H4 tap. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+Preset value of DFE H4 tap. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+Preset value of DFE H4 tap. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+Preset value of DFE H4 tap. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+Preset value of DFE H4 tap. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+Preset value of DFE H4 tap. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+Preset value of DFE H4 tap. Gen3: 0~7 Gen4:15~8
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Preset value of DFE H4 tap. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+Preset value of DFE H4 tap. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+Preset value of DFE H4 tap. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+Preset value of DFE H4 tap. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+Preset value of DFE H4 tap. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+Preset value of DFE H4 tap. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+Preset value of DFE H4 tap. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+Preset value of DFE H4 tap. Gen3: 0~7 Gen4:15~8
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Preset value of DFE H5 tap. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+Preset value of DFE H5 tap. Gen3: 0~7 Gen4:15~8.
+------------------------------
+<field_public_text>:
+Preset value of DFE H5 tap. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+Preset value of DFE H5 tap. Gen3: 0~7 Gen4:15~8.
+------------------------------
+<field_public_text>:
+Preset value of DFE H5 tap. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+Preset value of DFE H5 tap. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+Preset value of DFE H5 tap. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+Preset value of DFE H5 tap. Gen3: 0~7 Gen4:15~8
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Preset value of DFE H5 tap. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+Preset value of DFE H5 tap. Gen3: 0~7 Gen4:15~8.
+------------------------------
+<field_public_text>:
+Preset value of DFE H5 tap. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+Preset value of DFE H5 tap. Gen3: 0~7 Gen4:15~8.
+------------------------------
+<field_public_text>:
+Preset value of DFE H5 tap. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+Preset value of DFE H5 tap. Gen3: 0~7 Gen4:15~8.
+------------------------------
+<field_public_text>:
+Preset value of DFE H5 tap. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+Preset value of DFE H5 tap. Gen3: 0~7 Gen4:15~8.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+EQ R preset value. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+EQ R preset value. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+EQ R preset value. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+EQ R preset value. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+EQ R preset value. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+EQ R preset value. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+EQ R preset value. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+EQ R preset value. Gen3: 0~7 Gen4:15~8
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+EQ R preset value. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+EQ R preset value. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+EQ R preset value. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+EQ R preset value. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+EQ R preset value. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+EQ R preset value. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+EQ R preset value. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+EQ R preset value. Gen3: 0~7 Gen4:15~8
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+EQ C preset value. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+EQ C preset value. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+EQ C preset value. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+EQ C preset value. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+EQ C preset value. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+EQ C preset value. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+EQ C preset value. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+EQ C preset value. Gen3: 0~7 Gen4:15~8
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+EQ C preset value. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+EQ C preset value. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+EQ C preset value. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+EQ C preset value. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+EQ C preset value. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+EQ C preset value. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+EQ C preset value. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+EQ C preset value. Gen3: 0~7 Gen4:15~8
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+VGA preset value. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+VGA preset value. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+VGA preset value. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+VGA preset value. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+VGA preset value. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+VGA preset value. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+VGA preset value. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+VGA preset value. Gen3: 0~7 Gen4:15~8
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+VGA preset value. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+VGA preset value. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+VGA preset value. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+VGA preset value. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+VGA preset value. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+VGA preset value. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+VGA preset value. Gen3: 0~7 Gen4:15~8
+------------------------------
+<field_public_text>:
+VGA preset value. Gen3: 0~7 Gen4:15~8
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Tx, C+1, adjustment enable/disable. 1'b1:enable 1'b0:disable
+------------------------------
+<field_public_text>:
+TX,C+1, saturation enable/disable. 1'b1:enable 1'b0:disable
+------------------------------
+<field_public_text>:
+Tx C+1, tap Offset adjustment when adjustment enabled.
+------------------------------
+<field_public_text>:
+Tx, C-1, adjustment enable/disable. 1'b1:enable 1'b0:disable
+------------------------------
+<field_public_text>:
+TX,C-1, saturation enable/disable. 1'b1:enable 1'b0:disable
+------------------------------
+<field_public_text>:
+Tx C-1, tap Offset adjustment when adjustment enabled.
+------------------------------
+<field_public_text>:
+TxCoeff method selection for DIV96/DIV80. 1'b0:DIV80 1b1:DIV96
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Tx C0, tap setting. Bit[0]:Can be set Bit[5:4]:reserved for future use
+------------------------------
+<field_public_text>:
+Tx Low-Freq setting.
+------------------------------
+<field_public_text>:
+Tx Full-Swing setting.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Reserved
+------------------------------
+<field_public_text>:
+-0db, TX, C-1
+------------------------------
+<field_public_text>:
+-3.5db, TX, C-1
+------------------------------
+<field_public_text>:
+-6db, TX C-1
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Reserved
+------------------------------
+<field_public_text>:
+-0db, TX, C+1
+------------------------------
+<field_public_text>:
+-3.5db, TX, C+1
+------------------------------
+<field_public_text>:
+-6db, TX C+1
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+C+1, preset-P(X) value for Gen 3.
+------------------------------
+<field_public_text>:
+C+1, preset-P(X) value for Gen 3.
+------------------------------
+<field_public_text>:
+C+1, preset-P(X) value for Gen 3.
+------------------------------
+<field_public_text>:
+C+1, preset-P(X) value for Gen 3.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+C+1, preset-P(X) value for Gen 3.
+------------------------------
+<field_public_text>:
+C+1, preset-P(X) value for Gen 3.
+------------------------------
+<field_public_text>:
+C+1, preset-P(X) value for Gen 3.
+------------------------------
+<field_public_text>:
+C+1, preset-P(X) value for Gen 3.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+C+1, preset-P(X) value for Gen 3.
+------------------------------
+<field_public_text>:
+C+1, preset-P(X) value for Gen 3.
+------------------------------
+<field_public_text>:
+C+1, preset-P(X) value for Gen 3.
+------------------------------
+<reggrp_short_dscr>:
+Register group for registers 0x68 to 0x6A
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+C0, preset-P(X) value for Gen 3.
+------------------------------
+<field_public_text>:
+C0, preset-P(X) value for Gen 3.
+------------------------------
+<field_public_text>:
+C0, preset-P(X) value for Gen 3.
+------------------------------
+<field_public_text>:
+C0, preset-P(X) value for Gen 3.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+C0, preset-P(X) value for Gen 3.
+------------------------------
+<field_public_text>:
+C0, preset-P(X) value for Gen 3.
+------------------------------
+<field_public_text>:
+C0, preset-P(X) value for Gen 3.
+------------------------------
+<field_public_text>:
+C0, preset-P(X) value for Gen 3.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+C0, preset-P(X) value for Gen 3.
+------------------------------
+<field_public_text>:
+C0, preset-P(X) value for Gen 3.
+------------------------------
+<field_public_text>:
+C0, preset-P(X) value for Gen 3.
+------------------------------
+<reggrp_short_dscr>:
+Register group for registers 0x6C to 0x6E
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+C-1, preset-P(X) value for Gen 3.
+------------------------------
+<field_public_text>:
+C-1, preset-P(X) value for Gen 3.
+------------------------------
+<field_public_text>:
+C-1, preset-P(X) value for Gen 3.
+------------------------------
+<field_public_text>:
+C-1, preset-P(X) value for Gen 3.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+C-1, preset-P(X) value for Gen 3.
+------------------------------
+<field_public_text>:
+C-1, preset-P(X) value for Gen 3.
+------------------------------
+<field_public_text>:
+C-1, preset-P(X) value for Gen 3.
+------------------------------
+<field_public_text>:
+C-1, preset-P(X) value for Gen 3.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+C-1, preset-P(X) value for Gen 3.
+------------------------------
+<field_public_text>:
+C-1, preset-P(X) value for Gen 3.
+------------------------------
+<field_public_text>:
+C-1, preset-P(X) value for Gen 3.
+------------------------------
+<reggrp_short_dscr>:
+Register group for registers 0x70 to 0x72
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+C+1, preset-P(X) value for Gen 4.
+------------------------------
+<field_public_text>:
+C+1, preset-P(X) value for Gen 4.
+------------------------------
+<field_public_text>:
+C+1, preset-P(X) value for Gen 4.
+------------------------------
+<field_public_text>:
+C+1, preset-P(X) value for Gen 4.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+C+1, preset-P(X) value for Gen 4.
+------------------------------
+<field_public_text>:
+C+1, preset-P(X) value for Gen 4.
+------------------------------
+<field_public_text>:
+C+1, preset-P(X) value for Gen 4.
+------------------------------
+<field_public_text>:
+C+1, preset-P(X) value for Gen 4.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+C+1, preset-P(X) value for Gen 4.
+------------------------------
+<field_public_text>:
+C+1, preset-P(X) value for Gen 4.
+------------------------------
+<field_public_text>:
+C+1, preset-P(X) value for Gen 4.
+------------------------------
+<reggrp_short_dscr>:
+Register group for registers 0x74 to 0x76
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+C0, preset-P(X) value for Gen 4.
+------------------------------
+<field_public_text>:
+C0, preset-P(X) value for Gen 4.
+------------------------------
+<field_public_text>:
+C0, preset-P(X) value for Gen 4.
+------------------------------
+<field_public_text>:
+C0, preset-P(X) value for Gen 4.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+C0, preset-P(X) value for Gen 4.
+------------------------------
+<field_public_text>:
+C0, preset-P(X) value for Gen 4.
+------------------------------
+<field_public_text>:
+C0, preset-P(X) value for Gen 4.
+------------------------------
+<field_public_text>:
+C0, preset-P(X) value for Gen 4.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+C0, preset-P(X) value for Gen 4.
+------------------------------
+<field_public_text>:
+C0, preset-P(X) value for Gen 4.
+------------------------------
+<field_public_text>:
+C0, preset-P(X) value for Gen 4.
+------------------------------
+<reggrp_short_dscr>:
+Register group for registers 0x78 to 0x7A
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+C-1, preset-P(X) value for Gen 4.
+------------------------------
+<field_public_text>:
+C-1, preset-P(X) value for Gen 4.
+------------------------------
+<field_public_text>:
+C-1, preset-P(X) value for Gen 4.
+------------------------------
+<field_public_text>:
+C-1, preset-P(X) value for Gen 4.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+C-1, preset-P(X) value for Gen 4.
+------------------------------
+<field_public_text>:
+C-1, preset-P(X) value for Gen 4.
+------------------------------
+<field_public_text>:
+C-1, preset-P(X) value for Gen 4.
+------------------------------
+<field_public_text>:
+C-1, preset-P(X) value for Gen 4.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+C-1, preset-P(X) value for Gen 4.
+------------------------------
+<field_public_text>:
+C-1, preset-P(X) value for Gen 4.
+------------------------------
+<field_public_text>:
+C-1, preset-P(X) value for Gen 4.
+------------------------------
+<reggrp_short_dscr>:
+Register group for register 0x00
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Reserved.
+------------------------------
+<field_public_text>:
+Control pcs2pma_itx_preemp_base.
+------------------------------
+<field_public_text>:
+Control pcs2pma_eid_lp.
+------------------------------
+<field_public_text>:
+RX termination 50 ohm control. 1'b1: enable. 1'b0: disable.
+------------------------------
+<reggrp_short_dscr>:
+Register group for registers 0x08 to 0x0D
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+FDC reset. 1: reset.
+------------------------------
+<field_public_text>:
+Reserved.
+------------------------------
+<field_public_text>:
+Voltage threshold for squelch detection.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+CTLE mode. 0: preset. 1: fine-tune.
+------------------------------
+<field_public_text>:
+RX EQ state bypass control. Bit[0]: bypass CTLE state. Bit[1]: bypass DFE state. Bit[2]: bypass FOM state. Bit[3]: bypass FDC state.
+------------------------------
+<field_public_text>:
+Logical RxElecIdle source selection. 2'd0: from PCS pipe_rxei. 2'd1: from PCS rx aligned signal, inverted 2'd2: from PMA rxei_filtered signal. 2'd3: 1'b0, emulate RxElecIdle is deasserted.
+------------------------------
+<field_public_text>:
+Automatic RX EQ evaluation after exiting RxElecIdle.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+RX EQ pcs2pma_os_man_en setting for eye width.
+------------------------------
+<field_public_text>:
+RX EQ Offset direction for eye width.
+------------------------------
+<field_public_text>:
+RX EQ Offset selection for eye width.
+------------------------------
+<field_public_text>:
+RX EQ pcs2pma_man_volt_en setting for eye width.
+------------------------------
+<field_public_text>:
+RX EQ voltage selection for eye width.
+------------------------------
+<field_public_text>:
+RX EQ pcs2pma_os_man_en setting for eye height.
+------------------------------
+<field_public_text>:
+RX EQ Offset direction for eye height.
+------------------------------
+<field_public_text>:
+RX EQ Offset selection for eye height.
+------------------------------
+<field_public_text>:
+RX EQ pcs2pma_man_volt_en setting for eye height.
+------------------------------
+<field_public_text>:
+RX EQ voltage selection for eye height.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+RX EQ pcs2pma_figmerit_sel setting.
+------------------------------
+<field_public_text>:
+RX EQ pcs2pma_fom_sel setting.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Latest FDC results.
+------------------------------
+<field_public_text>:
+Latest FOM results.
+------------------------------
+<field_public_text>:
+Current RX EQ FDC state.
+------------------------------
+<field_public_text>:
+Current RX EQ core state.
+------------------------------
+<field_public_text>:
+Current RX EQ main state.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+RX EQ logical RXEI indication.
+------------------------------
+<field_public_text>:
+RX EQ auto-flow timeout indication.
+------------------------------
+<field_public_text>:
+RX EQ invalid setting indication.
+------------------------------
+<field_public_text>:
+RX EQ evaluation done indication.
+------------------------------
+<reggrp_short_dscr>:
+Register group for registers 0x10 to 0x12
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+RXEQ status observation
+------------------------------
+<field_public_text>:
+RXEQ status observation
+------------------------------
+<field_public_text>:
+RXEQ status observation
+------------------------------
+<field_public_text>:
+RXEQ status observation
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+RXEQ status observation
+------------------------------
+<field_public_text>:
+RXEQ status observation
+------------------------------
+<field_public_text>:
+RXEQ status observation
+------------------------------
+<field_public_text>:
+RXEQ status observation
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+RXEQ status observation
+------------------------------
+<reggrp_short_dscr>:
+Register group for register 0x14
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+TX {C+1, C0, C-1} directly pass-through from pipe_txdeemph[17:0]. 1'b1: enable. 1'b0: disable.
+------------------------------
+<field_public_text>:
+TX C+1 enable/disable. 1'b1: enable. 1'b0: disable.
+------------------------------
+<field_public_text>:
+TX C0 enable/disable. 1'b1: enable. 1'b0: disable.
+------------------------------
+<field_public_text>:
+TX C-1 enable/disable. 1'b1: enable. 1'b0: disble.
+------------------------------
+<reggrp_short_dscr>:
+Register group for registers 0x16 to 0x1A
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+TXEQ status observation
+------------------------------
+<field_public_text>:
+TXEQ status observation
+------------------------------
+<field_public_text>:
+TXEQ status observation
+------------------------------
+<field_public_text>:
+TXEQ status observation
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+TXEQ status observation
+------------------------------
+<field_public_text>:
+TXEQ status observation
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+RX margin pcs2pma_os_man_en setting.
+------------------------------
+<field_public_text>:
+RX margin pcs2pma_man_volt_en setting.
+------------------------------
+<field_public_text>:
+RX margin pcs2pma_figmerit_sel setting.
+------------------------------
+<field_public_text>:
+RX margin pcs2pma_fom_sel setting.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Current RX margin state.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+RX margin manual voltage selection
+------------------------------
+<field_public_text>:
+Rx margin offset
+------------------------------
+<field_public_text>:
+Rx margin offset, vertical
+------------------------------
+<field_public_text>:
+RX margin offset, horizontal
+------------------------------
+<reggrp_short_dscr>:
+Register group for register 0x1C
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Tx Amplitude status observation
+------------------------------
+<field_public_text>:
+Tx Amplitude status observation
+------------------------------
+<reggrp_short_dscr>:
+Register group for register 0x30
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Eye-scan internal use control.
+------------------------------
+<field_public_text>:
+Eye-scan internal use control.
+------------------------------
+<field_public_text>:
+Eye-scan internal use control.
+------------------------------
+<field_public_text>:
+Eye-scan internal use control.
+------------------------------
+<reggrp_short_dscr>:
+Register group for register 0x34
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+PI control. 1: hold PI.
+------------------------------
+<reggrp_short_dscr>:
+Register group for registers 0x3C to 0x3E
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Rxstatus, overflow error counter
+------------------------------
+<field_public_text>:
+Rxstatus, underflow error counter
+------------------------------
+<field_public_text>:
+Rxvalid falling edge counter
+------------------------------
+<field_public_text>:
+PIPE status observation
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Reserved
+------------------------------
+<field_public_text>:
+Reserved
+------------------------------
+<field_public_text>:
+Rxstatus, disparity error counter
+------------------------------
+<field_public_text>:
+Rxstatus, coding error counter
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+BIST error counter
+------------------------------
+<field_public_text>:
+BIST error counter
+------------------------------
+<field_public_text>:
+Indicates that there are BIST errors to system: 0: no error. 1: errors occur.
+------------------------------
+<field_public_text>:
+Shows that BIST test comparison passes to system: 0: BIST test fails. 1: BIST test passes.
+------------------------------
+<field_public_text>:
+Shows that BIST test is running to system: 0: BIST mode stops. 1: BIST mode is running.
+------------------------------
+<field_public_text>:
+Trigger BIST mode expected false error from system: 0: default . 1: generate expected false error pattern Note: This control signal is used to stop BIST test and make sure the BIST error detection circuitry is flawless.
+------------------------------
+<field_public_text>:
+Reserved
+------------------------------
+<field_public_text>:
+Enable BIST check from system: 0: normal mode. 1: enable BIST check.
+------------------------------
+<field_public_text>:
+Enable BIST test from system: 0: normal mode. 1: enable BIST test.
+------------------------------
+<reggrp_short_dscr>:
+Register group for registers 0x40 to 0x5B
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+CTLE preset eye results.
+------------------------------
+<field_public_text>:
+CTLE preset eye results.
+------------------------------
+<field_public_text>:
+CTLE preset eye results.
+------------------------------
+<field_public_text>:
+CTLE preset eye results.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+CTLE preset eye results.
+------------------------------
+<field_public_text>:
+CTLE preset eye results.
+------------------------------
+<field_public_text>:
+CTLE preset eye results.
+------------------------------
+<field_public_text>:
+CTLE preset eye results.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+CTLE preset eye results.
+------------------------------
+<field_public_text>:
+CTLE preset eye results.
+------------------------------
+<field_public_text>:
+CTLE preset eye results.
+------------------------------
+<field_public_text>:
+CTLE preset eye results.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+CTLE preset eye results.
+------------------------------
+<field_public_text>:
+CTLE preset eye results.
+------------------------------
+<field_public_text>:
+CTLE preset eye results.
+------------------------------
+<field_public_text>:
+CTLE preset eye results.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+EQ R fine-tune eye results.
+------------------------------
+<field_public_text>:
+EQ R fine-tune eye results.
+------------------------------
+<field_public_text>:
+EQ R fine-tune eye results.
+------------------------------
+<field_public_text>:
+EQ R fine-tune eye results.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+EQ R fine-tune eye results.
+------------------------------
+<field_public_text>:
+EQ R fine-tune eye results.
+------------------------------
+<field_public_text>:
+EQ R fine-tune eye results.
+------------------------------
+<field_public_text>:
+EQ R fine-tune eye results.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+EQ R fine-tune eye results.
+------------------------------
+<field_public_text>:
+EQ R fine-tune eye results.
+------------------------------
+<field_public_text>:
+EQ R fine-tune eye results.
+------------------------------
+<field_public_text>:
+EQ R fine-tune eye results.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+EQ R fine-tune eye results.
+------------------------------
+<field_public_text>:
+EQ R fine-tune eye results.
+------------------------------
+<field_public_text>:
+EQ R fine-tune eye results.
+------------------------------
+<field_public_text>:
+EQ R fine-tune eye results.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+EQ C fine-tune eye results.
+------------------------------
+<field_public_text>:
+EQ C fine-tune eye results.
+------------------------------
+<field_public_text>:
+EQ C fine-tune eye results.
+------------------------------
+<field_public_text>:
+EQ C fine-tune eye results.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+EQ C fine-tune eye results.
+------------------------------
+<field_public_text>:
+EQ C fine-tune eye results.
+------------------------------
+<field_public_text>:
+EQ C fine-tune eye results.
+------------------------------
+<field_public_text>:
+EQ C fine-tune eye results.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+EQ C fine-tune eye results.
+------------------------------
+<field_public_text>:
+EQ C fine-tune eye results.
+------------------------------
+<field_public_text>:
+EQ C fine-tune eye results.
+------------------------------
+<field_public_text>:
+EQ C fine-tune eye results.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+EQ C fine-tune eye results.
+------------------------------
+<field_public_text>:
+EQ C fine-tune eye results.
+------------------------------
+<field_public_text>:
+EQ C fine-tune eye results.
+------------------------------
+<field_public_text>:
+EQ C fine-tune eye results.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+VGA fine-tune eye results.
+------------------------------
+<field_public_text>:
+VGA fine-tune eye results.
+------------------------------
+<field_public_text>:
+VGA fine-tune eye results.
+------------------------------
+<field_public_text>:
+VGA fine-tune eye results.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+VGA fine-tune eye results.
+------------------------------
+<field_public_text>:
+VGA fine-tune eye results.
+------------------------------
+<field_public_text>:
+VGA fine-tune eye results.
+------------------------------
+<field_public_text>:
+VGA fine-tune eye results.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+VGA fine-tune eye results.
+------------------------------
+<field_public_text>:
+VGA fine-tune eye results.
+------------------------------
+<field_public_text>:
+VGA fine-tune eye results.
+------------------------------
+<field_public_text>:
+VGA fine-tune eye results.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+VGA fine-tune eye results.
+------------------------------
+<field_public_text>:
+VGA fine-tune eye results.
+------------------------------
+<field_public_text>:
+VGA fine-tune eye results.
+------------------------------
+<field_public_text>:
+VGA fine-tune eye results.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+TX preset FOM results.
+------------------------------
+<field_public_text>:
+TX preset FOM results.
+------------------------------
+<field_public_text>:
+TX preset FOM results.
+------------------------------
+<field_public_text>:
+TX preset FOM results.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+TX preset FOM results.
+------------------------------
+<field_public_text>:
+TX preset FOM results.
+------------------------------
+<field_public_text>:
+TX preset FOM results.
+------------------------------
+<field_public_text>:
+TX preset FOM results.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+TX preset FOM results.
+------------------------------
+<field_public_text>:
+TX preset FOM results.
+------------------------------
+<field_public_text>:
+TX preset FOM results.
+------------------------------
+<field_public_text>:
+TX preset FOM results.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+TX preset FOM results.
+------------------------------
+<field_public_text>:
+TX preset FOM results.
+------------------------------
+<field_public_text>:
+TX preset FOM results.
+------------------------------
+<field_public_text>:
+TX preset FOM results.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+TX fine-tune FOM results.
+------------------------------
+<field_public_text>:
+TX fine-tune FOM results.
+------------------------------
+<field_public_text>:
+TX fine-tune FOM results.
+------------------------------
+<field_public_text>:
+TX fine-tune FOM results.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+TX fine-tune FOM results.
+------------------------------
+<field_public_text>:
+TX fine-tune FOM results.
+------------------------------
+<field_public_text>:
+TX fine-tune FOM results.
+------------------------------
+<field_public_text>:
+TX fine-tune FOM results.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+TX fine-tune FOM results.
+------------------------------
+<field_public_text>:
+TX fine-tune FOM results.
+------------------------------
+<field_public_text>:
+TX fine-tune FOM results.
+------------------------------
+<field_public_text>:
+TX fine-tune FOM results.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+TX fine-tune FOM results.
+------------------------------
+<field_public_text>:
+TX fine-tune FOM results.
+------------------------------
+<field_public_text>:
+TX fine-tune FOM results.
+------------------------------
+<field_public_text>:
+TX fine-tune FOM results.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+TX fine-tune FDC results.
+------------------------------
+<field_public_text>:
+TX fine-tune FDC results.
+------------------------------
+<field_public_text>:
+TX fine-tune FDC results.
+------------------------------
+<field_public_text>:
+TX fine-tune FDC results.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+TX fine-tune FDC results.
+------------------------------
+<field_public_text>:
+TX fine-tune FDC results.
+------------------------------
+<field_public_text>:
+TX fine-tune FDC results.
+------------------------------
+<field_public_text>:
+TX fine-tune FDC results.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+TX fine-tune FDC results.
+------------------------------
+<field_public_text>:
+TX fine-tune FDC results.
+------------------------------
+<field_public_text>:
+TX fine-tune FDC results.
+------------------------------
+<field_public_text>:
+TX fine-tune FDC results.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+TX fine-tune FDC results.
+------------------------------
+<field_public_text>:
+TX fine-tune FDC results.
+------------------------------
+<field_public_text>:
+TX fine-tune FDC results.
+------------------------------
+<field_public_text>:
+TX fine-tune FDC results.
+------------------------------
+<reggrp_short_dscr>:
+Register group for register 0x7C
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Debug signal.
+------------------------------
+<field_public_text>:
+Debug signal.
+------------------------------
+<field_public_text>:
+Debug signal.
+------------------------------
+<field_public_text>:
+Reserved
+------------------------------

@@ -1,0 +1,808 @@
+=== DOCUMENTATION FOR TARGET: AFI ===
+
+<target_short_dscr>:
+Automatic Frame Injector Configuration
+------------------------------
+<target_public_text>:
+The Automatic Frame Injector (AFI) provides mechanisms for periodic injection of PDUs. E.g. injection of
+- OAM PDUs for continuity check, loss and delay measurement 
+- OAM PDUs for high bandwidth service activation test, ref. ITU Y.1564.
+- IEEE 1588 PDUs
+
+With regards to the injection bandwidth supported by AFI, refer to AFI:DTI_TBL.
+------------------------------
+<reggrp_short_dscr>:
+Miscellaneous AFI configuration
+------------------------------
+<reg_short_dscr>:
+Miscellaneous AFI control parameters
+------------------------------
+<field_public_text>:
+Enable AFI.
+
+Must be set to 1 before any use of AFI.
+------------------------------
+<reg_short_dscr>:
+Control information about new frame received by AFI for injection.
+------------------------------
+<field_public_text>:
+Valid bit for NEW_FRM_INFO.FRM_INFO.
+------------------------------
+<reg_short_dscr>:
+Frame information about new frame received by AFI for injection.
+------------------------------
+<field_public_text>:
+Frame information for new frame received by AFI.
+
+The inforrmation must be copied to FRM_INFO bits in FRM_ENTRY_PART0 and FRM_ENTRY_PART1.
+
+Once FRM_INFO has been copied to FRM_TBL, then NEW_FRM_CTRL.VLD must be cleared.
+
+Related parameters:
+AFI:FRM_TBL:FRM_ENTRY_PART0.PART0
+AFI:FRM_TBL:FRM_ENTRY_PART1.PART1
+------------------------------
+<field_enc>:
+Bit 0-14: fp
+Bit 15-21: dstp
+Bit 22-24: eprio
+Bit 25: short
+------------------------------
+<reg_short_dscr>:
+Warnings from AFI block
+------------------------------
+<reg_public_text>:
+These bits shall normally not get set.
+------------------------------
+<field_public_text>:
+DTI_CNT_DOWN has reached its maximum negative value.
+------------------------------
+<field_public_text>:
+A TTI in TTI_TBL was elected to be processed, but was already being processed.
+
+This may indicate that the length of a calendar slot is too short (ref. AFI:TTI_MISC:TTI_CAL_SLOT_PTRS).
+
+If enabled in STICKY_INFO_ENA.TTI_BUSY_INFO_ENA, the corresponding TTI pointer is stored in STICKY_INFO.TTI_PTR.
+------------------------------
+<field_public_text>:
+FRM_OUT_MAX has been reached for port.
+
+This is unusual, but may occur when a large number of frames are successively injected to queues of the same port or if the port flow controlled or is shaped to a low bandwidth.
+
+The number of injections that can be outstanding (i.e. waiting to be transmitted out of QSYS) for a port  at a time is configured in AFI:PORT_TBL:PORT_CFG.FRM_OUT_MAX.
+
+If enabled in STICKY_INFO_ENA.FRM_OUT_MAX_INFO_ENA, the corresponding port number is stored in STICKY_INFO.PORT_NUM.
+------------------------------
+<field_public_text>:
+A new frame for injection was received by AFI, but NEW_FRM_CTRL.VLD was still 1.
+
+Check that NEW_FRM_CTRL.VLD is cleared upon copying NEW_FRM_INFO.FRM_INFO to FRM_TBL.
+------------------------------
+<reg_short_dscr>:
+Additional information about sticky bit events.
+------------------------------
+<reg_public_text>:
+The information is updated if 
+a) Enabled in STICKY_INFO_ENA
+and
+b) STICKY_INFO_WR_CNT is > 0
+------------------------------
+<field_public_text>:
+Number of times STICKY_INFO.PORT_NUM and  STICKY_INFO.TTI_PTR is allowed to be updated.
+------------------------------
+<field_enc>:
+0: Illegal
+1: Max one update of STICKY_INFO allowed (decremented for each update).
+2: Max two updates of STICKY_INFO allowed (decremented for each update).
+...
+15: Any number of updates of STICKY_INFO allowed (not decremented).
+------------------------------
+<field_public_text>:
+TTI pointer corresponding to sticky bit event.
+------------------------------
+<field_public_text>:
+Port number corresponding to sticky bit event.
+------------------------------
+<reg_short_dscr>:
+Enabling of additional information about sticky bit events.
+------------------------------
+<field_public_text>:
+Enable updating of STICKY_INFO.TTI_PTR for WARN_TTI_BUSY_STICKY.
+------------------------------
+<field_public_text>:
+Reserved, must set to its default value.
+------------------------------
+<field_public_text>:
+Enable updating of STICKY_INFO.PORT_NUM for WARN_FRM_OUT_MAX_STICKY.
+------------------------------
+<field_public_text>:
+Enable updating of STICKY_INFO.PORT_NUM for ERR_FRM_OUT_NEG_STICKY.
+------------------------------
+<reg_short_dscr>:
+Lenght of DTI Duration Tick
+------------------------------
+<field_public_text>:
+Lenght of DTI Duration Tick in clock cycles.
+
+Default value corresponds to 0.1ms.
+------------------------------
+<reggrp_short_dscr>:
+Frame Table
+------------------------------
+<reggrp_public_text>:
+Table of frames (or frame references) to be injected. 
+The actual frame data are stored in QSYS. 
+
+Used for both TTI and DTI.
+
+Notes:
+Write operations to entries in the frame table, which are in the process of being removed (FRM_RM=1, see FRM_ENTRY_PART0) are not allowed.
+
+Address 0 in the Frame Table must only be used for TTI (not for DTI), since DTIs use address value 0 to mark end of sequence.
+------------------------------
+<reg_short_dscr>:
+Entry type and pointer to next Frame Table entry.
+------------------------------
+<reg_public_text>:
+Note:
+Write operations to entries in the frame table, which are in the process of being removed (FRM_RM=1, see FRM_ENTRY_PART0) are not allowed.
+------------------------------
+<field_public_text>:
+Entry Type.
+
+Delay entries are only applicable to DTI.
+
+The Entry Type controls the use of FRM_ENTRY_PART0.PART0.
+------------------------------
+<field_enc>:
+0: Frame 
+1: Delay
+------------------------------
+<field_public_text>:
+Pointer to next Frame Table entry.
+
+Only applicable for frames used for DTI.
+------------------------------
+<reg_short_dscr>:
+Frame Table entry configuration, part 0
+------------------------------
+<reg_public_text>:
+Note:
+Write operations to entries in the frame table, which are in the process of being removed (FRM_RM=1, see FRM_ENTRY_PART1) are not allowed.
+------------------------------
+<field_public_text>:
+Configuration of frame or delay entry in Frame Table.
+Delay entries are only used for DTI.
+
+Delay entry fields:
+DELAY: 
+Delay between injection of start of frames. 
+Unit: One system clock cycle.
+
+
+Frame entry fields:
+FRM_INFO.fp:
+FRM_INFO.dstp:
+Frame information, ref. AFI:MISC:NEW_FRM_INFO.FRM_INFO.
+
+INJ_CNT: 
+Injection count. Number times to inject frame.
+Frame is ignored if INJ_CNT=0 or FRM_RM=1.
+Only applicable for DTI.
+
+Related parameters:
+AFI:FRM_TBL:FRM_ENTRY_PART1.PART1
+------------------------------
+<field_enc>:
+Delay entry type:
+Bit 0-29: DELAY
+
+Frame entry type:
+Bit 0-14: fp
+Bit 15-21: dstp
+Bit 22-29: inj_cnt
+------------------------------
+<reg_short_dscr>:
+Frame Table entry configuration, part 1
+------------------------------
+<reg_public_text>:
+Note:
+Write operations to entries in the frame table, which are in the process of being removed (FRM_RM=1) are not allowed.
+------------------------------
+<field_public_text>:
+Configuration of frame entry in Frame Table.
+
+Delay entry fields:
+PART1 is not used for delay entries.
+
+
+Frame entry fields:
+FRM_INFO.short:
+FRM_INFO.eprio:
+Frame information, ref. AFI:MISC:NEW_FRM_INFO.FRM_INFO.
+
+FRM_RM:
+When set, next frame injection causes frame to be removed from buffer memory. 
+This injection will not be transmitted on the destination port.
+Once removed, HW sets FRM_GONE=1.
+
+FRM_GONE:
+Set by AFI when frame has been removed from buffer memory.
+
+Related parameters:
+AFI:FRM_TBL:FRM_ENTRY_PART0.PART0
+------------------------------
+<field_enc>:
+Bit 0: FRM_INFO.short
+Bit 1-3: FRM_INFO.eprio
+Bit 4: FRM_RM
+Bit 5: FRM_GONE
+------------------------------
+<reggrp_short_dscr>:
+Delay Triggered Injection Table
+------------------------------
+<reggrp_public_text>:
+Delay Triggered Injection Table
+
+With DTIs a chain of frame and delays (between frames) can be configured for injection.
+
+DTIs are intended for service activation tests, ref. ITU-T Y.1564.
+
+Before writing to a DTI Table entry, the corresponding DTI counter must be disabled (AFI:DTI_MISC:DTI_CTRL.ENA=0).
+
+The processing time for a chain with one frame entry and one delay entry is 12 clock cycles.
+For 64 byte frames and a clock cycle of 1597 ps the maximum injection line bandwidth for a single DTI instance thus becomes 35065 Mbps.
+For longer clock cycles, the injection bandwidth is proportionally smaller.
+
+For a clock cycle of 1597 ps and 64 byte frames the total line bandwidth through each VD is limited to 35065 Mbps.
+For longer clock cycles, the VD bandwidth is proportionally smaller.
+
+Accross all DTIs and TTIs, AFI can - for 64 byte frames - inject up to half the cell bus bandwidth, provided that such bandwidth is allocated in the cell bus calendar.
+I.e. for a clock cycle of 1597 ps the maximum injected bandwidth becomes 105197 Mbps.
+------------------------------
+<reg_short_dscr>:
+Configuration of DTI Mode.
+------------------------------
+<field_public_text>:
+See AFI:DTI_TBL:DTI_MODE.MODE, encoding 2.
+------------------------------
+<field_public_text>:
+Reserved, must set to its default value.
+------------------------------
+<field_public_text>:
+Number of remaining injections of current frame in frame sequence (NEXT_FRM_PTR).
+
+Must be set to 0 when (re)starting DTI.
+------------------------------
+<field_public_text>:
+If the last frame table entry of a DTI sequence is a delay, then this is termed a "trailing delay".
+
+By setting TRAILING_DELAY_SEQ_CNT=N a trailing delay is only applied for every Nth sequence injection.
+
+This can be used to "fine tune" the bandwidth of a DTI sequence.
+
+TRAILING_DELAY_SEQ_CNT=0 disables this feature.
+
+If a DTI sequence (in the frame table) has no trailing delay, then TRAILING_DELAY_SEQ_CNT has no effect.
+------------------------------
+<field_enc>:
+0: Disable feature.
+1: Apply trailing delay for every sequence injected.
+2: Apply trailing delay for every 2nd sequence injected.
+3: Apply trailing delay for every 3rd sequence injected.
+...
+------------------------------
+<field_public_text>:
+Configuration of DTI mode.
+------------------------------
+<field_enc>:
+0:  Frame sequence shall be injected DTI_CNT.CNT times.
+
+1:  
+Frame sequence shall be injected until stopped (DTI_CTRL.ENA=0).
+Number of frames injected is counted in DTI_CNT.CNT.
+ 
+2:
+Frame sequence shall be injected DTI_CNT.CNT times. Once this is done, the DTI pointed to by AFI:DTI_TBL:DTI_MODE.DTI_NEXT will be enabled. This can be used to concatenate DTIs.
+
+3: 
+Reserved.
+------------------------------
+<reg_short_dscr>:
+Port and queue for injected frames.
+------------------------------
+<field_public_text>:
+QU_NUM selects the queue, which the frame is injected into.
+For details, refer to the functional description of the queue system in the datasheet.
+------------------------------
+<field_public_text>:
+Port number which injection queue transmits on.
+
+Injection queue is selected by QU_NUM.
+------------------------------
+<reg_short_dscr>:
+DTI Frame Table pointers
+------------------------------
+<field_public_text>:
+Pointer to next frame in frame sequence.
+
+Must be set to same value as FIRST_FRM_PTR when (re)starting DTI.
+------------------------------
+<field_public_text>:
+Pointer to first frame in frame sequence.
+------------------------------
+<reg_short_dscr>:
+DTI counter
+------------------------------
+<field_public_text>:
+DTI_MODE.MODE=0, 2:
+Number of remaining frame sequences to inject. 
+Configured by SW, decremented by AFI.
+
+DTI_MODE.MODE=1:
+Number of frames injected.
+------------------------------
+<reg_short_dscr>:
+Duration of last DTI run
+------------------------------
+<field_public_text>:
+Duration of last DTI run in DTI Duration Ticks.
+Before starting a DTI, DURATION must be set to 0.
+
+When AFI:DTI_MISC:DTI_CTRL.ENA becomes 0, DURATION is updated with the duration of the DTI run.
+
+While a DTI is running DURATION holds an internal time stamp of when the DTI was started. This value is not intended for SW usage.
+
+Related parameters:
+AFI:MISC:DTI_DURATION_TICK_LEN.DTI_DURATION_TICK_LEN
+------------------------------
+<reggrp_short_dscr>:
+Miscellaneous DTI configuration and status information
+------------------------------
+<reggrp_public_text>:
+Miscellaneous DTI configuration and status information
+------------------------------
+<reg_short_dscr>:
+DTI count down counters
+------------------------------
+<field_public_text>:
+Remaining number of clock cycles before next injection.
+May become negative while waiting for table/injection access. Two's complement encoded.
+
+Should be set to 0 when (re)starting DTI (unless an initial delay is desirable).
+------------------------------
+<reg_short_dscr>:
+DTI control
+------------------------------
+<field_public_text>:
+DTI bandwidth.
+
+Used to give arbitration precedence to high bandwidth DTIs.
+------------------------------
+<field_enc>:
+0: <5Gbps
+1: >=5Gbps
+------------------------------
+<field_public_text>:
+Enable DTI.
+
+If MODE=0 or MODE=2, then ENA is cleared by AFI when configured number of sequences have been injected.
+
+Before (re)starting a DTI the following initialization should be done:
+DURATION must be set to 0.
+NEXT_FRM_PTR should be set to FIRST_FRM_PTR.
+DTI_CNT_DOWN.CNT_DOWN should be set to 0.
+FRM_INJ_CNT should be set to 0
+AFI::MISC_CTRL.AFI_ENA must be set to 1.
+
+If MODE=2, then the AFI will set ENA=1 for the DTI pointed to by DTI_NEXT once the DTI with MODE=2 completes.
+------------------------------
+<reggrp_short_dscr>:
+Timer Triggered Injection Table
+------------------------------
+<reggrp_public_text>:
+Timer Triggered Injection Table
+
+When changing the configuration of a TTI, TIMER_LEN must be set to 0 (i.e. TTI must be disabled).
+------------------------------
+<reg_short_dscr>:
+Port and queue for injected frames.
+------------------------------
+<field_public_text>:
+QU_NUM selects the queue, which the frame is injected into.
+For details, refer to the functional description of the queue system in the datasheet.
+
+QU_NUM must not be changed when timer is enabled.
+------------------------------
+<field_public_text>:
+Port number which injection queue transmits on.
+
+Injection queue is selected by QU_NUM.
+
+PORT_NUM must not be changed when timer is enabled.
+------------------------------
+<reg_short_dscr>:
+TTI Timer configuration
+------------------------------
+<field_public_text>:
+Number of ticks of configured TICK_IDX between frame injections.
+
+The period between each injection becomes 
+  tick_period x TIMER_LEN
+
+Setting TIMER_LEN to non-zero value enables TTI, provided that TIMER_ENA is set to 1.
+TTIs can be disabled by either setting TIMER_LEN=0 or by setting TIMER_ENA=0.
+
+0x1FF (= Inject ASAP) is intended for removal of frame from buffer memory. Upon injection, HW sets TIMER_LEN to 0 (=Disable).
+
+Before setting TIMER_LEN, TICK_CNT should be set to a random value in range 1-TIMER_LEN (unless a specific initial timer value is desirable).
+------------------------------
+<field_enc>:
+0 => Disable TTI (can also be achieved by setting TIMER_ENA=0).
+1 => 1 tick
+2 => 2 ticks
+...
+0x1ff => Inject ASAP, then set to TIMER_LEN=0 by AFI.
+------------------------------
+<field_public_text>:
+Enable timer.
+
+Note that disabling a timer can also be achieved by setting TIMER_LEN to 0.
+
+Before enabling a timer AFI::MISC_CTRL.AFI_ENA must be set to 1.
+------------------------------
+<field_public_text>:
+Configuration of injection time jitter for TTI.
+------------------------------
+<field_enc>:
+0: No jitter
+1: Timer is set to a random value in the range [TIMER_LEN*0.75; TIMER_LEN]
+2: Timer is set to a random value in the range [TIMER_LEN*0.50; TIMER_LEN]
+3: Timer is set to a random value in the range [1;TIMER_LEN]
+------------------------------
+<field_public_text>:
+Timer Tick, which TTI shall use.
+------------------------------
+<reg_short_dscr>:
+Frame pointer for TTI
+------------------------------
+<field_public_text>:
+Pointer to the frame in Frame Table, which TTI shall inject.
+------------------------------
+<reg_short_dscr>:
+Current state of TTI's tick counter
+------------------------------
+<field_public_text>:
+Number of ticks until next injection.
+
+Frame is injected when TICK_CNT=0. Upon injection TICK_CNT gets set to TIMER_LEN.
+
+Should be set to a random value in range 1-TIMER_LEN before starting TTI.
+------------------------------
+<reg_short_dscr>:
+Miscellaneous TTI parameters
+------------------------------
+<field_public_text>:
+Enable counting of injected frames in AFI:TTI_MISC:TTI_INJ_CNT.TTI_INJ_CNT.
+------------------------------
+<reg_short_dscr>:
+TUPE Control
+------------------------------
+<reg_public_text>:
+Control value for Table UPdate Engine (TUPE).
+
+See AFI:TUPE.
+------------------------------
+<field_public_text>:
+Control value for Table UPdate Engine (TUPE).
+
+See AFI:TUPE.
+------------------------------
+<reggrp_short_dscr>:
+TTI Tick configuration
+------------------------------
+<reggrp_public_text>:
+TTI Tick configuration
+------------------------------
+<reg_short_dscr>:
+Base Tick configuration.
+------------------------------
+<field_public_text>:
+Length of TTI Base Tick.
+
+Unit: One system clock cycle.
+
+In default configuration and a clock cycle of 1597 ps, the tick length corresponds to 52us.
+
+If the device is uses a longer clock cycle, then the value of BASE_LEN must be reconfigured accordingly.
+------------------------------
+<reg_short_dscr>:
+Length of TTI Ticks 0-3
+------------------------------
+<field_public_text>:
+Length of TTI Tick 3.
+
+Unit: TTI Tick 2, as configured in TTI_TICK_LEN_0_3.LEN2.
+
+In default configuration the tick length corresponds to 10ms.
+------------------------------
+<field_public_text>:
+Length of TTI Tick 2.
+
+Unit: TTI Tick 1, as configured in TTI_TICK_LEN_0_3.LEN1.
+
+In default configuration the tick length corresponds to 3.3ms.
+------------------------------
+<field_public_text>:
+Length of TTI Tick 1.
+
+Unit: TTI Tick 0, as configured in TTI_TICK_LEN_0_3.LEN0.
+
+In default configuration the tick length corresponds to 416us.
+------------------------------
+<field_public_text>:
+Length of TTI Tick 0.
+
+Unit: Base Ticks, as configured in TTI_TICK_BASE.BASE_LEN.
+
+In default configuration the tick length corresponds to 52us.
+------------------------------
+<reg_short_dscr>:
+Length of TTI Ticks 4-7
+------------------------------
+<field_public_text>:
+Length of TTI Tick 7.
+
+Unit: TTI Tick 6, as configured in TTI_TICK_LEN_4_7.LEN6.
+
+In default configuration the tick length corresponds to 1min.
+------------------------------
+<field_public_text>:
+Length of TTI Tick 6.
+
+Unit: TTI Tick 5, as configured in TTI_TICK_LEN_4_7.LEN5.
+
+In default configuration the tick length corresponds to 10s.
+------------------------------
+<field_public_text>:
+Length of TTI Tick 5.
+
+Unit: TTI Tick 4, as configured in TTI_TICK_LEN_4_7.LEN4.
+
+In default configuration the tick length corresponds to 1s.
+------------------------------
+<field_public_text>:
+Length of TTI Tick 4.
+
+Unit: TTI Tick 3, as configured in TTI_TICK_LEN_0_3.LEN3.
+
+In default configuration the tick length corresponds to 100ms.
+------------------------------
+<reggrp_short_dscr>:
+Miscellaneous TTI configration
+------------------------------
+<reggrp_public_text>:
+Miscellaneous TTI configration
+------------------------------
+<reg_short_dscr>:
+Start and end Frame Table pointers for Calendar Slot
+------------------------------
+<field_public_text>:
+Calendar Slot's Frame Table end pointer.
+------------------------------
+<field_public_text>:
+Calendar Slot's Frame Table start pointer.
+------------------------------
+<reg_short_dscr>:
+Number of TTIs to service in slot before moving to next TTI Calendar slot.
+------------------------------
+<field_public_text>:
+Number of TTIs to service in slot before moving to next TTI Calendar Slot.
+------------------------------
+<field_enc>:
+0: 1
+1: 1
+2: 2
+...
+------------------------------
+<reg_short_dscr>:
+TTI Control
+------------------------------
+<field_public_text>:
+Reserved, must set to its default value.
+------------------------------
+<field_public_text>:
+Length of TTI Calendar.
+------------------------------
+<field_enc>:
+0: Length=1 (Slot 0)
+1: Length=2 (Slot 0-1)
+2: Length=3 (Slot 0-2)
+3: Length=4 (Slot 0-3)
+------------------------------
+<field_public_text>:
+When set, initialize Calendar to start at Calendar Slot 0.
+
+Cleared by AFI when done.
+------------------------------
+<field_public_text>:
+Enable TTIs.
+
+Before enabling TTIs, TTI_INIT should be used to initialize Calendar state.
+------------------------------
+<reg_short_dscr>:
+TTI Injection Counter
+------------------------------
+<field_public_text>:
+Number of TTI frame injections.
+Enabled per TTI using AFI:TTI_TBL:TTI_MISC_CFG.INJ_CNT_ENA.
+
+Frames injected for removal are also counted.
+------------------------------
+<reg_short_dscr>:
+State of random algorithm used for TTI jitter calculation
+------------------------------
+<field_public_text>:
+State of random algorithm used for TTI jitter calculation.
+
+Updated by AFI for each jitter calculation.
+Should be initialized by SW to a random, non-zero value.
+------------------------------
+<reg_short_dscr>:
+Outstanding TTI injections per port
+------------------------------
+<field_public_text>:
+See AFI:PORT_TBL:PORT_CFG.FRM_OUT_MAX.
+------------------------------
+<reggrp_short_dscr>:
+Port parameter configuration
+------------------------------
+<reggrp_public_text>:
+Port parameter configuration
+------------------------------
+<reg_short_dscr>:
+Port configuration parameters
+------------------------------
+<field_public_text>:
+Controls what action to take if TTI injection cannot be performed due to FRM_OUT_MAX reached or injection stop from QSYS. 
+
+FC_SKIP_TTI_INJ should be set when disabling a port using FRM_OUT_MAX. 
+See PORT_CFG.FRM_OUT_MAX.
+------------------------------
+<field_enc>:
+0: Postpone injection until injection is again allowed.
+1: Skip this injection.
+------------------------------
+<field_public_text>:
+Maximum number of injections that can be outstanding at a time per port.
+
+DTI injections are held back if FRM_OUT_MAX is exceeded.
+TTI injections are held back if FRM_OUT_MAX+TTI_FRM_OUT_MAX is exceeded.
+
+TTI_FRM_OUT_MAX ensures that TTI injections are still possible when a DTI flow is configured slightly above port speed.
+
+If FRM_OUT_MAX is set to 0 to disable injections for port, then it is recommended to first set FC_SKIP_TTI_INJ=1 to avoid a burst of injections when injections are later enabled.
+Upon setting FRM_OUT_MAX back to non-zero value, then FC_SKIP_TTI_INJ must be set back to its original value.
+
+Note that "removal injections" (for removing frames from buffer memory) are not included in the number of outstanding injections per port and are therefore also allowed when FRM_OUT_MAX=0.
+------------------------------
+<field_enc>:
+0: Injection disabled for port (both TTI and DTI injections, regardless of TTI_FRM_OUT_MAX value)
+1: Maximum 1 outstanding injection.
+2: Maximum 2 outstanding injections.
+...
+1022: Maximum 1022 outstanding injections.
+1023: Illegal.
+------------------------------
+<reggrp_short_dscr>:
+AFI Table UPdata Engine (AFI TUPE)
+------------------------------
+<reggrp_public_text>:
+Engine - called "AFI TUPE" - for updating TTI Table.
+
+TUPE is used as follows:
+1) Configure TUPE parameters.
+2) Set TUPE_MISC.TUPE_START=1
+3) Await TUPE_MISC.TUPE_START=0
+
+While TUPE is running (i.e. TUPE_START=1) CPU must not write to TTI Table.
+While TUPE is running no injections will be performed for TTIs within configured TUPE address range and matching the configured TUPE criteria.
+------------------------------
+<reg_short_dscr>:
+Miscellaneous TUPE parameters
+------------------------------
+<field_public_text>:
+Enable use of CMD_QU_NUM_VAL.
+
+For further information refer to
+AFI:TUPE:TUPE_CMD1.CMD_QU_NUM_VAL
+------------------------------
+<field_public_text>:
+Enable use of CMD_PORT_NUM_VAL.
+
+For further information refer to
+AFI:TUPE:TUPE_CMD1.CMD_PORT_NUM_VAL
+------------------------------
+<field_public_text>:
+New value for TIMER_ENA for any TTIs matching TUPE criteria.
+
+Must be enabled by AFI:TUPE:TUPE_MISC.CMD_TIMER_ENA_ENA.
+------------------------------
+<field_public_text>:
+Enable use of CMD_TIMER_ENA_VAL.
+
+For further information refer to
+AFI:TUPE:TUPE_MISC.CMD_TIMER_ENA_VAL
+------------------------------
+<field_public_text>:
+Enable use of CRIT_QU_NUM_ENA.
+
+For further information refer to
+AFI:TUPE:TUPE_CRIT1.CRIT_QU_NUM_VAL
+------------------------------
+<field_public_text>:
+Enable use of CRIT_PORT_NUM_VAL.
+
+For further information refer to
+AFI:TUPE:TUPE_CRIT1.CRIT_PORT_NUM_VAL
+------------------------------
+<field_public_text>:
+Start TUPE.
+
+Write 1 to start TUPE.
+Set to 0 by TUPE when done.
+
+Before running TUPE, AFI::MISC_CTRL.AFI_ENA must be set to 1.
+
+Note:
+While TUPE is running (i.e. TUPE_START=1) CPU must not write to TTI Table.
+------------------------------
+<reg_short_dscr>:
+Address range for TUPE to process
+------------------------------
+<field_public_text>:
+Last address in TTI Table for TUPE to process.
+
+Must be >= TUPE_START_ADDR.
+------------------------------
+<field_public_text>:
+First address in TTI Table for TUPE to process.
+
+Must be <= TUPE_START_ADDR.
+------------------------------
+<reg_short_dscr>:
+TUPE Criteria
+------------------------------
+<field_public_text>:
+If enabled by AFI:TUPE:TUPE_MISC.CRIT_QU_NUM_ENA, then QU_NUM in TTIs must match this value in order to be processed by TUPE.
+------------------------------
+<field_public_text>:
+If enabled by AFI:TUPE:TUPE_MISC.CRIT_PORT_NUM_ENA, then PORT_NUM in TTIs must match this value in order to be processed by TUPE.
+------------------------------
+<reg_short_dscr>:
+TUPE Criteria
+------------------------------
+<field_public_text>:
+Refer to AFI:TUPE:TUPE_CRIT3.CRIT_TUPE_CTRL_VAL.
+------------------------------
+<reg_short_dscr>:
+TUPE Criteria
+------------------------------
+<field_public_text>:
+For one or more of the configured CRIT_TUPE_CTRL_VALs, TUPE_CTRL in TTIs must match the following criteria in order to be processed by TUPE:
+
+(TTI.TUPE_CTRL & CRIT_TUPE_CTRL_MASK) == CRIT_TUPE_CTRL_VAL[i]
+------------------------------
+<reg_short_dscr>:
+TUPE Command Parameters
+------------------------------
+<field_public_text>:
+New value for QU_NUM for any TTIs matching TUPE criteria.
+
+Must be enabled by AFI:TUPE:TUPE_MISC.CMD_QU_NUM_ENA.
+------------------------------
+<field_public_text>:
+New value for PORT_NUM for any TTIs matching TUPE criteria.
+
+Must be enabled by AFI:TUPE:TUPE_MISC.CMD_PORT_NUM_ENA.
+------------------------------

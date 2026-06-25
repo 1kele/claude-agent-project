@@ -1,0 +1,1553 @@
+=== DOCUMENTATION FOR TARGET: SD25G_TARGET ===
+
+<reggrp_short_dscr>:
+Register group for registers 0x00 to 0x1F
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<field_public_text>:
+Reference current/voltage fine-tuning control ~+/-2.5% increase/decrease per code change
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<field_public_text>:
+Clock distribution buffer fine-tuning
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+High speed CML & divider fine-tuning
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<field_public_text>:
+Ref clock receiver enable
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<field_public_text>:
+VCO calibration reset
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+VCO divider setting,00, divide by 0 01, divide by 2
+------------------------------
+<field_public_text>:
+Enable clock distribution for TX Lane 0 + Lane 1
+------------------------------
+<field_public_text>:
+Power down VCO
+------------------------------
+<field_public_text>:
+Enable clock distribution for TX Lane 2 + Lane 3
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Reference clock divide 00  Divide-by-1 01  Divide-by-2 10  Divide-by-4
+------------------------------
+<field_public_text>:
+Bypass VCO calibration,Debug mode only
+------------------------------
+<field_public_text>:
+Enable clock distribution for RX Lane 0 + Lane 1
+------------------------------
+<field_public_text>:
+Enable clock distribution for RX Lane 2 + Lane 3
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<field_public_text>:
+Application notes for more details and restrictions.  Common settings:0110: Divide by 160 1111: Divide by 330
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+PLL loop parameter tuning
+------------------------------
+<field_public_text>:
+PLL loop parameter tuning
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Power down buffers in ref clock path
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<field_public_text>:
+PLL loop parameter tuning
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<field_public_text>:
+Switches between On-chip ref clock or External Bump ref clock
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<field_public_text>:
+VCO current tuning
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+T4 in figure 17 (reset scheme) 00: 30t 01: 10000t 10: 20000t 11: 30000t
+------------------------------
+<field_public_text>:
+T2 in figure 17 (reset scheme) 00: 30t 01: 10000t 10: 20000t 11: 30000t
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+T6 in figure 17 (reset scheme) 00: 30t 01: 1000t 10: 5000t 11: 10000t
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Simulation speed up mode enable. 0: no speed up 1: speed up. Note that loss of lock related functions will not be speed up
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+1: enable LS3 loopback path.
+------------------------------
+<field_public_text>:
+BIST enable control for all lanes
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<field_public_text>:
+Reset signal for pll, low active
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Link based,To select between interface pin control (default) and register control of 1. DFE coefficient control 2. Power down control 3. 50ohm term control 4. Eye scan enable
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<field_public_text>:
+Data width/rate control from register or hardward pin.0: cfg control 1: hwt control
+------------------------------
+<field_public_text>:
+Data width control:000: 10 bit 001: 16 bit 010: 20 bit 011: 32 bit 100:  64 bit
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Deassert ppm control default :10'h032=50
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Deassert ppm control default :10'h032=50
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Assert ppm control default :10'h0c8=200
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Assert ppm control default :10'h0c8=200
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<reggrp_short_dscr>:
+Register group for registers 0x21 to 0x32
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+User defined BIST pattern
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+User defined BIST pattern
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+User defined BIST pattern
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+User defined BIST pattern
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+User defined BIST pattern
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+User defined BIST pattern
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+User defined BIST pattern
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+User defined BIST pattern
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<field_public_text>:
+Refer to hwt_fom_sel
+------------------------------
+<field_public_text>:
+Reset RX FIFO if RXEI is asserted:0 : disable,1 : enable
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<reggrp_short_dscr>:
+Register group for registers 0x40 to 0x4C
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<reggrp_short_dscr>:
+Register group for register 0xC0
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Loss of lock (PLL)
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<reggrp_short_dscr>:
+Register group for register 0xFF
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Index for register access
+------------------------------
+<reggrp_short_dscr>:
+Register group for registers 0x00 to 0x47
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<field_public_text>:
+TX driver amplitude fine tuning
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+TX sub rate control
+------------------------------
+<field_public_text>:
+0:1000m 1:1200m 2: 900m 3: 800m 4: 700m 5: 500m 6: 400m 7: 600m
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+1st stage post-equalization level control of TX
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+TX data path setting. Should set to 1.
+------------------------------
+<field_public_text>:
+Power down TX driver
+------------------------------
+<field_public_text>:
+Power down clock circuits
+------------------------------
+<field_public_text>:
+Power down CML circuits
+------------------------------
+<field_public_text>:
+RX to TX loopback enable
+------------------------------
+<field_public_text>:
+TX to RX loopback enable
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Pre-equalization level control of TX
+------------------------------
+<field_public_text>:
+Enable TX data path control.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Enable 1st stage post-equalization control of TX.
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<field_public_text>:
+Enable pre-equalization control of TX.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+DFE related clock enable
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<field_public_text>:
+PMAA FIFO clock reset
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Time constant for DFE adaptation
+------------------------------
+<field_public_text>:
+Enable DFE digital adaptation
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<field_public_text>:
+Eye scan enable
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+DFE tap enable
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Bypass DFE coefficient
+------------------------------
+<field_public_text>:
+Bypass DFE coefficient
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Bypass DFE coefficient
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Bypass DFE coefficient
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Bypass DFE coefficient
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+See application note
+------------------------------
+<field_public_text>:
+Power down error amplifier for DFE adaptation
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<field_public_text>:
+CDR clock enable
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Power down CTLE
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<field_public_text>:
+Bypass RX regulator
+------------------------------
+<field_public_text>:
+Power up RX regulator
+------------------------------
+<field_public_text>:
+TX loopback enable
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+CDR BW setting
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+CTLE C setting
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<field_public_text>:
+Power down DFE analog circuits
+------------------------------
+<field_public_text>:
+CDR resetn
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Place CDR in "holding" state Recovered clock does not track data
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<field_public_text>:
+Required for DFE
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<field_public_text>:
+Eye scan resetn
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<field_public_text>:
+Required.  Set to 1 in normal mode
+------------------------------
+<field_public_text>:
+RX loopback enable
+------------------------------
+<field_public_text>:
+PI step size
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<field_public_text>:
+CTLE "R" bypass
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+VGA code bypass
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+CTLE "R" code
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+VGA code bypass
+------------------------------
+<field_public_text>:
+CDR phase interpolator enable
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+full/subrate frequency selection:00: full 01: 1/2 10: 1/4 11: 1/8
+------------------------------
+<field_public_text>:
+Fast eye scan method.0:Calculate central phase 1:Calculate all phase
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+2nd order CDR setting.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<field_public_text>:
+2nd order CDR tracking setting
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<field_public_text>:
+Phase interpolator bandwidth setting,data rate dependent
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Disable 2nd order CDR
+------------------------------
+<field_public_text>:
+full/subrate frequency selection:00: full 01: 1/2 10: 1/4 11: 1/8
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<field_public_text>:
+Reset PI controller
+------------------------------
+<field_public_text>:
+Reset DFE digital adaptation
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<field_public_text>:
+Fast eye scan enable
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+BIST pattern selection
+------------------------------
+<field_public_text>:
+BIST error injection enable
+------------------------------
+<field_public_text>:
+BIST enable signal
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+0 : non free running mode 1 : free running mode
+------------------------------
+<field_public_text>:
+Reserved
+------------------------------
+<field_public_text>:
+1: bist_err counter will stop when reaching 0xffff_ffff 0: bist_err counter will run continuously, will not saturate.
+------------------------------
+<field_public_text>:
+1: bist_err will assert if rx all zero data in PRBS mode.0: Treat all zero data input as correct data Note: r_bist_chk_zero must be set after r_bist_ok is asserted.
+------------------------------
+<field_public_text>:
+BIST result compare enable.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<field_public_text>:
+DFE reset
+------------------------------
+<field_public_text>:
+CDR reset
+------------------------------
+<field_public_text>:
+RX polarity invert
+------------------------------
+<field_public_text>:
+RX bit order reversal
+------------------------------
+<field_public_text>:
+TX polarity invert
+------------------------------
+<field_public_text>:
+TX bit order reversal
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+0x0000 : Infinite BIST run time
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+0x0001 ~ 0xFFFF : BIST run time =(data width/bit rate) *1024* r_bist_timer[15:0]
+------------------------------
+<reggrp_short_dscr>:
+Register group for registers 0xC0 to 0xDE
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+DFE H1 readback
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+DFE H2 readback
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+DFE H3 readback
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+DFE H4 readback
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+DFE H5 readback
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Eye scan result
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Eye scan result
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Eye scan result
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Eye scan result
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Eye scan result
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Eye scan result
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Eye scan result
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Eye scan result
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Eye scan result
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Eye scan result for single point scan
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Read back RXEQ"C"code
+------------------------------
+<field_public_text>:
+Eye scan complete
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<field_public_text>:
+Internal use
+------------------------------
+<reggrp_short_dscr>:
+Register group for registers 0xE0 to 0xE4
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+The bist time is time out.Bist time = (data width/bit rate) *1024*r_bist_timer
+------------------------------
+<field_public_text>:
+BIST is error.
+------------------------------
+<field_public_text>:
+BIST is ok.
+------------------------------
+<field_public_text>:
+BIST is active.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+BIST Error counter.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+BIST Error counter.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+BIST Error counter.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+BIST Error counter.
+------------------------------

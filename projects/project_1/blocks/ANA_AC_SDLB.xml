@@ -1,0 +1,371 @@
+=== DOCUMENTATION FOR TARGET: ANA_AC_SDLB ===
+
+<target_short_dscr>:
+Leaky Bucket Block
+------------------------------
+<reggrp_short_dscr>:
+Miscellaneous parameters
+------------------------------
+<reg_short_dscr>:
+XLB pointer translation control
+------------------------------
+<field_public_text>:
+Enable XLB pointer translation.
+
+Use during removal of XLB from LB Group.
+------------------------------
+<reg_short_dscr>:
+Original XLB pointer value
+------------------------------
+<reg_public_text>:
+Use during removal of XLB from LB Group.
+------------------------------
+<field_public_text>:
+Original LB Set address for LB pointer translation.
+------------------------------
+<reg_short_dscr>:
+New XLB pointer value
+------------------------------
+<reg_public_text>:
+Use during removal of XLB from LB Group.
+------------------------------
+<field_public_text>:
+Translate to end of list.
+------------------------------
+<field_public_text>:
+New LB Set address for LB pointer translation.
+------------------------------
+<reg_short_dscr>:
+Miscellaneous rate control parameters.
+------------------------------
+<field_public_text>:
+Enable frame rate mode.
+
+FRM_RATE_ENA must be set if FRM_RATE_ENA is set for any XLB.
+FRM_RATE_ENA must be cleared if FRM_RATE_ENA is not set for any XLB.
+
+Related parameters:
+ANA_AC_SDLB:LBGRP_TBL:FRM_RATE_TOKENS.FRM_RATE_TOKENS
+------------------------------
+<reg_short_dscr>:
+Register for signaling LB having entered MARK_ALL_FRMS_RED=1 state
+------------------------------
+<field_public_text>:
+Set by HW when a new DLB has entered MARK_ALL_FRMS_RED=1 state.
+
+Related parameters:
+ANA_AC_SDLB:MISC:MARK_ALL_FRMS_RED_SET.MARK_ALL_FRMS_RED_SET_LBSET
+------------------------------
+<field_public_text>:
+LB Set address of DLB having entered MARK_ALL_FRMS_RED=1 state.
+Only valid when MARK_ALL_FRMS_RED_SET_VLD=1.
+
+Related parameters:
+ANA_AC_SDLB:MISC:MARK_ALL_FRMS_RED_SET.MARK_ALL_FRMS_RED_SET_VLD
+------------------------------
+<reg_short_dscr>:
+Register for clearing MARK_ALL_FRMS_RED=1 state for a DLB.
+------------------------------
+<field_public_text>:
+Set this bit to clear MARK_ALL_FRMS_RED in the state table for the LB Set specified in MARK_ALL_FRMS_RED_CLRL_LBSET_ADDR.
+
+This bit is cleared when the operation has been completed.
+
+Related parameters:
+ANA_AC_SDLB:MISC:MARK_ALL_FRMS_RED_CLR.MARK_ALL_FRMS_RED_CLR_LBSET
+ANA_AC_SDLB:LBSET_TBL:DLB_MISC.MARK_ALL_FRMS_RED_ENA
+------------------------------
+<field_public_text>:
+LB Set to be processed when MARK_ALL_FRMS_RED_CLR=1.
+
+Related parameters:
+ANA_AC_SDLB:MISC:MARK_ALL_FRMS_RED_CLR.MARK_ALL_FRMS_RED_CLR_VLD
+------------------------------
+<reggrp_short_dscr>:
+LB Group configuration table
+------------------------------
+<reggrp_public_text>:
+Configuration of LB Group parameters.
+------------------------------
+<reg_short_dscr>:
+Pointer to first XLB in LB Group.
+------------------------------
+<field_public_text>:
+Address of LB Set containing first LB of LB Group.
+------------------------------
+<reg_short_dscr>:
+Number of clock cycles between each PUP for LBs in LB Group.
+------------------------------
+<field_public_text>:
+Number of clock cycles between each Periodic UPdate (PUP) for LBs in LB Group.
+
+Together with PUP_TOKENS (configured per LB) this controls the rate of the LB.
+------------------------------
+<reg_short_dscr>:
+Various PUP related parameters.
+------------------------------
+<field_public_text>:
+Enable Periodic UPdate (PUP).
+------------------------------
+<field_public_text>:
+Delta time between updating LBs within an LB Set, i.e. PUP_LB_DT specifies the number of clock cycles between each LB update within LB Set.
+
+Can be used to avoid many LBs opening concurrently.
+
+Should be set to PUP_INTERVAL/<number of LBs in LB Group>.
+------------------------------
+<reg_short_dscr>:
+Miscellaneous LB Group parameters
+------------------------------
+<field_public_text>:
+Number of positions to right-shift LB's threshold value.
+
+May be used for supporting smaller threshold values, e.g. for AVB.
+
+Related parameters:
+ANA_AC_SDLB:LBSET_TBL:THRES.THRES
+------------------------------
+<reg_short_dscr>:
+Tokens to subtract per frame, when DLB_FRM_RATE_ENA=1.
+------------------------------
+<field_public_text>:
+Number of tokens to subtract from bucket on SoF events for LBs with FRM_RATE_ENA=1.
+
+Only used if FRM_RATE_ENA=1 for LB.
+------------------------------
+<reg_short_dscr>:
+LB Group current state
+------------------------------
+<field_public_text>:
+Address of current LB Set in LB Group
+------------------------------
+<reg_short_dscr>:
+Number of tokens to add to bucket each time it is subject to a periodic update (PUP).
+------------------------------
+<reg_public_text>:
+For DLBs replication 0 is CIR bucket and replication 1 is EIR bucket.
+------------------------------
+<field_public_text>:
+Number of tokens to add to bucket each time it is subject to a periodic update (PUP).
+
+The rate (tokens per second) with which tokens are added to the bucket is:
+   PUP_TOKENS x clk_frequency / PUP_INTERVAL 
+
+A bucket can be configured to be permanently open by setting
+PUP_TOKENS=0x1fff
+When permanently open, no tokens are subtracted from the bucket and PUP will set the number of tokens in the bucket to THRES. No inheritance will occur when a bucket is permanently open.
+To configure a DLB to be permanently open, PUP_TOKENS must be set to 0x1fff for both the CIR bucket and the EIR bucket. 
+Setting only CIR bucket or only EIR bucket to 0x1fff is not a valid configuration.
+
+Related parameters:
+ANA_AC_SDLB:LBGRP_TBL:PUP_INTERVAL.PUP_INTERVAL
+------------------------------
+<reg_short_dscr>:
+Bucket thresholds
+------------------------------
+<reg_public_text>:
+For DLBs replication 0 is CIR bucket and replication 1 is EIR bucket.
+------------------------------
+<field_public_text>:
+Minimum number of tokens, which the bucket shall contain before it is allowed to reopen.
+
+This can be used to configure hysteresis.
+
+The unit for THRES_HYS is
+  2 ^ (13 - THRES_SHIFT) tokens
+
+Related parameters:
+ANA_AC_SDLB:LBGRP_TBL:LBGRP_MISC.THRES_SHIFT
+------------------------------
+<field_public_text>:
+Maximum number of tokens the bucket is allowed to contain, i.e. the maximum burst size for the LB.
+
+The unit for THRES is
+  2 ^ (13 - THRES_SHIFT) tokens
+
+Related parameters:
+ANA_AC_SDLB:LBGRP_TBL:LBGRP_MISC.THRES_SHIFT
+------------------------------
+<reg_short_dscr>:
+Pointer to next XLB in LB Group.
+------------------------------
+<field_public_text>:
+Index of XLB's LB Group.
+
+Related parameters:
+ANA_AC_SDLB:LBGRP_TBL
+------------------------------
+<field_public_text>:
+Address of LB Set containing next LB in LB Group.
+
+To mark the end of LB Group's LB list, set LBSET_NEXT and LB_NEXT to point to current LB.
+
+Related parameters:
+ANA_AC_SDLB:LBGRP_TBL:XLB_START
+------------------------------
+<reg_short_dscr>:
+Inheritance related parameters.
+------------------------------
+<reg_public_text>:
+For DLBs replication 0 is CIR bucket and replication 1 is EIR bucket.
+------------------------------
+<field_public_text>:
+Index of inheritor LB within inheritor LB Set.
+
+Only applicable if LB Set has two ore more LBs.
+
+Related parameters:
+ANA_AC_SDLB:LBSET_TBL:INH_CTRL.INH_MODE
+ANA_AC_SDLB:LBSET_TBL:INH_LBSET_ADDR.INH_LBSET_ADDR
+------------------------------
+<field_public_text>:
+Inheritance mode.
+
+Inheritance may be used for implementing MEF 10.2 and 10.3 bandwidth profiles.
+
+Related parameters:
+ANA_AC_SDLB:LBSET_TBL:INH_CTRL.INH_LB (only applicable if LB Set has two or more LBs)
+ANA_AC_SDLB:LBSET_TBL:INH_LBSET_ADDR.INH_LBSET_ADDR
+------------------------------
+<field_enc>:
+0 (INH_MODE_NONE): 
+No inheritor, i.e. any excess tokens are lost.
+
+1 (INH_MODE_OTHER_LBSET): 
+Spill over into LB pointed to by INH_LBSET_ADDR and INH_LB.
+INH_LB is only applicable if LB Set has two ore more LBs.
+
+2 (INH_MODE_NEXT_LB):
+Spill over into next LB in current LB Set.
+This mode is only allowed for the first LB in a DLB (e.g. CIR LB spilling into EIR LB).
+
+3: Reserved
+------------------------------
+<field_public_text>:
+Maximum number of tokens to add to bucket for each PUP, including inherited tokens.
+
+If the bucket is configured to inherit tokens, then it is recommended to configure PUP_TOKENS_MAX, since that ensures that the bucket is updated sufficiently frequently to absorb the inherited tokens.
+PUP_TOKENS_MAX should not be set to a higher value than the amount of tokens that the bucket can actually receive (i.e. it should not just be set to all-ones).
+
+Can be used to implement MEF 10.3 CIRmax and EIRmax.
+------------------------------
+<field_enc>:
+0: Disable PUP_TOKENS_MAX feature.
+------------------------------
+<reg_short_dscr>:
+Address of inheritor LB Set.
+------------------------------
+<field_public_text>:
+Address of inheritor LB Set.
+
+Related parameters:
+ANA_AC_SDLB:LBSET_TBL:INH_CTRL.INH_MODE
+ANA_AC_SDLB:LBSET_TBL:INH_CTRL.INH_LB (only applicable if LB Set has two or more LBs)
+------------------------------
+<reg_short_dscr>:
+Miscellaneous parameters per DLB
+------------------------------
+<reg_public_text>:
+Miscellaneous parameters for each pair of two LBs. 
+LB n (even) is CIR, LB n+1 (odd) is EIR.
+------------------------------
+<field_public_text>:
+Number of tokens to subtract from bucket, when SoF is encountered.
+
+A value of 20 will correspond to inclusion of preamble and interframe gap in rate.
+------------------------------
+<field_enc>:
+Two complements encoded.
+------------------------------
+<field_public_text>:
+Once a single red frame has been observed (and thus dropped), then drop all subsequent frames regardless of number of tokens in DLB's buckets.
+
+Related parameters:
+ANA_AC_SDLB:MISC:MARK_ALL_FRMS_RED_SET
+ANA_AC_SDLB:MISC:MARK_ALL_FRMS_RED_CLR
+------------------------------
+<field_public_text>:
+Enable frame rate mode for both LBs in DLB.
+
+Frame rate related parameters:
+ANA_AC_SDLB:MISC:MISC_RATE_CTRL.FRM_RATE_ENA
+ANA_AC_SDLB:LBGRP_TBL:FRM_RATE_TOKENS.FRM_RATE_TOKENS
+------------------------------
+<reg_short_dscr>:
+DLB configuration
+------------------------------
+<field_public_text>:
+Drop yellow frames.
+------------------------------
+<field_public_text>:
+Configuration of Drop Precedence bypass level. 
+Frames with DP below DP_BYPASS_LVL bypass the policer (frames are never policed and the bucket is not updated with the frames).
+------------------------------
+<field_enc>:
+0: No frames bypass the policer
+1: Frames with DP = 0 bypass the policer
+2: Frames with DP = 0 or 1 bypass the policer
+3: Frames with DP = 0, 1 or 2 bypass the policer
+------------------------------
+<field_public_text>:
+If set, BDLB policing is disabled.
+------------------------------
+<field_public_text>:
+Configures if stripped encapsulation data (normalized data) is policed by the policer.
+------------------------------
+<field_enc>:
+0: Encapsulation data is counted as frame data.
+1: Encapsulation data in not counted as frame data.
+------------------------------
+<field_public_text>:
+Configuration of dual leaky bucket color awareness.
+
+Frames with DP below or equal to COLOR_AWARE_LVL is treated as green. 
+Frames with DP above COLOR_AWARE_LVL are treated as yellow.
+------------------------------
+<field_enc>:
+0: DLB policer is color aware. Incoming frames with DP=0 are green and frames with DP>0 are yellow. 
+1: DLB policer is color aware. Incoming frames with DP<=1 are green and frames with DP>1 are yellow. 
+2: DLB policer is color aware. Incoming frames with DP<=2 are green and frames with DP>2 are yellow. 
+3: DLB policer is color unaware. All incoming frames are green.
+------------------------------
+<field_public_text>:
+Configuration of the drop precedence change for green frames being remarked to yellow. 
+For such frames, the DP level will be incremented with CIR_INC_DP_VAL.
+------------------------------
+<field_enc>:
+0: DP is not increased.
+n: DP is increased with n for PIR traffic.
+------------------------------
+<field_public_text>:
+Control the algorithm for dual leaky buckets.
+
+The following algorithms are supported:
+Single Rate Three Color Marker, RFC2697 (SR TCM)
+Two Rate Three Color Marker, RFC2698 (TR TCM)
+MEF 10.2
+MEF 10.3 (only supported if instantiation includes INH_CTRL register).
+
+To configure SR TCM use the following configuration:
+1) Set DLB_MODE=MEF
+2) Configure rate of bucket 0 to CIR
+3) Configure the inheritor of bucket 0 to be bucket 1 (INH_MODE=1, INH_LB=1 or DLB_COUPLING_MODE=1)
+4) Configure rate of bucket 1 to 0 (PUP_TOKENS=0)
+
+To configure TR TCM use the following configuration:
+Set DLB_MODE=TR_TCM
+Configure rate+threshold of bucket 0/1 to CIR/EIR+CBS/EBS
+------------------------------
+<field_enc>:
+0: MEF
+1: TR_TCM
+------------------------------
+<field_public_text>:
+Configures action to be applied to policed frames.
+------------------------------
+<field_enc>:
+0: No action.
+1: Remove front ports from frame's destination port set.
+2: Remove CPU ports from frame's destination port set.
+3: Remove both front ports and CPU ports from frame's destination port set.
+------------------------------

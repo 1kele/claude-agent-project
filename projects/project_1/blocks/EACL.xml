@@ -1,0 +1,884 @@
+=== DOCUMENTATION FOR TARGET: EACL ===
+
+<target_short_dscr>:
+Egress Access Control Lists
+------------------------------
+<reggrp_short_dscr>:
+Common configuration and status for all egress ACL ports
+------------------------------
+<reg_short_dscr>:
+Configure custom TPID values
+------------------------------
+<field_public_text>:
+Configure 3 custom TPID values.
+
+These must be configured identically in ANA_CL::VLAN_STAG_CFG.STAG_ETYPE_VAL.
+
+Related parameters:
+ANA_CL::VLAN_STAG_CFG.STAG_ETYPE_VAL
+------------------------------
+<field_enc>:
+n: TPID value
+------------------------------
+<reg_short_dscr>:
+E-tag configuration
+------------------------------
+<field_public_text>:
+Enable E-tag awareness.
+
+This field must be configured identical to ANA_CL::ETAG_CFG.ETAG_TPID_ENA.
+------------------------------
+<reg_short_dscr>:
+R-tag configuration
+------------------------------
+<field_public_text>:
+Enable R-tag awareness.
+
+This field must be configured identical to ANA_CL::RTAG_CFG.RTAG_TPID_ENA.
+------------------------------
+<reg_short_dscr>:
+Various configuration of ES2 in egress ACL module
+------------------------------
+<field_public_text>:
+Configure VSTAX MISC field decoding. Should be configured consistent with ANA_AC and REW.
+
+Related parameters:
+ANA_AC:PS_COMMON:COMMON_VSTAX_CFG.VSTAX2_MISC_ISDX_ENA
+REW:COMMON:PORT_CTRL.VSTAX2_MISC_ISDX_ENA
+------------------------------
+<field_enc>:
+0: VSTAX MISC contains aggregation code
+1: VSTAX MISC contains ISDX and COSID
+------------------------------
+<field_public_text>:
+Selects ES2 action to combine the REW_CMD fields from the two lookups.
+------------------------------
+<field_enc>:
+0: Select REW_CMD of first lookup if both lookups are valid else only REW_CMD from valid lookup is selected.
+1: Select REW_CMD of second lookup if both lookups are valid else only REW_CMD from valid lookup is selected.
+2: Logical OR the REW_CMD of first and second lookup if both lookups are valid else only REW_CMD from valid lookup is selected.
+3: Logical AND the REW_CMD of first and second lookup if both lookups are valid else only REW_CMD from valid lookup is selected.
+------------------------------
+<field_public_text>:
+Selects ES2 action to use when a DISCARD action result clashed with a redir REDIRECT result.
+------------------------------
+<field_enc>:
+Two bits, one per DISCARD result.
+Bit 0 regards to first action result is DISCARD and second action result is REDIRECT.
+Bit 1 regards to first action result is REDIRECT and second action result is DISCARD.
+0: DISCARD takes priority.
+1: REDIRECT takes priority.
+------------------------------
+<field_public_text>:
+Selects which queue_num and port number to use, when both ES2 actions result in COPY or both ES2 actions result in REDIRECT.
+------------------------------
+<field_enc>:
+0: Use queue_num and port_num from first action result
+1: Use queue_num and port_num from second action result
+------------------------------
+<field_public_text>:
+Selects which queue_num to use, when both ES2 actions result in CPU COPY.
+------------------------------
+<field_enc>:
+0: Use CPU queue_num from first action result
+1: Use CPU queue_num from second action result
+------------------------------
+<field_public_text>:
+Enable ES2 router mode lookup when IFH.ENCAP.RT_FWD indicates routing.
+When enabled and IFH.FWD.DST_MODE = ENCAP, IFH.ENCAP.RT_FWD = 1, and IFH.ENCAP_ID_RLEG_MODE = 3, then IFH.ENCAP.ENCAP_ID_RLEG field is decoded and used as ERLEG in the lookup keys
+If IFH.ENCAP.RT_FWD does not indicate routing, the lookup is done normally regardless of the ES2_BY_RT_FWD configuration.
+------------------------------
+<field_enc>:
+0: Normal ES2 lookup
+1: Enable router mode ES2 lookup
+------------------------------
+<field_public_text>:
+Enable ES2 router mode lookup when IFH.FWD.DST_MODE indicates routing.
+
+When enabled and IFH.FWD.DST_MODE = L3UC_ROUTING or IFH.FWD.DST_MODE = L3MC_ROUTING, the IFH.DST.ERLEG is used in ES2 lookup.
+If IFH_FWD.DST_MODE does not indicate routing, the lookup is done normally regardless of the ES2_BY_RLEG configuration.
+------------------------------
+<field_enc>:
+0: Normal ES2 lookup
+1: Enable router mode ES2 lookup
+------------------------------
+<reg_short_dscr>:
+Map drop precedence to drop eligible value
+------------------------------
+<reg_public_text>:
+Drop precedence level for the frame is translated to a drop eligible value 0 or 1, selecting between _DE0 or _DE1 mapping tables, when translating the internal prio to TAG priorities. Mapped drop precedence/internal priority is used when selected by TAG control configuration (see TAG ctrl)
+------------------------------
+<field_public_text>:
+Drop precedence N uses mapping table given by bit N in this field.
+------------------------------
+<field_enc>:
+xxx0: Map DP value 0 to DE value 0
+xxx1: Map DP value 0 to DE value 1
+...
+0xxx: Map DP value 3 to DE value 0
+1xxx: Map DP value 3 to DE value 1
+------------------------------
+<reg_short_dscr>:
+Rewriter router leg configuration.
+------------------------------
+<field_public_text>:
+Router leg base MAC address, least significant bits.
+
+In order to have different MAC addresses per router leg, the base address may be incremented using VID or VMID, ref. RLEG_MAC_TYPE_SEL.
+
+This must be configured consistently in ANA_L3::RLEG_CFG_0.RLEG_MAC_LSB.
+------------------------------
+<field_enc>:
+Bit 0: MAC address, bit 0
+...
+Bit 23: MAC address, bit 23
+------------------------------
+<reg_short_dscr>:
+Rewriter router leg configuration.
+------------------------------
+<field_public_text>:
+Configuration of router leg specific MAC address.
+
+Related parameters:
+ANA_L3::RLEG_CFG_1.RLEG_MAC_TYPE_SEL
+REW::RLEG_CFG_1.RLEG_MAC_TYPE_SEL
+------------------------------
+<field_enc>:
+0: RLEG used to increment base MAC address:
+RLEG_MAC = RLEG_MAC_MSB(23:0) & ((RLEG_MAC_LSB(23:0) + IFH.ERLEG) mod 2**24)
+
+1: RLEG_EVID (IFH.VSTAX.TAG.VID) used to increment base MAC address:
+RLEG_MAC = RLEG_MAC_MSB(23:0) & ((RLEG_MAC_LSB(23:0) + RLEG_EVID) mod 2**24)
+
+2: Base MAC address used for all router legs
+RLEG_MAC = RLEG_MAC_MSB[23:0] & RLEG_MAC_LSB[23:0] 
+
+3: Reserved
+------------------------------
+<field_public_text>:
+Router leg base MAC address, least significant bits.
+
+In order to have different MAC addresses per router leg, the base address may be incremented using VID or VMID, ref. RLEG_MAC_TYPE_SEL.
+
+This must be configured consistently in ANA_L3::RLEG_CFG_1.RLEG_MAC_MSB.
+------------------------------
+<field_enc>:
+Bit 0: MAC address, bit 24
+...
+Bit 23: MAC address, bit 47
+------------------------------
+<reg_short_dscr>:
+Configuration of TCP range generation
+------------------------------
+<field_public_text>:
+Selected field matched against the range
+------------------------------
+<field_enc>:
+0: Idle (No match)
+1: TCP / UDP dport value is matched against range
+2: TCP / UDP sport value is matched against range
+3: TCP / UDP dport or sport values are matched against range
+4: Classified VID value is matched against range
+5: Classified DSCP value is matched against range
+7: Reserved
+------------------------------
+<reg_short_dscr>:
+Configuration of  matcher range generation
+------------------------------
+<field_public_text>:
+Upper range value
+------------------------------
+<field_public_text>:
+Lower range value
+------------------------------
+<reg_short_dscr>:
+EACL Interrupt events
+------------------------------
+<reg_public_text>:
+EACL Interrupt events if interrupt enable is set in EACL::INTR_ENA and the corresponding event is triggered in EACL::INTR_IDENT
+------------------------------
+<field_public_text>:
+Set if a frame was discarded due to an invalid SOF pointer. I.e. the SOF cell could not be stored due to resource limitations. To enable this interrupt, set EACL::INTR_ENA.VCAP_ES2_INTR_ENA
+------------------------------
+<field_enc>:
+0: No event
+1: Event
+
+Bit is cleared by writing a 1 to this position.
+------------------------------
+<field_public_text>:
+Set if VCAP_ES2 triggered an interrupt. To enable this interrupt, set EACL::INTR_ENA.VCAP_ES2_INTR_ENA
+------------------------------
+<field_enc>:
+0: No event
+1: Event
+
+Bit is cleared by writing a 1 to this position.
+------------------------------
+<reg_short_dscr>:
+EACL interrupt enable mask
+------------------------------
+<reg_public_text>:
+Controls interrupt of CPU.
+ 
+Events can be found in EACL::INTR
+Identity of interrupt events can be found in EACL::INTR_IDENT
+------------------------------
+<field_public_text>:
+Configures INVLD_SOF_PTR_DISCARD_INTR interrupts
+------------------------------
+<field_enc>:
+0: Disable interrupt
+1: Enable interrupt
+------------------------------
+<field_public_text>:
+Configures VCAP_ES2_INTR interrupts
+------------------------------
+<field_enc>:
+0: Disable interrupt
+1: Enable interrupt
+------------------------------
+<reg_short_dscr>:
+EACL interrupt status
+------------------------------
+<field_public_text>:
+Status of INVLD_SOF_PTR_DISCARD_INTR interrupts
+------------------------------
+<field_enc>:
+0: No interrupt
+1: Interrupt to CPU
+------------------------------
+<field_public_text>:
+Status of VCAP_ES2_INTR interrupts
+------------------------------
+<field_enc>:
+0: No interrupt
+1: Interrupt to CPU
+------------------------------
+<reggrp_short_dscr>:
+Interface mapping table to map from XQS:QMAP_VPORT_TBL:QMAP_VPORT_TBL.QMAP_VPORT_VAL to a physical/logical port number, an interface number and an ACL group
+------------------------------
+<reg_short_dscr>:
+Interface mapping table to map from XQS:QMAP_VPORT_TBL:QMAP_VPORT_TBL.QMAP_VPORT_VAL
+------------------------------
+<reg_public_text>:
+Interface mapping table to map from XQS:QMAP_VPORT_TBL:QMAP_VPORT_TBL.QMAP_VPORT_VAL to a physical/logical port number, an interface number and an ACL group
+------------------------------
+<field_public_text>:
+ACL Group Identifier.
+------------------------------
+<field_public_text>:
+Virtual Interface number valid. Selects whether PHYS_PORT_NUM or VIRT_IF_NUM is used for key profile selection and VCAP match. One bit per lookup.
+------------------------------
+<field_enc>:
+0: PHYS_PORT_NUM is used for VCAP lookup and key profile selection.
+1: VIRT_IF_NUM is used for VCAP lookup and key profile selection.
+------------------------------
+<field_public_text>:
+Virtual Interface number.
+------------------------------
+<field_public_text>:
+Physical or logical port number.
+------------------------------
+<field_enc>:
+Port number, either physical or logical.
+------------------------------
+<reggrp_short_dscr>:
+VCAP_ES2 configuration per port or vitual interface.
+0-64: 65 Physical ports.
+65-129: 65 Virtual Interfaces.
+130-137: 8 CPU ports.
+------------------------------
+<reg_short_dscr>:
+VCAP_IS2 key selection
+------------------------------
+<reg_public_text>:
+Key selection for VCAP_ES2 lookups. Replicated per lookup.
+------------------------------
+<field_public_text>:
+Applies to IPv6 unicast and multicast frames.
+------------------------------
+<field_enc>:
+0: Match against MAC_ETYPE entries.
+1: Match against IP_7TUPLE entries.
+4: Match against IP6_VID entries.
+5: Match against IP6_STD entries.
+6: Downgrade IPv6 frames to IPv4 and do key type selection according to IP4_KEY_SEL.
+------------------------------
+<field_public_text>:
+Applies to IPv4 unicast and multicast frames.
+------------------------------
+<field_enc>:
+0: Match against MAC_ETYPE entries.
+1: Match against IP_7TUPLE entries.
+3: Match against IP4_TCP_UDP for IPv4 TCP/UDP frames and against IP4_OTHER entries for other IPv4 frames.
+4: Match against IP4_VID entries.
+5: Match against IP4_OTHER entries.
+------------------------------
+<field_public_text>:
+Applies to ARP/RARP frames.
+------------------------------
+<field_enc>:
+0: Match against MAC_ETYPE entries.
+1: Match against ARP entries.
+------------------------------
+<field_public_text>:
+Enable/disable VCAP_ES2 lookups.
+------------------------------
+<field_enc>:
+0: No ES2 lookup for this profile.
+1: ES2 lookup enabled for this profile.
+------------------------------
+<reggrp_short_dscr>:
+VCAP_ES2 counter table
+------------------------------
+<reg_short_dscr>:
+VCAP_ES2 counter
+------------------------------
+<reg_public_text>:
+The CNT_TBL counters count number of hits in VCAP_ES2. For each of the two VCAP_ES2 lookups, a VCAP match results in the associated counter being incremented using the VCAP_ES2 action CNT_ID as index.
+------------------------------
+<field_public_text>:
+VCAP_ES2 counter value.
+------------------------------
+<reggrp_short_dscr>:
+Various policer controls
+------------------------------
+<reggrp_public_text>:
+Policer configuration and status registers
+------------------------------
+<reg_short_dscr>:
+Configuration of EACL policer rates
+------------------------------
+<field_public_text>:
+EACL policer leaky bucket rate.
+
+Regarding unit, refer to POL_UPD_INT_CFG.POL_UPD_INT.
+
+Related parameters:
+POL_EACL_CTRL.FRAME_RATE_ENA
+See also:
+EACL:POL_CFG:POL_UPD_INT_CFG.POL_UPD_INT
+EACL:POL_CFG:POL_EACL_CTRL.FRAME_RATE_ENA
+------------------------------
+<field_enc>:
+When POL_EACL_CTRL.FRAME_RATE_ENA is disabled, policing is performed in bits per second (bps). 
+0: Open until burst capacity is used, then closed.
+1: Rate = 1 x <unit> bps
+n: Rate = n x <unit> bps
+
+When POL_EACL_CTRL.FRAME_RATE_ENA is enabled, policing is performed in frames per second (fps). 
+0: Open until burst capacity is used, then closed.
+1: Rate = <unit> fps
+n: Rate = n x <unit> fps
+------------------------------
+<reg_short_dscr>:
+Configuration of EACL policer thresholds
+------------------------------
+<field_public_text>:
+Policer threshold size (a.ka. burst capacity). Unit is 8192 bytes.
+
+Related parameters:
+POL_EACL_CTRL.FRAME_RATE_ENA
+See also:
+EACL:POL_CFG:POL_EACL_CTRL.FRAME_RATE_ENA
+------------------------------
+<field_enc>:
+When POL_EACL_CTRL.FRAME_RATE_ENA is disabled burst capacity is configured in steps of 8192 bytes.
+0: Always closed
+1: Burst capacity = 8192 bytes
+n: Burst capacity = n x 8192 bytes
+63: Burst capacity = 516096 bytes
+
+When POL_EACL_CTRL.FRAME_RATE_ENA is enabled burst capacity is configured in steps of 8192/2504 frames.
+0: Always closed
+1: Burst capacity = 1 x 8192/2504 frames
+n: Burst capacity = n x 8192/2504 frames
+63: Burst capacity = 206 frames
+------------------------------
+<reg_short_dscr>:
+Configuration of EACL policer parameters
+------------------------------
+<reg_public_text>:
+Only frames with an VCAP ES2 action with POLICE_ENA=1 are subject to EACL policing. The policer index is then controlled by the VCAP ES2 action field POLICE_IDX.
+------------------------------
+<field_public_text>:
+Configuration of Drop Precedence bypass level. 
+Frames with DP below DP_BYPASS_LVL bypass the policer (frames are never policed and the bucket is not updated with the frames).
+------------------------------
+<field_enc>:
+0: No frames bypass the policer
+1: Frames with DP = 0 bypass the policer
+2: Frames with DP = 0 or 1 bypass the policer
+3: Frames with DP = 0, 1 or 2 bypass the policer
+------------------------------
+<field_public_text>:
+Value added to each frame before updating the bucket. 
+Gap value range: -64 to +63 in two's complement format.
+
+Setting GAP_VALUE to 20 corresponds to a line-rate measurement, since on the line each frame will be preceded by 12 bytes of IFG and 8 bytes of preamble.
+Setting GAP_VALUE to 0 corresponds to a data-rate measurement.
+------------------------------
+<field_enc>:
+0x40: -64
+0x41: -63
+   ...
+0x7F: -1
+0x00: 0
+0x01: 1
+   ...
+0x3F: 63
+------------------------------
+<field_public_text>:
+Configures the frame types to be policed by the policer. 
+Each bit in the mask enables a specific frame type.
+
+If a frame does not match any of the enabled frame types, then the frame bypasses the policer (never discarded and the bucket is not updated with the frame).
+------------------------------
+<field_enc>:
+'00': Police frame
+'01': Only frames to front ports are triggering policer and only front port destinations are policed.
+'10': Frames to CPU are triggering policer and only CPU destinations are policed.
+'11': Frames to front ports and/or CPU are triggering policer and being policed.
+------------------------------
+<field_public_text>:
+Enables frame rate mode for the EACL policer, where policer rates are measured in frames per second instead of bits per second.
+------------------------------
+<field_enc>:
+0: Rates measured in bits per second
+1: Rates measured in frames per second
+------------------------------
+<reg_short_dscr>:
+Miscellaneous policer parameters
+------------------------------
+<field_public_text>:
+If set, all EACL policers are initialized and buckets are open. The bit must be cleared for normal operation to resume.
+------------------------------
+<field_enc>:
+0: Normal operation
+1: Initialization
+------------------------------
+<reg_short_dscr>:
+Policer update interval
+------------------------------
+<reg_public_text>:
+Configure the leaky bucket update interval for the EACL policers. 
+This configuration affects the policing rate unit for these policers. 
+By setting this parameter to a clock frequency dependent value, the rate unit can be kept identical/similar across different system clock frequencies.
+------------------------------
+<field_public_text>:
+This configuration will affect the policing rate unit for the EACL policers. The rate unit is calculated as follows:
+
+Rate unit = SYS_CLK / (POL_UPD_INT * 16) bps
+
+Recommended value and corresponding rate unit:
+52.08Mhz: 130 => 25040bps
+78.125Mhz: 195 => 25040bps
+156.25Mhz: 390 => 25040bps
+250MHz: 624 => 25040bps
+500MHz: 1248 => 25040bps
+
+Frame rate mode is also affected by this setting. The default frame rate unit is 10fps (frames per second). This is scaled according to this formula:
+Frame rate = 10fps * (Rate unit / 25040bps)
+------------------------------
+<field_enc>:
+0-31: Not allowed
+N: Update interval
+------------------------------
+<reg_short_dscr>:
+Policer diagnostic information
+------------------------------
+<field_public_text>:
+Set if an EACL policer is active.
+
+Bit is cleared by writing a 1 to this position.
+------------------------------
+<field_enc>:
+0: No event has occurred
+1: EACL policer is active (frames added to leaky buckets)
+------------------------------
+<field_public_text>:
+Set if frame has been remarked due to EACL policer.
+
+Bit is cleared by writing a 1 to this position.
+------------------------------
+<field_enc>:
+0: No event has occurred
+1: EACL policer drop event has occurred
+------------------------------
+<field_public_text>:
+Set if frame has been dropped due to EACL policer.
+
+Bit is cleared by writing a 1 to this position.
+------------------------------
+<field_enc>:
+0: No event has occurred
+1: EACL policer drop event has occurred
+------------------------------
+<field_public_text>:
+Set if an EACL policer has been bypassed due to a frame's DP level or traffic type mask.
+
+Bit is cleared by writing a 1 to this position.
+------------------------------
+<field_enc>:
+0: No event has occurred
+1: EACL policer has been bypassed
+------------------------------
+<reggrp_short_dscr>:
+Sticky diagnostic status
+------------------------------
+<reg_short_dscr>:
+Sticky bits register for events generated by VCAP_ES2
+------------------------------
+<field_public_text>:
+This sticky bit signals an IP_7TUPLE lookup was performed.
+------------------------------
+<field_public_text>:
+This sticky bit signals an IP6_VID lookup was performed.
+------------------------------
+<field_public_text>:
+This sticky bit signals an IP6_STD lookup was performed.
+------------------------------
+<field_public_text>:
+This sticky bit signals an IP4_TCPUDP lookup was performed.
+------------------------------
+<field_public_text>:
+This sticky bit signals an IP4_VID lookup was performed.
+------------------------------
+<field_public_text>:
+This sticky bit signals an IP4_OTHER lookup was performed.
+------------------------------
+<field_public_text>:
+This sticky bit signals an ARP lookup was performed.
+------------------------------
+<field_public_text>:
+This sticky bit signals a MAC_ETYPE lookup was performed.
+------------------------------
+<reggrp_short_dscr>:
+Mapping of ISDX and egress port to FRER member stream IDs.
+------------------------------
+<reggrp_public_text>:
+The mapping table contains one entry per ISDX. Each ISDX supports a fan-out of up to 8 egress ports. The member stream IDs for each of the up to 8 ports are allocated consecutively using the value of the first member stream ID as base address.
+------------------------------
+<reg_short_dscr>:
+Member stream ID associated with ISDXn-PORT0.
+------------------------------
+<field_public_text>:
+The member stream ID assigned to ISDXn-PORTx is FRER_FIRST_MEMBER + x.
+n is the FRER_MAP index, x is in 0 to 7 range.
+A port set to all ones will not have an stream ID assigned.
+
+Related parameters:
+EACL:FRER_MAP:FRER_EGR_PORT.FRER_EGR_PORT0
+EACL:FRER_MAP:FRER_EGR_PORT.FRER_EGR_PORT1
+EACL:FRER_MAP:FRER_EGR_PORT.FRER_EGR_PORT2
+EACL:FRER_MAP:FRER_EGR_PORT.FRER_EGR_PORT3
+------------------------------
+<reg_short_dscr>:
+Egress ports to be assigned a member stream ID.
+------------------------------
+<field_public_text>:
+A frame that has been assigned the same ISDX as this register address and is forwarded to the egress port matching the value in this register (if not set to all ones), will be assigned member stream ID FRER_FIRST_MEMBER+4*replication+0. 
+
+Related parameters:
+EACL:FRER_MAP:FRER_FIRST_MEMBER.FRER_FIRST_MEMBER
+------------------------------
+<field_public_text>:
+A frame that has been assigned the same ISDX as this register address and is forwarded to the egress port matching the value in this register (if not set to all ones), will be assigned member stream ID FRER_FIRST_MEMBER+4*replication+1.
+
+Related parameters:
+EACL:FRER_MAP:FRER_FIRST_MEMBER.FRER_FIRST_MEMBER
+------------------------------
+<field_public_text>:
+A frame that has been assigned the same ISDX as this register address and is forwarded to the egress port matching the value in this register (if not set to all ones), will be assigned member stream ID FRER_FIRST_MEMBER+4*replication+2.
+
+Related parameters:
+EACL:FRER_MAP:FRER_FIRST_MEMBER.FRER_FIRST_MEMBER
+------------------------------
+<field_public_text>:
+A frame that has been assigned the same ISDX as this register address and is forwarded to the egress port matching the value in this register (if not set to all ones), will be assigned member stream ID FRER_FIRST_MEMBER+4*replication+3.
+
+Related parameters:
+EACL:FRER_MAP:FRER_FIRST_MEMBER.FRER_FIRST_MEMBER
+------------------------------
+<reg_short_dscr>:
+FRER configuration common to all streams.
+------------------------------
+<field_public_text>:
+TicksPerSecond will be the system clock frequency divided by (WATCHDOG_PRESCALER*8*1024).
+          This is the time base for RESET_TICKS.
+          Value 0 disables the watchdog.
+          Recomended value for TicksPerSecond is 100.
+          Related parameters:
+          TicksPerSecond as defined in 802.1CB-2017
+          EACL:FRER_CFG_COMPOUND:FRER_CFG_COMPOUND.RESET_TICKS
+          EACL:FRER_CFG_MEMBER:FRER_CFG_MEMBER.RESET_TICKS
+------------------------------
+<reg_short_dscr>:
+FRER configuration for compound streams. One entry per each compound stream.
+------------------------------
+<field_public_text>:
+A Boolean value specifying whether packets with no sequence_number subparameter are to be accepted.
+          Should be set to 1 when VECTOR_ALGORITHM is 0.
+          Applies to the sequence recovery function.
+          Related parameters:
+          frerSeqRcvyTakeNoSequence as defined in 802.1CB-2017
+------------------------------
+<field_public_text>:
+Use Vector_Alg for sequence recovery algorithm instead of Match_Alg.
+          Applies to the sequence recovery function.
+          Related parameters:
+          frerSeqRcvyAlgorithm as defined in 802.1CB-2017
+------------------------------
+<field_public_text>:
+An integer specifying how many bits of the SequenceHistory variable are to be used.
+          Applies to the sequence recovery function.
+          Related parameters:
+          frerSeqRcvyHistoryLength as defined in 802.1CB-2017
+------------------------------
+<field_enc>:
+0: Not allowed
+          n: History length = n+1
+------------------------------
+<field_public_text>:
+An integer specifying after how many ticks the reset watchdog should be triggered.
+          Applies to the sequence recovery function.
+          Related parameters:
+          frerSeqRcvyResetMSec as defined in 802.1CB-2017
+          EACL:FRER_CFG:FRER_CFG.WATCHDOG_PRESCALER
+------------------------------
+<field_public_text>:
+Reset the sequence recovery function.
+          Related parameters:
+          frerSeqRcvyReset as defined in 802.1CB-2017
+------------------------------
+<field_public_text>:
+Instantiate a sequence recovery function for this compound stream.
+          Do not set together with generation.
+          Related parameters:
+          frerSeqRcvyStreamList as defined in 802.1CB-2017
+          frerSeqRcvyPortList as defined in 802.1CB-2017
+          ANA_AC:FRER_GEN:FRER_GEN.ENABLE
+------------------------------
+<reg_short_dscr>:
+FRER configuration for member streams. One entry per each member stream.
+------------------------------
+<field_public_text>:
+A Boolean value specifying whether packets with no sequence_number subparameter are to be accepted.
+          Should be set to 1 when VECTOR_ALGORITHM is 0.
+          Applies to the individual recovery function.
+          Related parameters:
+          frerSeqRcvyTakeNoSequence as defined in 802.1CB-2017
+------------------------------
+<field_public_text>:
+Use Vector_Alg for sequence recovery algorithm instead of Match_Alg.
+          Applies to the individual recovery function.
+          Related parameters:
+          frerSeqRcvyAlgorithm as defined in 802.1CB-2017
+------------------------------
+<field_public_text>:
+An integer specifying how many bits of the SequenceHistory variable are to be used.
+          Applies to the individual recovery function.
+          Related parameters:
+          frerSeqRcvyHistoryLength as defined in 802.1CB-2017
+------------------------------
+<field_enc>:
+0: Not allowed
+          n: History length = n+1
+------------------------------
+<field_public_text>:
+An integer specifying after how many ticks the reset watchdog should be triggered.
+          Applies to the individual recovery function.
+          Related parameters:
+          frerSeqRcvyResetMSec as defined in 802.1CB-2017
+          EACL:FRER_CFG:FRER_CFG.WATCHDOG_PRESCALER
+------------------------------
+<field_public_text>:
+Reset the individual recovery function.
+          Related parameters:
+          frerSeqRcvyReset as defined in 802.1CB-2017
+------------------------------
+<field_public_text>:
+Instantiate an individual recovery function for this member stream.
+          Do not set together with generation.
+          Related parameters:
+          frerSeqRcvyStreamList as defined in 802.1CB-2017
+          frerSeqRcvyPortList as defined in 802.1CB-2017
+          ANA_AC:FRER_GEN:FRER_GEN.ENABLE
+------------------------------
+<field_public_text>:
+Compound stream to which this member stream pertains.
+          Related parameters:
+          EACL:FRER_CFG_COMPOUND:FRER_CFG_COMPOUND.ENABLE
+------------------------------
+<reggrp_short_dscr>:
+FRER counters for compound streams. One entry per each compound stream.
+------------------------------
+<reg_short_dscr>:
+frerCpsSeqRcvyResets
+------------------------------
+<field_public_text>:
+frerCpsSeqRcvyResets as defined in 802.1CB-2017
+------------------------------
+<reg_short_dscr>:
+frerCpsSeqRcvyTaglessPackets
+------------------------------
+<field_public_text>:
+frerCpsSeqRcvyTaglessPackets as defined in 802.1CB-2017
+------------------------------
+<reg_short_dscr>:
+frerCpsSeqRcvyPassedPackets
+------------------------------
+<field_public_text>:
+frerCpsSeqRcvyPassedPackets as defined in 802.1CB-2017
+------------------------------
+<reg_short_dscr>:
+frerCpsSeqRcvyDiscardedPackets
+------------------------------
+<field_public_text>:
+frerCpsSeqRcvyDiscardedPackets as defined in 802.1CB-2017
+------------------------------
+<reg_short_dscr>:
+frerCpsSeqRcvyOutOfOrderPackets
+------------------------------
+<field_public_text>:
+frerCpsSeqRcvyOutOfOrderPackets as defined in 802.1CB-2017
+------------------------------
+<reg_short_dscr>:
+frerCpsSeqRcvyRoguePackets
+------------------------------
+<field_public_text>:
+frerCpsSeqRcvyRoguePackets as defined in 802.1CB-2017
+------------------------------
+<reg_short_dscr>:
+frerCpsSeqRcvyLostPackets
+------------------------------
+<field_public_text>:
+frerCpsSeqRcvyLostPackets as defined in 802.1CB-2017
+------------------------------
+<reggrp_short_dscr>:
+FRER counters for member streams. One entry per each member stream.
+------------------------------
+<reg_short_dscr>:
+frerCpsSeqRcvyResets
+------------------------------
+<field_public_text>:
+frerCpsSeqRcvyResets as defined in 802.1CB-2017
+------------------------------
+<reg_short_dscr>:
+frerCpsSeqRcvyTaglessPackets
+------------------------------
+<field_public_text>:
+frerCpsSeqRcvyTaglessPackets as defined in 802.1CB-2017
+------------------------------
+<reg_short_dscr>:
+frerCpsSeqRcvyPassedPackets
+------------------------------
+<field_public_text>:
+frerCpsSeqRcvyPassedPackets as defined in 802.1CB-2017
+------------------------------
+<reg_short_dscr>:
+frerCpsSeqRcvyDiscardedPackets
+------------------------------
+<field_public_text>:
+frerCpsSeqRcvyDiscardedPackets as defined in 802.1CB-2017
+------------------------------
+<reg_short_dscr>:
+frerCpsSeqRcvyOutOfOrderPackets
+------------------------------
+<field_public_text>:
+frerCpsSeqRcvyOutOfOrderPackets as defined in 802.1CB-2017
+------------------------------
+<reg_short_dscr>:
+frerCpsSeqRcvyRoguePackets
+------------------------------
+<field_public_text>:
+frerCpsSeqRcvyRoguePackets as defined in 802.1CB-2017
+------------------------------
+<reg_short_dscr>:
+frerCpsSeqRcvyLostPackets
+------------------------------
+<field_public_text>:
+frerCpsSeqRcvyLostPackets as defined in 802.1CB-2017
+------------------------------
+<reggrp_short_dscr>:
+Common counter configuration.
+------------------------------
+<reggrp_public_text>:
+This register group defines configuration parameters common to all counters in the corresponding counter register group.
+------------------------------
+<reg_short_dscr>:
+Global configuration register
+------------------------------
+<reg_public_text>:
+Global configuration register
+------------------------------
+<field_public_text>:
+This field is to configure the counters of all flows to count the byte number or the frame number.
+------------------------------
+<field_enc>:
+'0': Count frames.
+'1': Count bytes.
+------------------------------
+<reg_short_dscr>:
+Event mask for counters.
+------------------------------
+<field_public_text>:
+This value stores the event mask which indicates the counter of all flows to count certain events.
+ If set to '1' the respective event is not filtered and can trigger the counter.
+ If set to '0' the respective event is filtered and the counter will treat the frame as if no event has occurred.
+
+ The following events apply to ACL stat: 
+ Bit0: Count CPU traffic applicable for CPU ACL policer but not discarded
+ Bit1: Count front port traffic applicable for ACL policer but not discarded
+ Bit2: Count CPU traffic discarded by ACL policer
+ Bit3: Count front port traffic discarded by ACL policer
+------------------------------
+<field_enc>:
+0: This event will not trigger counting.
+1: Enable counting for frames with this event.
+------------------------------
+<reggrp_short_dscr>:
+Individual configuration.
+------------------------------
+<reggrp_public_text>:
+This register group defines individual configurations for registers in a STAT.
+------------------------------
+<reg_short_dscr>:
+The counter's least significant 32 bits.
+------------------------------
+<field_public_text>:
+This register contains the least significant 32 bits of a counter.
+------------------------------
+<reg_short_dscr>:
+The counter's most significant 8 bits.
+------------------------------
+<field_public_text>:
+The counter's most significant 8 bits.
+
+The field stores the value in the counters of a flow from bit 32 to the most significant bit. 
+
+Reading:
+The MSB part of the counter is latched to a shadow register, when the LSB part is read. 
+As a result, the LSB part must always be read first, and the MSB part must be read immediately after the LSB part is read. 
+
+Writing:
+The procedure for writing differs depending on counter group:
+ANA_AC:STAT_CNT_CFG_PORT: LSB part must be written first, followed by MSB part.
+All other counter groups: MSB part must be written first, followed by LSB part.
+------------------------------
+<reggrp_short_dscr>:
+Access core memory
+------------------------------
+<reg_short_dscr>:
+Core reset control
+------------------------------
+<reg_public_text>:
+Controls reset and initialization of the switching core. Proper startup sequence is:
+- Enable memories
+- Initialize memories
+- Enable core
+------------------------------
+<field_public_text>:
+Initialize core memories. Field is automatically cleared when operation is complete (approx. 40 us).
+------------------------------

@@ -17,28 +17,31 @@ async def chat(user_id: str, prompt: str, file_path: str) -> dict:
 
     full_project_path = None
     final_prompt = prompt
+    add_dir = None
 
     if file_path:
         full_project_path = os.path.abspath(os.path.join(PROJECTS_BASE_DIR, file_path))
-        final_prompt = f"Документация находится в папке {full_project_path}. {prompt}"
+        blocks_dir = os.path.join(full_project_path, "blocks")
+        if os.path.exists(blocks_dir):
+            final_prompt = f"Документация разбита по блокам в папке {blocks_dir}. Найди нужный файл исходя из запроса и ответь: {prompt}"
+            add_dir = blocks_dir
+        else:
+            final_prompt = f"Документация находится в папке {full_project_path}. {prompt}"
+            add_dir = full_project_path
 
     if user_id not in active_sessions:
         token_uuid = str(uuid.uuid4())
-
-        cmd = ["claude", "-p", final_prompt,"--effort", "low", "--session-id", f"{token_uuid}"]
-
+        cmd = ["claude", "-p", final_prompt, "--effort", "low", "--session-id", token_uuid,
+               "--system-prompt",
+               "Ты помощник по технической документации. Отвечай только на вопросы пользователя. Не предлагай сохранять файлы и не выполняй никаких действий с файловой системой кроме чтения документации."]
         active_sessions[user_id] = token_uuid
-
     else:
         token_uuid = active_sessions[user_id]
-        cmd = ["claude", "-p", final_prompt, "--effort", "low", "--resume", f"{token_uuid}"]
+        cmd = ["claude", "-p", final_prompt, "--effort", "low", "--resume", token_uuid]
 
-    if full_project_path:
-        cmd += ["--add-dir", full_project_path]
-
+    if add_dir:
+        cmd += ["--add-dir", add_dir]
     result = subprocess.run(cmd, capture_output=True, text=True, cwd=work_dir)
-    print("CMD:", cmd)
-    print("FULL PATH EXISTS:", os.path.exists(full_project_path) if full_project_path else None)
     return {"response": result.stdout, "session_id": token_uuid}
 
 

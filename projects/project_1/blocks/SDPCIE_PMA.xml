@@ -1,0 +1,2789 @@
+=== DOCUMENTATION FOR TARGET: SDPCIE_PMA ===
+
+<reggrp_short_dscr>:
+Register group for register 0x00
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Simulation speed up mode enable.0: no speed up.1: speed up. Note loss of lock related functions will not be speed up.
+------------------------------
+<reggrp_short_dscr>:
+Register group for registers 0x05 to 0x15
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+1: enable reference clock buffer.0: power down reference clock buffer.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+For PCIe Gen1, Gen2 , cfg_sw_10g=1For other rate, cfg_sw_10g=0 if no specified.
+------------------------------
+<field_public_text>:
+For PCIe Gen1, Gen2, , cfg_sw_8g=1For other rate, cfg_sw_8g=0 if no specified.
+------------------------------
+<field_public_text>:
+1: enable PLL clock output buffers to the left hand side of common block. PLL clock will output to the left at lower set of clock routing in TX/RX lane.0: disable PLL clock output buffers to the left.
+------------------------------
+<field_public_text>:
+1: enable PLL clock output buffers to the right hand side of common block. PLL clock will output to the right at upper set of clock routing in TX/RX lane.0: disable PLL clock output buffers to the right.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+VCO sub-rate divided ratio.000: /1001: /2001: /2011: /8
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Charge pump base current coarse-tune.
+------------------------------
+<field_public_text>:
+VCO bias current setting.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Charge pump current fine-tune.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Reserved.
+------------------------------
+<field_public_text>:
+Reserved.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Fine tune the swing of ssc refclk swing.
+------------------------------
+<field_public_text>:
+Fine tune bias current for refclk ssc PI.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Reserved.
+------------------------------
+<field_public_text>:
+Fine tune the swing of pll distributed clock.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Fine tune swing of PLL clock buffer.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+reference current/voltage fine-tune control. +/- 2.5% increase/decrease code per step.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+PLL multiplying factor(Fref*N):000000: 64000001: 66000010: 80000011: 100000100: 120001011: 400001100: 480010100: 240
+------------------------------
+<reggrp_short_dscr>:
+Register group for register 0x17
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Reserved.
+------------------------------
+<field_public_text>:
+Reserved.
+------------------------------
+<reggrp_short_dscr>:
+Register group for registers 0x1A to 0x1C
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+REFCLKP/REFCLKN termination resistor enable.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Reserved
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Reserved
+------------------------------
+<reggrp_short_dscr>:
+Register group for registers 0x1F to 0x26
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+0: All bias are reference to internal BG resistor.1: Some bias currents are reference to external 10K BG resistor.
+------------------------------
+<field_public_text>:
+Enable BG bias current source (20 lines) from common block to the right hand side of TX/RX lane. Enable the desired current source from one common block only. If more than 1 common block are used and both enabled for this bit, bias current will be almost twice to the TX/RX lane which will cause function improperly.
+------------------------------
+<field_public_text>:
+Enable BG bias current source (20 lines) from common block to the left hand side of TX/RX lane. Enable the desired current source from one common block only. If more than 1 common block are used and both enabled for this bit, bias current will be almost twice to the TX/RX lane which will cause function improperly.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+For TX lane to lane skew requirement, if more than 5 lanes in one side of CMU to share the same TX clock transmission line, then insert common block in between and activate TX clock buffer/repeater inside this common block with this bit set to '1'. Refer to "IGPSERT18A_configuration_application_note.docx"
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Refclk ssc enable.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reggrp_short_dscr>:
+Register group for registers 0x30 to 0x38
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+PLL lol (loss of lock) status output enable
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+PLL loss of lock deassert timing.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+PLL loss of lock deassert timing.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+PLL loss of lock assert timing.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+PLL loss of lock assert timing.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+PLL loss of lock deassert dppm control.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+PLL loss of lock deassert dppm control.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+PLL loss of lock assert dppm control.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+PLL loss of lock assert dppm control.
+------------------------------
+<reggrp_short_dscr>:
+Register group for registers 0x40 to 0x57
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+T1 in Figure 3.2-1 (reset scheme).
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+T1 = r_time_pll2ckb * 8t
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Mask of resetn to PLL.0 : PLL will not be reset.1 : PLL can be reset by reset sequence.
+------------------------------
+<field_public_text>:
+Selection for T1 in Figure 3.2-1 if the power state is changed.0 : T1 = r_time_pllckb*8t1 : T1 = r_time_pll2ckb_pwrchg*8t
+------------------------------
+<field_public_text>:
+VCO pre-calibration0 : No VCO pre-calibration1 : Run the VCO pre-calibration.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+T0 in Figure 3.2-1 (reset scheme).T0 = r_time_pweron2pll[5:0]* 1T
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Reset signal for pll,low active.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Reset tree buffer power down control selection.0 : Configuration registers1 : internal circuit.
+------------------------------
+<field_public_text>:
+The source of cfg_bias_dn_en/ cfg_bias_dn_en selection0 : configuration register1 : hwt_bias_dn_en / hwt_bias_up_en
+------------------------------
+<field_public_text>:
+The source of link_buf_en selection0 : configuration register1 : hwt_link_buf_en
+------------------------------
+<field_public_text>:
+Reserved.
+------------------------------
+<field_public_text>:
+The source of SSC control signals  selection0 : configuration register1 : configuration from pinshwt_refck_ssc_en,hwt_refck_ssc_resetbhwt_refck_center_spreadinghwt_refck_mcntMaxVal[4:0]hwt_refck_ncntMaxVal[10:0]hwt_refck_ssc_pi_bw[2:0]hwt_refck_ssc_pi_step[1:0]hwt_refck_ssc_rtl_clk_sel
+------------------------------
+<field_public_text>:
+Reserved
+------------------------------
+<field_public_text>:
+Data width/data rate/termination resistor of reference clock control from register or hardware pin.0: cfg control 1: pcs2pma_phymode[[4:0],hwt_cfg_sel_div[4:0]hwt_vco_sel_div[2:0]hwt_refck_r_en
+------------------------------
+<field_public_text>:
+0 : Legacy mode1 : PCI-E auto detction
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+sel_div[5:0] selection0 : hwt_cfg_sel[5:0] or  cfg_sel_div[5:0] depend on the r_DwidthCtrl_from_hwt1 : preset setting depend on the pcs2pma_phymode
+------------------------------
+<field_public_text>:
+The source of power control related signals.0 : configuration register1 : hwt_refck_term_enhwt_ctrl_logic_pdhwt_vco_pdhwt_ck_tree_pdhwt_en_tx_ck_uphwt_en_tx_ck_dnhwt_pd_div66hwt_pd_div64hwt_pma_tx_ck_pdhwt_ibias_pdhwt_refck_pdhwt_en_dummy
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+SATA/SAS : 5'b00_100PCIE Gen1/2 : 5'b00_011PCIE Gen3 : 5'b00_010(8G-12G VCO)PCIE Gen3 : 5'b10_010(16G VCO)PCIE Gen4 : 5'b10_010DP mode Gen1 : 5'b01_000DP mode Gen2 : 5'b01_001DP mode Gen3 : 5'b01_010DP mode Gen4 : 5'b01_011Others : 5'b00_000
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Preset cfg_sel_div[5:0] for PCIE Gen1/Gen2 , SATA/SAS or DP Gen1
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Preset cfg_sel_div[5:0] for PCIE Gen3/Gen4 or DP Gen4
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Preset sw_10g for PCIE Gen3/Gen4, SATA/SAS or DP Gen4
+------------------------------
+<field_public_text>:
+Preset sw_8g for PCIE Gen3/Gen4, SATA/SAS or DP Gen4
+------------------------------
+<field_public_text>:
+Preset sw_10g for PCIE Gen1/Gen2, SATA/SAS or DP Gen1
+------------------------------
+<field_public_text>:
+Preset sw_8g for PCIE Gen1/Gen2, SATA/SAS or DP Gen1
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+T1 in Figure 3.2-1. Refer to the description of r_auto_pwrchg_en
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+T1 in Figure 3.2-1. Refer to the description of r_auto_pwrchg_en
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Preset cfg_icp_sel[3:0] for the PCIE Gen3/Gen4, SATA/SAS or DP Gen4
+------------------------------
+<field_public_text>:
+Preset cfg_i_vco[3:0] for the PCIE Gen3/Gen4, SATA/SAS or DP Gen4
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Preset cfg_rsel_gen[2:0] for the PCIE Gen3/Gen4, SATA/SAS or DP Gen4
+------------------------------
+<field_public_text>:
+Preset cfg_icp_base_sel[3:0] for the PCIE Gen3/Gen4, SATA/SAS or DP Gen4
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Preset cfg_sel_div[5:0] for DP Gen3
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Preset cfg_sel_div[5:0] for DP Gen2
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Preset sw_10g for DP Gen2
+------------------------------
+<field_public_text>:
+Preset sw_10g for DP Gen3
+------------------------------
+<field_public_text>:
+Preset sw_8g for DP Gen2
+------------------------------
+<field_public_text>:
+Preset sw_8g for DP Gen3
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Preset cfg_i_vco[3:0] for the DP Gen2
+------------------------------
+<field_public_text>:
+Preset cfg_i_vco[3:0] for the DP Gen3
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Preset cfg_icp_sel[2:0] for the DP Gen2
+------------------------------
+<field_public_text>:
+Preset cfg_icp_sel[2:0] for the DP Gen3
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Preset cfg_icp_base_sel[3:0] for the DP Gen2
+------------------------------
+<field_public_text>:
+Preset cfg_icp_base_sel[3:0] for the DP Gen3
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Preset cfg_rsel_sel[2:0] for the DP Gen2
+------------------------------
+<field_public_text>:
+Preset cfg_rsel_sel[2:0] for the DP Gen3
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Preset vco_start_code for the DP Gen3
+------------------------------
+<field_public_text>:
+Preset vco_start_code for the DP Gen2
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Preset vco_start_code for the DP Gen4
+------------------------------
+<reggrp_short_dscr>:
+Register group for registers 0xE0 to 0xE3
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Loss of lock of PLL
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Reserved.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Valid if r_en_pre_cal_vco =1Current vco code.
+------------------------------
+<field_public_text>:
+Valid if r_en_pre_cal_vco =10 : vco pre-calibration is on go-ing.1 : vco pre-calibration is done.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Valid if r_en_pre_cal_vco =1Pre-calibrated  vco code of PCI-E Gen3/Gen4.
+------------------------------
+<field_public_text>:
+Valid if r_en_pre_cal_vco =1Pre-calibrated  vco code of PCI-E Gen1/Gen2.
+------------------------------
+<reggrp_short_dscr>:
+Register group for register 0xFF
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+This register provides RW access switch between CMU registers , LANE registers through EXT CFG i/f Val 0-CMU access, 1-LANE access
+------------------------------
+<reggrp_short_dscr>:
+Register group for registers 0x00 to 0xE4
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Simulation speed up mode enable.0: no speed up.1: speed up. Note loss of lock related functions will not be speed up.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Refer to pcs2pma_txdetrx_str
+------------------------------
+<field_public_text>:
+Refer to pcs2pma_txdetrx_en
+------------------------------
+<field_public_text>:
+Refer to hwt_pma_txck_sel[2:0]
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+TX data path setting. Should set to 1.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Enable 1st stage post-equalization control of TX.
+------------------------------
+<field_public_text>:
+Enable TX data path control.
+------------------------------
+<field_public_text>:
+Enable pre-equalization control of TX.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Pre-equalization level control of TX. Refer to section 2.6.2
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+1st stage post-equalization level control of TX. Refer to section 2.6.2.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+PMAA RX to TX loopback enable.
+------------------------------
+<field_public_text>:
+PMAA TX to RX loopback enable.
+------------------------------
+<field_public_text>:
+Power down control of PMAA TX serializer block.
+------------------------------
+<field_public_text>:
+Power down control of PMAA TX clock.
+------------------------------
+<field_public_text>:
+Power down control of TX driver to support EEE.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal
+------------------------------
+<field_public_text>:
+CTLE regulator enable.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Refer to hwt_lane_id[2:0]
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Power down control of CTLE block.
+------------------------------
+<field_public_text>:
+CTLE gain control.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+TX to RX loopback enable.
+------------------------------
+<field_public_text>:
+RX to TX loopback enable.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+PCIE Gen1 / SATA I / SAS 1.5G/other rate[7:5] : PI bandwidth control, [4:0] : 1st CDR digital low pass filter select.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+PCIE Gen2 / SATA II/ SAS 3G[7:5] : PI bandwidth control, [4:0] : 1st CDR digital low pass filter select.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+PCIE Gen3 / SATA III/ SAS 6G[7:5] : PI bandwidth control, [4:0] : 1st CDR digital low pass filter select.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+SAS 12G[7:5] : PI bandwidth control, [4:0] : 1st CDR digital low pass filter select.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+CDR Clock enable.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Power down control of CDR path buffer.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Enable signal for DFE tap mux.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal
+------------------------------
+<field_public_text>:
+Power down control of error amplifier.
+------------------------------
+<field_public_text>:
+Enable signal for DFE clock.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Power down control of DFE block.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+PCIE Gen2 / SATA II / SAS 3GPI bandwidth control.
+------------------------------
+<field_public_text>:
+PCIE Gen1 / SATA I / SAS 1.5G/other ratePI bandwidth control.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+SAS 12GPI bandwidth control.
+------------------------------
+<field_public_text>:
+PCIE Gen3 / SATA III / SAS 6GPI bandwidth control.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal
+------------------------------
+<field_public_text>:
+Internal use signal
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal
+------------------------------
+<field_public_text>:
+Internal use signal
+------------------------------
+<field_public_text>:
+Refer to hwt_fom_sel
+------------------------------
+<field_public_text>:
+Internal use signal
+------------------------------
+<field_public_text>:
+Internal use signal
+------------------------------
+<field_public_text>:
+PI usage. Set the signal before pcs_iscan_en is asserted.0 : DFE purpose1 : Eye scan purpose
+------------------------------
+<field_public_text>:
+Internal use signal
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal
+------------------------------
+<field_public_text>:
+Internal use signal
+------------------------------
+<field_public_text>:
+Internal use signal
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal
+------------------------------
+<field_public_text>:
+Internal use signal
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Refer to hwt_pma_rxdiv_sel[2:0]
+------------------------------
+<field_public_text>:
+Enable signal for summer block.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+TX predriver curent setting.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+8-bit for TX amplitude adjustment {cfg_itx_ipdriver_base[1:0],cfg_ibias_tune_reserve[5:0]} from 0.4Vpp to 1.2Vpp. 1LSB could increase/decrease 3.125mV. cfg_itx_ipdriver_base[2] is reserved.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Power down control of analog loss of signal squelch block. 1: power down.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Refer to hwt_rxrate_sel[1:0]
+------------------------------
+<field_public_text>:
+Refer to hwt_txrate_sel[1:0]
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Refer to pcs2pma_txswing
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+CDR low pass filter threshold z
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+CDR low pass filter threshold y
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+2nd order CDR disable signal.0 : Enable.1 : Disable.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Reserved
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Reserved
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+PCIE Gen2 / SATA II / SAS 3G.
+------------------------------
+<field_public_text>:
+PCIE Gen1 / SATA I / SAS 1.5G/other rate.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+SAS 12G
+------------------------------
+<field_public_text>:
+PCIE Gen3 / SATA III / SAS 6G.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Refer to aux_rxck_sel
+------------------------------
+<field_public_text>:
+voltage threshold for squelch detection.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Fast eye scan method.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+0 : SSC down spreading.1 : SSC center spreading.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+0 : Disable SSC.1 : Enable SSC.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Refer to aux_txck_sel
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Reset signal for SSC (active low)
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signals
+------------------------------
+<field_public_text>:
+Internal use signals
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+8-bit for TX amplitude adjustment {cfg_itx_ipdriver_base[1:0],cfg_ibias_tune_reserve[5:0]} from 0.4Vpp to 1.2Vpp. 1LSB could increase/decrease 3.125mV. cfg_itx_ipdriver_base[2] is reserved.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+T2 of Figure3.2-1 for power change operation.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+T2 of Figure3.2-1 for power change operation.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signals
+------------------------------
+<field_public_text>:
+Internal use signals
+------------------------------
+<field_public_text>:
+Internal use signals
+------------------------------
+<field_public_text>:
+Internal use signals
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signals
+------------------------------
+<field_public_text>:
+Internal use signals
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signals
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signals
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signals
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signals
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signals
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+The time interval to change the value of each power control bit.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+The order of pcs2pma_power_ctrl[0] in the power change sequence.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+The order of pcs2pma_power_ctrl[1] in the power change sequence.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+The order of pcs2pma_power_ctrl[2] in the power change sequence.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+The order of pcs2pma_power_ctrl[8:4] in the power change sequence.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+The order of pcs2pma_power_ctrl[11] in the power change sequence.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+The order of pcs2pma_power_ctrl[12] in the power change sequence.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+The order of pcs2pma_power_ctrl[13] in the power change sequence.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+The order of pcs2pma_power_ctrl[14] in the power change sequence.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+The order of pcs2pma_power_ctrl[15] in the power change sequence.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+The order of pcs2pma_power_ctrl[16] in the power change sequence.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+The order of pcs2pma_power_ctrl[17] in the power change sequence.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+The order of pcs2pma_power_ctrl[18] in the power change sequence.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+The order of pcs2pma_power_ctrl[19] in the power change sequence.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+The order of pcs2pma_power_ctrl[20] in the power change sequence.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+The order of pcs2pma_power_ctrl[22] in the power change sequence.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+The order of pcs2pma_power_ctrl[24] in the power change sequence.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+The order of tx_deemph related signals in the power change sequence.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+8-bit for TX amplitude adjustment {cfg_itx_ipdriver_base[1:0],cfg_ibias_tune_reserve[5:0]} from 0.4Vpp to 1.2Vpp. 1LSB could increase/decrease 3.125mV. cfg_itx_ipdriver_base[2] is reserved.
+------------------------------
+<field_public_text>:
+8-bit for TX amplitude adjustment {cfg_itx_ipdriver_base[1:0],cfg_ibias_tune_reserve[5:0]} from 0.4Vpp to 1.2Vpp. 1LSB could increase/decrease 3.125mV. cfg_itx_ipdriver_base[2] is reserved.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+0x0000: infinite BIST run time. 0x0001~0xFFFF: BIST run time = (data wicth/bit reate)* r_bist_timer[15:0]
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+See above description
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+BIST pattern selection.000: PRBS7.001: PRBS9.010: PRBS11.011: PRBS15.100: PRBS23.101: PRBS31.110: clock pattern.111: user defined pattern.
+------------------------------
+<field_public_text>:
+0: non free running mode.1: free running mode.
+------------------------------
+<field_public_text>:
+BIST error injection enable
+------------------------------
+<field_public_text>:
+BIST enable signal
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+1: bist_err counter will stop when reaching 32'hffff_ffff.0: bist_err counter will run continuously, will not saturate.
+------------------------------
+<field_public_text>:
+1: bist_err will assert if rx all zero data in PRBS mode..0: Treat all zero data input as correct data. Note: r_bist_chk_zero must be set after r_bist_ok is asserted.
+------------------------------
+<field_public_text>:
+BIST result compare enable.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+RX loss of lock deassert timing.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+RX loss of lock deassert timing.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+RX loss of lock assert timing.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+RX loss of lock assert timing.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+RX loss of lock status output enable.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+RX loss of lock deassert dppm control.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+RX loss of lock deassert dppm control.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+RX loss of lock assert dppm control.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+RX loss of lock assert dppm control.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Analog loss of signal enable.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+RX data bit polarity control. 1: polarity will be inverted.
+------------------------------
+<field_public_text>:
+RX data bit reversal control. High active.
+------------------------------
+<field_public_text>:
+TX data bit polarity control. 1: polarity will be inverted.
+------------------------------
+<field_public_text>:
+TX data bit reversal control. High active.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal
+------------------------------
+<field_public_text>:
+RX loss of lock event clear.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Reserved
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Reserved
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Reserved
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Reserved
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+T2 in Figure 3.2-1 or T1 in Figure 3.2-2 (reset scheme).
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+T2 in Figure 3.2-1 or T1 in Figure 3.2-2 (reset scheme).
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+T3 in Figure 3.2-1 or T2 in Figure 3.2-2 (reset scheme).
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+T3 in Figure 3.2-1 or T2 in Figure 3.2-2 (reset scheme).
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+T5 in Figure 3.2-1 or T4 in Figure 3.2-2 (reset scheme).
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+T5 in Figure 3.2-1 or T4 in Figure 3.2-2 (reset scheme).
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+T4 in Figure 3.2-1 or T3 in Figure 3.2-2 (reset scheme).
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Enable the auto SQ offset cancellation.0 : Manual mode.1 : Auto mode.
+------------------------------
+<field_public_text>:
+Enable the auto RX offset cancellation.Priority : r_auto_oscal_afe> r_oscal_reg 0 : Manual mode.1 : Auto RX offset cancellation.
+------------------------------
+<field_public_text>:
+The source of cfg_resetb_oscal_afe, cfg_pd_osdac_afe and cfg_oscal_afe. 0 : Pins interface1 : configuration registers
+------------------------------
+<field_public_text>:
+The ckb2cdr timer selection for power change event.0 : r_time_ckb2cdr[15:0] 1 : r_time_ckb2cdr_pwrchg
+------------------------------
+<field_public_text>:
+Clock source of clk_out.00 : TX /16 /20 /32 or /64 clock.01 : TX /16 clock10 : RX /16 /20 /32 or /64 clock 11 : RX /16 clock
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal
+------------------------------
+<field_public_text>:
+Internal use signal
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Refer to hwt_multi_lane_mode
+------------------------------
+<field_public_text>:
+1: enable LS3 loopback path.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal
+------------------------------
+<field_public_text>:
+Internal use signal
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Select pcie gen1/2 mode is from hardware pin or configuration registers.0 : Configuration register1 : From cfg_sel_div
+------------------------------
+<field_public_text>:
+Select lane_id is from hardware pin or configuration registers.0 : Configuration register1 : pin interface
+------------------------------
+<field_public_text>:
+Select aux_txck_sel/aux_rxck_sel is from hardware pin or configuration registers.0 : Configuration register1 : pin interface
+------------------------------
+<field_public_text>:
+To select between interface pin control (default) and register control of1.???? TX FFE coefficient control2.???? TX swing control3.???? power down controlEye scan enable
+------------------------------
+<field_public_text>:
+0 : Legacy mode1 : PCI-E auto detection.
+------------------------------
+<field_public_text>:
+Internal use signal
+------------------------------
+<field_public_text>:
+Data width/data rate/termination resistor of reference clock control from register or hardware pin.0: cfg control 1: hwt control
+------------------------------
+<field_public_text>:
+Reset RX FIFO if RXEI is asserted0 : disable1 : enable
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+To select between interface pin control (default) and register control oftx swing0 : Pin control1 : Register control
+------------------------------
+<field_public_text>:
+To select between interface pin control (default) and register control of miscellaneous signals.0 : Pin control1 : Register control
+------------------------------
+<field_public_text>:
+To select between interface pin control (default) and register control of tx equalizer0 : Pin control1 : Register control
+------------------------------
+<field_public_text>:
+To select between interface pin control (default) and register control of eye scan function0 : Pin control1 : Register control
+------------------------------
+<field_public_text>:
+Refer to hwt_data_width_sel[2:0]
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+User defined BIST pattern
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+User defined BIST pattern
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+User defined BIST pattern
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+User defined BIST pattern
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+User defined BIST pattern
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+User defined BIST pattern
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+User defined BIST pattern
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+User defined BIST pattern
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Beacon data pattern.0 : TXP = 0: TXN= 11 : TXP = 1 : TXN =0
+------------------------------
+<field_public_text>:
+Enable the beacon transimission.0 : Disable1 : Enable
+------------------------------
+<field_public_text>:
+Source selection of tx_beacon_en and tx_beacon_d0 : pins interface1 : configuration registers
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+SATA speed change mode.0 : Disable. The pcs2pma_spd_chg is invalid.1 : Enable
+------------------------------
+<field_public_text>:
+Enable CDR auto reset function. Reset CDR if loss of lock under SSC0 : Disable CDR auto reset1 : Enable CDR auto reset.
+------------------------------
+<field_public_text>:
+Reset tree buffer power down control selection.0 : Configuration registers1 : internal circuit.
+------------------------------
+<field_public_text>:
+Select RXEQ control signals are from hardware pin or configuration registers.0 : hardware pin1 : configuration registers
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Source selection of cfg_rxdet_en and cfg_rxdet_str.0 : pins interface1 : configuration registers.
+------------------------------
+<field_public_text>:
+Source selection of ALOS threshold 0 : configuration registers.1 : pins interface
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Gating the pma_tx_ck_src,pma_rx_ck and pclk when speed change
+------------------------------
+<field_public_text>:
+Select pclk_gating is from hardware pin or configuration registers.0 : Configuration register1 : From hardware pins
+------------------------------
+<field_public_text>:
+Select cdr control signals are from hardware pin or configuration registers.0 : Configuration register1 : From hardware pins
+------------------------------
+<field_public_text>:
+Select ssc control signals are from hardware pin or configuration registers.0 : Configuration register1 : From hardware pins
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+SATA/SAS : 5'b00_100PCIE Gen1/2 : 5'b00_011PCIE Gen3 : 5'b00_010(8G-12G VCO)PCIE Gen3 : 5'b10_010(16G VCO)PCIE Gen4 : 5'b10_010DP mode Gen1 : 5'b01_000DP mode Gen2 : 5'b01_001DP mode Gen3 : 5'b01_010DP mode Gen4 : 5'b01_011Others : 5'b00_000
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+RX loss of lock deassert  ppm control for SSC.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+RX loss of lock deassert  ppm control for SSC.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+RX loss of lock assert  ppm control for SSC.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+RX loss of lock assert  ppm control for SSC.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Preset registers for PCIE-G3, SATA-3 or DP-G3
+------------------------------
+<field_public_text>:
+Preset registers for PCIE-G2, SATA-2 or DP-G2
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Preset registers for PCIE-G4, SAS-3 or DP-G4
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Preset registers for PCIE-G2, SATA-2 or DP-G2
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Preset registers for PCIE-G3, SATA-3 or DP-G3
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Preset registers for PCIE-G4, SAS-3 or DP-G4
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Preset registers for PCIE-G3, SATA-3 or DP-G3
+------------------------------
+<field_public_text>:
+Preset registers for PCIE-G2, SATA-2 or DP-G2
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Preset registers for PCIE-G4, SAS-3 or DP-G4
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal
+------------------------------
+<field_public_text>:
+8-bit for TX amplitude adjustment {cfg_itx_ipdriver_base[1:0],cfg_ibias_tune_reserve[5:0]} from 0.4Vpp to 1.2Vpp. 1LSB could increase/decrease 3.125mV. cfg_itx_ipdriver_base[2] is reserved.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal
+------------------------------
+<field_public_text>:
+Internal use signal
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Preset registers for PCIE-G3, SATA-3 or DP-G3
+------------------------------
+<field_public_text>:
+Preset registers for PCIE-G2, SATA-2 or DP-G2
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Preset registers for PCIE-G4, SAS-3 or DP-G4
+------------------------------
+<field_public_text>:
+Preset registers for PCIE-G3, SATA-3 or DP-G3
+------------------------------
+<field_public_text>:
+Preset registers for PCIE-G2, SATA-2 or DP-G2
+------------------------------
+<field_public_text>:
+Preset registers for PCIE-G4, SAS-3 or DP-G4
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Preset registers for PCIE-G3, SATA-3 or DP-G3
+------------------------------
+<field_public_text>:
+Preset registers for PCIE-G2, SATA-2 or DP-G2
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Preset registers for PCIE-G4, SAS-3 or DP-G4
+------------------------------
+<field_public_text>:
+Preset registers for PCIE-G3, SATA-3 or DP-G3
+------------------------------
+<field_public_text>:
+Preset registers for PCIE-G2, SATA-2 or DP-G2
+------------------------------
+<field_public_text>:
+Preset registers for PCIE-G4, SAS-3 or DP-G4
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Preset registers for PCIE-G4, SAS-3 or DP-G4
+------------------------------
+<field_public_text>:
+Preset registers for PCIE-G3, SATA-3 or DP-G3
+------------------------------
+<field_public_text>:
+Preset registers for PCIE-G2, SATA-2 or DP-G2
+------------------------------
+<field_public_text>:
+Preset registers for PCIE-G4, SAS-3 or DP-G4
+------------------------------
+<field_public_text>:
+Preset registers for PCIE-G3, SATA-3 or DP-G3
+------------------------------
+<field_public_text>:
+Preset registers for PCIE-G2, SATA-2 or DP-G2
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Preset registers for PCIE-G3, SATA-3 or DP-G3
+------------------------------
+<field_public_text>:
+Preset registers for PCIE-G2, SATA-2 or DP-G2
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Preset registers for PCIE-G4, SAS-3 or DP-G4
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Preset registers for PCIE-G3, SATA-3 or DP-G3
+------------------------------
+<field_public_text>:
+Preset registers for PCIE-G2, SATA-2 or DP-G2
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Preset registers for PCIE-G4, SAS-3 or DP-G4
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Preset registers for PCIE-G3, SATA-3 or DP-G3
+------------------------------
+<field_public_text>:
+Preset registers for PCIE-G2, SATA-2 or DP-G2
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Preset registers for PCIE-G4, SAS-3 or DP-G4
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Preset registers for PCIE-G2, SATA-2 or DP-G2
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Preset registers for PCIE-G3, SATA-3 or DP-G3
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Preset registers for PCIE-G4, SAS-3 or DP-G4
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Preset registers for PCIE-G4, SAS-3 or DP-G4
+------------------------------
+<field_public_text>:
+Preset registers for PCIE-G3, SATA-3 or DP-G3
+------------------------------
+<field_public_text>:
+Preset registers for PCIE-G2, SATA-2 or DP-G2
+------------------------------
+<field_public_text>:
+Preset registers for PCIE-G4, SAS-3 or DP-G4
+------------------------------
+<field_public_text>:
+Preset registers for PCIE-G3, SATA-3 or DP-G3
+------------------------------
+<field_public_text>:
+Preset registers for PCIE-G2, SATA-2 or DP-G2
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+DFE coefficient.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+DFE coefficient.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+DFE coefficient.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+DFE coefficient.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+DFE coefficient.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Reserved.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Eye scan status0 : eye scan is on-going1 : eye scan process is done.
+------------------------------
+<field_public_text>:
+0 : Fast eye scan is correct.1 : Fast eye scan is failed. The upper bound or low bound of eye can not be found.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Eye scan result
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Eye scan result
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Eye scan result
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Eye scan result
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Eye scan result
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Eye scan result
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Eye scan result
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Eye scan result
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Eye scan result
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Eye scan result for single point scan.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Squelch status.
+------------------------------
+<field_public_text>:
+Loss of signal state.0: RX signal is detected. Note this bit is RX data pattern dependent. Non-standard application with this signal is recommended to check with GUC designers.
+------------------------------
+<field_public_text>:
+RX loss of lock indicator. 0: RX clock is locked to PLL clock..
+------------------------------
+<field_public_text>:
+RX loss of lock event indicator. (latch-high signal).0: RX clock is locked to PLL clock.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+The bist time is time out.Bist time = (data width/bit rate)*1024 * r_bist_timer.
+------------------------------
+<field_public_text>:
+BIST is error.
+------------------------------
+<field_public_text>:
+BIST is ok.
+------------------------------
+<field_public_text>:
+BIST is active.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+BIST Error counter
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+BIST Error counter
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+BIST Error counter
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+BIST Error counter
+------------------------------
+<reggrp_short_dscr>:
+Register group for registers 0xF0 to 0xFE
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Preset registers for PCIE-G3, SATA-3 or DP-G3
+------------------------------
+<field_public_text>:
+Preset registers for PCIE-G2, SATA-2 or DP-G2
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Preset registers for PCIE-G4, SAS-3 or DP-G4
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Preset registers for PCIE-G3, SATA-3 or DP-G3
+------------------------------
+<field_public_text>:
+Preset registers for PCIE-G2, SATA-2 or DP-G2
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Preset registers for PCIE-G2, SATA-2 or DP-G2
+------------------------------
+<field_public_text>:
+Preset registers for PCIE-G4, SAS-3 or DP-G4
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Preset registers for PCIE-G4, SAS-3 or DP-G4
+------------------------------
+<field_public_text>:
+Preset registers for PCIE-G3, SATA-3 or DP-G3
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Preset registers for PCIE-G3, SATA-3 or DP-G3
+------------------------------
+<field_public_text>:
+Preset registers for PCIE-G2, SATA-2 or DP-G2
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Preset registers for PCIE-G4, SAS-3 or DP-G4
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Pre-equalization level control of TX. Refer to section 2.6.2
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Pre-equalization level control of TX. Refer to section 2.6.2
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Pre-equalization level control of TX. Refer to section 2.6.2
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+Internal use signal.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+CTLE gain control.
+------------------------------
+<field_public_text>:
+CTLE gain control.
+------------------------------
+<reg_short_dscr>:
+CMU Configuration Register
+------------------------------
+<field_public_text>:
+CTLE gain control.
+------------------------------

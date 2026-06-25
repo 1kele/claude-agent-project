@@ -1,0 +1,384 @@
+=== DOCUMENTATION FOR TARGET: LCPLL28 ===
+
+<target_short_dscr>:
+LCPLL Macro
+------------------------------
+<target_public_text>:
+LC-PLL 28nm IP
+------------------------------
+<reggrp_short_dscr>:
+LC-PLL configuartion and status register set
+------------------------------
+<reggrp_public_text>:
+LC-PLL configuartion and status register set
+------------------------------
+<reg_short_dscr>:
+LC-PLL configuration register 1
+------------------------------
+<reg_public_text>:
+LC-PLL configuration register 1
+------------------------------
+<field_public_text>:
+LCPLL Adaptation C offset. Each LSB is 1 LSB of SELCFIN_BIN
+------------------------------
+<field_enc>:
+0: Add no offset
+>0: Adding offset
+------------------------------
+<field_public_text>:
+VCO power setting. (Binary code)
+------------------------------
+<field_enc>:
+0: Lowest power
+1: Higher Power
+2: Even Higher Power
+...
+15: Max power (recommended setting)
+------------------------------
+<field_public_text>:
+FST Varactor Bank adjust. Thermometer Coding.
+------------------------------
+<field_enc>:
+0: All varactors off
+1: 1 Bank on
+3: 2 Banks on
+7: 3 Banks on
+15: 4 Banks on
+------------------------------
+<field_public_text>:
+Set Coarse Metal Cap Select. Used when ADAP is set to 0.
+------------------------------
+<field_enc>:
+0: Max VCO Freq
+....
+7: Min VCO freq
+------------------------------
+<field_public_text>:
+Set Fine Metal Cap Select. Used when ADAP is set to 0.
+------------------------------
+<field_enc>:
+0: Max VCO Freq
+....
+7: Min VCO freq
+------------------------------
+<field_public_text>:
+LCPLL VCO Range adapatation
+------------------------------
+<field_enc>:
+0: Set manually
+1: Adapt
+------------------------------
+<field_public_text>:
+Bypass Resistor LUT
+------------------------------
+<field_enc>:
+0: Use LUT
+1: Bypass LUT. Value of SELFR passed directly to R array
+------------------------------
+<field_public_text>:
+Charge pump gain setting. When SDUAL=1, Charge Pump Gain setting for integral path. When SDUAL=0, Charge pump gain setting in summation with STOPCPP.
+
+Enable/disable transistor pairs. Thermometer coding.
+------------------------------
+<field_enc>:
+0: Max gain
+1: Less gain
+3: Even less gain
+7: Less than even less gain
+15: No gain (do not use)
+Others: reserved
+------------------------------
+<field_public_text>:
+PLL Filter Capacitor Select
+
+Thermometer Coding
+------------------------------
+<field_enc>:
+0: Min Cap
+1:
+3:
+7:
+15: Max Cap
+Others: reserved
+------------------------------
+<reg_short_dscr>:
+LC-PLL configuration register 2
+------------------------------
+<reg_public_text>:
+LC-PLL configuration register 2
+------------------------------
+<field_public_text>:
+PLL Loop Filter R select
+------------------------------
+<field_enc>:
+If RBYP = 0:
+Binary Coding:
+0: Max R
+...
+0xFF: Min R
+
+If RBYP = 1:
+Resistor Weights are as follows. Can use any combination of resistors desired.
+0x1: 68.8k
+0x2: 34.4k
+0x4: 17.2k
+0x8: 8.6k
+0x10: 4.3k
+0x20: 2.15k
+0x40: 1.075k
+0x80: 537.5
+------------------------------
+<field_public_text>:
+F in alpha (F/R) For fractional divider. Keep at 0 for normal operation.
+------------------------------
+<reg_short_dscr>:
+LC-PLL configuration register 3
+------------------------------
+<reg_public_text>:
+LC-PLL configuration register 3
+------------------------------
+<field_public_text>:
+Digital Logic Reset
+------------------------------
+<field_enc>:
+0: Reset
+1: Normal Operation
+------------------------------
+<field_public_text>:
+Divide by 2.
+------------------------------
+<field_enc>:
+0: Divide by 2 (Normal Operation)
+1: Divide by 1
+------------------------------
+<field_public_text>:
+PD Sigma Delta
+------------------------------
+<field_enc>:
+0: Sigma Delta Enabled. Frac-N Operation
+1: Power Down Sigma Delta (Normal Operation)
+------------------------------
+<field_public_text>:
+R in alpha (alpha = F/R) for fractional divider. Keep at 0x0F4240 for normal operation
+------------------------------
+<reg_short_dscr>:
+LC-PLL configuration register 4
+------------------------------
+<reg_public_text>:
+LC-PLL configuration register 4
+------------------------------
+<field_public_text>:
+LCPLL Test Mode
+------------------------------
+<field_enc>:
+0:  Normal Operation
+1: Adds another Divide by 4 on feedback divider (ATE test only)
+------------------------------
+<field_public_text>:
+Time limit for phase lock detector.  
+It is the number of clock counts of reference clock.  
+Within this time, if the number of error is larger than ERRBUF, the lock detector will trigger LOS signal. 
+
+Good value is 0x14
+------------------------------
+<field_public_text>:
+Error Buffer. Set to 0x1.
+------------------------------
+<field_public_text>:
+Select source of the LCPLL integer divider value N used for VCO frequency control:
+
+When N_SRC_SEL is '0' the value of N is controlled by the reference clock selection strapping pins and the LCPLL_CONFIG4.N register is ignored.
+
+When N_SRC_SEL is '1' the value of N is controlled by the LCPLL_CONFIG4.N register.
+------------------------------
+<field_enc>:
+0: Use strapping pins to select N value
+1: Use LCPLL_CONFIG4.N register to select N value
+------------------------------
+<field_public_text>:
+N integer divider.  VCO freq = REFCLKIN * N. Target is 10GHz.
+
+Minimum: 32 (0x20)
+Maximum: 2^16: 1 
+
+The configured value is ignored if LCPLL_CONFIG4.N_SRC_SEL = '0'
+------------------------------
+<reg_short_dscr>:
+LC-PLL configuration register 5
+------------------------------
+<reg_public_text>:
+LC-PLL configuration register 5
+------------------------------
+<field_public_text>:
+Only effective when SDUAL=1. Sets DC voltage level for proportional path.
+------------------------------
+<field_enc>:
+0x0: 3/4 of 0.9v supply
+0x1: 1/2 of 0.9v supply
+------------------------------
+<field_public_text>:
+When SDUAL=1, Charge pump gain setting for proportional path. When SDUAL=0, Charge Pump gain setting in summation with STOPCPI
+
+Enable/disable transistor pairs. Thermometer coding.
+------------------------------
+<field_enc>:
+0x0: Max gain
+0x1: Less gain
+0x3: Even less gain
+0x7: Less than even less gain
+0xF: No gain (do not use)
+------------------------------
+<field_public_text>:
+CML power setting.
+------------------------------
+<field_enc>:
+0x0: Min Power
+0x1: More Power
+...
+0xF: Max Power
+------------------------------
+<field_public_text>:
+PLL loop mode setting.
+------------------------------
+<field_enc>:
+0x0: Single loop
+0x1: Dual loop
+------------------------------
+<field_public_text>:
+Charge Pump Current Select (Binary Weighted)
+------------------------------
+<field_enc>:
+0: Minimum
+1: More
+2: More still
+...
+31: Max
+------------------------------
+<field_public_text>:
+Digital Mux Select
+------------------------------
+<field_enc>:
+0: CK625M (625MHz)
+1: CCK (Feedback clock going back into PFD)
+2: RKO (Buffered clock inside PLL feeding PFD)
+3: CLKREF (Buffered clock from REFCLK Buffer)
+4 - 15: Reserved. (Bits 2 and 3 do not drive anything)
+------------------------------
+<field_public_text>:
+Digital Mux Enable. For test purposes only.
+------------------------------
+<field_enc>:
+0: Disabled. Output is static low.
+1: DMUX enabled
+------------------------------
+<field_public_text>:
+AMUX select. Select analog signal to monitor.
+
+The analog output pin must be enabled to monitor the output from the AMUX. See register:
+CLKGEN:AOUT:AOUT_CFG.AOUT_ENA
+------------------------------
+<field_enc>:
+0: VSS (0V)
+1: VDD1P8 (1.8V)
+2: VDD0P9A (0.9V)
+3: VDD (0.9V)
+4: FSTDC (LC VCO control Voltage)
+5: VBG227 (0.227V)
+6: VBG454 (0.454V)
+7: BG1P2 (1.2V)
+8: NRF_PLL (0.9V CML reference voltage)
+9: NRFB (1.8V CML reference voltage)
+10: NRFT(1.8V CML reference voltage)
+11 - 15: VSS (0V)
+------------------------------
+<field_public_text>:
+AMUX Enable. For Diagnostic purposes only.
+
+The analog output pin must be enabled to monitor the output from the AMUX. See register
+CLKGEN:AOUT:AOUT_CFG.AOUT_ENA
+------------------------------
+<field_enc>:
+0: Disable AMUX (normal operation. Output set to 0V)
+1: Enable AMUX
+------------------------------
+<reg_short_dscr>:
+LC-PLL miscellaneous configuration register
+------------------------------
+<reg_public_text>:
+LC-PLL miscellaneous configuration register
+------------------------------
+<field_public_text>:
+Misc. configuration bits for LCPLL. Currently not used.
+------------------------------
+<field_public_text>:
+LC Cap Calibration Toggle. 
+This bit is toggled low -> high -> low to start the calibration FSM to select the fine and coarse values for the LC tank.
+------------------------------
+<field_enc>:
+0: Normal Operation
+0 -> 1 -> 0: Triggers FSM to run and find proper values for LC tank. 
+1: Clears FSM.
+------------------------------
+<field_public_text>:
+CML 10G Clock Buffer Right Enable.
+------------------------------
+<field_enc>:
+0:  Disabled
+1: Enabled
+------------------------------
+<field_public_text>:
+CML 10G Clock Buffer Left Enable.
+------------------------------
+<field_enc>:
+0:  Disabled
+1: Enabled
+------------------------------
+<reg_short_dscr>:
+LC-PLL status register
+------------------------------
+<reg_public_text>:
+LC-PLL status register
+------------------------------
+<field_public_text>:
+LCPLL Loss of Lock Status
+------------------------------
+<field_enc>:
+0: PLL Sync'd (Normal Operation)
+1: LOL
+------------------------------
+<field_public_text>:
+LCPLL adaptation done
+------------------------------
+<field_enc>:
+0: Running
+1: Done (Stable PLL Output)
+------------------------------
+<field_public_text>:
+LCPLL C Fine slow
+
+Low value found for fine select when doing adaptation
+------------------------------
+<field_public_text>:
+LCPLL C Fine High
+
+High value found for fine select when doing adaptation
+------------------------------
+<field_public_text>:
+LCPLL C Coarse Low
+
+Low value found for coarse select when doing adaptation
+------------------------------
+<field_public_text>:
+LCPLL C Coarse High
+
+High value found for coarse select when doing adaptation
+------------------------------
+<reg_short_dscr>:
+LC-PLL miscellaneous status register
+------------------------------
+<reg_public_text>:
+LC-PLL miscellaneous status register
+------------------------------
+<field_public_text>:
+No connection. Nothing being utilized. Tied Logic Low inside the LCPLL.
+------------------------------

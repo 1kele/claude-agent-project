@@ -1,0 +1,487 @@
+=== DOCUMENTATION FOR TARGET: ANA_ACL ===
+
+<target_short_dscr>:
+Access Control List sub block of the Analyzer
+------------------------------
+<reggrp_short_dscr>:
+Common configurations used by ANA_ACL
+------------------------------
+<reg_short_dscr>:
+VCAP_S2 configuration
+------------------------------
+<reg_public_text>:
+Configuration per port.
+------------------------------
+<field_public_text>:
+Enable/disable VCAP_S2 lookups.
+
+Bit[0]: Relates to first lookup in VCAP_S2
+Bit[1]: Relates to second lookup in VCAP_S2
+Bit[2]: Relates to third lookup in VCAP_S2
+Bit[3]: Relates to fourth lookup in VCAP_S2
+------------------------------
+<field_enc>:
+0: Disable
+1: Enable.
+------------------------------
+<reg_short_dscr>:
+Source IP table used for multicast IP address swapping
+------------------------------
+<field_public_text>:
+New source IP address used when frame's IP addresses are swapped and the original destination IP address was a multicast address. IP address swapping is enabled in VCAP_S2 action ACL_RT_MODE.
+
+IPv4: Each entry configures one IPv4 address.
+IPv6: Four consecutive entries configures one IPv6 address. Entries must start at 4 x n, n=0, 1, ..., 7. First entry encodes bits 31:0 of IPv6 address, second entry encoded bits 63:32, and so on.
+------------------------------
+<reg_short_dscr>:
+Configuration of various ACL PTP features
+------------------------------
+<field_public_text>:
+Reserved, must set to its default value.
+------------------------------
+<field_public_text>:
+Reserved, must set to its default value.
+------------------------------
+<field_public_text>:
+Reserved, must set to its default value.
+------------------------------
+<field_public_text>:
+Reserved, must set to its default value.
+------------------------------
+<field_public_text>:
+If set, and VCAP_S2 action REW_CMD[2] is set, ANA_ACL rewrites Delay_Req frames. The following PTP fields can be modified in ANA_ACL depending on configuration in PTP_MISC_CTRL and ANA_ACL:PTP_MASTER_CFG:
+- messageType (set to Delay_Resp)
+- messageLength
+- flagField
+- sourcePortIdentity
+- controlField
+- logMessageInterval
+- receiveTimestamp
+- requestingPortIdentity
+------------------------------
+<reg_short_dscr>:
+Configuration of various swap features
+------------------------------
+<field_public_text>:
+Number of bits in frame's DMAC counting from LSB which are not replaced if replacing the DMAC (IS2 action ACL_RT_MODE) and reduced DMAC is enabled (IS2 action SAM_SEQ_ENA). New DMAC is provided by IS2 action ACL_MAC. 
+For example, if set to 16, the 16 LSB bits in the frame's DMAC are not replaced while the 32 MSB bits are replaced with corresponding 32 bits from ACL_MAC.
+------------------------------
+<field_public_text>:
+New hop count value when swapping IPv6 addresses.
+------------------------------
+<field_public_text>:
+New TTL value when swapping IPv4 addresses.
+------------------------------
+<field_public_text>:
+Reserved, must set to its default value.
+------------------------------
+<field_public_text>:
+Reserved, must set to its default value.
+------------------------------
+<reg_short_dscr>:
+Configuration of various features
+------------------------------
+<field_public_text>:
+Controls how to update routing statistics events for ingress ANA_ACL actions.
+------------------------------
+<field_enc>:
+0:
+UC: If frame is dropped by VCAP_S2 rule, then clear ivmid_ip_uc_received (as if frame never reached the router)
+MC: If frame is dropped by VCAP_S2 rule, then leave ivmid_ip_mc_received unchanged (as if frame may reach the router)
+1: If frame is dropped by VCAP_S2 rule, then clear ivmid_ip_uc_received/ivmid_ip_mc_received (as if frame never reached the router, but was dropped in the L2 switch)
+------------------------------
+<field_public_text>:
+Controls how to update routing statistics events for egress ACL actions.
+------------------------------
+<field_enc>:
+0: If routed frame is dropped by VCAP_S2 rule, then clear evmid statistics (as if frame never left the router). Event evmid_acl_discarded is set.
+1: If routed frame is dropped by VCAP_S2 rule, then leave evmid statistics set (as if frame did leave the router and was dropped in the L2 switch). Event evmid_acl_discarded is set.
+------------------------------
+<field_public_text>:
+Reserved, must set to its default value.
+------------------------------
+<field_public_text>:
+Reserved, must set to its default value.
+------------------------------
+<field_public_text>:
+Controls routing related frame edits in ANA_ACL block.
+
+By default, routing related frame edits are done in REW, but when combining routing with PTP, ANA_ACL must be configured to change DMAC to next-hop DMAC in order to allow other information to be stored in the IFH.
+
+ANA_ACL can rewrite the following routing related fields:
+1) Change DMAC to next-hop MAC address (as determined by ANA_L3).
+2) Set IFH.FWD.DST_MODE=ENCAP to prevent REW from doing routing related frame editing.
+
+Decrement of TTL/Hop limit is still performed by REW. 
+
+When performing routing related frame edits in ANA_ACL, editing of SMAC must be performed by ANA_L3 (ANA_L3::ROUTING_CFG.RT_SMAC_UPDATE_ENA).
+------------------------------
+<field_enc>:
+0: Disable routing in ANA_ACL block.
+1: Enable routing related frame edits independently of VCAP_S2 action ACL_RT_MODE.
+2: Enable routing related frame edits if VCAP_S2 action ACL_RT_MODE allows routing.
+------------------------------
+<field_public_text>:
+Force VCAP_S2 lookup to use IGR_PORT_MASK_SEL=3 for looped frames instead of IGR_PORT_MASK_SEL=1.
+------------------------------
+<field_enc>:
+0: Disable
+1: Enable.
+------------------------------
+<field_public_text>:
+Enable VCAP_S2 key field IGR_PORT_MASK_SEL=2 for masqueraded frames.
+------------------------------
+<field_enc>:
+0: Disable
+1: Enable.
+------------------------------
+<field_public_text>:
+Enable VCAP_S2 key field IGR_PORT_MASK_SEL=3 for frames received with VStaX header.
+------------------------------
+<field_enc>:
+0: Disable
+1: Enable.
+------------------------------
+<field_public_text>:
+Enable VCAP_S2 key field IGR_PORT_MASK_SEL=3 for frames from VD0 or VD1.
+------------------------------
+<field_enc>:
+0: Disable
+1: Enable.
+------------------------------
+<field_public_text>:
+Enable VCAP_S2 key field IGR_PORT_MASK_SEL=3 for CPU injected frames.
+------------------------------
+<field_enc>:
+0: Disable
+1: Enable.
+------------------------------
+<reg_short_dscr>:
+Configuration of various features
+------------------------------
+<field_public_text>:
+Reserved, must set to its default value.
+------------------------------
+<field_public_text>:
+Reserved, must set to its default value.
+------------------------------
+<field_public_text>:
+Controls whether VCAP fields VID and ISDX use egress information (EVID, RSDX) for routed frames instead of ingress information (IVID, ISDX). RSDX is used when RSDX > 0, otherwise ISDX is kept as is.
+
+This configuration applies to keys for which layer 2 port information is used (ANA_ACL:KEY_SEL:VCAP_S2_KEY_SEL.IGR_PORT_MASK_SEL==0).
+
+Bit[n]: Relates to lookup n in VCAP_S2.
+------------------------------
+<reg_short_dscr>:
+Router leg statistics masks
+------------------------------
+<reg_public_text>:
+RLEG statistics masks pointed to from VCAP_IS2 action RLEG_STAT_IDX.
+------------------------------
+<field_public_text>:
+One bit per IRLEG statistics events. If a bit is set, the corresponding event in the IRLEG statistics mask from ANA_L3 is cleared. If bit is cleared, the corresponding event in the IRLEG statistics mask is left untouched. See ANA_AC:STAT_GLOBAL_CFG_IRLEG:STAT_GLOBAL_EVENT_MASK.GLOBAL_EVENT_MASK for definition of statistics events.
+
+Bit corresponding to acl_discarded is special:
+0: Do not set acl_discarded when frame is discarded by ACL rule.
+1: Set acl_discarded when frame is discarded by ACL rule.
+------------------------------
+<field_public_text>:
+One bit per ERLEG statistics events. If a bit is set, the corresponding event in the ERLEG statistics mask from ANA_L3 is cleared. If bit is cleared, the corresponding event in the ERLEG statistics mask is left untouched. See ANA_AC:STAT_GLOBAL_CFG_ERLEG:STAT_GLOBAL_EVENT_MASK.GLOBAL_EVENT_MASK for definition of statistics events.
+
+Bit corresponding to acl_discarded is special:
+0: Do not set acl_discarded when frame is discarded by ACL rule.
+1: Set acl_discarded when frame is discarded by ACL rule.
+------------------------------
+<reg_short_dscr>:
+Fragment configuration
+------------------------------
+<field_public_text>:
+Threshold used for invalidating L4 frames in S2.
+------------------------------
+<field_public_text>:
+If set, S2 key field L3_FRAGMENT_TYPE encodes Jaguar2-style fragmentation information in CLM:
+L3_FRAGMENT_TYPE[0]: Set if IPv4 frame is fragmented (MF==1 or FO>0).
+L3_FRAGMENT_TYPE[1]: Set if IPv4 frame is fragmented but not the first fragment (FO>0),
+
+If cleared, S2 key field L3_FRAGMENT_TYPE encodes the following values:
+0: No Fragments: MF==0 and FO==0
+1: Initial Fragments: MF==1 and FO == 0
+2: Suspicious Fragment: FO!=0 and FO <= VCAP_S2_FRAGMENT_CFG.FRAGMENT_OFFSET_THRES.
+3: Valid Follow-up Fragment: FO > VCAP_S2_FRAGMENT_CFG.FRAGMENT_OFFSET_THRES.
+
+MF: More Fragments flag in IPv4 header.
+FO: Fragment offset in IPv4 header.
+------------------------------
+<field_enc>:
+0: Fragment offset threshold is used.
+1: Fragment offset threshold is not used.
+------------------------------
+<field_public_text>:
+Threshold used for encoding of the L3_FRAGMENT_TYPE field in S2.
+------------------------------
+<reg_short_dscr>:
+Configuration of TCP range generation
+------------------------------
+<field_public_text>:
+Selected field matched against the range
+------------------------------
+<field_enc>:
+0: Idle (No match)
+1: TCP / UDP dport value is matched against range
+2: TCP / UDP sport value is matched against range
+3: TCP / UDP dport or sport values are matched against range
+4: Classified XVID value is matched against range
+5: Classified DSCP value is matched against range
+6: Selected value from frame is matched against range, see ANA_ACL::VCAP_S2_RNG_OFFSET_CFG for details.
+7: Classified GVID is matched against range. Match is false if GVID is not present.
+------------------------------
+<reg_short_dscr>:
+Configuration of  matcher range generation
+------------------------------
+<field_public_text>:
+Upper range value
+------------------------------
+<field_public_text>:
+Lower range value
+------------------------------
+<reg_short_dscr>:
+Configuration of selected range generation
+------------------------------
+<field_public_text>:
+16-bit offset position of selectable range matcher input counting from the EtherType (up to three VLAN tags skipped).
+------------------------------
+<field_enc>:
+0: EtherType
+1: frame byte 0 and 1 after EtherType
+...
+n: frame byte 2n-2 and 2n-1 after EtherType
+------------------------------
+<reg_short_dscr>:
+UPSID(s) for local ports
+------------------------------
+<reg_public_text>:
+First replication covers port number 0-31
+Second replication covers port numbers 32-63 (if applicable)
+etc.
+
+If not all OWN_UPSID replications are required in a given port configuration, then any unused replications must be set to the value of one of the replications in use.
+------------------------------
+<field_public_text>:
+Configures own UPSID to be used for stacking.
+
+This must be configured consistently across the following registers:
+ANA_CL:COMMON:OWN_UPSID
+ANA_ACL:COMMON:OWN_UPSID
+ANA_L2:COMMON:OWN_UPSID
+ANA_AC:PS_COMMON:OWN_UPSID
+REW:COMMON:OWN_UPSID
+------------------------------
+<reggrp_short_dscr>:
+VCAP_S2 configuration per port
+------------------------------
+<reg_short_dscr>:
+PTP port configuration
+------------------------------
+<reg_public_text>:
+Clock domain selection and mapping of ingress port number.
+------------------------------
+<field_public_text>:
+Part of portNumber used in portIdentity when ANA_ACL:PTP_MASTER_CFG:PTP_SRC_PORT_CFG.PORT_NUM_SEL is set. PTP_PORT_NUM specifies bits 7:0 in portNumber. Remaining bits in portNumber are taken from ANA_ACL:PTP_MASTER_CFG:PTP_SRC_PORT_CFG.PORT_NUM
+------------------------------
+<reggrp_short_dscr>:
+VCAP_S2 key selection configuration
+------------------------------
+<reggrp_public_text>:
+The table can be indexed from the following sources (listed in order of preference):
+- VCAP_CLM (actions S2_KEY_SEL_IDX and S2_KEY_SEL_ENA)
+- Ingress router leg (ANA_L3:VMID:VMID_MISC.IRLEG_S2_KEY_SEL_IDX)
+- Egress router leg (ANA_L3:VMID:VMID_MISC.ERLEG_S2_KEY_SEL_IDX)
+- Logical port
+
+For each lookup in VCAP_S2, the source is selected as follows:
+1. Use configuration selected by VCAP_CLM if available (action S2_KEY_SEL_ENA=1) and selected configuration has KEY_SEL_ENA set.
+2. Use configuration selected by ERLEG if frame is routed and selected configuration has KEY_SEL_ENA set.
+3. Use configuration selected by IRLEG if frame is routed and selected configuration has KEY_SEL_ENA set.
+4. Use port configuration
+
+The first 70 entries are used by the port. The remaining 64 entries are used by VCAP_CLM and router legs.
+I.e. for S2_KEY_SEL_IDX, IRLEG_S2_KEY_SEL_IDX and ERLEG_S2_KEY_SEL_IDX the actual index into ANA_ACL:KEY_SEL is calculated as follows
+KEY_SEL_IDX+70
+------------------------------
+<reg_short_dscr>:
+VCAP_S2 key selection
+------------------------------
+<reg_public_text>:
+Key selection for VCAP_S2 lookups. Replicated per lookup.
+------------------------------
+<field_public_text>:
+If set, this profile's configuration is applicable for key selection process. Note, a port's configuration is always available.
+------------------------------
+<field_public_text>:
+Selects port information used in the IGR_PORT_MASK in VCAP_S2 keys. Must be set for RLEG-based entries.
+------------------------------
+<field_enc>:
+0: Use L2 information in IGR_PORT_MASK
+1: Use L3 information in IGR_PORT_MASK for routed frames, otherwise L2 information.
+------------------------------
+<field_public_text>:
+Applies to frames where frame_type is set to non Ethernet (MPLS).
+------------------------------
+<field_enc>:
+0: Match against MAC_ETYPE entries.
+1: match against CUSTOM_1 entries.
+2: match against CUSTOM_2 entries.
+3: No lookup.
+------------------------------
+<field_public_text>:
+Applies to IPv4 multicast frames.
+------------------------------
+<field_enc>:
+0: Match against MAC_ETYPE entries.
+1: Match against IP4_TCP_UDP for IPv4 TCP/UDP frames and against IP4_OTHER entries for other IPv4 frames.
+2: Match against IP_7TUPLE entries.
+3: Match against IP4_VID entries.
+------------------------------
+<field_public_text>:
+Applies to IPv4 unicast frames.
+------------------------------
+<field_enc>:
+0: Match against MAC_ETYPE entries.
+1: Match against IP4_TCP_UDP for IPv4 TCP/UDP frames and against IP4_OTHER entries for other IPv4 frames.
+2: Match against IP_7TUPLE entries.
+------------------------------
+<field_public_text>:
+Applies to IPv6 multicast frames.
+------------------------------
+<field_enc>:
+0: Match against MAC_ETYPE entries.
+1: Match against IP_7TUPLE entries.
+2: Match against IP6_VID entries.
+3: Match against IP6_STD entries.
+4: Match against IP4_TCP_UDP for IPv6 TCP/UDP frames and against IP4_OTHER entries for other IPv6 frames. IP addresses are truncated to 32 bits LSB.
+------------------------------
+<field_public_text>:
+Applies to IPv6 unicast frames.
+------------------------------
+<field_enc>:
+0: Match against MAC_ETYPE entries.
+1: Match against IP_7TUPLE entries.
+2: Match against IP6_STD entries.
+3: Match against IP4_TCP_UDP for IPv6 TCP/UDP frames and against IP4_OTHER entries for other IPv6 frames. IP addresses are truncated to 32 bits LSB.
+------------------------------
+<field_public_text>:
+Applies to ARP/RARP frames.
+------------------------------
+<field_enc>:
+0: Match against MAC_ETYPE entries.
+1: Match against ARP entries.
+------------------------------
+<reggrp_short_dscr>:
+VCAP_S2 counter table for lookups 0 and 1
+------------------------------
+<reg_short_dscr>:
+VCAP_S2 counter
+------------------------------
+<reg_public_text>:
+The CNT_TBL_A counters count number of hits in VCAP_S2. For each of the two VCAP_S2 lookups (lookups 0 and 1), a VCAP match results in the associated counter being incremented using the VCAP_S2 action CNT_ID as index.
+------------------------------
+<field_public_text>:
+VCAP_S2 counter value.
+------------------------------
+<reggrp_short_dscr>:
+VCAP_S2 counter table for lookups 2 and 3
+------------------------------
+<reg_short_dscr>:
+VCAP_S2 counter
+------------------------------
+<reg_public_text>:
+The CNT_TBL_B counters count number of hits in VCAP_S2. For each of the two VCAP_S2 lookups (lookups 2 and 3), a VCAP match results in the associated counter being incremented using the VCAP_S2 action CNT_ID as index.
+------------------------------
+<field_public_text>:
+VCAP_S2 counter value.
+------------------------------
+<reggrp_short_dscr>:
+PTP configuration
+------------------------------
+<reggrp_public_text>:
+The configuration is used when generating PTP Delay_Resp frames. The register group is indexed with VCAP_S2 action PTP_MASTER_SEL.
+------------------------------
+<reg_short_dscr>:
+PTP clock identifier MSB
+------------------------------
+<field_public_text>:
+Bits 63:32 of clockIdentifier used in portIdentity.
+------------------------------
+<reg_short_dscr>:
+PTP clock identifier LSB
+------------------------------
+<field_public_text>:
+Bits 31:0 of clockIdentifier used in portIdentity.
+------------------------------
+<reg_short_dscr>:
+PTP domain configuration used in sourcePortIdentity
+------------------------------
+<field_public_text>:
+If set, lowest 7 bits in portIdentity is taken from ANA_ACL:PORT:PTP_CFG.PTP_PORT_NUM. Otherwise, portIdentity is taken from PTP_SRC_PORT_CFG.PORT_NUM.
+------------------------------
+<field_public_text>:
+Port number used in portIdentity.
+------------------------------
+<reg_short_dscr>:
+Miscellaneous PTP domain configuration
+------------------------------
+<field_public_text>:
+Mask used to configure which bits in flagField, byte 0, are overwriteen with value configured in PTP_MISC_CFG.FLAG_FIELD.
+------------------------------
+<field_enc>:
+Bit x=0: Do not overwrite bit x in flagField, byte 0.
+Bit x=1: Overwrite bit x in flagField, byte 0, with FLAG_FIELD, bit x.
+------------------------------
+<field_public_text>:
+New values for byte 0 in flagField. Only bits with the corresponding bits set in FLAG_FIELD_MASK, are used.
+------------------------------
+<reggrp_short_dscr>:
+Sticky diagnostic status
+------------------------------
+<reg_short_dscr>:
+Sticky bits register for events generated by VCAP_S2
+------------------------------
+<field_public_text>:
+This sticky bit signals that CLM selected key type for lookup.
+------------------------------
+<field_public_text>:
+This sticky bit signals that IRLEG selected key type for lookup.
+------------------------------
+<field_public_text>:
+This sticky bit signals that ERLEG selected key type for lookup.
+------------------------------
+<field_public_text>:
+This sticky bit signals that the port selected key type for lookup.
+------------------------------
+<field_public_text>:
+This sticky bit signals a CUSTOM2 lookup was performed.
+------------------------------
+<field_public_text>:
+This sticky bit signals a CUSTOM1 lookup was performed.
+------------------------------
+<field_public_text>:
+This sticky bit signals an IP6_VID lookup was performed.
+------------------------------
+<field_public_text>:
+This sticky bit signals an IP_7TUPLE lookup was performed.
+------------------------------
+<field_public_text>:
+This sticky bit signals an IP4_VID lookup was performed.
+------------------------------
+<field_public_text>:
+This sticky bit signals an IP4_TCPUDP lookup was performed.
+------------------------------
+<field_public_text>:
+This sticky bit signals an IP4_OTHER lookup was performed.
+------------------------------
+<field_public_text>:
+This sticky bit signals an ARP lookup was performed.
+------------------------------
+<field_public_text>:
+This sticky bit signals a MAC_ETYPE lookup was performed.
+------------------------------

@@ -1,0 +1,157 @@
+=== DOCUMENTATION FOR TARGET: SUBCPU_SYS_CFG ===
+
+<target_short_dscr>:
+Sub-CPU system settings
+------------------------------
+<reggrp_short_dscr>:
+Configurations for the sub-CPU system.
+------------------------------
+<reg_short_dscr>:
+General purpose register
+------------------------------
+<field_public_text>:
+General purpose 32-bit register for software development and debug.
+------------------------------
+<reg_short_dscr>:
+General control register
+------------------------------
+<field_public_text>:
+Use this field to change from Boot mode to Normal mode. In Boot mode, the reset vector of the sub-CPU maps to CS0 on the FLASH interface of the main CPU system. When in Normal mode, this address maps instead to the Code memory.
+------------------------------
+<field_enc>:
+0: The sub-CPU system memory map is in Normal mode.
+1: The sub-CPU system memory map is in Boot mode.
+------------------------------
+<field_public_text>:
+Enable subCPU UART interface on GPIOs.
+------------------------------
+<field_public_text>:
+Enable subCPU I2C interface on GPIOs.
+------------------------------
+<field_public_text>:
+Force reset the watchdog timer of the sub-CPU system. Once enabled, the WDT cannot be disabled unless it is reset.
+------------------------------
+<field_public_text>:
+Soft reset the sub-CPU system. The AMBA fabric and peripherals may be protected through SUBCPU_SYS_CFG:SYSTEM_CTRL:RESET_PROTECT.SOFT_RST_PROT_AMBA.
+------------------------------
+<reg_short_dscr>:
+General status information
+------------------------------
+<field_public_text>:
+Debug information for checking register read/write problems. This is a read-only field which can only be cleared by reset of the sub-CPU system.
+------------------------------
+<field_enc>:
+0: No errors detected.
+1: Non-32bit access to registers, access has been discarded, read returns 0x8888 or 0x88.
+2: reserved
+3: reserved
+4: Unimplemented sub-CPU system register, access has been discarded, read returns 0x88888888.
+------------------------------
+<field_public_text>:
+Indicates the sleeping status of the sub-CPU.
+------------------------------
+<field_enc>:
+0 : CPU active
+1 : CPU sleeping
+------------------------------
+<reg_short_dscr>:
+Protect reset targets from reset sources
+------------------------------
+<field_public_text>:
+Protect AMBA and peripherals from WDT timeout reset and any soft reset mapped to the sub-CPU address space.
+This includes the SYSTEM_CTRL:RESET.SOFT_RST soft reset.
+The watchdog timer of the sub-CPU system is not protected.
+------------------------------
+<field_public_text>:
+Protect watchdog timer from WDT timeout reset and any soft reset mapped to the sub-CPU address space.
+This includes the SYSTEM_CTRL:RESET.SOFT_RST soft reset.
+------------------------------
+<field_public_text>:
+This configuration protects the sub-CPU system from System Reset (Except for ATPG Mode).
+------------------------------
+<field_enc>:
+0 -  When system reset is asserted, even the sub-CPU system will be reset.
+1 -  When system reset is asserted, the sub-CPU system will not be reset.
+------------------------------
+<field_public_text>:
+This configuration protects the sub-CPU from reset due to entering a locked-up state.
+------------------------------
+<reg_short_dscr>:
+Reset-cause register
+------------------------------
+<field_public_text>:
+Indication that system reset was asserted. Write '1' to clear this field.
+------------------------------
+<field_public_text>:
+Indication that force reset was asserted. Write '1' to clear this field.
+------------------------------
+<field_public_text>:
+Indication that soft reset was asserted by the sub-CPU. Write '1' to clear this field.
+------------------------------
+<field_public_text>:
+Indication that soft reset was asserted through the respective configuration field. Write '1' to clear this field.
+------------------------------
+<field_public_text>:
+Indication that reset due to lock was asserted. Write '1' to clear this field.
+------------------------------
+<field_public_text>:
+Indication that WDT reset was asserted. Write '1' to clear this field.
+------------------------------
+<reggrp_short_dscr>:
+SPI Master Controller
+------------------------------
+<reg_short_dscr>:
+Enable slave-select forcing
+------------------------------
+<field_public_text>:
+Use to enable forcing of the slave select of the SPI master controller. When set, the slave select is driven by SUBCPU_SYS_CFG:SS_FORCE. When 0, the slave select is driven by the SPI master, and SUBCPU_SYS_CFG:SS_FORCE must be kept at 1.
+------------------------------
+<reg_short_dscr>:
+Slave select value to force
+------------------------------
+<field_public_text>:
+Value to drive on the slave select output. This field is used when SUBCPU_SYS_CFG:SS_FORCE_ENA is set to 1. Otherwise it must be kept to 1.
+------------------------------
+<reg_short_dscr>:
+Set mapping of slave select
+------------------------------
+<field_public_text>:
+Each bit corresponds to a shared slave-select. Multiple bits may be cleared for broadcasting. The final slave-select mapping depends on the following configurations:
+
+SUBCPU_SYS_CFG:SIMC[0]:SS_MASK.SS_MASK
+SUBCPU_SYS_CFG:SIMC[1]:SS_MASK.SS_MASK
+------------------------------
+<field_enc>:
+one-cold encoding
+------------------------------
+<reg_short_dscr>:
+Master contention configuration.
+------------------------------
+<field_public_text>:
+Hooked up to the master contention input (ss_in_n) of the SPI Master block .
+------------------------------
+<reggrp_short_dscr>:
+TWI hold time configuration
+------------------------------
+<reg_short_dscr>:
+TWI hold time configuration
+------------------------------
+<field_public_text>:
+Configure the hold time delay to apply to SDA after SCK when transmitting from the device. This delay is expressed in a number of VCore System clock cycles. The delay value should be as close to 300ns as possible without going below 300ns.
+------------------------------
+<field_enc>:
+Set to (300ns/4.8ns + 2) = 65
+------------------------------
+<field_public_text>:
+Set this field to enable hold time on the TWI SDA output. When enabled the TWI_CONFIG.TWI_CNT_RELOAD field determines the amount of hold time to apply to SDA.
+------------------------------
+<reggrp_short_dscr>:
+TWI spike filter configuration
+------------------------------
+<reg_short_dscr>:
+TWI spike filter configuration
+------------------------------
+<field_public_text>:
+Configuration of the spike filter width on the SCL and SDA inputs.
+Filters spikes with a width of (SPIKE_FILTER_CFG+1)*SYSTEM_CLK or less.
+------------------------------

@@ -1,0 +1,316 @@
+=== DOCUMENTATION FOR TARGET: FDMA ===
+
+<target_short_dscr>:
+Parallel Frame DMA
+------------------------------
+<target_public_text>:
+This target contains registers for configuring and controlling the logic related to the parallel Frame DMA engine.
+------------------------------
+<reggrp_short_dscr>:
+Parallel Frame DMA
+------------------------------
+<reggrp_public_text>:
+Parallel Frame DMA engine for improved performance with high latency
+ memories such as PCIe. Has support for 2x 64bit address space to allow one
+ 64bit region for PCIe and another region for local DDR memory.
+
+For registers and fields in this group, which are replicated per channel; replication-index-0 correponds to extraction-channel 0, replication-index-1 corresponds to extraction-channel 1, and so on. The injection channels follows after the extraction channels.
+------------------------------
+<reg_short_dscr>:
+Activate specific channels
+------------------------------
+<field_public_text>:
+Set to activate specific FDMA channels, there is one bit per channel. The corresponding LLP pointer must be configured prior to activating a channel, see FDMA:FDMA:FDMA_DCB_LLP for more information. Bits in this field are cleared immediately when set.
+------------------------------
+<reg_short_dscr>:
+Add DCBs to specific channels
+------------------------------
+<field_public_text>:
+Set to schedule reload of DCB for specific FDMA channels, there is one bit per channel. Reload is used when adding new DCBs to an active channel. See documentation for how to safely add DCBs to active channels by using memory modifications and a single write to the RELOAD field. Bits in this field are cleared when the corresponding channel reloads or receives a DCB containing a valid next pointer.
+------------------------------
+<reg_short_dscr>:
+Disable specific channels
+------------------------------
+<field_public_text>:
+Set to schedule disable of specific FDMA channels, there is one bit per channel. The channel will finish the current DCB, write the DONE bit to the DCB status and then disable. Bits in this field is cleared when the channel disables.
+------------------------------
+<reg_short_dscr>:
+Ungraceful disable of specific channels
+------------------------------
+<field_public_text>:
+Immediately disable specific FDMA channels, there is one bit per channel. Unlike FDMA:FDMA:FDMA_CH_DISABLE, using this field will not take the state of the channel into account. It is meant to be used only as part of an error recovery process. Bits in this field are cleared immediately when set.
+------------------------------
+<reg_short_dscr>:
+Channel counters
+------------------------------
+<field_public_text>:
+This field is incremented every time the channel saves status for a DB that has EOF.
+This counter can only be modified safely when the corresponding channel is disabled (FDMA_CH_ACTIVE.CH_ACTIVE).
+------------------------------
+<field_public_text>:
+This field is incremented every time the channel saves status for a DB that has INTR set.
+This counter can only be modified safely when the corresponding channel is disabled (FDMA_CH_ACTIVE.CH_ACTIVE).
+------------------------------
+<field_public_text>:
+This field is incremented every time the channel loads a DCB.
+This counter can be modified safely while the corresponding channel is not pending (see FDMA_CH_PENDING.CH_PENDING for more information).
+------------------------------
+<reg_short_dscr>:
+Pointer to next DCB
+------------------------------
+<field_public_text>:
+Set prior to activating a specific channel, there is one replication per channel. The LLP field is a 64bit pointer to current head of DCB chain, software manually write this field prior to activating a channel using FDMA_CH_ACTIVATE.CH_ACTIVATE. While a channel is activate software must not update the field, it is automatically updated by the FDMA as it progress through the list of DCBs. See FDMA_CH_RELOAD.CH_RELOAD for information about adding additional DCBs to an active channel.
+------------------------------
+<reg_short_dscr>:
+Pointer to next DCB
+------------------------------
+<field_public_text>:
+Bit 32-63 of field LLP.
+------------------------------
+<reg_short_dscr>:
+Pointer to current DCB
+------------------------------
+<field_public_text>:
+This field holds the pointer to current DCB, there is one replication per channel.
+------------------------------
+<reg_short_dscr>:
+Pointer to current DCB
+------------------------------
+<field_public_text>:
+Bit 32-63 of field LLP_PREV.
+------------------------------
+<reg_short_dscr>:
+Read-only channel status indication fields
+------------------------------
+<field_public_text>:
+Indication on per-channel status.
+------------------------------
+<field_enc>:
+0: Disabled
+1: Active
+------------------------------
+<reg_short_dscr>:
+Per channel pending flag
+------------------------------
+<field_public_text>:
+A channel is considered to be pending if all of the following conditions apply:
+- it is active
+- without disabling process initiated
+- either the DCB list is not finished or it is set for reloading
+------------------------------
+<field_enc>:
+0: Disabled or about to disable, or the DCB list is finished and no reloading is scheduled.
+1: Active, with DCBs pending to be fetched or with reloading scheduled.
+------------------------------
+<reg_short_dscr>:
+Channel configuration
+------------------------------
+<reg_public_text>:
+This register is replicated per channel.
+------------------------------
+<field_public_text>:
+Set to enable safe write of extraction status word. This configuration only applies to extraction channels. This field can be set if the PCIe system might split up 32bit writes to PCIe memory, in this case software could accidentally read a partially populated status word and make incorrect decisions.
+------------------------------
+<field_enc>:
+0: FDMA write STATUS word once with DONE=1.
+1: FDMA write STATUS word twice, first with DONE=0 and then with DONE=1.
+------------------------------
+<field_public_text>:
+If this field is set, then the INTR_DB will be set only when saving complete frames.
+------------------------------
+<field_public_text>:
+Configure mapping of injection channel to port-number. This configuration only applies to injection channels.
+------------------------------
+<field_enc>:
+0-1: FDMA port number.
+Other values are reserved.
+------------------------------
+<field_public_text>:
+The number of data blocks per DCB. This field controls the amount of data that is fetched for each DCB. The default value is set to maximum, this is a high value which will cause a lot of bandwidth to be used for fetching of DCBs. Software should configure an optimized value appropriate to the scenario they are working in, see documentation for more information about FDMA scenarios.
+------------------------------
+<field_enc>:
+1 through 15
+Other values are reserved
+------------------------------
+<reg_short_dscr>:
+Channel translation offset
+------------------------------
+<field_public_text>:
+Translation offset that is added to DCB, status and DB pointers of the respective channel. Write 0 to disable translation.
+The configured offset is always a multiple of 1MB.
+------------------------------
+<field_enc>:
+Value = (offset in bytes) / 1048576
+------------------------------
+<reg_short_dscr>:
+Injection channel token counter
+------------------------------
+<field_public_text>:
+Every time a channel activates with a DCB that has the TOKEN field set this counter is decremented by one. Channels that loads a DCB with the TOKEN field set cannot activate unless this counter is different from zero.
+This counter can be written by software, or incremented automatically by using the token tick counter (see FDMA_CH_INJ_TOKEN_TICK_CNT for more information). This counter can be modified safely when automatic incrementing is not enabled (see FDMA:FDMA:FDMA_CH_INJ_TOKEN_CNT  for more information).
+------------------------------
+<reg_short_dscr>:
+Injection channel token tick counter reload value
+------------------------------
+<field_public_text>:
+Automatic incrementing of the token counter is enabled by setting this field different from 0. This field holds the reload value for the FDMA_CH_INJ_TOKEN_TICK_CNT.
+Note: When changing the value of this field the same value should also be written to the FDMA_CH_INJ_TOKEN_TICK_CNT field, this is needed for speeding up token counter increments when changing from a high reload value to a low reload value.
+------------------------------
+<field_enc>:
+0: Token tick counter is disabled
+n: Add one token every n * 200ns clock cycles
+------------------------------
+<reg_short_dscr>:
+Injection channel token tick counter
+------------------------------
+<field_public_text>:
+Down-counter, decremented by one every 200ns. The counter is enabled when the token scheme is enabled through FDMA:FDMA:FDMA_CH_INJ_TOKEN_TICK_RLD. When zero is reached one token will be added to FDMA:FDMA:FDMA_CH_INJ_TOKEN_CNT and the down-counter will load the value from FDMA:FDMA:FDMA_CH_INJ_TOKEN_TICK_RLD (subtract one and continue decrementing from that value).
+------------------------------
+<reg_short_dscr>:
+Port-specific configuration
+------------------------------
+<reg_public_text>:
+Replicated register. Per port configuration.
+------------------------------
+<field_public_text>:
+Enable FCS padding for all injected frames. Padding with zeros is performed on all frame-sizes by extending the frame by 4 bytes.
+------------------------------
+<field_public_text>:
+The minimum size of injection frames in bytes. Undersized frames are 0-padded to this size.
+
+The zero-padding of undersized frames is performed after the FCS padding.
+------------------------------
+<field_enc>:
+0 : Disabled
+1-63 : Invalid
+64-255 : Minimum frame size in bytes
+------------------------------
+<reg_short_dscr>:
+Control of FDMA ports
+------------------------------
+<field_public_text>:
+This field when set, it performs three functions:
+1. it prevents the injection engine from accessing the buffered DBs
+2. it blocks any new memory read accesses by the injection engine
+3. it stops frame injection towards the switch core at frame boundary
+------------------------------
+<field_public_text>:
+This field when set, it performs three functions:
+1. it prevents the injection engine from accessing the buffered DBs
+2. it blocks any new memory read accesses by the injection engine
+3. it stops frame injection towards the switch core
+------------------------------
+<field_public_text>:
+This field when set, it performs two functions:
+1. it prevents the extraction engine from accessing the buffered DBs
+2. it blocks any new memory write accesses by the extraction engine
+------------------------------
+<field_public_text>:
+This field indicates whether the extraction buffer of the port is empty.
+------------------------------
+<field_enc>:
+1: empty
+0: not empty
+------------------------------
+<reg_short_dscr>:
+DCB-event
+------------------------------
+<field_public_text>:
+Set by FDMA when reading a DCB that has INTR field set in the DCB's INFO word, there is one bit per channel.
+------------------------------
+<reg_short_dscr>:
+DCB-event interrupt enable
+------------------------------
+<field_public_text>:
+Enables DCB read-event to be propagated as interrupt, there is one bit per channel. See FDMA:FDMA:FDMA_INTR_DCB.INTR_DCB for additional information.
+------------------------------
+<reg_short_dscr>:
+DB-event
+------------------------------
+<field_public_text>:
+Set by FDMA when saving status for a DB that has INTR field set in the DB's STATUS word, there is one bit per channel. For injection channels it is possible to gate interrupt with EOF in the status word, see FDMA_CH_CFG.CH_INTR_DB_EOF_ONLY for more information. For extraction channels the interrupt is emitted when saving DONE=1 in the status word, this is related to the FDMA_CH_CFG.CH_XTR_STATUS_MODE setting.
+------------------------------
+<reg_short_dscr>:
+DB-event interrupt enable
+------------------------------
+<field_public_text>:
+Enables DB-event to be propagated as interrupt, there is one bit per channel. See FDMA:FDMA:FDMA_INTR_DB.INTR_DB for additional information.
+------------------------------
+<reg_short_dscr>:
+ERR-event
+------------------------------
+<field_public_text>:
+Shows if an ERR-event has occurred, there is one bit per port. It signals errors related only to injection ports that the injection channel source cannot be retrieved.
+------------------------------
+<field_public_text>:
+Shows if an ERR-event has occurred, there is one bit per channel. See the data sheet for information on when this event can occur.
+------------------------------
+<reg_short_dscr>:
+Channel interrupt enable
+------------------------------
+<field_public_text>:
+Enables propagation of  ERR-event as interrupt, there is one bit per injection port.
+------------------------------
+<field_public_text>:
+Enables propagation of DCB-event, DB-event, and ERR-event as interrupt, there is one bit per channel.
+------------------------------
+<reg_short_dscr>:
+Currently interrupting channels
+------------------------------
+<field_public_text>:
+Shows currently interrupting injection ports, there is one bit per port. When a bit is set in this register the FDMA is generating interrupt towards the VCore interrupt controller.
+------------------------------
+<field_public_text>:
+Shows currently interrupting channels, there is one bit per channel. When a bit is set in this register the FDMA is generating interrupt towards the VCore interrupt controller.
+------------------------------
+<reg_short_dscr>:
+Error sticky flags
+------------------------------
+<field_public_text>:
+Error indicator per extraction channel regarding writing of erroneous data in the DBs. The error signals that the internal buffer has gone out of sync with the posted write of AXI. As a result, the data that is extracted in the data blocks is corrupted. When this error happens, the FDMA will not initiate any new write operations for the erroneous channel. Due to possible posted-write though, some blocks will be written, depending on how many outstanding write operations the targeted memory supports.
+------------------------------
+<field_public_text>:
+Error indicator per extraction channel. When set, the extraction buffer of the channel has been overflowed. When this error happens, the FDMA will not initiate any new write operations for the erroneous channel. Due to possible posted-write though, some blocks will be written, depending on how many outstanding write operations the targeted memory supports.
+------------------------------
+<field_public_text>:
+Error indicator per extraction channel. When set, the taxi buffer of the channel has been overflowed. When this error happens, the FDMA will not initiate any new write operations for the erroneous channel. Due to possible posted-write though, some blocks will be written, depending on how many outstanding write operations the targeted memory supports.
+------------------------------
+<field_public_text>:
+Error indication per extraction channel regarding illegal value of DCB INFO.DATAL field. The error is triggered when the DATAL is not a multiple of 128bytes. Once this error has been set, the FDMA stops decoding the DCB and accepting data blocks for this channel, and the channel is disabled automatically. The channel cannot be re-enabled unless the error is cleared by writing 1 to the respective bit of this field. FDMA_DCB_LLP_PREV[ch] holds in this case the pointer to the DCB that caused the error.
+------------------------------
+<field_public_text>:
+Error indicator per channel regarding erroneous read of DCB. This error is delivered to the FDMA from the AXI fabric. As soon as the error occurs, the FDMA stops decoding the DCB and accepting new data blocks for this channel. The data blocks that were accepted before are processed normally. The channel is disabled automatically, and it cannot be re-enabled until the error has been cleared. The error is cleared by writing 1 to this field.  Combining the information from FDMA_DCB_LLP_PREV and FDMA_CH_STATUS.CH_ERR_DCB_WRD128_IDX the programmer can know where the error happened and restore functionality.  The error is cleared by writing 1 to the respective bit of this field.
+------------------------------
+<field_public_text>:
+Error indicator per port regarding erroneous read of DB. This error is delivered to the FDMA from the AXI fabric. The frame that the erroneous data belong to is dropped. The error is cleared by writing 1 to the respective bit of this field.
+------------------------------
+<field_public_text>:
+Error indicator per port regarding the loss of synchronization between buffering data and forwarding them to the switch core. The FDMA gets automatically back in sync. All the data between getting out of sync and back in sync is dropped. The error is cleared by writing 1 to the respective bit of this field.
+------------------------------
+<field_public_text>:
+Error indicator per channel regarding write operations. This error is delivered to the FDMA from the AXI fabric when it fails to complete a write operation. When this error is triggered, the FDMA cuts the supply of DBs to the respective channel. Moreover, for extraction channels only, the FDMA will not initiate any new write operations with extracted frame data. However, additional transactions of the erroneous channel can be pending. Channel activity shall stop when the respective pipeline is drained. The error is cleared by writing 1 to the respective bit of this field.
+------------------------------
+<reg_short_dscr>:
+Error sticky flags
+------------------------------
+<field_public_text>:
+Error indicating that frame data were received without having received SOF. The FDMA skips over this data.
+------------------------------
+<reg_short_dscr>:
+FDMA idle Counter
+------------------------------
+<field_public_text>:
+This counter shows for how long the FDMA has been idle. The counter is incremented once every 200ns, and reset whenever the FDMA moves frame data to or from the queuing system. The counter saturates at maximum value (approx 3.3 seconds of idle time).
+------------------------------
+<reg_short_dscr>:
+Control fields
+------------------------------
+<field_public_text>:
+This field resets the internal control registers of the FDMA (not the configuration registers).
+------------------------------
+<reg_short_dscr>:
+FDMA port statistics.
+------------------------------
+<field_public_text>:
+Per-port counter of frames that are injected to the switch core.
+------------------------------

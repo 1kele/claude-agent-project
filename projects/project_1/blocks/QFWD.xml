@@ -1,0 +1,112 @@
+=== DOCUMENTATION FOR TARGET: QFWD ===
+
+<target_short_dscr>:
+Queue System Configuration
+------------------------------
+<reggrp_short_dscr>:
+Switch configuration
+------------------------------
+<reg_short_dscr>:
+Various switch port mode settings
+------------------------------
+<field_public_text>:
+Enable port for any frame transfer.
+Frames to or from a port with PORT_ENA cleared are discarded.
+------------------------------
+<field_public_text>:
+Set the switching speed per port. One forwarding guaranteed every this period of time has passed. Unit is system clock cycles.
+------------------------------
+<field_public_text>:
+Enable yellow traffic to use reserved ingress space.
+------------------------------
+<field_public_text>:
+When enabled for a port, frames -from- that port are discarded when the controlling watermarks are hit. If disabled - the frame will stay in memory until resources are available. If INGRESS_DROP_MODE or EGRESS_DROP_MODE applies for a frame copy, it will be discared.
+------------------------------
+<field_public_text>:
+Control whether frames received on the port may use shared resources. If ingress port or queue has reserved memory left to use, frame enqueuing is always allowed.
+------------------------------
+<field_enc>:
+0: Use shared memory as well
+1: Do not use shared memory
+------------------------------
+<field_public_text>:
+Control whether frames forwarded to the port may use shared resources. If egress port or queue has reserved memory left to use, frame enqueuing is always allowed.
+------------------------------
+<field_enc>:
+0: Use shared memory as well
+1: Do not use shared memory
+------------------------------
+<field_public_text>:
+When enabled for a port, frames -to- that port are discarded when the controlling watermarks are hit. If disabled - the frame will stay in memory until resources are available. If INGRESS_DROP_MODE or EGRESS_DROP_MODE applies for a frame copy, it will be discared.
+------------------------------
+<field_public_text>:
+Set this to clear (port) and (port,qos) reservations for the destination port. This is required to be able to move queues between ports.
+------------------------------
+<field_public_text>:
+When learn-all copies are generated, having this field set will request an additional learn copy towards this port on top of the port configured in FRAME_COPY_CFG.
+
+Related parameters:
+QFWD:SYSTEM:FRAME_COPY_CFG
+------------------------------
+<field_enc>:
+0: Do not generate extra copy on this port
+1: Generate extra copy on this port
+------------------------------
+<reg_short_dscr>:
+Forwarder mischeleaneous configuration
+------------------------------
+<field_public_text>:
+Reserved, must set to its default value.
+------------------------------
+<field_public_text>:
+Enable this to make the forwarding engine generate back-to-back requests towards the egress queues.
+------------------------------
+<reg_short_dscr>:
+Frame copying configuration
+------------------------------
+<reg_public_text>:
+Configures how various frame copies are to be generated in the forwarding core. 
+
+Frame copies are made when the CPU should get one or more copies (some CPU queues hit), when learn updates are to be generated, and when frame mirroring is requested. 
+
+Per copy reason, it is configured to which physical port the frame is to be sent, and which QoS level to use in the egress queues. 
+
+0-7: Configuration for cpu queue N.
+8: Configuration for learn updates.
+9-11: Configuration for mirror probe 0-2.
+------------------------------
+<field_public_text>:
+Physical port to send the frame to.
+
+Related parameters:
+QFWD:SYSTEM:SWITCH_PORT_MODE.LEARNALL_MORE
+------------------------------
+<field_public_text>:
+Selected QoS level to use in the egress queues
+------------------------------
+<field_public_text>:
+Set to enable use of use FRMC_QOS_VAL. Otherwise classified priority is used.
+------------------------------
+<field_public_text>:
+Use super priority enqueuing.
+
+Note that even when SP is used, QoS value still controls from which pool resources are allocated, so it may be relevant to also set FRMC_QOS_ENA=1 and FRMC_QOS_VAL.
+------------------------------
+<field_enc>:
+0: Use normal queues
+1: Use super priority queue bypassing all shapers 
+2: Use super priority queue obeying/updating port shaper
+3: reserved
+------------------------------
+<reg_short_dscr>:
+Counter for number of frames forwarding aborted due to forward pressure
+------------------------------
+<field_public_text>:
+Counts number of frames discarded due to forward pressure, since queue system reset.
+------------------------------
+<reg_short_dscr>:
+Counter for number of frames forwarding aborted due to aggressive forward pressure
+------------------------------
+<field_public_text>:
+Counts number of frames discarded due to aggressive forward pressure, since queue system reset.
+------------------------------

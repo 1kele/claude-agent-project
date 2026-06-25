@@ -1,0 +1,1417 @@
+=== DOCUMENTATION FOR TARGET: REW ===
+
+<target_short_dscr>:
+Rewriter
+------------------------------
+<reggrp_short_dscr>:
+Common configuration and status for all rewriter ports
+------------------------------
+<reg_short_dscr>:
+UPSID(s) for local ports
+------------------------------
+<reg_public_text>:
+First replication covers port number 0-31
+Second replication covers port numbers 32-63 (if applicable)
+etc.
+
+If not all OWN_UPSID replications are required in a given port configuration, then any unused replications must be set to the value of one of the replications in use.
+------------------------------
+<field_public_text>:
+Configures own UPSID to be used for stacking.
+
+This must be configured consistently across the following registers:
+ANA_CL:COMMON:OWN_UPSID
+ANA_ACL:COMMON:OWN_UPSID
+ANA_L2:COMMON:OWN_UPSID
+ANA_AC:PS_COMMON:OWN_UPSID
+REW:COMMON:OWN_UPSID
+------------------------------
+<reg_short_dscr>:
+Common Control configuration
+------------------------------
+<field_public_text>:
+Reserved, must set to its default value.
+------------------------------
+<field_public_text>:
+Control if frames are aborted if the IFH.ENCAP.WORD16_POP_CNT field is out of the supported range.
+------------------------------
+<field_enc>:
+0: Keep frame
+1: Abort frame
+------------------------------
+<field_public_text>:
+When padding is required after tag removal, also the FCS will be removed before zero padding and new FCS is added.
+------------------------------
+<field_enc>:
+0: Disable
+1: Enable
+------------------------------
+<field_public_text>:
+Enable R-tag awareness.
+
+If R-tag aware, any VLAN tags before or after the R-tag are parsed (maximum two VLAN tags are supported together with an R-tag). 
+
+If R-tag unaware, the frame's R-tag is not analyzed and the frame is considered a frame with ETYPE=0xF1C1. Any VLAN tags before the R-tag are still analyzed.
+
+REW:COMMON:COMMON_CTRL.ETAG_TPID_ENA must be set to 0 when R-tag awareness is enabled.
+See:
+ANA_CL:COMMON:RTAG_CFG.RTAG_TPID_ENA
+------------------------------
+<field_public_text>:
+Enable E-tag awareness.
+
+If E-tag aware, the frame's E-tag is parsed and E-tag information is available for E-tag rewrites.
+If E-tag unaware, the frame's E-tag is not analyzed and the frame is considered a frame with ETYPE=0x893F.
+
+REW:COMMON:COMMON_CTRL.RTAG_TPID_ENA must be set to 0 when E-tag awareness is enabled.
+See:
+ANA_CL:COMMON:ETAG_CFG.ETAG_TPID_ENA
+------------------------------
+<reg_short_dscr>:
+Port based configuration for rewriter
+------------------------------
+<reg_public_text>:
+IFH configuration of physical rewriter ports
+------------------------------
+<field_public_text>:
+Configure the rewriter IFH mode for the port.
+
+The configuration  is used by the physical port and is not changed for TX-Mirrored frames.
+
+See ASM::PORT_CFG.INJ_FORMAT_CFG
+------------------------------
+<field_enc>:
+0: Normal mode. 
+1: Keep IFH without modifications. Frames are not updated. IFH is kept
+2: Encapsulate IFH. 
+   The frame's DMAC, SMAC and a fixed TAG with ETYPE=8880 (Microchip) and EPID=0x000B are inserted in front of the IFH:
+      [FRM_DMAC][FRM_SMAC][0x8880][0x000B][IFH][FRAME]
+3: Encapsulate IFH using the ENCAP table
+   Use ES0 to generate an ENCAP_ID and insert the encapsulation in front of the IFH:
+      [ENCAP][IFH][FRAME]
+   ES0 controlled encapsulations will be used if the ENCAP_ID action is active, otherwise mode 2) is used.
+------------------------------
+<reg_short_dscr>:
+Port based configuration for rewriter
+------------------------------
+<reg_public_text>:
+IFH configuration of CPU and VD rewriter ports
+------------------------------
+<field_public_text>:
+CPU and VD port IFH configuration. For normal operation the default value should not be changed.
+
+See ASM::PORT_CFG.INJ_FORMAT_CFG
+
+Encoding is 2 bits per port:
+Bits 1-0: Port 65 (CPU0)
+Bits 3-2: Port 66 (CPU1)
+Bits 5-4: Port 67 (VD0)
+Bits 7-6: Port 68 (VD1)
+Bits 9-8: Port 69 (VD2)
+------------------------------
+<field_enc>:
+0: Normal mode. 
+1: Keep IFH without modifications. Frames are not updated. IFH is kept
+2: Encapsulate IFH. 
+   The frame's DMAC, SMAC and a fixed TAG with ETYPE=8880 (Microchip) and EPID=0x000B are inserted in front of the IFH:
+      [FRM_DMAC][FRM_SMAC][0x8880][0x000B][IFH][FRAME]
+3: Encapsulate IFH using the ENCAP table
+   Use ES0 to generate an ENCAP_ID and insert the encapsulation in front of the IFH:
+      [ENCAP][IFH][FRAME]
+   ES0 controlled encapsulations will be used if the ENCAP_ID action is active, otherwise mode 2) is used.
+------------------------------
+<reg_short_dscr>:
+Port based configuration for rewriter
+------------------------------
+<reg_public_text>:
+Configuration of rewriter ports.
+------------------------------
+<field_public_text>:
+Map the configuration port to a logical port number to be used by ES0 keys. The port used for the lookup can be Tx-mirrored.
+
+Use the unmapped port number, if the mapped value is outside port range (default)
+------------------------------
+<field_enc>:
+0-69: Use this port number for ES0 lookup
+70-127: Do not map port number
+------------------------------
+<field_public_text>:
+Configures the port statistics pipeline point location. Two locations can be selected:
+
+Outer: The port statistics is located after REW_VRAP. All frames extracted in REW are not counted. All frames injected in REW are counted.
+Inner: The port statistics is located before REW_IN_MIP. All frames extracted in REW are counted. All frames injected in REW are not counted.
+
+This configuration only affects frames that are either injected or extracted in the Rewriter. Other frames are always counted by the ports statistics regardless of the inner- or outer location.
+------------------------------
+<field_enc>:
+0: Outer location
+1: Inner location
+------------------------------
+<field_public_text>:
+Configures the extraction statistics pipeline point. Frames extracted before the configured pipeline point are not counted by the ESDX counters
+
+Configuring the value 'REW_IN_MIP' will cause all extracted frames to be counted.
+------------------------------
+<field_enc>:
+0: Reserved
+1: REW_IN_MIP
+2: REW_IN_SW
+3: REW_IN_VOE
+4: REW_OU_VOE
+5: REW_OU_SW
+6: REW_OU_MIP
+7: REW_SAT
+8: REW_PORT_VOE
+9: REW_VRAP
+------------------------------
+<field_public_text>:
+Configures the injection statistics pipeline point. Frames injected after the configured pipeline point are not counted by the ESDX counters.
+
+Configuring the value 'REW_'VRAP will cause all injected frames to be counted.
+------------------------------
+<field_enc>:
+0: Reserved
+1: REW_IN_MIP
+2: REW_IN_SW
+3: REW_IN_VOE
+4: REW_OU_VOE
+5: REW_OU_SW
+6: REW_OU_MIP
+7: REW_SAT
+8: REW_PORT_VOE
+9: REW_VRAP
+------------------------------
+<field_public_text>:
+Configure VSTAX MISC field decoding.
+
+The configuration can be Tx-mirrored.
+------------------------------
+<field_enc>:
+0: VSTAX MISC contains aggregation code
+1: VSTAX MISC contains ISDX and COSID
+------------------------------
+<field_public_text>:
+Configure tagging of frames with VSTAX.GEN.FWD_MODE = VS2_FWD_GMIRROR. Only active on front ports for frames using this FWD_MODE.
+
+This is used to control the remote mirror tagging of frames that have been mirrored from one unit in the stack to another unit.
+
+The configuration  is used by the physical port and is not changed for TX-Mirrored frames.
+------------------------------
+<field_enc>:
+0: Always push the remote mirror tag carried VSTAX.TAG into the frame. No other tags are pushed.
+1: Obey local port tag configuration.
+------------------------------
+<field_public_text>:
+Enable padding of frames to 76 bytes.
+
+If a frame is smaller than 64 bytes when all rewrites are done, the frame is extended to 64 bytes to prevent under size frames leaving the chip. Setting this bit will cause all frames on the port to be extended to 76 bytes instead of 64 bytes. 
+
+VSTAX_PAD_ENA must be set for stacking ports (i.e. ports with PORT_CTRL.VSTAX_HDR_ENA=1).
+
+The configuration is used by the physical port and is not changed for TX-Mirrored frames.
+
+Related parameters:
+REW:COMMON:PORT_CTRL.VSTAX_HDR_ENA
+------------------------------
+<field_enc>:
+0: Normal padding to 64 bytes
+1: Pad to 76 bytes
+------------------------------
+<field_public_text>:
+Enable insertion of stacking header in frame.
+
+The configuration is used by the physical port and is not changed for TX-Mirrored frames.
+
+For stacking ports, VSTAX_PAD_ENA must also be set.
+
+Related parameters:
+REW:COMMON:PORT_CTRL.VSTAX_PAD_ENA
+------------------------------
+<field_enc>:
+0: Disable
+1: Enable
+------------------------------
+<field_public_text>:
+Select logical stacking port (or stacking port group) membership
+
+The configuration is used by the physical port and is not changed for TX-Mirrored frames.
+------------------------------
+<field_enc>:
+0: Stack A
+1: Stack B
+------------------------------
+<reg_short_dscr>:
+IEEE 801.1BR and IEEE802.1CB configuration
+------------------------------
+<reg_public_text>:
+Configuration of 802.1BR Bridge Port Extension and 802.1CB Frame Replication and Elimination for Reliability (FRER) funtions in Rewriter
+------------------------------
+<field_public_text>:
+Table to determine local ingress- and egress extension ports (L_IGR_PORT and L_EGR_PORT) when operating as a 802.1BR controlling bridge
+
+Use the unmapped port number, if the mapped value is outside port range (default)
+
+Logical ingress port. Mapping of IFH.SRC_PORT: 
+L_IGR_PORT := IPE_TBL[IFH.SRC_PORT]
+
+Logical egress port. Mapping of cell bus port number: 
+L_EGR_PORT := IPE_TBL[REW.CELLBUS.PORT_NUM]
+------------------------------
+<field_enc>:
+0-69: Use this port number for local ingress- and egress lookups
+70-127: Do not map port number
+------------------------------
+<field_public_text>:
+Force ES0 lookups to use ISDX keys, independently of the ISDX value and IFH.ES0_ISDX_KEY_ENA
+------------------------------
+<field_enc>:
+0: Normal selection
+1: Force ISDX lookups
+2: Force VID lookups
+3: Reserved
+------------------------------
+<field_public_text>:
+Control 802.1BR E-TAG handling. 
+
+This bit must be set to '0' to allow full 802.1BR E-TAG operation.
+
+When this bit is set to '1' the ingress E-TAG is kept unmodified in the frame when the IFH field IFH.TAGGING.RTAG_ETAG_AVAIL is set to '1'. When IFH.TAGGING.RTAG_ETAG_AVAIL is '0' no E-TAG is pushed regardless of ES0 configuration
+------------------------------
+<field_enc>:
+0: Normal mode. Allow modification and pop of ingress 801.1BR E-TAG
+1: The ingress E-TAG is left unchanged in the frame if present on ingress
+------------------------------
+<reg_short_dscr>:
+Configure custom TPID values
+------------------------------
+<field_public_text>:
+Configure 3 custom TPID values.
+
+These must be configured identically in ANA_CL::VLAN_STAG_CFG.STAG_ETYPE_VAL.
+
+Related parameters:
+ANA_CL::VLAN_STAG_CFG.STAG_ETYPE_VAL
+------------------------------
+<field_enc>:
+n: TPID value
+------------------------------
+<reg_short_dscr>:
+Various configuration of ES0 in rewriter module
+------------------------------
+<field_public_text>:
+Setting this bit disables use of the PORT_CTRL.ES0_LPORT_NUM table for egress port to logical port mapping and forces use of the virtual DPORT as EGR_PORT ES0 key value
+
+Correct virtual switch operation requires ES0_DPORT_ENA to be set.
+------------------------------
+<field_enc>:
+0: Normal ES0_LPORT_NUM operation
+1: Always use DPORT from QSYS as EGR_PORT key value
+------------------------------
+<field_public_text>:
+Via ES0 it is possible to loop frames back to the Analyzer using the LOOP_ENA and FWD_SEL actions. 
+
+If this bit is set, a frame can only be looped once by ES0.
+------------------------------
+<field_enc>:
+0: No ES0 frame loop limitation
+1: Allow only one loop of frame
+------------------------------
+<field_public_text>:
+When enabled and IFH.ENCAP.ENCAP_ID_RLEG_MODE = 3  and egress port = VD2, the ES0 'XVID' key field is set to IFH.ENCAP.ENCAP_ID_RLEG
+------------------------------
+<field_public_text>:
+Enable lookup in VCAP_ES0 to control advanced frame modifications.
+------------------------------
+<field_enc>:
+0: VCAP_ES0 do not control frame modifications
+1: VCAP_ES0 controls all frame rewrites
+------------------------------
+<reg_short_dscr>:
+Configure mirror probes
+------------------------------
+<reg_public_text>:
+Related parameters:
+ANA_AC:MIRROR_PROBE
+------------------------------
+<field_public_text>:
+The TX port for the mirror_probe (From where rewrite configuration is taken)
+------------------------------
+<field_enc>:
+0: Port 0
+1: Port 1
+. . .
+n: Port n
+------------------------------
+<field_public_text>:
+Select encapsulation ID to use for remote mirror frames.
+------------------------------
+<field_enc>:
+0: No encapsulation
+1-n: Encapsulation ID n
+------------------------------
+<field_public_text>:
+Enable encapsulation of mirrored frames. One or two Q-Tags (Q-in-Q) or the encapsulation table can be used.
+
+In tag mode the VLAN tags will be added in the outer most position after the SMAC. This will also be the case if a MPLS link layer is added to the frame. The tags will then be added after LL-SMAC.
+
+In encapsulation mode an entry in the ENCAP-table is used for encapsulation. This will override any encapsulation selected by ES0 for the frame.
+------------------------------
+<field_enc>:
+0: Local mirror port. No encapsulation
+1: Add one VLAN tag. Configured by MIRROR_TAG_A_CFG
+2: Add two VLAN tags. Configured by MIRROR_TAG_A_CFG and MIRROR_TAG_B_CFG
+3: Use ENCAP table selected by REMOTE_ENCAP_ID
+------------------------------
+<reg_short_dscr>:
+Configure mirror probes
+------------------------------
+<reg_public_text>:
+Configuration of mirror QTag A. Each mirror probe can be configured individually.
+------------------------------
+<field_public_text>:
+Mirror Q-tag A Tag Protocol Identifier (TPID)
+------------------------------
+<field_enc>:
+0: 0x8100
+1: 0x88A8
+2: Custom1. REW::TPID_CFG[0].TPID_VAL
+3: Custom2. REW::TPID_CFG[1].TPID_VAL
+4: Custom3. REW::TPID_CFG[2].TPID_VAL
+5: Select via ifh.vstax.tag_type and ifh.encap.tag_tpid
+  If ifh.encap.tag_tipd = STD_TPID: 
+    If ifh.vstax.tag_type = 0 then 0x8100 else 0x88A8 
+  If ifh.encap.tag_tipd = CUSTOM<n>: 
+    Custom<n> TPID
+6-7: Reserved
+------------------------------
+<field_public_text>:
+Mirror Q-tag A VID value.
+------------------------------
+<field_enc>:
+n: VID n
+------------------------------
+<field_public_text>:
+Mirror Q-tag A DEI value.
+------------------------------
+<field_enc>:
+0: DEI bit = 0
+1: DEI bit = 1
+------------------------------
+<field_public_text>:
+Selection of mirror Q-tag A PCP value.
+------------------------------
+<field_enc>:
+0: Use classified PCP
+1: Use TAG_A_PCP_VAL
+------------------------------
+<field_public_text>:
+Mirror Q-tag A PCP value.
+------------------------------
+<field_enc>:
+n: PCP n
+------------------------------
+<reg_short_dscr>:
+Configure mirror probes
+------------------------------
+<reg_public_text>:
+Configuration of mirror QTag B. Each mirror probe can be configured individually.
+------------------------------
+<field_public_text>:
+Mirror Q-tag B Tag Protocol Identifier (TPID)
+------------------------------
+<field_enc>:
+0: 0x8100
+1: 0x88A8
+2: Custom1. REW::TPID_CFG[0].TPID_VAL
+3: Custom2. REW::TPID_CFG[1].TPID_VAL
+4: Custom3. REW::TPID_CFG[2].TPID_VAL
+5: Select via ifh.vstax.tag_type and ifh.encap.tag_tpid
+  If ifh.encap.tag_tipd = STD_TPID: 
+    If ifh.vstax.tag_type = 0 then 0x8100 else 0x88A8 
+  If ifh.encap.tag_tipd = CUSTOM<n>: 
+    Custom<n> TPID
+6-7: Reserved
+------------------------------
+<field_public_text>:
+Mirror Q-tag B VID value.
+------------------------------
+<field_enc>:
+n: VID n
+------------------------------
+<field_public_text>:
+Mirror Q-tag B DEI value.
+------------------------------
+<field_enc>:
+0: DEI bit = 0
+1: DEI bit = 1
+------------------------------
+<field_public_text>:
+Selection of mirror Q-tag B PCP value.
+------------------------------
+<field_enc>:
+0: Use classified PCP
+1: Use TAG_B_PCP_VAL
+------------------------------
+<field_public_text>:
+Mirror Q-tag B PCP value.
+------------------------------
+<field_enc>:
+n: PCP n
+------------------------------
+<reg_short_dscr>:
+Map drop precedence to drop eligible value
+------------------------------
+<reg_public_text>:
+Drop precedence level for the frame is translated to a drop eligible value 0 or 1, selecting between _DE0 or _DE1 mapping tables, when translating the internal prio to TAG priorities. Mapped drop precedence/internal priority is used when selected by TAG control configuration (see TAG ctrl)
+------------------------------
+<field_public_text>:
+Drop precedence N uses mapping table given by bit N in this field.
+------------------------------
+<field_enc>:
+xxx0: Map DP value 0 to DE value 0
+xxx1: Map DP value 0 to DE value 1
+...
+0xxx: Map DP value 3 to DE value 0
+1xxx: Map DP value 3 to DE value 1
+------------------------------
+<reg_short_dscr>:
+Remap table of DSCP values.
+------------------------------
+<field_public_text>:
+Full one to one DSCP remapping table common for all ports.
+------------------------------
+<reg_short_dscr>:
+Rewriter router leg configuration.
+------------------------------
+<field_public_text>:
+Router leg base MAC address, least significant bits.
+
+In order to have different MAC addresses per router leg, the base address may be incremented using VID or VMID, ref. RLEG_MAC_TYPE_SEL.
+
+This must be configured consistently in ANA_L3 and possibly EACL.
+
+Related parameters:
+ANA_L3:COMMON:RLEG_CFG_0.RLEG_MAC_LSB
+EACL:COMMON:RLEG_CFG_0.RLEG_MAC_LSB
+------------------------------
+<field_enc>:
+Bit 0: MAC address, bit 0
+...
+Bit 23: MAC address, bit 23
+------------------------------
+<reg_short_dscr>:
+Rewriter router leg configuration.
+------------------------------
+<field_public_text>:
+Configuration of router leg specific MAC address.
+
+This must be configured consistently in ANA_L3 and possibly EACL.
+
+Related parameters:
+ANA_L3:COMMON:RLEG_CFG_1.RLEG_MAC_TYPE_SEL
+EACL:COMMON:RLEG_CFG_1.RLEG_MAC_TYPE_SEL
+------------------------------
+<field_enc>:
+0: RLEG used to increment base MAC address:
+RLEG_MAC = RLEG_MAC_MSB(23:0) & ((RLEG_MAC_LSB(23:0) + IFH.ERLEG) mod 2**24)
+
+1: EVID (VMID.RLEG_EVID) used to increment base MAC address:
+RLEG_MAC = RLEG_MAC_MSB(23:0) & ((RLEG_MAC_LSB(23:0) + RLEG_EVID) mod 2**24)
+
+2: Base MAC address used for all router legs
+RLEG_MAC = RLEG_MAC_MSB[23:0] & RLEG_MAC_LSB[23:0] 
+
+3: Reserved
+------------------------------
+<field_public_text>:
+Router leg base MAC address, least significant bits.
+
+In order to have different MAC addresses per router leg, the base address may be incremented using VID or VMID, ref. RLEG_MAC_TYPE_SEL.
+
+This must be configured consistently in ANA_L3 and possibly EACL.
+
+Related parameters:
+ANA_L3:COMMON:RLEG_CFG_1.RLEG_MAC_MSB
+EACL:COMMON:RLEG_CFG_1.RLEG_MAC_MSB
+------------------------------
+<field_enc>:
+Bit 0: MAC address, bit 24
+...
+Bit 23: MAC address, bit 47
+------------------------------
+<reg_short_dscr>:
+Control register for counter events
+------------------------------
+<field_public_text>:
+Select from which source port events are counted.
+------------------------------
+<field_enc>:
+'n': Count events from source port n
+------------------------------
+<field_public_text>:
+If set to 1 events from all ports are counted. If 0 the port is selected by the 'EVENT_CNT_PORT' register
+------------------------------
+<field_enc>:
+0: Count events from the port selected by 'EVENT_CNT_PORT'
+1: Count events from all ports
+------------------------------
+<field_public_text>:
+Configure ESDX counting for stacking ports.
+
+If this bit is set and PORT_CTRL.VSTAX_HDR_ENA=1, all counting based on the ESDX value is disabled regardless of the CNT_CTRL.STAT_MODE configuration.
+
+Related parameters:
+ANA_AC:PS_COMMON:COMMON_VSTAX_CFG.VSTAX2_ISDX_STAT_DIS
+------------------------------
+<field_enc>:
+0: Normal ESDX statistics mode
+1: Disable ESDX statistics for stacking ports
+------------------------------
+<field_public_text>:
+Enable counting of frames discarded by the REW. The QSYS abort statistics counters are used.
+
+This bit only enables counting of frames discarded by ES0 or the SW_MIP. Frame discards done by the OAM MEP are not included.
+------------------------------
+<field_enc>:
+0: Disable counting
+1: Enable counting
+------------------------------
+<field_public_text>:
+Configures the egress service statistics mode. The following options for looking up the egress service counter set are available:
+
+In mode 0 and 1 yellow frames (DE=1) are counted separately
+In mode 2 and 3 multicast frames (DMAC bit 40 = 1) are counted separately
+
+Related parameters:
+ANA_AC:PS_COMMON:MISC_CTRL.USE_VID_AS_ISDX_ENA
+------------------------------
+<field_enc>:
+0: Use ESDX from ES0 if hit, otherwise ISDX
+1: Use ESDX from ES0 if hit, otherwise no counting
+2: Use ISDX (ifh.vstax.misc.isdx as index)
+3: Use classified VID (ifh.vstax.tag.vid)
+------------------------------
+<reg_short_dscr>:
+Controls the common sticky event counter.
+------------------------------
+<field_public_text>:
+Counter with number of masked events. Multiple simultaneously events are counted as one.
+------------------------------
+<field_enc>:
+Counter can be written by SW.
+------------------------------
+<reg_short_dscr>:
+Global CPU configuration
+------------------------------
+<reg_public_text>:
+Selected local CPU queues can be redirected to a global CPU (GCPU) located on front- and/or stack ports. Each of the eight local CPU queues are configured individually. 
+
+CPU queue redirection is enabled in QFWD::FRAME_COPY_CFG.FRMC_PORT_VAL
+
+The CPU queue number assigned to a frame is the highest priority CPU queue bit set in IFH.MISC.CPU_MASK. The CPU queue number is used to select configuration per queue. 
+
+The GCPU forward frame modifications are not done, if no bits are set in IFH.MISC.CPU_MASK.
+------------------------------
+<field_public_text>:
+Used when GCPU frames are forwarded to a front port. 
+
+Frames are sent with the IFH preserved. The IFH is encapsulated according to the configuration. Setting GCPU_KEEP_IFH to a value different from 0 overrides the GCPU_TAG_SEL and GCPU_DO_NOT_REW settings for front ports. No other rewrites are done to the frame.
+
+The GCPU_KEEP_IFH setting is not active if IFH_CTRL.KEEP_IFH_SEL is different from 0 or if PORT_CTRL.VSTAX_HDR_ENA=1
+------------------------------
+<field_enc>:
+0: Normal mode. 
+1: Keep IFH without modifications. Frames are not updated. IFH is kept
+2: Encapsulate IFH. 
+   The frame's DMAC, SMAC and a fixed TAG with ETYPE=8880 (Microchip) and EPID=0x000B are inserted in front of the IFH:
+      [FRM_DMAC][FRM_SMAC][0x8880][0x000B][IFH][FRAME]
+3: Encapsulate IFH using the ENCAP table
+   Use GCPU_UPSID and GCPU_UPSPN or ES0 to generate an ENCAP_ID and insert the encapsulation in front of the IFH:
+      [ENCAP][IFH][FRAME]
+   ENCAP_ID = 32*GCPU_UPSID+GCPU_UPSPN or ENCAP_ID action from ES0
+   IF ENCAP_ID = 0 then the ES0 action ENCAP_ID is used to control the encapsulation. If neither of these encapsulations are valid (ENCAP_ID > 0) then mode 2) is used.
+------------------------------
+<field_public_text>:
+Used when GCPU frames are forwarded to a front port. 
+
+Frame are not modified when forwarded to the GCPU expect for the optional tags configured in GCPU_CFG.GCPU_TAG_SEL
+------------------------------
+<field_enc>:
+0: Allow normal rewrites of GCPU frames forwarded to front ports
+1: Allow only addition of GCPU_TAGS to GCPU frames
+------------------------------
+<field_public_text>:
+When a GCPU frame is forwarded to a stack port:
+Force a change of the VSTAX.TAG to the configured values in GCPU_TAG_CFG:0
+
+When a GCPU frame is forwarded to a front port:
+Optionally add one or two Q-tags to the frame. The tags are configured using GCPU_TAG_CFG
+------------------------------
+<field_enc>:
+0: Normal mode. No tags are added and VSTAX.TAG is equal to the outer most frame tag
+1: Add one tag to GCPU frames forwarded to front ports. Set VSTAX.TAG to GCPU_TAG_CFG:0 for frames on a stack port
+2: Add two tags to GCPU frames forwarded to front ports. Set VSTAX.TAG to GCPU_TAG_CFG:0 for frames on a stack port
+3: Reserved
+------------------------------
+<field_public_text>:
+Used when GCPU frames are forwarded to a stack port. 
+
+Configure forward mode of GCPU frames on stack ports by selecting value of VSTAX.GEN.FWD_MODE.
+------------------------------
+<field_enc>:
+0: VSTAX.GEN.FWD_MODE = VS2_FWD_GCPU_UPS
+Forward the frame to a specific unit in the stack
+
+1: VSTAX.GEN.FWD_MODE = VS2_FWD_PHYSICAL
+Forward the frame to a specific port on a specific unit in the stack.
+------------------------------
+<field_public_text>:
+Used when GCPU frames are forwarded to a stack port. 
+
+DST_PN to be used as destination in the VSTAX header. Set VSTAX.DST.DST_PN to configured value.
+------------------------------
+<field_enc>:
+0: DST_PN 0
+1: DST_PN 1
+... 
+n: DST_PN n
+------------------------------
+<field_public_text>:
+Used when GCPU frames are forwarded to a stack port. 
+
+DST_UPSID to be used as destination in the VSTAX header. Set VSTAX.DST.DST_UPSID to configured value.
+------------------------------
+<field_enc>:
+0: DST_UPSID 0
+1: DST_UPSID 1
+... 
+n: DST_UPSID n
+------------------------------
+<reg_short_dscr>:
+VSTAX Configuration per logical Stacking port
+------------------------------
+<field_public_text>:
+Link TTL value
+------------------------------
+<field_public_text>:
+Change priority for learn all frames.
+------------------------------
+<field_enc>:
+0: Disable
+1: Enable (Learn-all are sent with highest priority)
+------------------------------
+<field_public_text>:
+Control whether forwarding modes specific to VStaX AF shall be translated to BF forwarding modes.
+
+If set to 0, the following translation will be performed:
+fwd_logical -> fwd_lookup
+fwd_mc -> fwd_lookup
+
+If set to 1, no translation will be performed.
+
+Translation is only required for AF switches operating in a BF stack.
+------------------------------
+<field_enc>:
+0: Perform fwd_mode translation.
+1: Do not perform fwd_mode translation.
+------------------------------
+<reg_short_dscr>:
+Configure optional GCPU tagging
+------------------------------
+<reg_public_text>:
+Configuration of QTags for GCPU frames.
+
+GCPU frames that are forwarded to a front port can optionally have one or two Qtags added. The tags will be placed in the outer most position after the SMAC.
+
+TAG_A is the outer tag. 
+Idx0:  TAG_A, Idx1:  TAG_B.
+------------------------------
+<field_public_text>:
+GCPU Q-tag Tag Protocol Identifiers (TPID)
+------------------------------
+<field_enc>:
+0: 0x8100
+1: 0x88A8
+2: Custom1. REW::TPID_CFG[0].TPID_VAL
+3: Custom2. REW::TPID_CFG[1].TPID_VAL
+4: Custom3. REW::TPID_CFG[2].TPID_VAL
+5: Select via ifh.vstax.tag_type and ifh.encap.tag_tpid
+  If ifh.encap.tag_tipd = STD_TPID: 
+    If ifh.vstax.tag_type = 0 then 0x8100 else 0x88A8 
+  If ifh.encap.tag_tipd = CUSTOM<n>: 
+    Custom<n> TPID
+6-7: Reserved
+------------------------------
+<field_public_text>:
+GCPU Q-tag VID values
+------------------------------
+<field_enc>:
+n: VID n
+------------------------------
+<field_public_text>:
+GCPU Q-tag DEI values
+------------------------------
+<field_enc>:
+0: DEI bit = 0
+1: DEI bit = 1
+------------------------------
+<field_public_text>:
+Selection of GCPU Q-tag PCP values
+------------------------------
+<field_enc>:
+0: Use classified PCP
+1: Use TAG_PCP_VAL
+------------------------------
+<field_public_text>:
+GCPU Q-tag PCP values.
+------------------------------
+<field_enc>:
+n: PCP n
+------------------------------
+<reggrp_short_dscr>:
+Mapping resource A
+------------------------------
+<reggrp_public_text>:
+This is used for mapping table lookups 0 and 1
+------------------------------
+<reg_short_dscr>:
+Configuration of mapping tables 0 and 1
+------------------------------
+<reg_public_text>:
+Lookup 0 and 1 values
+------------------------------
+<field_public_text>:
+Mapped TC value
+------------------------------
+<field_enc>:
+n: New TC value
+------------------------------
+<field_public_text>:
+Mapped DSCP value
+------------------------------
+<field_enc>:
+n: New DSCP value
+------------------------------
+<field_public_text>:
+Mapped DEI value
+------------------------------
+<field_enc>:
+n: New DEI value
+------------------------------
+<field_public_text>:
+Mapped PCP value
+------------------------------
+<field_enc>:
+n: New PCP value
+------------------------------
+<reg_short_dscr>:
+Configuration of mapping tables 0 and 1. MPLS label
+------------------------------
+<reg_public_text>:
+Lookup 0 and 1 values
+------------------------------
+<field_public_text>:
+Mapped MPLS label value
+------------------------------
+<field_enc>:
+n: Label value
+------------------------------
+<reggrp_short_dscr>:
+Mapping resource B
+------------------------------
+<reggrp_public_text>:
+This is used for mapping table lookups 2 and 3
+------------------------------
+<reg_short_dscr>:
+Configuration of mapping tables 2 and 3
+------------------------------
+<reg_public_text>:
+Lookup 2 and 3 values
+------------------------------
+<field_public_text>:
+Mapped TC value
+------------------------------
+<field_enc>:
+n: New TC value
+------------------------------
+<field_public_text>:
+Mapped DSCP value
+------------------------------
+<field_enc>:
+n: New DSCP value
+------------------------------
+<field_public_text>:
+Mapped DEI value
+------------------------------
+<field_enc>:
+n: New DEI value
+------------------------------
+<field_public_text>:
+Mapped PCP value
+------------------------------
+<field_enc>:
+n: New PCP value
+------------------------------
+<reg_short_dscr>:
+Configuration of mapping tables 2 and 3. MPLS label
+------------------------------
+<reg_public_text>:
+Lookup 2 and 3 values
+------------------------------
+<field_public_text>:
+Mapped MPLS label value
+------------------------------
+<field_enc>:
+n: Label value
+------------------------------
+<reggrp_short_dscr>:
+Port based configuration and status for rewriter
+------------------------------
+<reggrp_public_text>:
+Replication is 70, mapped as follows:
+------------------------------------------------------------
+0  - 64: Physical Ports
+65 - 66: CPU ports
+67 - 69: Virtual device (VD) ports
+
+In normal operation frame rewrites should be enabled for the physical ports and port 69 (VD2) and disabled for ports other ports.
+
+See IFH_CTRL.KEEP_IFH_SEL and IFH_CTRL_CPUVD.KEEP_IFH_SEL_CPUVD
+------------------------------
+<reg_short_dscr>:
+Configures per port custom values for TAGs
+------------------------------
+<field_public_text>:
+PCP field in the TCI.
+------------------------------
+<field_enc>:
+n: Port PCP value
+------------------------------
+<field_public_text>:
+DEI field in the TCI.
+------------------------------
+<field_enc>:
+n: Port DEI value
+------------------------------
+<field_public_text>:
+VID field in the TCI.
+------------------------------
+<field_enc>:
+n: Port VID
+------------------------------
+<reg_short_dscr>:
+Map internal priority to tagged priority.
+------------------------------
+<field_public_text>:
+Map internal priority to UPRIO/PCP value in tags. This table used for DP values mapped to 0 in REW::DP_MAP.DP.
+------------------------------
+<reg_short_dscr>:
+Map internal priority to tagged priority.
+------------------------------
+<field_public_text>:
+Map internal priority to UPRIO/PCP value in tags. This table used for DP values mapped to 1 in REW::DP_MAP.DP.
+------------------------------
+<reg_short_dscr>:
+Map internal priority to tag value.
+------------------------------
+<field_public_text>:
+Map QoS/COSID/Classified PCP to CFI/DEI value in tags. This table used for DP values mapped to 0 in REW::DP_MAP.DP.
+
+TAG_DEI_CFG controls whether QoS or COSID is used for lookup in this table.
+
+Related parameters:
+REW:PORT:TAG_CTRL.TAG_DEI_CFG
+REW:COMMON:DP_MAP.DP
+------------------------------
+<reg_short_dscr>:
+Map internal priority to tag value.
+------------------------------
+<field_public_text>:
+Map QoS/COSID/Classified PCP to CFI/DEI value in tags. This table used for DP values mapped to 1 in REW::DP_MAP.DP.
+
+TAG_DEI_CFG controls whether QoS or COSID is used for lookup in this table.
+
+Related parameters:
+REW:PORT:TAG_CTRL.TAG_DEI_CFG
+REW:COMMON:DP_MAP.DP
+------------------------------
+<reg_short_dscr>:
+Configure PORT tagging
+------------------------------
+<field_public_text>:
+Control how port tags are added. If this bit is set, the IFH field VSTAX.TAG.WAS_TAGGED must be '1' before a port tag is added to a frame.
+
+See TAG_CTRL.TAG_CFG
+------------------------------
+<field_enc>:
+0: Normal port tagging mode
+1: Frames are not port tagged, if VSTAX.TAG.WAS_TAGGED = '0' regardless of TAG_CTRL.TAG_CFG configuration
+------------------------------
+<field_public_text>:
+Control port tagging.
+
+See TAG_CTRL.TAG_CFG_OBEY_WAS_TAGGED.
+------------------------------
+<field_enc>:
+0: Port tagging disabled
+1: Tag all frames, except when classified VID=PORT_VLAN_CFG.PORT_VID or classified VID=0
+2: Tag all frames, except when classified VID=0
+3: Tag all frames
+------------------------------
+<field_public_text>:
+Select Tag Protocol Identifier (TPID) for port tagging
+------------------------------
+<field_enc>:
+0: 0x8100
+1: 0x88A8
+2: Custom1. REW::TPID_CFG[0].TPID_VAL
+3: Custom2. REW::TPID_CFG[1].TPID_VAL
+4: Custom3. REW::TPID_CFG[2].TPID_VAL
+5: Select via ifh.vstax.tag_type and ifh.encap.tag_tpid
+  If ifh.encap.tag_tipd = STD_TPID: 
+    If ifh.vstax.tag_type = 0 then 0x8100 else 0x88A8 
+  If ifh.encap.tag_tipd = CUSTOM<n>: 
+    Custom<n> TPID
+6-7: Reserved
+------------------------------
+<field_public_text>:
+Select VID in port tag
+------------------------------
+<field_enc>:
+Select VID in port tag.
+
+0: Use XVID. This is the classified VID
+1: Use PORT_VLAN_CFG.PORT_VID
+2: Use GVID. This is the classified VID
+3: Reserved
+------------------------------
+<field_public_text>:
+Select PCP in port tag.
+
+0: Classified PCP: IFH.VSTAX.TAG.CL_PCP
+1: PORT_PCP
+2: PCP value from PCP_MAP_DEx[IFH.VSTAX.QOS.CL_QOS]
+3: IFH.VSTAX.QOS.CL_QOS
+4: PCP value from PCP_MAP_DEx[IFH.VSTAX.MISC.COSID]
+5: IFH.VSTAX.MISC.COSID
+6: PCP value from PCP_MAP_DEx[IFH.VSTAX.TAG.CL_PCP]
+7: Reserved
+
+Related parameters:
+REW:COMMON:DP_MAP.DP
+REW:PORT:PCP_MAP_DE0.PCP_DE0
+REW:PORT:PCP_MAP_DE1.PCP_DE1
+REW:PORT:PORT_VLAN_CFG.PORT_PCP
+------------------------------
+<field_public_text>:
+Select value of DEI field in port tag.
+
+0: Classified DEI: IFH.VSTAX.TAG.CL_DEI
+1: PORT_DEI
+2: DEI value from DEI_MAP_DEx[IFH.VSTAX.QOS.CL_QOS]
+3: DEI value from DP_MAP.DP
+4: DEI value from DEI_MAP_DEx[IFH.VSTAX.MISC.COSID]
+5: DEI value from DEI_MAP_DEx[IFH.VSTAX.TAG.CL_PCP]
+6-7: Reserved
+
+Related parameters:
+REW:COMMON:DP_MAP.DP
+REW:PORT:DEI_MAP_DE0.DEI_DE0
+REW:PORT:DEI_MAP_DE1.DEI_DE1
+REW:PORT:PORT_VLAN_CFG.PORT_DEI
+------------------------------
+<reg_short_dscr>:
+Enable DSCP updates on the port.
+------------------------------
+<field_public_text>:
+Control the "Selected DSCP" value.
+
+If DSCP_UPDATE_ENA=1 and IFH.QOS.UPDATE_DSCP=1 then "Selected DSCP" is set to IFH.QOS.DSCP.
+
+Otherwise "Selected DSCP" is set to frame DSCP.
+
+"Selected DSCP" is afterward potentially remapped (depending on DSCP_REMAP_ENA) and written into the frame, see DSCP_REMAP_ENA.
+
+Related parameters:
+REW:PORT:DSCP_MAP.DSCP_REMAP_ENA
+------------------------------
+<field_public_text>:
+Enable use of a shared DSCP remap table (DSCP_REMAP).
+
+If DSCP_REMAP=1 and IFH.QOS.TRANSP_DSCP=0, then the frame's DSCP is set to 
+DSCP_REMAP["Selected DSCP"]
+
+Otherwise the frame's DSCP is set to "Selected DSCP".
+
+For a description of the algorithm used to deduct "Selected DSCP" refer to DSCP_UPDATE_ENA.
+
+Related parameters:
+REW:PORT:DSCP_MAP.DSCP_UPDATE_ENA
+REW:COMMON:DSCP_REMAP
+ANA_CL:PORT:QOS_CFG.DSCP_KEEP_ENA
+------------------------------
+<reg_short_dscr>:
+1588 configuration
+------------------------------
+<reg_public_text>:
+Selects mode of port when transmitting (index 0), or receiving (index 1)
+------------------------------
+<field_public_text>:
+PTP operation mode for frames.
+------------------------------
+<field_enc>:
+0: Front port
+1: Backplane port using RSRV field 30 bit TS transfer
+2: Backplane port using CF field for 48 bit TS transfer
+3: PTP Disabled port
+------------------------------
+<field_public_text>:
+Sets the time domain this port belongs to.
+------------------------------
+<reg_short_dscr>:
+1588 configuration
+------------------------------
+<field_public_text>:
+Set to skip update of udp checksums for IPv6 frames
+------------------------------
+<field_public_text>:
+Set to disable clearing of checksum field in IPv4 frames
+------------------------------
+<field_public_text>:
+If set, the egress device time stamp will be reduced to the nearest integer nanosec value, which then will be reported through the RSRV field in the outgoing PDU.
+------------------------------
+<field_public_text>:
+Select the signature to use in the TS fifo. The on chip TS fifo includes a 47 bit signature field, and the full ingress time stamp and source port number can then be used as a signature.
+When an external PHY is holding the fifo, the PCH header can only transfer 15 bit signature.
+------------------------------
+<field_enc>:
+00: 15 bits nanosec part of rx stamp
+01: 8 LSBs(SubNS) of rx stamp + 7 bits source port
+10: Bits 15:8 of nanosec, and 7 bit source port
+11: Bits 7:0 of PDU sequence no, and 7 bit source port.
+------------------------------
+<reg_short_dscr>:
+1588 configuration
+------------------------------
+<field_public_text>:
+Signed value to add to CF when frame is transmitted on this port. Field is used if requested through the analyzer match rule. This value can be used as the egress asymmetry delay for the particular PTP flow.
+------------------------------
+<reg_short_dscr>:
+1588 configuration
+------------------------------
+<field_public_text>:
+Signed value to add to CF when frame is transmitted on this port. Field is used if requested through the analyzer match rule. This value can be used as the egress asymmetry delay for the particular PTP flow.
+------------------------------
+<reg_short_dscr>:
+1588 configuration
+------------------------------
+<field_public_text>:
+Signed value to add to CF when frame is received on this port. Field is used if requested through the analyzer match rule. This value can be used as the ingress asymmetry or ingress asymmetry+path delay for the particular PTP flow.
+------------------------------
+<reg_short_dscr>:
+1588 configuration
+------------------------------
+<field_public_text>:
+Signed value to add to CF when frame is received on this port. Field is used if requested through the analyzer match rule. This value can be used as the ingress asymmetry or ingress asymmetry+path delay for the particular PTP flow.
+------------------------------
+<reg_short_dscr>:
+1588 configuration
+------------------------------
+<field_public_text>:
+Signed value to add to CF when frame is received on this port. Field is used if requested through the analyzer match rule. This value can be used as the ingress asymmetry or ingress asymmetry+path delay for the particular PTP flow.
+------------------------------
+<reg_short_dscr>:
+1588 configuration
+------------------------------
+<field_public_text>:
+Signed value to add to CF when frame is received on this port. Field is used if requested through the analyzer match rule. This value can be used as the ingress asymmetry or ingress asymmetry+path delay for the particular PTP flow.
+------------------------------
+<reg_short_dscr>:
+Low 32 bits of PTP Mac Address
+------------------------------
+<field_public_text>:
+If requested by the PTP action out of the analyzer, this MAC address can be pasted into the SMAC.
+------------------------------
+<reg_short_dscr>:
+High 16 bits of PTP Mac Address
+------------------------------
+<field_public_text>:
+If requested by the PTP action out of the analyzer, this MAC address can be pasted into the SMAC.
+------------------------------
+<reggrp_short_dscr>:
+MAC address translation table
+------------------------------
+<reggrp_public_text>:
+The MAC table contains MAC address translation configuration. It is indexed by ES0 action MAC_IDX
+
+The table lookup is controlled by the REW_CMD received from the EACL block. The following commands are supported:
+
+0: Default - no operation.
+1: Swap MAC addresses. Clear bit 40 in new SMAC.
+2: Translate the DMAC using VCAP_ES0 action.
+3: Translate the SMAC using VCAP_ES0 action.
+4-7: Reserved. Undefined at time of writing
+------------------------------
+<reg_short_dscr>:
+MAC address replace configuration
+------------------------------
+<reg_public_text>:
+MAC replacement configuration
+------------------------------
+<field_public_text>:
+Number of bits in frame's MAC counting from LSB which are not replaced if replacing the MAC address
+
+For example, if set to 16, the 16 LSB bits in the frame's MAC address are not replaced while the 32 MSB bits are replaced with corresponding 32 bits from the associated MAC address.
+------------------------------
+<reg_short_dscr>:
+EACL MAC address configuration - bits 47:32
+------------------------------
+<reg_public_text>:
+MAC address bits 47:32 used for MAC address translation. See REW:MAC_TBL
+------------------------------
+<field_public_text>:
+MAC address bits 47:32 used for EACL MAC translation
+------------------------------
+<reg_short_dscr>:
+EACL MAC address configuration - bits 31:0
+------------------------------
+<reg_public_text>:
+MAC address bits 31:0 used for MAC address translation. See REW:MAC_TBL
+------------------------------
+<field_public_text>:
+MAC address bits 31:0 used for EACL MAC translation
+------------------------------
+<reggrp_short_dscr>:
+PTP Control
+------------------------------
+<reg_short_dscr>:
+Configuration register for PTP stamping
+------------------------------
+<field_public_text>:
+If the fifo is overflown, additional stamps will overwrite older.
+------------------------------
+<field_public_text>:
+Write one to advance the stamp queue to the next available.
+------------------------------
+<field_public_text>:
+The stamp queue is non empty
+------------------------------
+<field_public_text>:
+Current stamp is an egress stamp
+------------------------------
+<field_public_text>:
+Field contains the port number the stamp was made on
+------------------------------
+<field_public_text>:
+The stamp is overflown, and some stamps are lost.
+------------------------------
+<reg_short_dscr>:
+Ingress time stamp
+------------------------------
+<field_public_text>:
+Contains the 30 bit time stamp.
+------------------------------
+<reg_short_dscr>:
+Ingress time stamp
+------------------------------
+<field_public_text>:
+Contains the 8 bit sub-nano time stamp.
+------------------------------
+<reg_short_dscr>:
+PTP reserved field check
+------------------------------
+<field_public_text>:
+Register contains one bit per port being set when the port has received a frame with non-zero reserved bytes field
+------------------------------
+<reg_short_dscr>:
+PTP reserved field check
+------------------------------
+<field_public_text>:
+Register contains one bit per port being set when the port has received a frame with non-zero reserved bytes field
+------------------------------
+<reg_short_dscr>:
+PTP reserved field check
+------------------------------
+<field_public_text>:
+Register contains one bit per port being set when the port has received a frame with non-zero reserved bytes field
+------------------------------
+<reg_short_dscr>:
+Ingress time stamp
+------------------------------
+<field_public_text>:
+Location of generic residence time field.
+------------------------------
+<field_enc>:
+0: Byte 0 within payload.
+1: Byte 2 within payload
+n: Byte (n x 2) within payload
+------------------------------
+<field_public_text>:
+Value format for recidense time field, expressed as fixed point number of nanoseconds.
+------------------------------
+<field_enc>:
+00: 48.16 (PTPv2 CF)
+01: 24.0 with overflow 6 bits in front (GOOSE)
+10: 16.16
+11: 32.0
+------------------------------
+<reggrp_short_dscr>:
+IP-in-IPv4 encapsulation RAM configuration
+------------------------------
+<reggrp_public_text>:
+Configuration for IP-in-IPv4 encapsulation
+------------------------------
+<reg_short_dscr>:
+Configure format of encapsulation
+------------------------------
+<reg_public_text>:
+The encapsulation table can be used to control both MPLS and and IP-in-IPv4  encapsulations
+------------------------------
+<field_public_text>:
+Configure format of table entry
+------------------------------
+<field_enc>:
+0: Normal (REW:ENCAP)
+1: IP (REW:ENCAP_IP4)
+------------------------------
+<reg_short_dscr>:
+Configure IP header fields
+------------------------------
+<reg_public_text>:
+Configure the outer IPv4 header of IP-in-IPv4 frames
+------------------------------
+<field_public_text>:
+IPv4 Protocol
+
+Typical values:
+41 for IPv6-in-IPv4
+47 for GRE
+4 for IPv4-in-IPv4
+------------------------------
+<field_public_text>:
+Don't Fragment bit
+------------------------------
+<field_public_text>:
+ECN field
+------------------------------
+<field_public_text>:
+Time to live in IP header.
+
+Note that as the frame is routed in the outer IP domain, the TTL is decremented. 
+I.e. the frame leaving the device will have a TTL value one smaller than the configured TTL.
+------------------------------
+<field_public_text>:
+Value of DSCP in the IPv4 header
+------------------------------
+<field_public_text>:
+Control value of DSCP in the IPv4 header.
+This can - e.g. - be used for mapping DSCP of inner IP header to DSCP of outer IP header.
+
+If mapping tables are used (DSCP_SEL=4-7), then an ES0 rule must be setup to control the index into the mapping table (ES0 action MAP_x_IDX). 
+The parameter ES0_VD2_ENCAP_ID_ENA can be used to have ENCAP_ID be part of the ES0 key.
+
+Related parameters:
+REW:COMMON:ES0_CTRL.ES0_VD2_ENCAP_ID_ENA
+REW:COMMON:ES0_CTRL.ES0_LU_ENA
+------------------------------
+<field_enc>:
+0: ifh.qos.dscp
+1: DSCP_VAL
+2-3: Reserved
+4: Mapped using mapping table 0
+5: Mapped using mapping table 1
+6: Mapped using mapping table 2
+7: Mapped using mapping table 3
+------------------------------
+<reg_short_dscr>:
+GRE protocol configuration
+------------------------------
+<reg_public_text>:
+GRE protocol configuration
+------------------------------
+<field_public_text>:
+Enable insertion of GRE header without checksum. 
+
+When GRE_ENA is set to 1, then PROTOCOL should be set to 47.
+------------------------------
+<field_public_text>:
+GRE Protocol Type. Normally set to:
+
+0x0800 for IPv4
+0x86DD for IPv6
+------------------------------
+<reg_short_dscr>:
+Source IPv4 address
+------------------------------
+<reg_public_text>:
+Source IPv4 address
+------------------------------
+<field_public_text>:
+Source IPv4 address
+------------------------------
+<reg_short_dscr>:
+Destination IPv4 address
+------------------------------
+<reg_public_text>:
+Destination IPv4 address
+------------------------------
+<field_public_text>:
+Destination IPv4 address
+------------------------------
+<reg_short_dscr>:
+Ingress router leg configuration
+------------------------------
+<reg_public_text>:
+Ingress router leg configuration
+------------------------------
+<field_public_text>:
+Ingress router leg for next round
+------------------------------
+<reggrp_short_dscr>:
+Egress Mapped VLAN (EVMID) configuration
+------------------------------
+<reg_short_dscr>:
+Rewriter router leg configuration
+------------------------------
+<field_public_text>:
+IP-in-IPv4 ingress router leg. Used used when the outer IPv4 layer is removed.
+------------------------------
+<field_public_text>:
+Control the value of VSTAX.TAG.WAS_TAGGED field in the stack header for frames that are L3 forwarded to a stack port.
+------------------------------
+<field_enc>:
+0: VSTAX.TAG.WAS_TAGGED = 0
+1: VSTAX.TAG.WAS_TAGGED = 1
+------------------------------
+<field_public_text>:
+VID for egress router leg.
+
+This must be configured consistently in ANA_L3:VMID:RLEG_CTRL.RLEG_EVID.
+------------------------------
+<field_enc>:
+n: VID
+------------------------------
+<reggrp_short_dscr>:
+Sequence numbers for PTP frames
+------------------------------
+<reg_short_dscr>:
+Sequence number configuration
+------------------------------
+<field_public_text>:
+Sequence number for the flow given by the time stamp field in IFH. Sequence number will automatically increase at each transmission referring to the sequence entry.
+------------------------------
+<reggrp_short_dscr>:
+Access core memory
+------------------------------
+<reg_short_dscr>:
+Core reset control
+------------------------------
+<reg_public_text>:
+Controls reset and initialization of the switching core. Proper startup sequence is:
+- Enable memories
+- Initialize memories
+- Enable core
+------------------------------
+<field_public_text>:
+Initialize core memories. Field is automatically cleared when operation is complete (approx. 40 us).
+------------------------------

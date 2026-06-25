@@ -1,0 +1,130 @@
+=== DOCUMENTATION FOR TARGET: DEVCPU_ORG ===
+
+<target_short_dscr>:
+CPU Device Origin
+------------------------------
+<reggrp_short_dscr>:
+Origin registers
+------------------------------
+<reg_short_dscr>:
+Origin configuration
+------------------------------
+<field_public_text>:
+Clear this field to make write accesses return status. By default write operations return status OK because they are finished before status of the access is known. All non-OK responses will be logged in DEVCPU_ORG::ERR_CNTS no matter the value of this field.
+------------------------------
+<reg_short_dscr>:
+Error counters
+------------------------------
+<field_public_text>:
+The "Target Busy" indication is triggered when an interface tries to access a target which is currently reset or if another interface is using the target.
+------------------------------
+<field_public_text>:
+The "Watch Dog Drop Origin" indication is triggered when the origin does not receive reply from the CSR ring within a given amount of time. This cannot happen during normal operation.
+------------------------------
+<field_public_text>:
+The "Watch Dog Drop" indication is triggered when a target is too long about processing a request. Usually requests are processed immediately but some accesses requires interaction with the core-logic, when this logic is in reset or during very heavy traffic load there is a chance of timing out in the target.
+------------------------------
+<field_public_text>:
+The "No Action" indication is triggered when a target is accessed with a non-existing address. In other words, the target did not contain a register at the requested address.
+------------------------------
+<field_public_text>:
+The "Unknown Target Module" indication is triggered when a non-existing target is requested. In other words there was no target with the requested target-id.
+------------------------------
+<reg_short_dscr>:
+Timeout configuration
+------------------------------
+<reg_public_text>:
+This register is shared between all interfaces on the Origin.
+------------------------------
+<field_public_text>:
+The contents of this field controls the timeout delay for the CSR system. Setting this field to 0 disables timeout. Timeout is handled as follows: A counter that decrements continually, when reaching 0 it will wrap to the value specified by this field. When a target has been processing a request for three "wraps" the target time-out and generate a WD_DROP indication. In the origin an Interface that has been processing a request for four "wraps" will time out and generate a WD_DROP_ORG indication.
+------------------------------
+<reg_short_dscr>:
+General purpose register
+------------------------------
+<reg_public_text>:
+This register is shared between all interfaces on the Origin.
+------------------------------
+<field_public_text>:
+General purpose 32-bit registers for debug and software development. The contents of this register can always (safely) be read. However write operations from different masters (to this register), which occur at (exactly) the same time, will fail.
+------------------------------
+<reg_short_dscr>:
+Atomic set of mailbox
+------------------------------
+<field_public_text>:
+Set bits in this register to atomically set corresponding bits in the DEVCPU_ORG::MAILBOX register. This register return 0 on read.
+------------------------------
+<reg_short_dscr>:
+Atomic clear of mailbox
+------------------------------
+<field_public_text>:
+Set bits in this register to atomically clear corresponding bits in the DEVCPU_ORG::MAILBOX register. This register return 0 on read.
+------------------------------
+<reg_short_dscr>:
+Mailbox
+------------------------------
+<reg_public_text>:
+This register is shared between all interfaces on the Origin.
+------------------------------
+<field_public_text>:
+Mailbox register which is shared between all interfaces on the Origin. Atomic (safe) modifications to the contents of this register can be performed by using the DEVCPU_ORG::MAILBOX_CLR and DEVCPU_ORG::MAILBOX_SET registers.
+------------------------------
+<reg_short_dscr>:
+Semaphore configuration
+------------------------------
+<reg_public_text>:
+This register is shared between all interfaces on the Origin.
+------------------------------
+<field_public_text>:
+By default semaphore-interrupt is generated when a semaphore is free. By setting this field interrupt is generated when semaphore is taken, bit 0 corresponds to semaphore 0, bit 1 to semaphore 1.
+------------------------------
+<field_enc>:
+0: Interrupt on taken semaphore
+1: Interrupt on free semaphore
+------------------------------
+<reg_short_dscr>:
+Semaphore 0
+------------------------------
+<field_public_text>:
+General Semaphore.The first interface to read this field will be granted the semaphore (reading this field returns 0x1). Once the semaphore has been granted, all reads return '0' from this field (until the semaphore has been released). Any interface can release the semaphore by writing (any value) to this field.
+------------------------------
+<field_enc>:
+0: Semaphore ownership denied.
+1: Semaphore has been granted.
+------------------------------
+<reg_short_dscr>:
+Semaphore 0 owner
+------------------------------
+<field_public_text>:
+Current owner of the semaphore. This field is a one-hot encoded vector, each bit in this vector correspond to an interface on the origin. If this field return 0, then the semaphore was free at the time of reading the register.
+------------------------------
+<field_enc>:
+0: Semaphore is free.
+1: VCore System owns semaphore
+2: VRAP owns semaphore
+4: SI owns smaphore
+8: MIIM owns semaphore
+------------------------------
+<reg_short_dscr>:
+Semaphore 1
+------------------------------
+<field_public_text>:
+General Semaphore.The first interface to read this field will be granted the semaphore (reading this field returns 0x1). Once the semaphore has been granted, all reads return '0' from this field (until the semaphore has been released). Any interface can release the semaphore by writing (any value) to this field.
+------------------------------
+<field_enc>:
+0: Semaphore ownership denied.
+1: Semaphore has been granted.
+------------------------------
+<reg_short_dscr>:
+Semaphore 1 owner
+------------------------------
+<field_public_text>:
+Current owner of the semaphore. This field is a one-hot encoded vector, each bit in this vector correspond to an interface on the origin. If this field return 0, then the semaphore was free at the time of reading the register.
+------------------------------
+<field_enc>:
+0: Semaphore is free.
+1: VCore System owns semaphore
+2: VRAP owns semaphore
+4: SI owns smaphore
+8: MIIM owns semaphore
+------------------------------
