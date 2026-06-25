@@ -20,9 +20,11 @@
           <option value="project_2">project_2</option>
         </select>
         <button class="new-chat" id="newChatButton" type="button">Новый чат</button>
+        <button onclick="saveChat()" type="button">Сохранить</button>
+        <button onclick="loadFiles()" type="button">Мои сохранения</button>
       </div>
     </header>
-
+        <div id="fileList"></div>
     <section class="chat" id="chatHistory" aria-live="polite">
       <div class="empty-state" id="emptyState">Начните новый диалог</div>
     </section>

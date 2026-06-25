@@ -1,5 +1,7 @@
 const USER_ID_KEY = "chat_user_id";
 
+let messages = [];
+
 const chatHistory = document.querySelector("#chatHistory");
 const emptyState = document.querySelector("#emptyState");
 const userIdLabel = document.querySelector("#userIdLabel");
@@ -52,6 +54,7 @@ function startNewChat() {
   localStorage.setItem(USER_ID_KEY, userId);
   updateUserIdLabel();
   clearChat();
+  messages = [];
   messageInput.focus();
 }
 
@@ -89,8 +92,12 @@ async function handleSubmit(event) {
     }
 
     const data = await response.json();
+    alert(`Сохранено: ${data.result || data}`);
     const botResponse = data?.result?.response || "Пустой ответ от сервера";
     pendingMessage.querySelector(".message-content").textContent = botResponse;
+
+    messages.push({ role: "user", content: prompt });
+    messages.push({ role: "bot", content: botResponse });
   } catch (error) {
     pendingMessage.classList.add("error");
     pendingMessage.querySelector(".message-content").textContent = `Ошибка отправки: ${error.message}`;
@@ -143,4 +150,49 @@ function resizeMessageInput() {
 function updateUserIdLabel() {
   userIdLabel.textContent = `user_id: ${userId}`;
   userIdLabel.title = userId;
+}
+
+async function saveChat() {
+    const project = projectSelect.value;
+    const chatId = userId;
+
+    const response = await fetch(`/chat/${project}/${chatId}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ chat_history: messages })
+    });
+
+    const data = await response.json();
+    alert(`Сохранено: ${data.result}`);
+}
+
+async function loadFiles() {
+    const project = projectSelect.value;
+
+    const response = await fetch(`/chat/${project}/files`);
+    const files = await response.json();
+
+    const fileList = document.getElementById("fileList");
+    fileList.innerHTML = "";
+
+    files.forEach(filename => {
+        const chatId = filename.replace(".txt", "");
+
+        const item = document.createElement("div");
+        item.innerHTML = `
+            <span>${filename}</span>
+            <button onclick="downloadFile('${project}', '${chatId}')">Скачать</button>
+            <button onclick="deleteFile('${project}', '${chatId}')">Удалить</button>
+        `;
+        fileList.appendChild(item);
+    });
+}
+
+async function downloadFile(project, chatId) {
+    window.location.href = `/chat/${project}/${chatId}`;
+}
+
+async function deleteFile(project, chatId) {
+    await fetch(`/chat/${project}/${chatId}`, { method: "DELETE" });
+    loadFiles();
 }

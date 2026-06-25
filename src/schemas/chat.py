@@ -9,3 +9,6 @@ class ChatRequest(BaseModel):
 class ChatResponse(BaseModel):
     response: str
     session_id: str
+
+class SaveChatRequest(BaseModel):
+    chat_history: list
