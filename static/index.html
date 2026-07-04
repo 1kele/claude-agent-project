@@ -7,7 +7,32 @@
   <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-  <main class="app">
+  <div class="auth-overlay" id="authOverlay" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+    <form class="auth-card" id="authForm">
+      <div class="auth-header">
+        <span class="auth-kicker">Claude Agent</span>
+        <h1 id="authTitle">Регистрация</h1>
+        <p id="authDescription">Создайте аккаунт, чтобы открыть чат.</p>
+      </div>
+
+      <label class="auth-field">
+        <span>Логин</span>
+        <input id="authLogin" name="login" type="text" autocomplete="username" required placeholder="Введите логин">
+      </label>
+
+      <label class="auth-field">
+        <span>Пароль</span>
+        <input id="authPassword" name="password" type="password" autocomplete="new-password" required placeholder="Введите пароль">
+      </label>
+
+      <p class="auth-error" id="authError" hidden></p>
+
+      <button class="auth-submit" id="authSubmit" type="submit">Зарегистрироваться</button>
+      <button class="auth-switch" id="authModeButton" type="button">Уже есть аккаунт? Войти</button>
+    </form>
+  </div>
+
+  <main class="app app--locked" id="appRoot" aria-hidden="true">
     <header class="topbar">
       <div class="brand">
         <strong>Чат</strong>
@@ -15,16 +40,92 @@
       </div>
 
       <div class="controls">
-        <select id="projectSelect" aria-label="Выбор проекта">
-          <option value="project_1">project_1</option>
-          <option value="project_2">project_2</option>
+        <select id="projectSelect" aria-label="Выбор проекта" disabled>
+          <option value="">Загрузка проектов...</option>
         </select>
         <button class="new-chat" id="newChatButton" type="button">Новый чат</button>
-        <button onclick="saveChat()" type="button">Сохранить</button>
-        <button onclick="loadFiles()" type="button">Мои сохранения</button>
+        <button class="topbar-button" id="saveChatButton" type="button">Сохранить</button>
+        <button class="topbar-button" id="loadFilesButton" type="button">Мои сохранения</button>
+        <button class="topbar-button admin-button" id="adminButton" type="button" hidden>Админ</button>
+        <button class="topbar-button logout-button" id="logoutButton" type="button">Выйти</button>
       </div>
     </header>
-        <div id="fileList"></div>
+
+    <div id="fileList"></div>
+
+    <section class="admin-panel" id="adminPanel" hidden>
+      <div class="admin-top">
+        <div>
+          <span class="admin-kicker">Управление</span>
+          <h2>Админ-панель</h2>
+          <p id="adminStatus">Данные не загружены</p>
+        </div>
+        <button class="topbar-button" id="closeAdminButton" type="button">К чату</button>
+      </div>
+
+      <div class="admin-layout">
+        <section class="admin-section">
+          <div class="admin-section-head">
+            <h3>Пользователи</h3>
+            <button class="topbar-button" id="refreshUsersButton" type="button">Обновить</button>
+          </div>
+          <div class="admin-list" id="adminUsersList"></div>
+        </section>
+
+        <section class="admin-section">
+          <div class="admin-section-head">
+            <h3>Доступы</h3>
+          </div>
+
+          <form class="admin-form" id="userLookupForm">
+            <label>
+              ID пользователя
+              <input id="lookupUserId" type="number" min="1" placeholder="Например, 3">
+            </label>
+            <button class="topbar-button" type="submit">Показать проекты</button>
+          </form>
+
+          <div class="admin-result" id="adminUserProjects"></div>
+
+          <form class="admin-form" id="grantAccessForm">
+            <div class="admin-form-row">
+              <label>
+                ID пользователя
+                <input id="grantUserId" type="number" min="1" placeholder="ID">
+              </label>
+              <label>
+                Логин
+                <input id="grantUserLogin" type="text" placeholder="login">
+              </label>
+            </div>
+            <div class="admin-project-choices" id="grantProjectChoices"></div>
+            <button class="topbar-button" type="submit">Выдать доступ</button>
+          </form>
+        </section>
+
+        <section class="admin-section">
+          <div class="admin-section-head">
+            <h3>Проекты</h3>
+            <button class="topbar-button" id="refreshProjectsButton" type="button">Обновить</button>
+          </div>
+
+          <form class="admin-form" id="addProjectForm">
+            <label>
+              Название
+              <input id="newProjectName" type="text" required placeholder="project_3">
+            </label>
+            <label>
+              Описание
+              <textarea id="newProjectDescription" rows="3" required placeholder="Краткое описание проекта"></textarea>
+            </label>
+            <button class="topbar-button" type="submit">Добавить проект</button>
+          </form>
+
+          <div class="admin-list" id="adminProjectsList"></div>
+        </section>
+      </div>
+    </section>
+
     <section class="chat" id="chatHistory" aria-live="polite">
       <div class="empty-state" id="emptyState">Начните новый диалог</div>
     </section>
