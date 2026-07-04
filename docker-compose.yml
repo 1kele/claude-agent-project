@@ -1,0 +1,40 @@
+services:
+  app:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      MODE: ${MODE:-LOCAL}
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: ${DB_NAME:-claudeagent}
+      DB_USER: ${DB_USER:-guest}
+      DB_PASS: ${DB_PASS:-abcde}
+      SECRET_KEY: ${SECRET_KEY:-change-me-before-production}
+      ALGORITHM: ${ALGORITHM:-HS256}
+      ACCESS_TOKEN_EXPIRE_MINUTES: ${ACCESS_TOKEN_EXPIRE_MINUTES:-10080}
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - ~/.claude:/root/.claude
+      - ~/.claude.json:/root/.claude.json
+
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: ${DB_NAME:-claudeagent}
+      POSTGRES_USER: ${DB_USER:-guest}
+      POSTGRES_PASSWORD: ${DB_PASS:-abcde}
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-guest} -d ${DB_NAME:-claudeagent}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
